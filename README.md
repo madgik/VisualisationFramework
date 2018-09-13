@@ -1,4 +1,4 @@
-# VisualisationFramework
+# Visualisation Framework
 
 ## Installation
 
