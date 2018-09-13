@@ -4,31 +4,31 @@
 
 ### React Projects
 
-*** Install Dependencies
+#### Install Dependencies
 
 yarn install
 
-*** Run locally
+#### Run locally
 
 yarn run start
 
-*** Build release
+#### Build release
 
 yarn run build
 
 ### Service
 
-*** Build
+#### Build
 
 mvn install (root project)
 
-*** Run locally
+#### Run locally
 
 tomcat7:run
 
 ### Portlets
 
-*** Build
+#### Build
 
 1. build react project
 	- copies dist/assets directory to portlet
