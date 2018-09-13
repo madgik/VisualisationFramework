@@ -1,0 +1,11 @@
+<application mode="online">
+
+	<group>DataAnalysis</group>
+	<name>data-analytics-visualization</name>
+	<version>1.0.0</version>
+
+	<description>Data analytics visualization service</description>
+
+	<exclude>/resources/</exclude>
+
+</application>

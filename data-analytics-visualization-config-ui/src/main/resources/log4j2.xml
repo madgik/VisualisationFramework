@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Appenders>
+		<File name="File" fileName="${sys:catalina.home}/logs/data-collection.log" append="false">
+			<PatternLayout pattern="%d{ISO8601} [%t] %-5level %logger{36} - %msg%n"/>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Logger name="gr.uoa.di.madgik.config" level="debug" additivity="false">
+			<AppenderRef ref="File"/>
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="File"/>
+		</Root>
+	</Loggers>
+</Configuration>

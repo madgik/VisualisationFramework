@@ -1,0 +1,20 @@
+type Configuration {
+    id: ID!
+    label: String!
+    description: String!
+    type: String
+    groupBy: String
+    xAxis: String
+    xAxisLabel: String
+    yAxis: String
+    yAxisLabel: String
+    zAxis: String
+    zAxisLabel: String
+    labelField: String
+    valueField: String
+}
+
+# The Root Query for the application
+type Query {
+    configurations(count: Int, offset: Int): [Configuration]!
+}

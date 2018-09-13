@@ -1,0 +1,5 @@
+<ReleaseNotes>
+	<Changeset component="gr.uoa.di.aginfra.data.analytics.visualization.1-0-0" date="2018-06-01">
+		<Change>First release</Change>
+	</Changeset>
+</ReleaseNotes>
