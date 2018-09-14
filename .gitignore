@@ -3,6 +3,8 @@ data-analytics-visualization-config-ui/target/
 data-analytics-visualization-service/target/
 data-analytics-visualization-ui/target/
 data-analytics-visualization-ui-react/node_modules/
+data-analytics-visualization-root/.idea
 *.log
 *.lock
 data-analytics-visualization-config-ui-react/node_modules/
+*.iml
