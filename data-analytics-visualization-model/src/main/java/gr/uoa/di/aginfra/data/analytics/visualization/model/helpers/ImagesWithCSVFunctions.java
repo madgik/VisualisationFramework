@@ -3,18 +3,21 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class ImagesWithCSVFunctions {
+
+    private static final Logger logger = LogManager.getLogger(ImagesWithCSVFunctions.class);
+
 
     public static Map<String, String> storeImages(String zipFilePath, DataDocumentRepository dataDocumentDAO, String vre) throws Exception {
 
@@ -36,9 +39,6 @@ public class ImagesWithCSVFunctions {
             }
 
         }
-
-
-
         return map;
     }
 
@@ -61,9 +61,9 @@ public class ImagesWithCSVFunctions {
         File file = new File(newDir);
         if (!file.exists()) {
             if (file.mkdir()) {
-                System.out.println("Directory is created!");
+                logger.info("Directory is created!");
             } else {
-                System.out.println("Failed to create directory!");
+                logger.info("Failed to create directory!");
             }
         }
 
@@ -77,7 +77,6 @@ public class ImagesWithCSVFunctions {
             if (split.length != 1) {
 
                 entryName = split[1];
-                System.out.println(entryName);
                 FileOutputStream out = new FileOutputStream(newDir + File.separator + entryName);
 
                 byte[] byteBuff = new byte[4096];
@@ -112,13 +111,4 @@ public class ImagesWithCSVFunctions {
         return bytes;
     }
 
-    public static boolean deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
-            }
-        }
-        return directoryToBeDeleted.delete();
-    }
 }

@@ -3,6 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ImagesWithCSVFunctions;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
@@ -10,14 +11,17 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFo
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.MMReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.querying.ConfigurationCriteria;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -33,6 +37,13 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	private DataDocumentRepository dataDocumentDAO;
 
 	private ModelMapper modelMapper;
+
+	private static PropertiesConfig.ApiConfigTemplate config ;
+
+	@Autowired
+	public void setApiConfiTemplate(PropertiesConfig appConfig){
+		this.config = appConfig.getProperties();
+	}
 
 	@Autowired
 	public ConfigurationServiceImpl(ConfigurationRepository configurationDAO,
@@ -196,7 +207,18 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 	private static void loadCSV(DataDocument dataDocument, byte[] bytes, DataDocumentRepository dataDocumentDAO) throws Exception {
 
-		final String dir = System.getProperty("user.dir");
+		//final String dir = System.getProperty("user.dir");
+		final String dir = config.getTempDirectory();
+
+		File tempDir = new File(dir);
+		if (!tempDir.exists()) {
+			if (tempDir.mkdir()) {
+				logger.info("Directory is created!");
+			} else {
+				logger.info("Failed to create directory!");
+			}
+		}
+
 		final String filename = dataDocument.getName();
 		String unzipedDirectory = null;
 		Map<String, String> imagesWithIds = null;
@@ -242,10 +264,11 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 				}
 				list.add(item);
 			}
+
 			dataDocument.setRecords(list);
 			if(isZipFile) {
 				File filesDir = new File(unzipedDirectory);
-				ImagesWithCSVFunctions.deleteDirectory(filesDir);
+				FileUtils.deleteDirectory(filesDir);
 			}
 		} catch (Exception e) {
 			throw new InvalidFormatException("Invalid csv format provided", e);
