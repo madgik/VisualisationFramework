@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ImagesWithCSVFunctions;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
@@ -15,6 +16,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -98,7 +102,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 				break;
 			}
 			case Records: {
-				loadCSV(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
+				//loadCSV(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
+				loadCSV(dataDocument, content, dataDocumentDAO);
+
 				break;
 			}
 			case JSON: {
@@ -186,5 +192,94 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		} catch (Exception e) {
 			throw new InvalidFormatException("Invalid csv format provided", e);
 		}
+	}
+
+	private static void loadCSV(DataDocument dataDocument, byte[] bytes, DataDocumentRepository dataDocumentDAO) throws Exception {
+
+		final String dir = System.getProperty("user.dir");
+		final String filename = dataDocument.getName();
+		String unzipedDirectory = null;
+		Map<String, String> imagesWithIds = null;
+		boolean isZipFile = false;
+		File file = null;
+
+		if(filename.endsWith(".zip")) {
+			isZipFile = true;
+			unzipedDirectory = ImagesWithCSVFunctions.unzip(bytes, dir);
+			imagesWithIds = ImagesWithCSVFunctions.storeImages(unzipedDirectory, dataDocumentDAO, dataDocument.getVre());
+			String csvFile = ImagesWithCSVFunctions.getCSVFile(unzipedDirectory);
+			file = new File(csvFile);
+		}
+
+
+		try {
+			String[][] csv;
+			if(isZipFile) {
+				csv = CSVReader.readCSV(new String(readBytesFromFile(file.getPath()), StandardCharsets.UTF_8.name()));
+				dataDocument.setName(file.getName());
+			}
+			else
+			{
+				csv = CSVReader.readCSV(new String(bytes, StandardCharsets.UTF_8.name()));
+
+			}
+			if (csv.length < 2) throw new Exception("No records found in csv file");
+
+			dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
+
+			List<Map<String, String>> list = new ArrayList<>();
+			for (int i = 1; i < csv.length; i++) {
+				Map<String, String> item = new HashMap<>();
+				for (int j = 0; j < dataDocument.getFields().size(); j++) {
+					String f = dataDocument.getFields().get(j);
+					if (csv[i].length > j) {
+						if(isZipFile && imagesWithIds.containsKey(csv[i][j]))
+							item.put(f,imagesWithIds.get(csv[i][j]));
+						else
+							item.put(f, csv[i][j]);
+					}
+					else item.put(f, null);
+				}
+				list.add(item);
+			}
+			dataDocument.setRecords(list);
+			if(isZipFile) {
+				File filesDir = new File(unzipedDirectory);
+				ImagesWithCSVFunctions.deleteDirectory(filesDir);
+			}
+		} catch (Exception e) {
+			throw new InvalidFormatException("Invalid csv format provided", e);
+		}
+	}
+
+	private static byte[] readBytesFromFile(String filePath) {
+
+		FileInputStream fileInputStream = null;
+		byte[] bytesArray = null;
+
+		try {
+
+			File file = new File(filePath);
+			bytesArray = new byte[(int) file.length()];
+
+			//read file into bytes[]
+			fileInputStream = new FileInputStream(file);
+			fileInputStream.read(bytesArray);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return bytesArray;
+
 	}
 }
