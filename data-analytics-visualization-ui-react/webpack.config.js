@@ -5,7 +5,6 @@ var ReplacePlugin = require('replace-bundle-webpack-plugin')
 let artifactId = "data-analytics-visualization-ui";
 
 module.exports = {
-  mode: "production",
   entry: './src/index.js',
   output: {
     filename: 'bundle.min.js',
