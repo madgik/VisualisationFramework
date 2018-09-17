@@ -18,6 +18,7 @@ public class ProdModelConfig {
 
 	@Bean
 	public UsageStatsService usageService() {
-		return new UsageStatsServiceImpl(appContext.getBean(RedisDataSourceManager.class));
+		return new UsageStatsServiceImpl();
+		//return new UsageStatsServiceImpl(appContext.getBean(RedisDataSourceManager.class));
 	}
 }
