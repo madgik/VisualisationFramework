@@ -48,7 +48,7 @@
     "build:clean-react": "rimraf dist",
     "build:clean-portlet": "rimraf '../data-analytics-visualization-ui/src/main/webapp/static/bundle.*'",
     "build:clean-portlet-assets": "rimraf '../data-analytics-visualization-ui/src/main/webapp/static/assets/*.*'",
-    "build:webpack": "webpack --config webpack.config.js",
+    "build:webpack": "webpack -p --config webpack.config.js",
     "build:mvn": "mvn -f ../data-analytics-visualization-ui/pom.xml clean package",
     "build:copy-bundle": "copyfiles -f \"./dist/*.*\" ../data-analytics-visualization-ui/src/main/webapp/static/",
     "build:copy-assets": "copyfiles -f \"./dist/assets/*.*\" ../data-analytics-visualization-ui/src/main/webapp/static/assets/",
