@@ -8,28 +8,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsageStatsServiceImpl implements UsageStatsService {
 
-	private RedisDataSourceManager redisDataSourceManager;
+	//private RedisDataSourceManager redisDataSourceManager;
 
 	@Autowired
-	public UsageStatsServiceImpl(RedisDataSourceManager redisDataSourceManager) {
-		this.redisDataSourceManager = redisDataSourceManager;
+	public UsageStatsServiceImpl(/*RedisDataSourceManager redisDataSourceManager*/) {
+		//this.redisDataSourceManager = redisDataSourceManager;
 	}
 
 	@Override
 	public VisualizationUsageStats getStats(String vre) throws Exception {
 
-		StatefulRedisConnection<String, String> commands = redisDataSourceManager.getRedisConnection();
-		String total = commands.async().get("visualizations:total").get();
-
-		VisualizationUsageStats stats = new VisualizationUsageStats();
-		stats.setTotal(total);
-		return stats;
+		return null;
+//
+//		StatefulRedisConnection<String, String> commands = redisDataSourceManager.getRedisConnection();
+//		String total = commands.async().get("visualizations:total").get();
+//
+//		VisualizationUsageStats stats = new VisualizationUsageStats();
+//		stats.setTotal(total);
+//		return stats;
 	}
 
 	@Override
 	public void visualizationVisited(String user, String vre, String id) {
-		StatefulRedisConnection<String, String> commands = redisDataSourceManager.getRedisConnection();
-		commands.async().incr("visualizations:total");
-		commands.async().incr("visualization:" + id);
+		System.out.println("Visualization visited");
+//		StatefulRedisConnection<String, String> commands = redisDataSourceManager.getRedisConnection();
+//		commands.async().incr("visualizations:total");
+//		commands.async().incr("visualization:" + id);
 	}
 }

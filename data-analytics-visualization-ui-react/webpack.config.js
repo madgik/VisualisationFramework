@@ -5,7 +5,6 @@ var ReplacePlugin = require('replace-bundle-webpack-plugin')
 let artifactId = "data-analytics-visualization-ui";
 
 module.exports = {
-  mode: "production",
   entry: './src/index.js',
   output: {
     filename: 'bundle.min.js',
@@ -54,6 +53,11 @@ module.exports = {
       replacement: function () {
         return 'window.staticFileBaseUrl';
       }
-    }])
+    }]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify("production")
+      }
+    })
   ]
 }

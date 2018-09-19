@@ -13,7 +13,7 @@ import { Button, Modal, Message } from 'semantic-ui-react'
 class ConfigurationModal extends React.Component {
   render() {
     return (
-      <Modal open={this.props.open} size="large" onClose={this.props.onModalClose}>
+      <Modal open={this.props.open} size="fullscreen" onClose={this.props.onModalClose}>
         <Modal.Header>Configuration</Modal.Header>
         <Modal.Content>
           <ConfigurationForm

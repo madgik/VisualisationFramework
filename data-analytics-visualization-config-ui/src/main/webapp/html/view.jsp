@@ -14,8 +14,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.5" />" />
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-        <script crossorigin src="https://unpkg.com/react@16.3.2/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16.3.2/umd/react-dom.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
     </head>
     <body>
     	<p id="portletInfo" data-namespace="<portlet:namespace/>" data-loginurl="<portlet:resourceURL />" hidden></p>
