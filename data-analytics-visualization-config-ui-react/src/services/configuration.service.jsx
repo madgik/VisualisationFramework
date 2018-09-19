@@ -26,7 +26,7 @@ function postConfiguration(item) {
 
 function putConfiguration(item) {
   var resourceUrl = Ajax.buildUrl(Ajax.CONFIGURATIONS_BASE_PATH + '/' + item.id);
-  return axios.put(resourceUrl, item);
+  return Ajax.put(resourceUrl, item);
 }
 
 function deleteConfiguration(id) {
