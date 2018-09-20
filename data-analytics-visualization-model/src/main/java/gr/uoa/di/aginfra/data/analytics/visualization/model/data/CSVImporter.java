@@ -29,32 +29,27 @@ public class CSVImporter implements RawDataImporter {
 
 	@Override
 	public void importData(byte[] content, DataDocument dataDocument) throws Exception {
+		if (FileHelpers.isZipFile(dataDocument.getName())) {
+			importZipWithDocuments(content, dataDocument);
+		} else {
+			importPlainCSV(content, dataDocument);
+		}
+	}
+
+	public void importZipWithDocuments(byte[] content, DataDocument dataDocument) throws Exception {
 
 		final String tempDirectory = config.getTempDirectory();
 
 		FileHelpers.createDirectory(tempDirectory);
 
-		final String filename = dataDocument.getName();
-		String unzipedDirectory = null;
-		Map<String, String> imagesWithIds = null;
-		boolean isZipFile = false;
-		File csvFile = null;
-
-		if (FileHelpers.isZipFile(filename)) {
-			isZipFile = true;
-			unzipedDirectory = ZipHelpers.unzip(content, tempDirectory);
-			imagesWithIds = storeImages(unzipedDirectory, dataDocument.getVre());
-			csvFile = new File(ZipHelpers.getCSVFile(unzipedDirectory));
-		}
+		String unzipedDirectory = ZipHelpers.unzip(content, tempDirectory);
+		Map<String, String> imagesWithIds = storeImages(unzipedDirectory, dataDocument.getVre());
+		File csvFile = new File(ZipHelpers.getCSVFile(unzipedDirectory));
 
 		String[][] csv;
 		try {
-			if (isZipFile) {
-				csv = CSVReader.readCSV(new String(FileHelpers.readBytesFromFile(csvFile.getPath()), StandardCharsets.UTF_8.name()));
-				dataDocument.setName(csvFile.getName());
-			} else {
-				csv = CSVReader.readCSV(new String(content, StandardCharsets.UTF_8.name()));
-			}
+			csv = CSVReader.readCSV(new String(FileHelpers.readBytesFromFile(csvFile.getPath()), StandardCharsets.UTF_8.name()));
+			dataDocument.setName(csvFile.getName());
 		} catch (Exception e) {
 			throw new InvalidFormatException("Invalid csv format provided", e);
 		}
@@ -69,7 +64,7 @@ public class CSVImporter implements RawDataImporter {
 			for (int j = 0; j < dataDocument.getFields().size(); j++) {
 				String f = dataDocument.getFields().get(j);
 				if (csv[i].length > j) {
-					if (isZipFile && imagesWithIds.containsKey(csv[i][j]))
+					if (imagesWithIds.containsKey(csv[i][j]))
 						item.put(f, imagesWithIds.get(csv[i][j]));
 					else
 						item.put(f, csv[i][j]);
@@ -80,10 +75,36 @@ public class CSVImporter implements RawDataImporter {
 
 		dataDocument.setRecords(list);
 
-		if (isZipFile) {
-			File filesDir = new File(unzipedDirectory);
-			FileUtils.deleteDirectory(filesDir);
+		File filesDir = new File(unzipedDirectory);
+		FileUtils.deleteDirectory(filesDir);
+	}
+
+	public void importPlainCSV(byte[] content, DataDocument dataDocument) throws Exception {
+
+		String[][] csv;
+		try {
+			csv = CSVReader.readCSV(new String(content, StandardCharsets.UTF_8.name()));
+		} catch (Exception e) {
+			throw new InvalidFormatException("Invalid csv format provided", e);
 		}
+
+		if (csv.length < 2) throw new Exception("No records found in csv file");
+
+		dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
+
+		List<Map<String, String>> list = new ArrayList<>();
+		for (int i = 1; i < csv.length; i++) {
+			Map<String, String> item = new HashMap<>();
+			for (int j = 0; j < dataDocument.getFields().size(); j++) {
+				String f = dataDocument.getFields().get(j);
+				if (csv[i].length > j) {
+					item.put(f, csv[i][j]);
+				} else item.put(f, null);
+			}
+			list.add(item);
+		}
+
+		dataDocument.setRecords(list);
 	}
 
 	private Map<String, String> storeImages(String zipFilePath, String vre) throws Exception {
@@ -104,9 +125,7 @@ public class CSVImporter implements RawDataImporter {
 				String id = dataDocumentDAO.store(dataDocument);
 				map.put(dataDocument.getName(), id);
 			}
-
 		}
 		return map;
 	}
-
 }
