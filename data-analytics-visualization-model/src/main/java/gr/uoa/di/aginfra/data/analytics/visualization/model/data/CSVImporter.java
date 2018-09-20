@@ -9,8 +9,6 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesCo
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ZipHelpers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -19,14 +17,12 @@ import java.util.stream.Collectors;
 
 public class CSVImporter implements RawDataImporter {
 
-	private static final Logger logger = LogManager.getLogger(CSVImporter.class);
-
 	private PropertiesConfig.ApiConfigTemplate config;
 
 	private DataDocumentRepository dataDocumentDAO;
 
 	public CSVImporter(PropertiesConfig.ApiConfigTemplate config,
-					   DataDocumentRepository dataDocumentDAO){
+					   DataDocumentRepository dataDocumentDAO) {
 		this.config = config;
 		this.dataDocumentDAO = dataDocumentDAO;
 	}
@@ -34,68 +30,59 @@ public class CSVImporter implements RawDataImporter {
 	@Override
 	public void importData(byte[] content, DataDocument dataDocument) throws Exception {
 
-		final String dir = config.getTempDirectory();
+		final String tempDirectory = config.getTempDirectory();
 
-		File tempDir = new File(dir);
-		if (!tempDir.exists()) {
-			if (tempDir.mkdir()) {
-				logger.info("Directory is created!");
-			} else {
-				logger.info("Failed to create directory!");
-			}
-		}
+		FileHelpers.createDirectory(tempDirectory);
 
 		final String filename = dataDocument.getName();
 		String unzipedDirectory = null;
 		Map<String, String> imagesWithIds = null;
 		boolean isZipFile = false;
-		File file = null;
+		File csvFile = null;
 
-		if(filename.endsWith(".zip")) {
+		if (FileHelpers.isZipFile(filename)) {
 			isZipFile = true;
-			unzipedDirectory = ZipHelpers.unzip(content, dir);
+			unzipedDirectory = ZipHelpers.unzip(content, tempDirectory);
 			imagesWithIds = storeImages(unzipedDirectory, dataDocument.getVre());
-			String csvFile = ZipHelpers.getCSVFile(unzipedDirectory);
-			file = new File(csvFile);
+			csvFile = new File(ZipHelpers.getCSVFile(unzipedDirectory));
 		}
 
+		String[][] csv;
 		try {
-			String[][] csv;
-			if(isZipFile) {
-				csv = CSVReader.readCSV(new String(FileHelpers.readBytesFromFile(file.getPath()), StandardCharsets.UTF_8.name()));
-				dataDocument.setName(file.getName());
-			}
-			else
-			{
+			if (isZipFile) {
+				csv = CSVReader.readCSV(new String(FileHelpers.readBytesFromFile(csvFile.getPath()), StandardCharsets.UTF_8.name()));
+				dataDocument.setName(csvFile.getName());
+			} else {
 				csv = CSVReader.readCSV(new String(content, StandardCharsets.UTF_8.name()));
-			}
-			if (csv.length < 2) throw new Exception("No records found in csv file");
-
-			dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
-
-			List<Map<String, String>> list = new ArrayList<>();
-			for (int i = 1; i < csv.length; i++) {
-				Map<String, String> item = new HashMap<>();
-				for (int j = 0; j < dataDocument.getFields().size(); j++) {
-					String f = dataDocument.getFields().get(j);
-					if (csv[i].length > j) {
-						if(isZipFile && imagesWithIds.containsKey(csv[i][j]))
-							item.put(f,imagesWithIds.get(csv[i][j]));
-						else
-							item.put(f, csv[i][j]);
-					}
-					else item.put(f, null);
-				}
-				list.add(item);
-			}
-
-			dataDocument.setRecords(list);
-			if(isZipFile) {
-				File filesDir = new File(unzipedDirectory);
-				FileUtils.deleteDirectory(filesDir);
 			}
 		} catch (Exception e) {
 			throw new InvalidFormatException("Invalid csv format provided", e);
+		}
+
+		if (csv.length < 2) throw new Exception("No records found in csv file");
+
+		dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
+
+		List<Map<String, String>> list = new ArrayList<>();
+		for (int i = 1; i < csv.length; i++) {
+			Map<String, String> item = new HashMap<>();
+			for (int j = 0; j < dataDocument.getFields().size(); j++) {
+				String f = dataDocument.getFields().get(j);
+				if (csv[i].length > j) {
+					if (isZipFile && imagesWithIds.containsKey(csv[i][j]))
+						item.put(f, imagesWithIds.get(csv[i][j]));
+					else
+						item.put(f, csv[i][j]);
+				} else item.put(f, null);
+			}
+			list.add(item);
+		}
+
+		dataDocument.setRecords(list);
+
+		if (isZipFile) {
+			File filesDir = new File(unzipedDirectory);
+			FileUtils.deleteDirectory(filesDir);
 		}
 	}
 

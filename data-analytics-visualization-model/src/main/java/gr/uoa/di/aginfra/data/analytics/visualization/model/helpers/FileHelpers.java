@@ -3,6 +3,20 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 import java.io.*;
 
 public class FileHelpers {
+
+	public static boolean isZipFile(String file) {
+		return file.endsWith(".zip");
+	}
+
+	public static void createDirectory(String dir) throws Exception{
+		File tempDir = new File(dir);
+		if (!tempDir.exists()) {
+			if (!tempDir.mkdir()) {
+				throw new Exception("Could not create directory " + dir);
+			}
+		}
+	}
+
 	public static byte[] convertImageToBytes(File file) throws FileNotFoundException {
 		FileInputStream fis = new FileInputStream(file);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
