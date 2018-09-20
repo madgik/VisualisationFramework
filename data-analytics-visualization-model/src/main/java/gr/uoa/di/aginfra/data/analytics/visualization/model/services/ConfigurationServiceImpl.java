@@ -1,31 +1,19 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporterFactory;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ImagesWithCSVFunctions;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.MMReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.querying.ConfigurationCriteria;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
@@ -38,20 +26,17 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 	private ModelMapper modelMapper;
 
-	private static PropertiesConfig.ApiConfigTemplate config ;
-
-	@Autowired
-	public void setApiConfiTemplate(PropertiesConfig appConfig){
-		this.config = appConfig.getProperties();
-	}
+	private RawDataImporterFactory rawDataImporterFactory;
 
 	@Autowired
 	public ConfigurationServiceImpl(ConfigurationRepository configurationDAO,
 									DataDocumentRepository dataDocumentDAO,
-									ModelMapper modelMapper) {
+									ModelMapper modelMapper,
+									RawDataImporterFactory rawDataImporterFactory) {
 		this.configurationDAO = configurationDAO;
 		this.dataDocumentDAO = dataDocumentDAO;
 		this.modelMapper = modelMapper;
+		this.rawDataImporterFactory = rawDataImporterFactory;
 	}
 
 	@Override
@@ -99,35 +84,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		dataDocument.setName(name);
 		dataDocument.setType(type);
 		dataDocument.setDataReference(isDataReference);
-		switch (type) {
-			case Tree: {
-				loadTree(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Graph: {
-				loadGraph(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case FreeMind: {
-				loadFreeMind(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Records: {
-				//loadCSV(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				loadCSV(dataDocument, content, dataDocumentDAO);
 
-				break;
-			}
-			case JSON: {
-				loadJSON(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Image:
-			default: {
-				dataDocument.setRawBytes(content);
-				break;
-			}
-		}
+		RawDataImporter importer = rawDataImporterFactory.getImporter(type);
+		importer.importData(content, dataDocument);
 
 		dataDocument.setCreatedAt(new Date());
 		dataDocument.setUpdatedAt(new Date());
@@ -142,167 +101,5 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	@Override
 	public void deleteConfiguration(String id) throws Exception {
 		configurationDAO.delete(id);
-	}
-
-	private static void loadTree(DataDocument dataDocument, String content) throws Exception {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-
-			TreeNode tree = mapper.readValue(content, TreeNode.class);
-
-			dataDocument.setTree(tree);
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid tree format provided", e);
-		}
-	}
-
-	private static void loadFreeMind(DataDocument dataDocument, String content) throws Exception {
-		try {
-			MMNode freeMind = new MMReader().parse(content);
-
-			dataDocument.setFreeMind(freeMind);
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid free mind format provided", e);
-		}
-	}
-
-	private static void loadGraph(DataDocument dataDocument, String content) throws Exception {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-
-			Graph graph = mapper.readValue(content, Graph.class);
-
-			dataDocument.setGraph(graph);
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid graph format provided", e);
-		}
-	}
-
-	private static void loadJSON(DataDocument dataDocument, String content) throws Exception {
-		dataDocument.setJSON(content);
-	}
-
-	private static void loadCSV(DataDocument dataDocument, String content) throws Exception {
-		try {
-			String[][] csv = CSVReader.readCSV(content);
-			if (csv.length < 2) throw new Exception("No records found in csv file");
-
-			dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
-
-			List<Map<String, String>> list = new ArrayList<>();
-			for (int i = 1; i < csv.length; i++) {
-				Map<String, String> item = new HashMap<>();
-				for (int j = 0; j < dataDocument.getFields().size(); j++) {
-					String f = dataDocument.getFields().get(j);
-					if (csv[i].length > j) item.put(f, csv[i][j]);
-					else item.put(f, null);
-				}
-				list.add(item);
-			}
-			dataDocument.setRecords(list);
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid csv format provided", e);
-		}
-	}
-
-	private static void loadCSV(DataDocument dataDocument, byte[] bytes, DataDocumentRepository dataDocumentDAO) throws Exception {
-
-		//final String dir = System.getProperty("user.dir");
-		final String dir = config.getTempDirectory();
-
-		File tempDir = new File(dir);
-		if (!tempDir.exists()) {
-			if (tempDir.mkdir()) {
-				logger.info("Directory is created!");
-			} else {
-				logger.info("Failed to create directory!");
-			}
-		}
-
-		final String filename = dataDocument.getName();
-		String unzipedDirectory = null;
-		Map<String, String> imagesWithIds = null;
-		boolean isZipFile = false;
-		File file = null;
-
-		if(filename.endsWith(".zip")) {
-			isZipFile = true;
-			unzipedDirectory = ImagesWithCSVFunctions.unzip(bytes, dir);
-			imagesWithIds = ImagesWithCSVFunctions.storeImages(unzipedDirectory, dataDocumentDAO, dataDocument.getVre());
-			String csvFile = ImagesWithCSVFunctions.getCSVFile(unzipedDirectory);
-			file = new File(csvFile);
-		}
-
-
-		try {
-			String[][] csv;
-			if(isZipFile) {
-				csv = CSVReader.readCSV(new String(readBytesFromFile(file.getPath()), StandardCharsets.UTF_8.name()));
-				dataDocument.setName(file.getName());
-			}
-			else
-			{
-				csv = CSVReader.readCSV(new String(bytes, StandardCharsets.UTF_8.name()));
-
-			}
-			if (csv.length < 2) throw new Exception("No records found in csv file");
-
-			dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
-
-			List<Map<String, String>> list = new ArrayList<>();
-			for (int i = 1; i < csv.length; i++) {
-				Map<String, String> item = new HashMap<>();
-				for (int j = 0; j < dataDocument.getFields().size(); j++) {
-					String f = dataDocument.getFields().get(j);
-					if (csv[i].length > j) {
-						if(isZipFile && imagesWithIds.containsKey(csv[i][j]))
-							item.put(f,imagesWithIds.get(csv[i][j]));
-						else
-							item.put(f, csv[i][j]);
-					}
-					else item.put(f, null);
-				}
-				list.add(item);
-			}
-
-			dataDocument.setRecords(list);
-			if(isZipFile) {
-				File filesDir = new File(unzipedDirectory);
-				FileUtils.deleteDirectory(filesDir);
-			}
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid csv format provided", e);
-		}
-	}
-
-	private static byte[] readBytesFromFile(String filePath) {
-
-		FileInputStream fileInputStream = null;
-		byte[] bytesArray = null;
-
-		try {
-
-			File file = new File(filePath);
-			bytesArray = new byte[(int) file.length()];
-
-			//read file into bytes[]
-			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(bytesArray);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (fileInputStream != null) {
-				try {
-					fileInputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-		}
-
-		return bytesArray;
-
 	}
 }
