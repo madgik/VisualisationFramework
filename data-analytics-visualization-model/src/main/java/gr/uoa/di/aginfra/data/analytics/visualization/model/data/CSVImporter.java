@@ -1,18 +1,18 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ImagesWithCSVFunctions;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.FileHelpers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ZipHelpers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,7 +34,6 @@ public class CSVImporter implements RawDataImporter {
 	@Override
 	public void importData(byte[] content, DataDocument dataDocument) throws Exception {
 
-		//final String dir = System.getProperty("user.dir");
 		final String dir = config.getTempDirectory();
 
 		File tempDir = new File(dir);
@@ -54,16 +53,16 @@ public class CSVImporter implements RawDataImporter {
 
 		if(filename.endsWith(".zip")) {
 			isZipFile = true;
-			unzipedDirectory = ImagesWithCSVFunctions.unzip(content, dir);
-			imagesWithIds = ImagesWithCSVFunctions.storeImages(unzipedDirectory, dataDocumentDAO, dataDocument.getVre());
-			String csvFile = ImagesWithCSVFunctions.getCSVFile(unzipedDirectory);
+			unzipedDirectory = ZipHelpers.unzip(content, dir);
+			imagesWithIds = storeImages(unzipedDirectory, dataDocument.getVre());
+			String csvFile = ZipHelpers.getCSVFile(unzipedDirectory);
 			file = new File(csvFile);
 		}
 
 		try {
 			String[][] csv;
 			if(isZipFile) {
-				csv = CSVReader.readCSV(new String(readBytesFromFile(file.getPath()), StandardCharsets.UTF_8.name()));
+				csv = CSVReader.readCSV(new String(FileHelpers.readBytesFromFile(file.getPath()), StandardCharsets.UTF_8.name()));
 				dataDocument.setName(file.getName());
 			}
 			else
@@ -100,31 +99,27 @@ public class CSVImporter implements RawDataImporter {
 		}
 	}
 
-	private static byte[] readBytesFromFile(String filePath) {
+	private Map<String, String> storeImages(String zipFilePath, String vre) throws Exception {
 
-		FileInputStream fileInputStream = null;
-		byte[] bytesArray = null;
+		File[] files = new File(zipFilePath).listFiles();
+		Map<String, String> map = new HashMap<String, String>();
 
-		try {
-			File file = new File(filePath);
-			bytesArray = new byte[(int) file.length()];
-
-			//read file into bytes[]
-			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(bytesArray);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (fileInputStream != null) {
-				try {
-					fileInputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		for (File file : files) {
+			if (!file.isDirectory() && file.getName().endsWith(".png")) {
+				DataDocument dataDocument = new DataDocument();
+				dataDocument.setVre(vre);
+				dataDocument.setName(file.getName());
+				dataDocument.setType(DataType.Image);
+				dataDocument.setDataReference(true);
+				dataDocument.setCreatedAt(new Date());
+				dataDocument.setUpdatedAt(new Date());
+				dataDocument.setRawBytes(FileHelpers.convertImageToBytes(file));
+				String id = dataDocumentDAO.store(dataDocument);
+				map.put(dataDocument.getName(), id);
 			}
-		}
 
-		return bytesArray;
+		}
+		return map;
 	}
+
 }
