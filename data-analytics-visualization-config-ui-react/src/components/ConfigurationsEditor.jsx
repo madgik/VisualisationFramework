@@ -1,14 +1,14 @@
 import React from 'react'
 
 import CongigurationsGrid from './list/ConfigurationsGrid'
-import ConfigurationModal from './item/ConfigurationModal'
+import ConfigurationModalContainer from './item/ConfigurationModalContainer'
 
 class CongigurationsEditor extends React.Component {
   render() {
     return (
       <React.Fragment>
         <CongigurationsGrid />
-        <ConfigurationModal />
+        <ConfigurationModalContainer />
       </React.Fragment>
     );
   }
