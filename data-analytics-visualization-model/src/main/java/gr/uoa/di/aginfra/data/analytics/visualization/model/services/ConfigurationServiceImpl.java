@@ -2,30 +2,17 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ImagesWithCSVFunctions;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.MMReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.querying.ConfigurationCriteria;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
@@ -38,20 +25,17 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 	private ModelMapper modelMapper;
 
-	private static PropertiesConfig.ApiConfigTemplate config ;
-
-	@Autowired
-	public void setApiConfiTemplate(PropertiesConfig appConfig){
-		this.config = appConfig.getProperties();
-	}
+	private RawDataImporterFactory rawDataImporterFactory;
 
 	@Autowired
 	public ConfigurationServiceImpl(ConfigurationRepository configurationDAO,
 									DataDocumentRepository dataDocumentDAO,
-									ModelMapper modelMapper) {
+									ModelMapper modelMapper,
+									RawDataImporterFactory rawDataImporterFactory) {
 		this.configurationDAO = configurationDAO;
 		this.dataDocumentDAO = dataDocumentDAO;
 		this.modelMapper = modelMapper;
+		this.rawDataImporterFactory = rawDataImporterFactory;
 	}
 
 	@Override
@@ -99,47 +83,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		dataDocument.setName(name);
 		dataDocument.setType(type);
 		dataDocument.setDataReference(isDataReference);
-		switch (type) {
-			case Tree: {
-				loadTree(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Graph: {
-				loadGraph(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case FreeMind: {
-				loadFreeMind(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Records: {
-				//loadCSV(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				loadCSV(dataDocument, content, dataDocumentDAO);
-//				UnpivotStructure unpivotStructure = new UnpivotStructure();
-//				List<String> list = new ArrayList<>();
-//				list.add("Emp1");
-//				list.add("Emp2");
-//				list.add("Emp3");
-//				list.add("Emp4");
-//				list.add("Emp5");
-//				unpivotStructure.setColumnsToUnpivot(list);
-//				unpivotStructure.setNewColumnName("Employee");
-//				unpivotStructure.setNewColumnValue("EmployeeValue");
-//
-//				unpivotCSV(dataDocument, content, dataDocumentDAO,unpivotStructure);
 
-				break;
-			}
-			case JSON: {
-				loadJSON(dataDocument, new String(content, StandardCharsets.UTF_8.name()));
-				break;
-			}
-			case Image:
-			default: {
-				dataDocument.setRawBytes(content);
-				break;
-			}
-		}
+		RawDataImporter importer = rawDataImporterFactory.getImporter(type);
+		importer.importData(content, dataDocument);
 
 		dataDocument.setCreatedAt(new Date());
 		dataDocument.setUpdatedAt(new Date());
