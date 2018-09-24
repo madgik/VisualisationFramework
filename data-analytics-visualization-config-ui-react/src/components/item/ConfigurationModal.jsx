@@ -27,7 +27,9 @@ class ConfigurationModal extends React.Component {
             onMenuItemClick={this.props.onMenuItemClick}
             onFilterAddition={this.props.onFilterAddition}
             onFilterFieldChange={this.props.onFilterFieldChange}
-            onFilterRemoval={this.props.onFilterRemoval} />
+            onFilterRemoval={this.props.onFilterRemoval}
+            onTransformationAddition={this.props.onTransformationAddition}
+            />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
@@ -61,6 +63,7 @@ const mapDispatchToProps = dispatch => ({
   onFilterFieldChange: (index, filter) => dispatch(configItemActions.updateFilter(index, filter)),
   onFilterRemoval: (index) => dispatch(configItemActions.removeFilter(index)),
   onMenuItemClick: (item) => dispatch(configItemActions.updateSelectedMenuItem(item)),
+  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
   onModalClose: () => dispatch(configItemActions.closeItemEdit()),
   onSavePressed: () => dispatch(configItemActions.storeConfiguration()),
   onDeletePressed: () => dispatch(configItemActions.deleteConfiguration())

@@ -44,6 +44,8 @@ public class Configuration {
 
 	private List<Parameter> parameters;
 
+	private Transformation transformations;
+
 	private List<Filter> filters;
 
 	private Configuration inner;
@@ -246,5 +248,13 @@ public class Configuration {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Transformation getTransformations() {
+		return transformations;
+	}
+
+	public void setTransformations(Transformation transformations) {
+		this.transformations = transformations;
 	}
 }

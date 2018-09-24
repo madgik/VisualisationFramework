@@ -11,6 +11,8 @@ export const configItemConstants = {
   REMOVE_DATA_SOURCE: 'remove-data-source',
   UPDATE_JOIN_FIELD: 'update-join-field',
   ADD_FILTER: 'add-filter',
+  ADD_TRANSFORMATION: 'add-transformation',
+  UPDATE_TRANSFORMATION: 'update-transformation-item',
   UPDATE_FILTER: 'update-filter',
   REMOVE_FILTER: 'remove-filter',
   SET_UPLOADED_FILE_METADATA: 'set-uploaded-file-metadata',

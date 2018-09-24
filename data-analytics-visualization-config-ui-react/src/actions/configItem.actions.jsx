@@ -14,6 +14,7 @@ export const configItemActions = {
   removeFile,
   updateJoinField,
   addFilter,
+  addTransformation,
   updateFilter,
   removeFilter,
   updateSelectedMenuItem,
@@ -116,6 +117,10 @@ function updateJoinField(source, field) {
 
 function addFilter(filter) {
   return { type: configItemConstants.ADD_FILTER, filter };
+}
+
+function addTransformation(transformation) {
+  return { type: configItemConstants.ADD_TRANSFORMATION, transformation };
 }
 
 function updateFilter(index, filter) {

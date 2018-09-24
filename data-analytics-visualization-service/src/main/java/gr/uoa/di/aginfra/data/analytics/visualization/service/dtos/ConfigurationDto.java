@@ -53,6 +53,16 @@ public class ConfigurationDto {
 
     private ConfigurationDto inner;
 
+    private Transformation transformations;
+
+    public Transformation getTransformations() {
+        return transformations;
+    }
+
+    public void setTransformations(Transformation transformations) {
+        this.transformations = transformations;
+    }
+
     public String getId() {
         return id;
     }

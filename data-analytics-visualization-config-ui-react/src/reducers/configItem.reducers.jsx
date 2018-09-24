@@ -161,6 +161,24 @@ export function configItem(state = defaultState(), action) {
           }
         }
       })
+      case configItemConstants.ADD_TRANSFORMATION:
+      if (!state.data.transformations) state.data.transformations = '';
+      return update(state, {
+        data: {
+          transformations: {
+            $set:action.transformation
+          }
+        }
+      })
+      case configItemConstants.UPDATE_TRANSFORMATION:
+      return update(state, {
+        data: {
+          $set: action.data
+        },
+        validation: {
+          $set: action.validation
+        }
+      });
     case configItemConstants.UPDATE_FILTER: {
       return update(state, {
         data: {

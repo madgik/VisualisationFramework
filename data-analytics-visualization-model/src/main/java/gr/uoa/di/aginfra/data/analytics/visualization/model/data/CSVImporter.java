@@ -2,11 +2,9 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.FileHelpers;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.PropertiesConfig;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.ZipHelpers;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import org.apache.commons.io.FileUtils;
 
@@ -33,6 +31,17 @@ public class CSVImporter implements RawDataImporter {
 			importZipWithDocuments(content, dataDocument);
 		} else {
 			importPlainCSV(content, dataDocument);
+//			UnpivotStructure unpivotStructure = new UnpivotStructure();
+//			List<String> list = new ArrayList<>();
+//			list.add("Emp1");
+//			list.add("Emp2");
+//			list.add("Emp3");
+//			list.add("Emp4");
+//			list.add("Emp5");
+//			unpivotStructure.setColumnsToUnpivot(list);
+//			unpivotStructure.setNewColumnName("Employee");
+//			unpivotStructure.setNewColumnValue("EmployeeValue");
+//			CSVUnpivot.unpivotCSV(dataDocument, content, dataDocumentDAO, unpivotStructure );
 		}
 	}
 
@@ -128,4 +137,7 @@ public class CSVImporter implements RawDataImporter {
 		}
 		return map;
 	}
+
+
+
 }
