@@ -1,9 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Transformation;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -12,32 +14,21 @@ import java.util.stream.Collectors;
 
 public class CSVUnpivot {
 
-    public static void unpivotCSV(DataDocument dataDocument, byte[] bytes, DataDocumentRepository dataDocumentDAO, UnpivotStructure unpivotStructure ) throws Exception {
+    public static DataSet unpivotCSV(DataSet dataSet, Transformation transformation) throws Exception {
 
-
-
-        final String filename = dataDocument.getName();
-        String unzipedDirectory = null;
-        Map<String, String> imagesWithIds = null;
-        boolean isZipFile = false;
-        File file = null;
+        UnpivotStructure unpivotStructure = new UnpivotStructure();
 
         try {
             String[][] csv;
             String[][] unpivotCSV;
 
-            csv = CSVReader.readCSV(new String(bytes, StandardCharsets.UTF_8.name()));
-            if (csv.length < 2) throw new Exception("No records found in csv file");
-
-            dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
-
             List<String> updatedFields = new ArrayList<>();
             List<Integer> columnsPosition = new ArrayList<>();
 
-            for (int j = 0; j < dataDocument.getFields().size(); j++) {
-                String f = dataDocument.getFields().get(j);
+            for (int j = 0; j < dataSet.getFields().size(); j++) {
+                String f = dataSet.getFields().get(j);
                 boolean addColumn = true;
-                for(String column : unpivotStructure.getColumnsToUnpivot()){
+                for(String column : transformation.getTransformationColumns()){
                     if(f.equals(column))
                         addColumn = false;
 
@@ -49,40 +40,46 @@ public class CSVUnpivot {
                     columnsPosition.add(j);
 
             }
-            updatedFields.add(unpivotStructure.getNewColumnName());
-            updatedFields.add(unpivotStructure.getNewColumnValue());
+            updatedFields.add(transformation.getTransformationLabel());
+            updatedFields.add(transformation.getTransformationLabelValue());
+            unpivotStructure.setNewColumnValue(transformation.getTransformationLabelValue());
+            unpivotStructure.setNewColumnName(transformation.getTransformationLabel());
+            unpivotStructure.setColumnsToUnpivot(transformation.getTransformationColumns());
             unpivotStructure.setColumnsPosition(columnsPosition);
 
-            List<Map<String, String>> list = new ArrayList<>();
+            List<List<String>> list = new ArrayList<>();
 
-            for (int i = 1; i < csv.length; i++) {
+            for (int i = 1; i < dataSet.getData().size(); i++) {
                 for (Integer oldColumns : unpivotStructure.getColumnsPosition()) {
-                    Map<String, String> item = new HashMap<>();
+                    //Map<String, String> item = new HashMap<>();
+                    List<String> item = new ArrayList<>();
                     boolean oldColumnFound = false;
                     int oldColumnPosition = 0;
                     String oldColumnValue = null;
-                    for (int j = 0; j < dataDocument.getFields().size(); j++) {
-                        String f = dataDocument.getFields().get(j);
-                        if (csv[i].length > j ) {
+                    for (int j = 0; j < dataSet.getFields().size(); j++) {
+                        String f = dataSet.getFields().get(j);
+                        if (dataSet.getData().get(i).size() > j ) {
                             if(!oldColumnFound && oldColumns == j)
                             {
-                                oldColumnValue = csv[i][j];
+                                oldColumnValue = dataSet.getData().get(i).get(j);
                                 oldColumnFound = true;
                                 oldColumnPosition = j;
                             }
                             else if(oldColumns != j && !unpivotStructure.getColumnsPosition().contains(j))
-                                item.put(f, csv[i][j]);
-                        } else item.put(f, null);
+                                item.add(dataSet.getData().get(i).get(j));
+                        } else item.add( null);
                     }
-                    item.put(unpivotStructure.getNewColumnName(), csv[0][oldColumnPosition]);
-                    item.put(unpivotStructure.getNewColumnValue(), oldColumnValue);
+                    item.add(dataSet.getFields().get(oldColumnPosition));
+                    item.add(oldColumnValue);
                     list.add(item);
                 }
             }
 
 
-            dataDocument.setFields(updatedFields);
-            dataDocument.setRecords(list);
+            dataSet.setFields(updatedFields);
+            dataSet.setData(list);
+
+            return dataSet;
 
         } catch (Exception e) {
             throw new InvalidFormatException("Invalid csv format provided", e);
