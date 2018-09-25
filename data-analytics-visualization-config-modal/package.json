@@ -7,13 +7,19 @@
     "react-dropzone": "~5.1.0"
   },
   "peerDependencies": {
+    "axios": "~0.18.0",
     "immutability-helper": "~2.8.1",
     "react": "~16.5.1",
     "react-dom": "~16.5.1",
+    "react-redux": "~5.0.7",
+    "redux": "~4.0.0",
+    "redux-logger": "~3.0.6",
+    "redux-thunk": "~2.3.0",
     "semantic-ui-react": "~0.80.2",
     "validator": "~10.7.1"
   },
   "devDependencies": {
+    "axios": "~0.18.0",
     "babel-install": "~2.1.0",
     "babel-loader": "~7.1.5",
     "babel-plugin-transform-react-remove-prop-types": "~0.4.15",
@@ -28,6 +34,10 @@
     "jquery": "3.3.1",
     "react": "~16.5.1",
     "react-dom": "~16.5.1",
+    "react-redux": "~5.0.7",
+    "redux": "~4.0.0",
+    "redux-logger": "~3.0.6",
+    "redux-thunk": "~2.3.0",
     "react-scripts": "~1.1.5",
     "replace": "~1.0.0",
     "replace-bundle-webpack-plugin": "~1.0.0",
