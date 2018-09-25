@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+var ReplacePlugin = require('replace-bundle-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -7,7 +8,8 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'commonjs',
-    library: ''
+    library: '',
+    publicPath: '__data_analytics_visualization_config_public_path__'
   },
   module: {
     rules: [{
@@ -42,6 +44,12 @@ module.exports = {
   },
 
   plugins: [
+    new ReplacePlugin([{
+      partten: /"__data_analytics_visualization_config_public_path__"/g,
+      replacement: function () {
+        return 'window.staticFileBaseUrl';
+      }
+    }]),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify("production")

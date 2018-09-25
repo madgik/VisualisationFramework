@@ -23,7 +23,9 @@ class ConfigurationModal extends React.Component {
             onMenuItemClick={this.props.onMenuItemClick}
             onFilterAddition={this.props.onFilterAddition}
             onFilterFieldChange={this.props.onFilterFieldChange}
-            onFilterRemoval={this.props.onFilterRemoval} />
+            onFilterRemoval={this.props.onFilterRemoval}
+            onTransformationAddition={this.props.onTransformationAddition}
+            />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?

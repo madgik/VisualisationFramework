@@ -27,6 +27,7 @@ class ConfigurationModalContainer extends React.Component {
         onDeletePressed={this.props.onDeletePressed}
         onModalClose={this.props.onModalClose}
         onSavePressed={this.props.onSavePressed}
+        onTransformationAddition={this.props.onTransformationAddition}
       />
     )
   }
