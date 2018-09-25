@@ -7,6 +7,8 @@ import ConfigurationDataForm from './ConfigurationDataForm'
 import ConfigurationFormMenu from './ConfigurationFormMenu'
 import ConfigurationFiltersEditor from './ConfigurationFiltersEditor'
 import ConfigurationDocumentsForm from './ConfigurationDocumentsForm';
+import ConfigurationTransformationsEditor from './ConfigurationTransformationsEditor';
+
 
 class ConfigurationForm extends React.Component {
 
@@ -28,6 +30,10 @@ class ConfigurationForm extends React.Component {
 
   isDocumentsMenuItemSelected() {
     return this.props.menuState.activeItem === 'documents';
+  }
+
+  isTransformationsMenuItemSelected() {
+    return this.props.menuState.activeItem === 'transformations';
   }
 
   render() {
@@ -56,6 +62,14 @@ class ConfigurationForm extends React.Component {
                 onFilterAddition={this.props.onFilterAddition}
                 onFilterFieldChange={this.props.onFilterFieldChange}
                 onFilterRemoval={this.props.onFilterRemoval} /> : ''}
+            {this.isTransformationsMenuItemSelected() ?
+              <ConfigurationTransformationsEditor
+                data={this.props.data}
+                validation={this.props.validation}
+                dataSources={this.props.data.dataSources}
+                onTransformationAddition={this.props.onTransformationAddition}
+                onFieldChange={this.props.onFieldChange}
+                onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
             {this.showChartFields() && this.isDocumentsMenuItemSelected() ?
               <ConfigurationDocumentsForm
                 data={this.props.data}

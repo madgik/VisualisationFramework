@@ -14,6 +14,7 @@ class ConfigurationFormMenu extends React.Component {
       <Menu.Item name='general' active={activeItem === 'general'} onClick={this.handleItemClick} />
       <Menu.Item name='data' active={activeItem === 'data'} onClick={this.handleItemClick} />
       <Menu.Item name='filters' active={activeItem === 'filters'} onClick={this.handleItemClick} />
+      <Menu.Item name='transformations' active={activeItem === 'transformations'} onClick={this.handleItemClick} />
       <Menu.Item name='documents' active={activeItem === 'documents'} onClick={this.handleItemClick} />
     </Menu>);
   }

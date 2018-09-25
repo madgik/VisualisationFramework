@@ -50,7 +50,9 @@ const mapDispatchToProps = dispatch => ({
   onMenuItemClick: (item) => dispatch(configItemActions.updateSelectedMenuItem(item)),
   onModalClose: () => dispatch(configItemActions.closeItemEdit()),
   onSavePressed: () => dispatch(configItemActions.storeConfiguration()),
-  onDeletePressed: () => dispatch(configItemActions.deleteConfiguration())
+  onDeletePressed: () => dispatch(configItemActions.deleteConfiguration()),
+  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
+
 })
 
 export default connect(
