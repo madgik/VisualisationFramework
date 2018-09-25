@@ -55,9 +55,14 @@ class ConfigurationGeneralForm extends React.Component {
     var suggestions = [];
     (this.props.data.dataSources || []).forEach(dataSource => {
       suggestions.push.apply(suggestions, (dataSource.fields || []).map(x => {
-        return {
-          text: showFileName ? dataSource.name + ' - ' + x : x,
-          value: dataSource.source + '-' + x
+        if(this.props.data.transformations != null)
+        {
+     //     if(!this.props.data.transformations.transformationColumns.includes(dataSource.source + '-' +x)){
+            return {
+              text: showFileName ? dataSource.name + ' - ' + x : x,
+              value: dataSource.source + '-' + x
+            }
+        //  }
         }
       }));
     });
