@@ -5,19 +5,30 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true
+      open: true,
+      isNew: true,
+      editItemId: null
     }
   }
 
   onModalClose() {
     this.setState({
-      open: false
+      open: false,
+      isNew: true,
+      editItemId: null
+    })
+  }
+
+  handleConfigurationLoaded(){
+    this.setState({
+      open: true
     })
   }
 
   handleModalOpen() {
     this.setState({
-      open: true
+      isNew: false,
+      editItemId: '5ad090ee426796058cfa51cf'
     })
   }
 
@@ -27,10 +38,13 @@ class App extends Component {
         <div onClick={() => this.handleModalOpen()}>Open</div>
         <ConfigurationModal
           open={this.state.open}
+          isNew={this.state.isNew}
+          editItemId={this.state.editItemId}
           routing={this.props.routing}
           onModalClose={() => this.onModalClose()}
-          onDeleteComplete={() => this.props.onModalClose()}
-          onSaveComplete={() => this.props.onModalClose()} />
+          onConfigurationLoaded={() => this.handleConfigurationLoaded()}
+          onDeleteComplete={() => this.onModalClose()}
+          onSaveComplete={() => this.onModalClose()} />
       </div>
     );
   }

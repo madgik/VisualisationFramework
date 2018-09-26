@@ -26,7 +26,6 @@ function defaultState() {
 
   return {
     isNew: true,
-    //open: false,
     data: {
       type: 'Line'
     },
@@ -44,13 +43,11 @@ export function configItem(state = defaultState(), action) {
   switch (action.type) {
     case configItemConstants.CREATE_ITEM: {
       var createState = defaultState();
-      createState.open = true;
       return createState;
     }
     case configItemConstants.EDIT_ITEM: {
       var editState = defaultState();
       editState.isNew = false;
-      editState.open = true;
       editState.data = action.data;
       return editState;
     }

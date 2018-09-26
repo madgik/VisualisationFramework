@@ -10,10 +10,14 @@ import ConfigurationModalInner from './ConfigurationModalInner';
 import Ajax from '../utilities/Ajax';
 import ErrorHandler from '../utilities/ErrorHandler';
 
+import { configItemActions } from '../actions'
+
 class ConfigurationModal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.isNew = false;
+    this.editItemId = '';
     this.store = createStore(rootReducer,
       applyMiddleware(thunkMiddleware, createLogger({
         predicate: () => !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
@@ -24,6 +28,27 @@ class ConfigurationModal extends React.Component {
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     ErrorHandler.init(this.store);
+  }
+
+  componentDidMount() {
+    this.checkRefresh();
+  }
+
+  componentDidUpdate() {
+    this.checkRefresh();
+  }
+
+  checkRefresh() {
+    if (this.props.isNew !== this.isNew ||
+      this.props.editItemId !== this.editItemId) {
+      this.isNew = this.props.isNew;
+      this.editItemId = this.props.editItemId;
+      if (this.isNew) {
+        this.store.dispatch(configItemActions.createConfiguration());
+      } else {
+        this.store.dispatch(configItemActions.editConfiguration(this.editItemId, this.props.onConfigurationLoaded));
+      }
+    }
   }
 
   render() {
