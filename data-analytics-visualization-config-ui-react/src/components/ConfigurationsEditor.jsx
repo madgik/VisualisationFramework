@@ -8,7 +8,8 @@ class CongigurationsEditor extends React.Component {
     return (
       <React.Fragment>
         <CongigurationsGrid />
-        <ConfigurationModalContainer />
+        <ConfigurationModalContainer
+          routing={this.props.routing} />
       </React.Fragment>
     );
   }

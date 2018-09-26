@@ -11,23 +11,10 @@ class ConfigurationModalContainer extends React.Component {
     return (
       <ConfigurationModal
         open={this.props.open}
-        data={this.props.data}
-        menu={this.props.menu}
-        validation={this.props.validation}
-        onFieldChange={this.props.onFieldChange}
-        onFileDropped={this.props.onFileDropped}
-        onRemoveFileClick={this.props.onRemoveFileClick}
-        onJoinFieldChange={this.props.onJoinFieldChange}
-        onMenuItemClick={this.props.onMenuItemClick}
-        onFilterAddition={this.props.onFilterAddition}
-        onFilterFieldChange={this.props.onFilterFieldChange}
-        onFilterRemoval={this.props.onFilterRemoval}
-        validationPanelMessages={this.props.validationPanelMessages}
-        errorMessage={this.props.errorMessage}
+        routing={this.props.routing}
         onDeletePressed={this.props.onDeletePressed}
         onModalClose={this.props.onModalClose}
         onSavePressed={this.props.onSavePressed}
-        onTransformationAddition={this.props.onTransformationAddition}
       />
     )
   }
