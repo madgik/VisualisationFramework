@@ -9,7 +9,8 @@ class CongigurationsEditor extends React.Component {
       <React.Fragment>
         <CongigurationsGrid />
         <ConfigurationModalContainer
-          routing={this.props.routing} />
+          routing={this.props.routing}
+          isLocalDeployment={this.props.isLocalDeployment} />
       </React.Fragment>
     );
   }

@@ -41,6 +41,7 @@ class App extends Component {
           isNew={this.state.isNew}
           editItemId={this.state.editItemId}
           routing={this.props.routing}
+          isLocalDeployment={true}
           onModalClose={() => this.onModalClose()}
           onConfigurationLoaded={() => this.handleConfigurationLoaded()}
           onDeleteComplete={() => this.onModalClose()}

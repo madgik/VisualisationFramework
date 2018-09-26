@@ -7,6 +7,7 @@ class Ajax {
   VISUALIZATIONS_BASE_PATH = 'visualizations'
 
   baseUrl = null
+  _isLocalDeployment = true
 
   getBaseUrl() {
     return this.baseUrl;
@@ -14,6 +15,14 @@ class Ajax {
 
   setBaseUrl(baseUrl) {
     this.baseUrl = baseUrl;
+  }
+
+  isLocalDeployment() {
+    return this._isLocalDeployment;
+  }
+  
+  setIsLocalDeployment(isLocalDeployment) {
+    this._isLocalDeployment = isLocalDeployment;
   }
 
   buildUrl(path, parameters) {
@@ -55,14 +64,6 @@ class Ajax {
   buildPortlet(path, parameters) {
     var resourceURL = this.baseUrl.replace('%7Burl%7D', path);
     return resourceURL.replace('%7Bparameters%7D', parameters ? parameters : '');
-  }
-
-  isLocalDeployment() {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      return true;
-    } else {
-      return false;
-    }
   }
 }
 

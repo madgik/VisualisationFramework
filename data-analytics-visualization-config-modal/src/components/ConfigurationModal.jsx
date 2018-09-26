@@ -27,6 +27,7 @@ class ConfigurationModal extends React.Component {
 
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
+    Ajax.setIsLocalDeployment(this.props.isLocalDeployment);
     ErrorHandler.init(this.store);
   }
 
@@ -43,7 +44,7 @@ class ConfigurationModal extends React.Component {
       this.props.editItemId !== this.editItemId) {
       this.isNew = this.props.isNew;
       this.editItemId = this.props.editItemId;
-      if (this.isNew) {
+      if (this.isNew || !this.editItemId || this.editItemId.length === 0) {
         this.store.dispatch(configItemActions.createConfiguration());
       } else {
         this.store.dispatch(configItemActions.editConfiguration(this.editItemId, this.props.onConfigurationLoaded));
