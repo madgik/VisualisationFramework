@@ -31,11 +31,13 @@ function createConfiguration() {
   return { type: configItemConstants.CREATE_ITEM };
 }
 
-function editConfiguration(id) {
+function editConfiguration(id, callback) {
   return function (dispatch) {
     configurationService.getConfiguration(id)
       .then(response => {
         dispatch(showConfigurationData(response.data))
+
+        if (callback) callback();
       });
   }
 }
@@ -134,7 +136,7 @@ function updateSelectedMenuItem(item) {
   return { type: configItemConstants.UPDATE_MENU_ITEM, item };
 }
 
-function storeConfiguration() {
+function storeConfiguration(callback) {
   return function (dispatch, getState) {
 
     dispatch(validateData())
@@ -148,6 +150,8 @@ function storeConfiguration() {
 
       promise.then(() => {
         dispatch(configurationStored())
+
+        if (callback) callback();
       });
     }
   }
@@ -181,7 +185,7 @@ function showValidationResult(validation, isFormValid, validationPanelMessages) 
   return { type: configItemConstants.SHOW_VALIDATION_RESULT, validation, isFormValid, validationPanelMessages };
 }
 
-function deleteConfiguration() {
+function deleteConfiguration(callback) {
   return function (dispatch, getState) {
 
     var id = getState().configItem.data.id;
@@ -190,7 +194,7 @@ function deleteConfiguration() {
       .then(() => {
         dispatch(closeItemEdit())
 
-        //dispatch(configListActions.loadConfigurations())
+        if (callback) callback();
       });
   }
 }

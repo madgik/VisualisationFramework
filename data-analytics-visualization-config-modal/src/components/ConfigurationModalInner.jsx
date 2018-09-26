@@ -55,9 +55,9 @@ class ConfigurationModalInner extends React.Component {
         </Modal.Content>
         <Modal.Actions>
           {!this.props.isNew ?
-            <Button negative className="left-aligned-modal-button" content='Delete' onClick={this.props.onDeletePressed} /> : ''}
+            <Button negative className="left-aligned-modal-button" content='Delete' onClick={() => this.props.onDeletePressed(this.props.onDeleteComplete)} /> : ''}
           <Button primary content='Cancel' onClick={this.props.onModalClose} />
-          <Button positive content='Save' onClick={this.props.onSavePressed} />
+          <Button positive content='Save' onClick={() => this.props.onSavePressed(this.props.onSaveComplete)} />
         </Modal.Actions>
       </Modal>
     )
@@ -79,11 +79,10 @@ const mapDispatchToProps = dispatch => ({
   onFilterFieldChange: (index, filter) => dispatch(configItemActions.updateFilter(index, filter)),
   onFilterRemoval: (index) => dispatch(configItemActions.removeFilter(index)),
   onMenuItemClick: (item) => dispatch(configItemActions.updateSelectedMenuItem(item)),
-  onModalClose: () => dispatch(configItemActions.closeItemEdit()),
-  onSavePressed: () => dispatch(configItemActions.storeConfiguration()),
-  onDeletePressed: () => dispatch(configItemActions.deleteConfiguration()),
-  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
-
+  //onModalClose: () => dispatch(configItemActions.closeItemEdit()),
+  onSavePressed: (callback) => dispatch(configItemActions.storeConfiguration(callback)),
+  onDeletePressed: (callback) => dispatch(configItemActions.deleteConfiguration(callback)),
+  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation))
 })
 
 export default connect(
