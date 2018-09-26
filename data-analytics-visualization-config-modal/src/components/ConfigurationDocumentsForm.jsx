@@ -23,14 +23,33 @@ class ConfigurationDocumentsForm extends React.Component {
     var showFileName = (this.props.data.dataSources || []).length > 1;
 
     var suggestions = [];
+     var array2;
+    
     (this.props.data.dataSources || []).forEach(dataSource => {
-      suggestions.push.apply(suggestions, (dataSource.fields || []).map(x => {
-        return {
-          text: showFileName ? dataSource.name + ' - ' + x : x,
-          value: dataSource.source + '-' + x
-        }
+
+      if(this.props.data.transformations !== undefined && this.props.data.transformations.transformationLabel !== '' && this.props.data.transformations.transformationLabelValue !== '' && this.props.data.transformations.transformationColumns.length > 0)
+      {
+        array2 =  dataSource.fields.filter((value, index, array) =>
+        {
+          return !this.props.data.transformations.transformationColumns.includes(dataSource.source + '-' +value)
+        });
+       
+      }
+      else
+        array2 = dataSource.fields;
+
+      suggestions.push.apply(suggestions, (array2 || []).map(x => {
+              return {
+              text: showFileName ? dataSource.name + ' - ' + x : x,
+              value: dataSource.source + '-' + x
+            }        
       }));
-    });
+      if(this.props.data.transformations !== undefined && this.props.data.transformations.transformationLabel !== '' && this.props.data.transformations.transformationLabelValue !== '' && this.props.data.transformations.transformationColumns.length > 0)
+      {
+        suggestions.push({text: this.props.data.transformations.transformationLabel, value: this.props.data.transformations.transformationLabel});
+        suggestions.push({text: this.props.data.transformations.transformationLabelValue, value: this.props.data.transformations.transformationLabelValue});
+      }
+      });
 
     if (addEmpty) {
       suggestions.unshift({

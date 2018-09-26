@@ -2,7 +2,7 @@ import React from 'react';
 
 import update from 'immutability-helper';
 
-import { Grid, Segment, Form, Input, Dropdown } from 'semantic-ui-react'
+import { Grid, Segment, Form, Input, Dropdown, Icon } from 'semantic-ui-react'
 
 class ConfigurationTransformationsEditor extends React.Component {
 
@@ -20,6 +20,13 @@ class ConfigurationTransformationsEditor extends React.Component {
     }
   }
 
+  handleTransformationRemoval = () => {
+    this.props.onTransformationAddition({
+      transformationLabel: '',
+      transformationLabelValue: '',
+      transformationColumns: []
+    });
+  }
   extractFieldSuggestions = () => {
     
     var showFileName = (this.props.dataSources || []).length > 1;
@@ -104,6 +111,9 @@ class ConfigurationTransformationsEditor extends React.Component {
               </Form.Field>
             </Form.Group>
           </Segment>
+        </Grid.Column>
+        <Grid.Column width="1" className="remove-filter-container">
+          <Icon name='minus circle' size='big' link onClick={this.handleTransformationRemoval} />
         </Grid.Column>
        
       </Grid>);

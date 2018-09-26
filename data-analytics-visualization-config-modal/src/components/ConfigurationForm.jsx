@@ -57,6 +57,7 @@ class ConfigurationForm extends React.Component {
                 onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor
+                transformations={this.props.data.transformations}
                 filters={this.props.data.filters}
                 dataSources={this.props.data.dataSources}
                 onFilterAddition={this.props.onFilterAddition}

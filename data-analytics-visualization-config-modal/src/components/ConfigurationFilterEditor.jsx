@@ -27,14 +27,33 @@ class ConfigurationFilterEditor extends React.Component {
     var showFileName = (this.props.dataSources || []).length > 1;
 
     var suggestions = [];
+    var array2;
+    
     (this.props.dataSources || []).forEach(dataSource => {
-      suggestions.push.apply(suggestions, (dataSource.fields || []).map(x => {
-        return {
-          text: showFileName ? dataSource.name + ' - ' + x : x,
-          value: dataSource.source + '-' + x
-        }
+
+      if(this.props.transformations !== undefined && this.props.transformations.transformationLabel !== '' && this.props.transformations.transformationLabelValue !== '' && this.props.transformations.transformationColumns.length > 0)
+      {
+        array2 =  dataSource.fields.filter((value, index, array) =>
+        {
+          return !this.props.transformations.transformationColumns.includes(dataSource.source + '-' +value)
+        });
+       
+      }
+      else
+        array2 = dataSource.fields;
+
+      suggestions.push.apply(suggestions, (array2 || []).map(x => {
+              return {
+              text: showFileName ? dataSource.name + ' - ' + x : x,
+              value: dataSource.source + '-' + x
+            }        
       }));
-    });
+      if(this.props.transformations !== undefined && this.props.transformations.transformationLabel !== '' && this.props.transformations.transformationLabelValue !== '' && this.props.transformations.transformationColumns.length > 0)
+      {
+        suggestions.push({text: this.props.transformations.transformationLabel, value: this.props.transformations.transformationLabel});
+        suggestions.push({text: this.props.transformations.transformationLabelValue, value: this.props.transformations.transformationLabelValue});
+      }
+      });
 
     return suggestions;
   }

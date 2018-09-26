@@ -23,6 +23,7 @@ class ConfigurationFiltersEditor extends React.Component {
           id={index}
           filter={item}
           dataSources={this.props.dataSources}
+          transformations={this.props.transformations}
           onFilterRemoval={this.props.onFilterRemoval}
           onFieldChange={this.props.onFilterFieldChange} />;
       })}
