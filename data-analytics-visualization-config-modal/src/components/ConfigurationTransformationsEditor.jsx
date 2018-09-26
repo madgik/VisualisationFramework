@@ -2,7 +2,7 @@ import React from 'react';
 
 import update from 'immutability-helper';
 
-import { Grid, Segment, Form, Input, Checkbox, Dropdown, Icon } from 'semantic-ui-react'
+import { Grid, Segment, Form, Input, Dropdown } from 'semantic-ui-react'
 
 class ConfigurationTransformationsEditor extends React.Component {
 
