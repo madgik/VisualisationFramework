@@ -29,7 +29,12 @@ class ConfigurationModal extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <ConfigurationModalInner open={this.props.open} />
+        <ConfigurationModalInner
+          open={this.props.open}
+          onModalClose={this.props.onModalClose}
+          onDeleteComplete={this.props.onDeleteComplete}
+          onSaveComplete={this.props.onSaveComplete}
+        />
       </Provider>
     )
   }
