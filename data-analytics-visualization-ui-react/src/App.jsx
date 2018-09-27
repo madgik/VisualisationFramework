@@ -16,14 +16,14 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.store = createStore(rootReducer, 
+    this.store = createStore(rootReducer,
       applyMiddleware(thunkMiddleware, createLogger({
         predicate: () => !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
       }))
     );
   }
 
-  componentDidMount() {
+  componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     this.store.dispatch(visualizationActions.requestVisualizations());
   }
@@ -31,7 +31,9 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <Visualization {...this.props} />
+        <Visualization
+          isLocalDeployment={Ajax.isLocalDeployment()}
+          {...this.props} />
       </Provider>
     );
   }

@@ -3,6 +3,7 @@ import React from 'react';
 import ChartSelector from './ChartSelector';
 import ChartTypeSelector from './ChartTypeSelector';
 import ChartPrinter from './ChartPrinter'
+import ChartConfigurator from './ChartConfigurator';
 
 import { Popup, Icon, Grid } from 'semantic-ui-react'
 
@@ -16,9 +17,10 @@ class ChartHeader extends React.Component {
               <ChartSelector
                 selected={this.props.chart}
                 charts={this.props.availableCharts}
-                onChange={this.props.onChartSelectionChange} 
-                dropDownStyle={{zIndex: '1000'}} />
+                onChange={this.props.onChartSelectionChange}
+                dropDownStyle={{ zIndex: '1000' }} />
               <ChartPrinter {...this.props} />
+              <ChartConfigurator {...this.props} />
             </div>
           </Grid.Column>
           <Grid.Column width={8}>
