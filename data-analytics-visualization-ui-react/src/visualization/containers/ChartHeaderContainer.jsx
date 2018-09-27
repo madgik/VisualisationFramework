@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { visualizationActions } from '../actions'
+import { visualizationActions, configItemActions } from '../actions'
 
 import ChartHeader from '../components/charts/ChartHeader'
 
@@ -10,7 +10,10 @@ const mapStateToProps = state => ({
   label: state.data.label,
   description: state.data.description,
   type: state.data.type,
-  availableTypes: state.data.availableTypes
+  availableTypes: state.data.availableTypes,
+  open: state.configItem.open,
+  isNew: state.configItem.isNew,
+  editItemId: state.configItem.editItemId
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -19,6 +22,17 @@ const mapDispatchToProps = dispatch => ({
   },
   onChartTypeSelectionChange: (e, { value }) => {
     dispatch(visualizationActions.changeChartType(value))
+  },
+  onConfigurationClick: () => {
+    dispatch(configItemActions.editConfiguration())
+  },
+  onModalClose: () => dispatch(configItemActions.closeItemEdit()),
+  onConfigurationLoaded: () => dispatch(configItemActions.showItemEdit()),
+  onSaveComplete: () => {
+    dispatch(configItemActions.closeItemEdit())
+  },
+  onDeleteComplete: () => {
+    dispatch(configItemActions.closeItemEdit())
   }
 })
 
