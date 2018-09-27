@@ -1,0 +1,32 @@
+.configuration-filters-editor .add-filter-container {
+  text-align: center;
+}
+
+.configuration-filters-editor .checkbox {
+  margin-top: 2rem;
+}
+
+.configuration-filters-editor .remove-filter-container {
+  line-height: 180px;
+}
+
+.left-aligned-modal-button {
+  position: absolute;
+  left: .75em;
+}
+
+.configuration-data-form .grid {
+  max-height: 300px;
+  overflow: auto;
+}
+
+/* .configuration-data-form {
+  position: relative;
+} */
+
+.configuration-data-form .remove-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
