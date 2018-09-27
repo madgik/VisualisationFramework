@@ -4,10 +4,12 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Transfor
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UnpivotTransformerImpl implements UnpivotTransformer {
 
     @Override
@@ -44,7 +46,7 @@ public class UnpivotTransformerImpl implements UnpivotTransformer {
 
                 List<List<String>> list = new ArrayList<>();
 
-                for (int i = 1; i < dataSet.getData().size(); i++) {
+                for (int i = 0; i < dataSet.getData().size(); i++) {
                     for (Integer oldColumns : unpivotStructure.getColumnsPosition()) {
                         List<String> item = new ArrayList<>();
                         boolean oldColumnFound = false;
