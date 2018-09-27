@@ -11,7 +11,7 @@ class TransformationsFiltering
     
         (dataSources || []).forEach(dataSource => {
 
-        if(transformations !== undefined && transformations.transformationLabel !== '' && transformations.transformationLabelValue !== '' && transformations.transformationColumns.length > 0)
+        if(transformations !== undefined && transformations !== null && transformations.transformationLabel !== '' && transformations.transformationLabelValue !== '' && transformations.transformationColumns.length > 0)
         {
         array2 =  dataSource.fields.filter((value, index, array) =>
         {
@@ -30,7 +30,7 @@ class TransformationsFiltering
         }));
       
     });
-    if(transformations !== undefined && transformations.transformationLabel !== '' && transformations.transformationLabelValue !== '' && transformations.transformationColumns.length > 0)
+    if(transformations !== undefined && transformations !== null && transformations.transformationLabel !== '' && transformations.transformationLabelValue !== '' && transformations.transformationColumns.length > 0)
     {
     suggestions.push({text: transformations.transformationLabel, value: transformations.transformationLabel});
     suggestions.push({text: transformations.transformationLabelValue, value: transformations.transformationLabelValue});
