@@ -140,7 +140,6 @@ function storeConfiguration(callback) {
   return function (dispatch, getState) {
 
     dispatch(validateData())
-
     var state = getState().configItem;
 
     if (state.isFormValid) {

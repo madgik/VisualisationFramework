@@ -13,7 +13,10 @@ function defaultState() {
     'zAxis',
     'zAxisLabel',
     'labelField',
-    'valueField'];
+    'valueField',
+    'transformationLabel',
+    'transformationLabelValue',
+    'transformationColumns'];
 
   var validation = {}
   fieldsToValidate.forEach(field => {

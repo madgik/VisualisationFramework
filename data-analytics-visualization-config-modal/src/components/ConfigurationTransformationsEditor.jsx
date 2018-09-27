@@ -81,25 +81,28 @@ class ConfigurationTransformationsEditor extends React.Component {
   render() {
     return (
       <Grid>
+      <label style={{fontWeight: 'bold'}}>Unpivot</label>
+
         <Grid.Column width="15">
           <Segment>
+
             <Form.Group widths='equal'>
-              <Form.Field>
-                <label>Label</label>
-                <Input placeholder='Label' value={this.props.data.transformations.transformationLabel || ''} 
-                    onChange={(e) => this.handleFieldChange('transformationLabel', e.target.value)} />
+              <Form.Field error={this.props.validation.transformationLabel.touched && !this.props.validation.transformationLabel.valid}>
+                <label>Attribute Column</label>
+                <Input placeholder='Attribute Column Label' value={this.props.data.transformations.transformationLabel || ''} 
+                    onChange={(e) => this.handleFieldChange('transformationLabel', e.target.value) } />
               </Form.Field>
-              <Form.Field>
-                <label>Field</label>
-                <Input placeholder='Label Value' value={this.props.data.transformations.transformationLabelValue || ''} onChange={(e) => this.handleFieldChange('transformationLabelValue', e.target.value)} />
+              <Form.Field error={this.props.validation.transformationLabelValue.touched && !this.props.validation.transformationLabelValue.valid}>
+                <label>Value Column</label>
+                <Input placeholder='Value Column Label' value={this.props.data.transformations.transformationLabelValue || ''} onChange={(e) => this.handleFieldChange('transformationLabelValue', e.target.value)} />
 
               </Form.Field>
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Field>
+              <Form.Field error={this.props.validation.transformationColumns.touched && !this.props.validation.transformationColumns.valid}>
                 <label>Columns</label>
                 <Dropdown
-                  placeholder='Select Columns'
+                  placeholder='Select the columns to unpivot'
                   multiple selection
                   options={this.extractFieldSuggestions()}
                   value={this.props.data.transformations.transformationColumns}
