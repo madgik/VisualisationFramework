@@ -12,6 +12,8 @@ import ErrorHandler from '../utilities/ErrorHandler';
 
 import { configItemActions } from '../actions'
 
+import './ConfigurationModal.css'
+
 class ConfigurationModal extends React.Component {
 
   constructor(props) {
@@ -56,6 +58,7 @@ class ConfigurationModal extends React.Component {
     return (
       <Provider store={this.store}>
         <ConfigurationModalInner
+          allowDelete={this.props.allowDelete}
           open={this.props.open}
           onModalClose={this.props.onModalClose}
           onDeleteComplete={this.props.onDeleteComplete}

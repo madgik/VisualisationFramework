@@ -28,7 +28,7 @@ class App extends Component {
   handleModalOpen() {
     this.setState({
       isNew: false,
-      editItemId: '5ad090ee426796058cfa51cf'
+      editItemId: '5baca31a990a036e10244e01'
     })
   }
 
@@ -37,6 +37,7 @@ class App extends Component {
       <div className="App">
         <div onClick={() => this.handleModalOpen()}>Open</div>
         <ConfigurationModal
+          allowDelete={true}
           open={this.state.open}
           isNew={this.state.isNew}
           editItemId={this.state.editItemId}

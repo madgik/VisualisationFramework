@@ -30,9 +30,8 @@ const mapDispatchToProps = dispatch => ({
   onConfigurationLoaded: () => dispatch(configItemActions.showItemEdit()),
   onSaveComplete: () => {
     dispatch(configItemActions.closeItemEdit())
-  },
-  onDeleteComplete: () => {
-    dispatch(configItemActions.closeItemEdit())
+    
+    dispatch(visualizationActions.reloadVisualization())
   }
 })
 

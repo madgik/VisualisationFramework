@@ -10,6 +10,7 @@ class ConfigurationModalContainer extends React.Component {
   render() {
     return (
       <ConfigurationModal
+        allowDelete={true}
         routing={this.props.routing}
         isLocalDeployment={this.props.isLocalDeployment}
 
@@ -21,8 +22,7 @@ class ConfigurationModalContainer extends React.Component {
         onModalClose={this.props.onModalClose}
         onConfigurationLoaded={this.props.onConfigurationLoaded}
         onSaveComplete={this.props.onSaveComplete}
-        onDeleteComplete={this.props.onDeleteComplete}
-      />
+        onDeleteComplete={this.props.onDeleteComplete} />
     )
   }
 }

@@ -12,6 +12,7 @@ class ChartConfigurator extends React.Component {
           <Icon name='cogs' />
         </Button>
         <ConfigurationModal
+          allowDelete={false}
           routing={this.props.routing}
           isLocalDeployment={this.props.isLocalDeployment}
 

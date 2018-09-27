@@ -54,7 +54,7 @@ class ConfigurationModalInner extends React.Component {
             </Message> : ''}
         </Modal.Content>
         <Modal.Actions>
-          {!this.props.isNew ?
+          {(!this.props.isNew && this.props.allowDelete) ?
             <Button negative className="left-aligned-modal-button" content='Delete' onClick={() => this.props.onDeletePressed(this.props.onDeleteComplete)} /> : ''}
           <Button primary content='Cancel' onClick={this.props.onModalClose} />
           <Button positive content='Save' onClick={() => this.props.onSavePressed(this.props.onSaveComplete)} />
