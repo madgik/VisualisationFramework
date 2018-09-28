@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { configListActions, configItemActions } from '../actions';
+import { configListActions } from '../actions';
 
 class ErrorHandler {
 
@@ -13,9 +13,7 @@ class ErrorHandler {
     axios.interceptors.response.use(function (response) {
       return response;
     }, function (error) {
-      self.store.getState().configItem.open ?
-        self.store.dispatch(configItemActions.showErrorMessage(self.extractErrorMessage(error))) :
-        self.store.dispatch(configListActions.showErrorMessage(self.extractErrorMessage(error)));
+      self.store.dispatch(configListActions.showErrorMessage(self.extractErrorMessage(error)));
       return Promise.reject(error);
     });
   }

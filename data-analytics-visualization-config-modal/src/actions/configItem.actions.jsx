@@ -38,7 +38,7 @@ function editConfiguration(id, callback) {
         dispatch(showConfigurationData(response.data))
 
         if (callback) callback();
-      });
+      }).catch(_ => { });
   }
 }
 
@@ -84,7 +84,7 @@ function uploadFile(files, type) {
 
       return documentService.postDocument(formData).then(response => {
         dispatch(updateUploadedFile(response.data));
-      })
+      }).catch(_ => { });
     });
   }
 }
@@ -96,7 +96,7 @@ function updateUploadedFile(id) {
 
     return documentService.getDocumentMetadata(id).then(response => {
       dispatch(setUploadedFileMetadata(response.data));
-    })
+    }).catch(_ => { });
   }
 }
 
@@ -151,7 +151,7 @@ function storeConfiguration(callback) {
         dispatch(configurationStored())
 
         if (callback) callback();
-      });
+      }).catch(_ => { });
     }
   }
 }
@@ -194,7 +194,7 @@ function deleteConfiguration(callback) {
         dispatch(closeItemEdit())
 
         if (callback) callback();
-      });
+      }).catch(_ => { });
   }
 }
 
