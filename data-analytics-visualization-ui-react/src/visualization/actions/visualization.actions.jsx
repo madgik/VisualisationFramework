@@ -66,6 +66,8 @@ function reloadVisualization() {
 
     var selected = getState().visualization.selected;
 
+    dispatch(documentActions.hideDocument());
+    
     dispatch(resetVisualization());
 
     var resourceUrl = Ajax.buildUrl(Ajax.VISUALIZATIONS_BASE_PATH + '/' + selected);
