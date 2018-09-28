@@ -6,7 +6,7 @@
 		<Description>${description}</Description>
 		<Class>DataAnalysis</Class>
 		<Name>${artifactId}</Name>
-		<Version>1.0.0</Version>
+		<Version>1.0.5</Version>
 		<Packages>
 			<Software>
 				<Name>${artifactId}</Name>
