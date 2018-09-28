@@ -13,7 +13,7 @@ class ErrorHandler {
     axios.interceptors.response.use(function (response) {
       return response;
     }, function (error) {
-        self.store.dispatch(configItemActions.showErrorMessage(self.extractErrorMessage(error)));
+      self.store.dispatch(configItemActions.showErrorMessage(self.extractErrorMessage(error)));
       return Promise.reject(error);
     });
   }

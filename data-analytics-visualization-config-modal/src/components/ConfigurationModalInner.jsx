@@ -44,8 +44,7 @@ class ConfigurationModalInner extends React.Component {
             onFilterAddition={this.props.onFilterAddition}
             onFilterFieldChange={this.props.onFilterFieldChange}
             onFilterRemoval={this.props.onFilterRemoval}
-            onTransformationAddition={this.props.onTransformationAddition}
-          />
+            onTransformationAddition={this.props.onTransformationAddition} />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
