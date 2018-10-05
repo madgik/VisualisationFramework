@@ -111,14 +111,13 @@ class ConfigurationTransformationsEditor extends React.Component {
                   
                  />
               </Form.Field>
-              <Form.Field>
-              </Form.Field>
+            
             </Form.Group>
             
           </Segment>
          
         </Grid.Column>
-        <Grid.Column width="equal" className="remove-filter-container">
+        <Grid.Column width="1" className="remove-filter-container">
           <Icon name='minus circle' size='big' link onClick={this.handleTransformationRemoval} />
         </Grid.Column>
        

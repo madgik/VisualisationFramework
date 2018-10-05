@@ -32,7 +32,7 @@ class ConfigurationValidators {
     })
 
 
-    if(item.transformations !== undefined && item.transformations !== null){
+    if(!!item.transformations){
       transformationsFieldsToValidate.forEach(field => {
         var result = this.validateField(field, item.transformations, validationState)
         validationState = result.state;
