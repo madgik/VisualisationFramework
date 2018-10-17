@@ -48,6 +48,8 @@ public class Visualization {
 
     private ThreeDData threeDData;
 
+    private HeatMapData heatMapData;
+
     private Collection<Tuple> tuples;
 
     private String JSON;
@@ -145,6 +147,10 @@ public class Visualization {
     public List<gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.Filter> getFilters() {
         return filters;
     }
+
+    public HeatMapData getHeatMapData() { return heatMapData; }
+
+    public void setHeatMapData(HeatMapData heatMapData) { this.heatMapData = heatMapData; }
 
     public void setFilters(List<Filter> filters) {
         this.filters = filters;

@@ -6,6 +6,7 @@ public enum VisualizationType {
     Scatter,
     Line,
     Step,
+    test,
 
     //Bar charts
     Bar,
@@ -14,6 +15,9 @@ public enum VisualizationType {
     Pie,
     Doughnut,
     Polar,
+
+    //HeatMap
+    HeatMap,
 
     //3d
 	ThreeD,

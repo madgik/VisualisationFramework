@@ -36,7 +36,9 @@ class ConfigurationGeneralForm extends React.Component {
     { text: 'Tree', value: 'Tree' },
     { text: 'Map', value: 'Map' },
     { text: 'World Wind Map', value: 'WorldWindMap' },
-    { text: 'Table', value: 'Table' }
+    { text: 'Table', value: 'Table' },
+    { text: 'HeatMap', value: 'HeatMap' }
+
   ]
 
   showAvailableTypes() {
@@ -72,6 +74,7 @@ class ConfigurationGeneralForm extends React.Component {
       this.props.data.type === 'Line' ||
       this.props.data.type === 'Step' ||
       this.props.data.type === 'ThreeD' ||
+      this.props.data.type === 'HeatMap' ||
       this.props.data.type === 'Bar');
   }
 
@@ -82,11 +85,13 @@ class ConfigurationGeneralForm extends React.Component {
   }
 
   showGroupByField = () => {
-    return (this.props.data.type !== 'ThreeD');
+    return (this.props.data.type !== 'ThreeD' || 
+            this.props.data.type !== 'HeatMap');
   }
 
   showZAxisField = () => {
-    return (this.props.data.type === 'ThreeD');
+    return (this.props.data.type === 'ThreeD'|| 
+    this.props.data.type === 'HeatMap');
   }
 
   showColorChartFields = () => {

@@ -14,7 +14,8 @@ public enum VisualizationDataType {
 	Graph,
 	FreeMind,
 	Map,
-	Tabular;
+	Tabular,
+	HeatMap;
 
 	private static Map<VisualizationType, VisualizationDataType> visualizationTypeDataTypeMap;
 
@@ -25,6 +26,8 @@ public enum VisualizationDataType {
 		visualizationTypeDataTypeMap.put(VisualizationType.Spline, VisualizationDataType.TimeSeries);
 		visualizationTypeDataTypeMap.put(VisualizationType.Step, VisualizationDataType.TimeSeries);
 		visualizationTypeDataTypeMap.put(VisualizationType.Pie, VisualizationDataType.Tuples);
+		visualizationTypeDataTypeMap.put(VisualizationType.HeatMap, VisualizationDataType.HeatMap);
+
 		visualizationTypeDataTypeMap.put(VisualizationType.Doughnut, VisualizationDataType.Tuples);
 		visualizationTypeDataTypeMap.put(VisualizationType.Polar, VisualizationDataType.Tuples);
 		visualizationTypeDataTypeMap.put(VisualizationType.Bar, VisualizationDataType.BarChart);

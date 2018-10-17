@@ -26,7 +26,9 @@ class UploadDataMessage extends React.Component {
     Tree: 'Please upload a valid json file of the following form',
     Map: 'Please upload a valid geogson file with coordinates in WGS 84',
     WorldWindMap: 'Please upload a valid geogson file with coordinates in WGS 84',
-    Table: 'Please upload a valid csv file'
+    Table: 'Please upload a valid csv file',
+    HeatMap: 'Please upload a valid csv file'
+
   }
 
   typeToImage = {
@@ -44,7 +46,8 @@ class UploadDataMessage extends React.Component {
     Tree: treeImage,
     Map: geoJsonImage,
     WorldWindMap: geoJsonImage,
-    Table: csvImage
+    Table: csvImage,
+    HeatMap: csvImage
   }
 
   render() {

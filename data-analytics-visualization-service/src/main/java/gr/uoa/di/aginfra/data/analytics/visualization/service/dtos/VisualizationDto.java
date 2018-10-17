@@ -49,6 +49,8 @@ public class VisualizationDto {
 
     private ThreeDData threeDData;
 
+    private HeatMapData heatMapData;
+
 	private Collection<Tuple> tuples;
 
 	private String JSON;
@@ -122,7 +124,15 @@ public class VisualizationDto {
 		this.zAxisLabel = zAxisLabel;
 	}
 
-	public boolean isHasColors() {
+    public HeatMapData getHeatMapData() {
+        return heatMapData;
+    }
+
+    public void setHeatMapData(HeatMapData heatMapData) {
+        this.heatMapData = heatMapData;
+    }
+
+    public boolean isHasColors() {
 		return hasColors;
 	}
 

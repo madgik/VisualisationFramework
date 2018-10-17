@@ -120,6 +120,8 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 	private static Configuration mapTo(Document document) {
 		Configuration configuration = new Configuration();
 		configuration.setId(document.getObjectId("_id").toString());
+		System.out.println(java.util.Arrays.asList(VisualizationType.values()));
+
 		if (document.containsKey("label")) configuration.setLabel(document.getString("label"));
 		if (document.containsKey("description")) configuration.setDescription(document.getString("description"));
 		if (document.containsKey("type")) configuration.setType(VisualizationType.valueOf(document.getString("type")));
