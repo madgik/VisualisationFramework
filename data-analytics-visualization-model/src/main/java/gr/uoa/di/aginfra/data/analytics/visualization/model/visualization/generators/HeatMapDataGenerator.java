@@ -4,9 +4,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configur
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.Visualization;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.HeatMapData;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.ThreeDData;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.extractors.HeatMapDataExtractor;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.extractors.ThreeDDataExtractor;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.DataSetFilterApplier;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.Filter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.FilterOptionsExtractor;
@@ -40,6 +38,12 @@ public class HeatMapDataGenerator extends RecordsGenerator implements Visualizat
     @Override
     public void generateData(Visualization visualization, Configuration configuration, DataSet dataSet, Map<String, String> filters) throws Exception {
 
+        if (visualization.getFilters() != null) {
+            for (Filter filter : visualization.getFilters()) {
+                filter.setOptions(filterOptionsExtractor.extract(dataSet, filter.getField()));
+            }
+        }
+
         if (!hasNonFilledInRequiredFilter(visualization, filters)) {
 
             dataSet = unpivotTransformer.unPivot(dataSet, configuration.getTransformations());
@@ -49,15 +53,14 @@ public class HeatMapDataGenerator extends RecordsGenerator implements Visualizat
             HeatMapData heatMapData = heatMapDataExtractor.extract(dataSet,
                     configuration.getXAxis(),
                     configuration.getYAxis(),
-                    configuration.getZAxis());
+                    configuration.getZAxis(),
+                    configuration.getGroupBy(),
+                    filters,
+                    dataSetFilterApplier);
 
             visualization.setHeatMapData(heatMapData);
         }
 
-        if (visualization.getFilters() != null) {
-            for (Filter filter : visualization.getFilters()) {
-                filter.setOptions(filterOptionsExtractor.extract(dataSet, filter.getField()));
-            }
-        }
+
     }
 }

@@ -11,15 +11,28 @@ class HeatMapRenderer extends React.Component {
 
   render() {
     var visualization = this.props.visualization;
-    
-    var data = [
-        {
-            x: visualization.heatMapData.xAxis,
-            y: visualization.heatMapData.yAxis,
-            z: visualization.heatMapData.zAxis,
-          type: 'heatmap'
-        }
-      ];
+    var data;
+    if(visualization.heatMapData !== null)
+    {
+        data = [
+            {
+                x: visualization.heatMapData.xAxis,
+                y: visualization.heatMapData.yAxis,
+                z: visualization.heatMapData.zAxis,
+            type: 'heatmap'
+            }
+        ];
+    }
+    else{
+        data = [
+            {
+                x: '',
+                y: '',
+                z: '',
+            type: 'heatmap'
+            }
+        ];
+    }
 
     var layout = {
       autosize: false,

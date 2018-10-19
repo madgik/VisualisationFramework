@@ -6,7 +6,6 @@ public enum VisualizationType {
     Scatter,
     Line,
     Step,
-    test,
 
     //Bar charts
     Bar,

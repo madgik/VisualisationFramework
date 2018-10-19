@@ -4,20 +4,15 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Key;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSetManipulator;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.HeatMapData;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.ThreeDData;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.DataSetFilterApplier;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Component
 public class HeatMapDataExtractorImpl extends DataSetManipulator implements HeatMapDataExtractor {
 
-    public HeatMapData extract(DataSet dataSet, String xAxisField, String yAxisField, String zAxisField) throws Exception {
+    public HeatMapData extract(DataSet dataSet, String xAxisField, String yAxisField, String zAxisField, String groupByField, Map<String, String> filters, DataSetFilterApplier dataSetFilterApplier) throws Exception {
 
         int xAxisFieldIndex = -1;
         if (xAxisField == null || (xAxisFieldIndex = getFieldIndex(dataSet, xAxisField)) == -1) {
@@ -40,6 +35,7 @@ public class HeatMapDataExtractorImpl extends DataSetManipulator implements Heat
     private HeatMapData extract(DataSet dataSet, int xAxisFieldIndex, int yAxisFieldIndex, int zAxisFieldIndex) {
 
         HeatMapData  heatMapData = new HeatMapData();
+       // heatMapData.setGroupByDistinctValues(new ArrayList<>(distinctGroupByValues));
         List<String> xAxisData = new ArrayList<>();
         List<String> yAxisData = new ArrayList<>();
         List<List<Integer>> zAxisData = new ArrayList<>();
@@ -71,13 +67,20 @@ public class HeatMapDataExtractorImpl extends DataSetManipulator implements Heat
             for(String x: xAxisData){
                 List<String> combinationValue = uniqueFieldCombinations.get(new Key(x, y));
                 if( combinationValue != null){
-                    Double total = combinationValue.stream().filter(e -> e.chars().allMatch(Character::isDigit))
-                            .mapToInt(i -> Integer.valueOf(i)).average().getAsDouble();
-                    zListRow.add(total.intValue());
+                    System.out.println(combinationValue.toString());
+                    OptionalDouble total = combinationValue.stream().filter(e -> e.chars().allMatch(Character::isDigit))
+                            .mapToInt(i -> Integer.valueOf(i)).average();
+                    if(total.isPresent()){
+                        Double average = total.getAsDouble();
+                        zListRow.add(average.intValue());
+                    }
+                    else
+                        zListRow.add(null);
                 }
                 else
                     zListRow.add(null);
             }
+            System.out.println(zListRow.toString());
             zAxisData.add(zListRow);
         }
 

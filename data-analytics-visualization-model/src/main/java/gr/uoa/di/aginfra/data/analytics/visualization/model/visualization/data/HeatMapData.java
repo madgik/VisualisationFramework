@@ -10,12 +10,12 @@ public class HeatMapData {
     private List<String> xAxis;
     private List<String> yAxis;
     private List<List<Integer>> zAxis;
-    private List<String> dates;
+    private List<String> groupByDistinctValues;
 
-    @JsonProperty("dates")
-    public List<String> getDates() { return dates; }
+    @JsonProperty("groupByDistinctValues")
+    public List<String> getGroupByDistinctValues() { return groupByDistinctValues; }
 
-    public void setDates(List<String> dates) { this.dates = dates; }
+    public void setGroupByDistinctValues(List<String> groupByDistinctValues) { this.groupByDistinctValues = groupByDistinctValues; }
 
     @JsonProperty("xAxis")
     public List<String> getXAxis() {
