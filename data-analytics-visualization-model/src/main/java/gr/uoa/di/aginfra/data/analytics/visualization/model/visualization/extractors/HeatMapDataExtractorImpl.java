@@ -89,7 +89,6 @@ public class HeatMapDataExtractorImpl extends DataSetManipulator implements Heat
             for(String x: xAxisData){
                 List<String> combinationValue = uniqueFieldCombinations.get(new Key(x, y));
                 if( combinationValue != null){
-                    System.out.println(combinationValue.toString());
                     OptionalDouble total = combinationValue.stream().filter(e -> e.chars().allMatch(Character::isDigit))
                             .mapToInt(i -> Integer.valueOf(i)).average();
                     if(total.isPresent()){
@@ -102,7 +101,6 @@ public class HeatMapDataExtractorImpl extends DataSetManipulator implements Heat
                 else
                     zListRow.add(null);
             }
-            System.out.println(zListRow.toString());
             zAxisData.add(zListRow);
         }
 
