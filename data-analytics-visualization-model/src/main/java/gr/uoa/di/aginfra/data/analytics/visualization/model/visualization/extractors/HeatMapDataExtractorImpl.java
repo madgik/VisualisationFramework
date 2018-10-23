@@ -8,6 +8,8 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filter
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Component
 public class HeatMapDataExtractorImpl extends DataSetManipulator implements HeatMapDataExtractor {
@@ -60,6 +62,26 @@ public class HeatMapDataExtractorImpl extends DataSetManipulator implements Heat
                 if(!yAxisData.contains(yValue))
                     yAxisData.add(yValue);
             }
+        }
+
+        try {
+            List<Integer> xAxisDataInteger = xAxisData.stream()
+                    .map(Integer::valueOf).sorted()
+                    .collect(Collectors.toList());
+            xAxisData = xAxisDataInteger.stream().map(String::valueOf).collect(Collectors.toList());
+        }
+        catch (NumberFormatException exception) {
+            xAxisData = xAxisData.stream().sorted().collect(Collectors.toList());
+        }
+
+        try {
+            List<Integer> yAxisDataInteger = yAxisData.stream()
+                    .map(Integer::valueOf).sorted()
+                    .collect(Collectors.toList());
+            yAxisData = yAxisDataInteger.stream().map(String::valueOf).collect(Collectors.toList());
+        }
+        catch (NumberFormatException exception) {
+            yAxisData = yAxisData.stream().sorted().collect(Collectors.toList());
         }
 
         for(String y: yAxisData){

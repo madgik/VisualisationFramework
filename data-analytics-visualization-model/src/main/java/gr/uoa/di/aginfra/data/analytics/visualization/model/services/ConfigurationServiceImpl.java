@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.convert.CSVConvertor;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporterFactory;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
@@ -96,6 +97,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 		dataDocument.setCreatedAt(new Date());
 		dataDocument.setUpdatedAt(new Date());
+
+
+
 
 		String id = dataDocumentDAO.store(dataDocument);
 
