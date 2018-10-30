@@ -19,7 +19,6 @@ public class ZipHelpers {
 
 	public static String getCSVFile(String zipFilePath){
 		File[] files = new File(zipFilePath).listFiles();
-		Map<String, String> map = new HashMap<String, String>();
 
 		for (File file : files) {
 			if (!file.isDirectory() && file.getName().endsWith(".csv")) {

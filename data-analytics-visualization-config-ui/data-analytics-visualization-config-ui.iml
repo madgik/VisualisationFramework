@@ -21,7 +21,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.resources.discovery:discovery-client:1.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.resources:common-gcore-resources:1.3.4-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.core:common-gcore-stubs:1.2.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.common:common-authorization:2.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.common:common-authorization:2.1.2-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.aspectj:aspectjrt:1.8.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.6.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.gcube.common.portal:portal-manager:2.4.1-SNAPSHOT" level="project" />
