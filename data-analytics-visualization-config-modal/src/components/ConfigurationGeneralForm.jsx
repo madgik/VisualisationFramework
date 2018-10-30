@@ -85,7 +85,8 @@ class ConfigurationGeneralForm extends React.Component {
   }
 
   showGroupByField = () => {
-    return (this.props.data.type !== 'ThreeD');
+    return (this.props.data.type !== 'ThreeD'
+    && this.props.data.type !== 'HeatMap');
   }
 
   showZAxisField = () => {

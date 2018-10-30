@@ -26,9 +26,9 @@ class HeatMapRenderer extends React.Component {
     else{
         data = [
             {
-                x: '',
-                y: '',
-                z: '',
+                x: [],
+                y: [],
+                z: [],
             type: 'heatmap'
             }
         ];
@@ -38,17 +38,11 @@ class HeatMapRenderer extends React.Component {
       autosize: false,
       width: this.props.size.width,
       height: this.props.size.height,
-      margin: {
-        l: 0,
-        r: 0,
-        b: 0,
-        t: 0,
-      },
-      scene: {
-        xaxis: { title: visualization.xAxisLabel },
-        yaxis: { title: visualization.yAxisLabel },
-        zaxis: { title: visualization.zAxisLabel }
-      }
+     
+      xaxis: { title: visualization.xAxisLabel },
+      yaxis: { title: visualization.yAxisLabel },
+      zaxis: { title: visualization.zAxisLabel }
+      
     };
 
     var config = {
