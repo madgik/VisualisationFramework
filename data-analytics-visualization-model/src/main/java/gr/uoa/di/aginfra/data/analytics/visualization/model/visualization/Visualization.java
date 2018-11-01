@@ -30,6 +30,8 @@ public class Visualization {
 
 	private boolean hasDocuments;
 
+	private int activeDocuments;
+
     private List<Parameter> parameters;
 
     private List<gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.Filter> filters;
@@ -236,4 +238,11 @@ public class Visualization {
         this.inner = inner;
     }
 
+    public int getActiveDocuments() {
+        return activeDocuments;
+    }
+
+    public void setActiveDocuments(int activeDocuments) {
+        this.activeDocuments = activeDocuments;
+    }
 }

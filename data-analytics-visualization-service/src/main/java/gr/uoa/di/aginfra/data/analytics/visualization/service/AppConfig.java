@@ -22,7 +22,7 @@ public class AppConfig {
 	public org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver() {
 		org.springframework.web.multipart.commons.CommonsMultipartResolver resolver =
 				new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-		resolver.setMaxUploadSize(16777216);
+		resolver.setMaxUploadSize(1136777216);
 		return resolver;
 	}
 }

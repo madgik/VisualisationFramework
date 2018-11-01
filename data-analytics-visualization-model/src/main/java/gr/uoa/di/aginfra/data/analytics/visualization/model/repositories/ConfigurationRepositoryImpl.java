@@ -153,6 +153,8 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 
 		if (document.containsKey("colorField")) configuration.setColorField(document.getString("colorField"));
 		if (document.containsKey("documentField")) configuration.setDocumentField(document.getString("documentField"));
+		if (document.containsKey("activeDocuments")) configuration.setActiveDocuments(document.getInteger("activeDocuments"));
+
 		if (document.containsKey("createdAt") && document.getLong("createdAt") != null)
 			configuration.setCreatedAt(new Date(document.getLong("createdAt")));
 		if (document.containsKey("updatedAt") && document.getLong("updatedAt") != null)
@@ -217,6 +219,7 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 			document.append("transformations", null);
 		}
 
+		document.append("activeDocuments", configuration.getActiveDocuments());
 		if (configuration.getXAxis() != null) document.append("xAxis", configuration.getXAxis());
 		if (configuration.getXAxisLabel() != null) document.append("xAxisLabel", configuration.getXAxisLabel());
 		if (configuration.getYAxis() != null) document.append("yAxis", configuration.getYAxis());

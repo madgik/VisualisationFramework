@@ -31,6 +31,8 @@ public class VisualizationDto {
 
 	private boolean hasDocuments;
 
+    private int activeDocuments;
+
     private List<Parameter> parameters;
 
     private List<Filter> filters;
@@ -242,5 +244,13 @@ public class VisualizationDto {
 
     public void setInner(Visualization inner) {
         this.inner = inner;
+    }
+
+    public int getActiveDocuments() {
+        return activeDocuments;
+    }
+
+    public void setActiveDocuments(int activeDocuments) {
+        this.activeDocuments = activeDocuments;
     }
 }
