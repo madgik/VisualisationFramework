@@ -290,9 +290,16 @@ class ChartRenderer extends React.Component {
         if (this.isBarChart(this.props.visualization.type)) {
           //TODO...
         } else {
-          if (this.cachedData.datasets[_datasetIndex].data[_index].doc) {
-            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc);
-          }
+            var position = this.props.document.modalSrc.findIndex(image => image.imageName === this.cachedData.datasets[_datasetIndex].data[_index].doc);
+            if (this.cachedData.datasets[_datasetIndex].data[_index].doc && position === -1){
+                this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments);
+            }
+            else{
+                var image = this.props.document.modalSrc[position];
+                this.props.document.modalSrc.splice(position, 1);
+                this.props.document.modalSrc.push(image);
+                this.props.onUpdateDocuments(this.props.document.modalSrc)
+            }
         }
       } else {
         this.props.onChartCanvasClick();

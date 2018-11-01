@@ -4,15 +4,19 @@ import VisualizationRenderer from '../components/VisualizationRenderer'
 import { documentActions } from '../actions';
 
 const mapStateToProps = state => ({
-  visualization: state.data
+  visualization: state.data,
+  document: state.document
 })
 
 const mapDispatchToProps = dispatch => ({
-  onChartElementClick: (url) => {
-    dispatch(documentActions.showDocument(url))
+  onChartElementClick: (url, modalSrc, activeDocuments) => {
+    dispatch(documentActions.showDocument(url, modalSrc, activeDocuments))
   },
   onChartCanvasClick: () => {
     dispatch(documentActions.hideDocument())
+  },
+  onUpdateDocuments: (modalSrc) => {
+    dispatch(documentActions.updateDocumentData(modalSrc))
   }
 })
 
