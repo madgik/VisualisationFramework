@@ -2,8 +2,8 @@
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
 	<portlet>
-		<portlet-name>data-analytics-visualization-ui</portlet-name>
-		<display-name>Data Analytics Visualization</display-name>
+		<portlet-name>data-analytics-visualization-dashboard</portlet-name>
+		<display-name>Data Analytics Visualization DashBoard</display-name>
 		<portlet-class>gr.uoa.di.madgik.visualization.portlet.VisualizationPortlet</portlet-class>
 
 		<init-param>
@@ -24,9 +24,9 @@
 		</supports>
 
         <portlet-info>
-			<title>Data Analytics Visualization</title>
-			<short-title>Data Analytics Visualization</short-title>
-			<keywords>Data Analytics Visualization</keywords>
+			<title>Data Analytics Visualization DashBoard</title>
+			<short-title>Data Analytics Visualization DashBoard</short-title>
+			<keywords>Data Analytics Visualization DashBoard</keywords>
 		</portlet-info>
 
 		<security-role-ref>

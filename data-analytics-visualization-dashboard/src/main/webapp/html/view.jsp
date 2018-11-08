@@ -44,7 +44,7 @@
 			var contextPath = '<%=request.getContextPath()%>/';
 			var nameSpace = $('#portletInfo').data('namespace');
 
-            ReactDOM.render(React.createElement(window.reactComponents['data-analytics-visualization-ui'].reactComponent, {
+            ReactDOM.render(React.createElement(window.reactComponents['data-analytics-visualization-dashboard'].reactComponent, {
 			    routing: {
 			        baseUrl: resourceURL
 			    }

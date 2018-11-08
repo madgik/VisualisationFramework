@@ -296,9 +296,13 @@ class ChartRenderer extends React.Component {
             }
             else{
                 var image = this.props.document.modalSrc[position];
-                this.props.document.modalSrc.splice(position, 1);
-                this.props.document.modalSrc.push(image);
-                this.props.onUpdateDocuments(this.props.document.modalSrc)
+                // this.props.document.modalSrc.splice(position, 1);
+                // this.props.document.modalSrc.push(image);
+                // this.props.onUpdateDocuments(this.props.document.modalSrc);
+                var clone = this.props.document.modalSrc.slice(0);
+                clone.splice(position, 1);
+                clone.push(image);
+                this.props.onUpdateDocuments(clone)
             }
         }
       } else {

@@ -2,7 +2,7 @@
 <!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
 
 <display>
-	<category name="Data Analytics Visualization">
-		<portlet id="data-analytics-visualization-ui" />
+	<category name="Data Analytics Visualization DashBoard">
+		<portlet id="data-analytics-visualization-dashboard" />
 	</category>
 </display>

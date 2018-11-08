@@ -4,7 +4,7 @@
 <liferay-portlet-app>
 
 	<portlet>
-		<portlet-name>data-analytics-visualization-ui</portlet-name>
+		<portlet-name>data-analytics-visualization-dashboard</portlet-name>
 		<instanceable>true</instanceable>
 	</portlet>
 
