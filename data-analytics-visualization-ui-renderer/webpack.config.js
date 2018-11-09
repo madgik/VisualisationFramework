@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 var ReplacePlugin = require('replace-bundle-webpack-plugin')
 
-let artifactId = "data-analytics-visualization-ui";
+let artifactId = "data-analytics-visualization-ui-renderer";
 
 module.exports = {
   entry: './src/index.js',
