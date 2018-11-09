@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 
 import VisualizationRenderer from '../components/VisualizationRenderer'
 import { documentActions } from '../actions';
+import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-ui-renderer'
+
 
 const mapStateToProps = state => ({
   visualization: state.data,
@@ -23,4 +25,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(VisualizationRenderer)
+)(VisualizationRendererInnerContainer)
