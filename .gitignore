@@ -11,3 +11,4 @@ data-analytics-visualization-config-ui-react/node_modules/
 *.iml
 data-analytics-visualization-model/data-analytics-visualization-model.iml
 data-analytics-visualization-service/data-analytics-visualization-service.iml
+data-analytics-visualization-ui-renderer/node_modules/
