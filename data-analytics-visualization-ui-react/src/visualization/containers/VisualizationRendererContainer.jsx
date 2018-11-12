@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import VisualizationRenderer from '../components/VisualizationRenderer'
 import { documentActions } from '../actions';
 import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-ui-renderer'
 
