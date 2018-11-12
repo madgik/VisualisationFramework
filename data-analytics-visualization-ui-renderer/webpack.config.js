@@ -1,20 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
-var ReplacePlugin = require('replace-bundle-webpack-plugin')
-
-let artifactId = "data-analytics-visualization-ui-renderer";
+var ReplacePlugin = require('replace-bundle-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.min.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'var',
-    library: ['reactComponents', artifactId],
-    publicPath: '__data_analytics_visualization_public_path__'
+    libraryTarget: 'commonjs',
+    library: '',
+    publicPath: '__data_analytics_visualization_renderer_public_path__'
   },
-
-
   module: {
     rules: [{
         test: /\.(js|jsx)$/,
@@ -49,7 +45,7 @@ module.exports = {
 
   plugins: [
     new ReplacePlugin([{
-      partten: /"__data_analytics_visualization_public_path__"/g,
+      partten: /"__data_analytics_visualization_renderer_public_path__"/g,
       replacement: function () {
         return 'window.staticFileBaseUrl';
       }
