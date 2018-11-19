@@ -18,7 +18,11 @@ const mapDispatchToProps = dispatch => ({
   },
   onUpdateDocuments: (modalSrc) => {
     dispatch(documentActions.updateDocumentData(modalSrc))
-  }
+  },
+  onMapElementClick: (feature) => {
+    // dispatch(documentActions.showDocument(url, modalSrc, activeDocuments))
+    console.log(feature);
+   }
 })
 
 export default connect(

@@ -12,6 +12,7 @@ import HeatMapRenderer from './heatmap/HeatMapRenderer'
 
 class VisualizationRendererInner extends React.Component {
   render() {
+
     if (this.props.visualization.type === 'Graph') {
       return <GraphRenderer {...this.props} />
     } else if (this.props.visualization.type === 'Tree') {
