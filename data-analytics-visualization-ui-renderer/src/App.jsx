@@ -17,10 +17,8 @@ class App extends React.Component {
     const mmRenderRef = React.createRef();
 
     return (
-      <Provider store={this.store}>
           <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
 
-      </Provider>
     );
   }
 }

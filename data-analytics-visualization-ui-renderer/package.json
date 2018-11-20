@@ -61,7 +61,7 @@
     "react-id-generator": "~0.1.6"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3306 && react-scripts start",
     "build": "npm run build:clean-react && npm run build:webpack",
     "build:clean-react": "rimraf dist",
     "build:webpack": "webpack -p --config webpack.config.js",

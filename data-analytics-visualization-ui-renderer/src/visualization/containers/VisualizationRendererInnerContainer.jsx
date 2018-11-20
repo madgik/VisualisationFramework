@@ -9,5 +9,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(
-  mapStateToProps)(VisualizationRendererInner)
+export default connect()(VisualizationRendererInner)

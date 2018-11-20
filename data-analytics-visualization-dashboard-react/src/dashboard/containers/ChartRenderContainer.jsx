@@ -4,10 +4,13 @@ import { connect } from 'react-redux'
 import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-ui-renderer'
 
 
-const mapStateToProps = state => ({
-  visualization: state.data.data2,
-  document: state.document
-})
+function mapStateToProps(state) {
+  console.log('data 2: ', state.data.chart2);   
+  return{
+    visualization: state.data.chart2,
+    document: state.document
+  };
+};
 
 
 export default connect(

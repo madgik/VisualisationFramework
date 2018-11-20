@@ -1,6 +1,7 @@
 import React from 'react';
 import VisualizationRendererContainer from './containers/VisualizationRendererContainer'
 import ChartRenderContainer from './containers/ChartRenderContainer'
+import Chart2RenderContainer from './containers/Chart2RenderContainer'
 
 
 class Dashboard extends React.Component {
@@ -23,20 +24,17 @@ class Dashboard extends React.Component {
     return (
       <div className="chart-container" style={sizeStyle}>
         <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
+
         <div style={chartsDsiplay}>
         <p>
-
-            <VisualizationRendererContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-
+            <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
         </p>
         <p>
-
+            <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
+        </p>
             <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-            </p>
-
-            <VisualizationRendererContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-
-        </div>
+        </div> 
+       
       </div>
     );
   }
