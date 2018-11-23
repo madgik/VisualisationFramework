@@ -69,6 +69,10 @@
   position: static;
 }
 
+.canvas-container {
+  height: 60vh;
+}
+
 .chart-header .left-controls {
   white-space: nowrap
 }

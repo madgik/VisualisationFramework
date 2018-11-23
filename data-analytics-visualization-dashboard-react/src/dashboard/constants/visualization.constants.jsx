@@ -8,5 +8,7 @@ export const visualizationConstants = {
   CHANGE_CHART_TYPE: 'change-chart-type',
   RELOAD_DATA: 'reload-data',
 
-  UPDATE_FILTER: 'update-filter'
+  UPDATE_FILTER: 'update-filter',
+  SELECT_LAYER: 'select-layer',
+
 }

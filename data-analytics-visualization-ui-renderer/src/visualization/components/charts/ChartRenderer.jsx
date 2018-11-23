@@ -208,6 +208,7 @@ class ChartRenderer extends React.Component {
 
     var options = {
       responsive: true,
+      maintainAspectRatio: false,	// Don't maintain w/h ratio
       legend: {
         position: 'top',
       },
@@ -290,23 +291,20 @@ class ChartRenderer extends React.Component {
         if (this.isBarChart(this.props.visualization.type)) {
           //TODO...
         } else {
-            var position = this.props.document.modalSrc.findIndex(image => image.imageName === this.cachedData.datasets[_datasetIndex].data[_index].doc);
-            if (this.cachedData.datasets[_datasetIndex].data[_index].doc && position === -1){
-                this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments);
-            }
-            else{
-                var image = this.props.document.modalSrc[position];
-                // this.props.document.modalSrc.splice(position, 1);
-                // this.props.document.modalSrc.push(image);
-                // this.props.onUpdateDocuments(this.props.document.modalSrc);
-                var clone = this.props.document.modalSrc.slice(0);
-                clone.splice(position, 1);
-                clone.push(image);
-                this.props.onUpdateDocuments(clone)
-            }
+          var position = this.props.document.modalSrc.findIndex(image => image.imageName === this.cachedData.datasets[_datasetIndex].data[_index].doc);
+          if (this.cachedData.datasets[_datasetIndex].data[_index].doc && position === -1) {
+            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments);
+          }
+          else {
+            var image = this.props.document.modalSrc[position];
+            var clone = this.props.document.modalSrc.slice(0);
+            clone.splice(position, 1);
+            clone.push(image);
+            this.props.onUpdateDocuments(clone)
+          }
         }
       } else {
-        this.props.onChartCanvasClick();
+          this.props.onChartCanvasClick();
       }
     }
   }
@@ -318,9 +316,16 @@ class ChartRenderer extends React.Component {
 
     this.cachedData = definition.d;
 
+    var style = {
+      width: this.props.size.width + 'px',
+      height: this.props.size.height + 'px'
+    }
     return (
       <div className="chart-renderer">
+
         <RC2
+          width={style.width}
+          height={style.height}
           redraw={true}
           data={definition.d}
           type={this.chartType(this.props.visualization.type)}
@@ -328,6 +333,7 @@ class ChartRenderer extends React.Component {
           getElementAtEvent={e => this.onElementClick(e)}
         />
       </div>
+
     )
   }
 }

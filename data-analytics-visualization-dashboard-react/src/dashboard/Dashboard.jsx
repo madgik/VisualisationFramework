@@ -2,40 +2,31 @@ import React from 'react';
 import VisualizationRendererContainer from './containers/VisualizationRendererContainer'
 import ChartRenderContainer from './containers/ChartRenderContainer'
 import Chart2RenderContainer from './containers/Chart2RenderContainer'
+import Columns from 'react-columns';
 
 
 class Dashboard extends React.Component {
 
   render() {
-    var sizeStyle = {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '25px',
-
-    };
-
-    var chartsDsiplay = {
-      alignItems: 'center',
-      padding: ' 0px 25px ',
-
-    };
+    var queries = [{
+      columns: 2,
+      query: 'min-width: 1350px'
+    }];
+    
     const mmRenderRef = React.createRef();
 
     return (
-      <div className="chart-container" style={sizeStyle}>
+      <Columns columns={2} gap='8px' queries={queries}
+      >
         <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
-
-        <div style={chartsDsiplay}>
-        <p>
+        <div >
             <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-        </p>
-        <p>
             <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-        </p>
             <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-        </div> 
-       
-      </div>
+        </div>
+      </Columns>
+
+
     );
   }
 }

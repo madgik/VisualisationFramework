@@ -4,7 +4,8 @@ import { visualizationConstants } from '../constants/visualization.constants'
 
 const visualizationDefault = {
   selected: '',
-  options: []
+  options: [],
+  selectedLayer:''
 }
 
 export function visualization(state = visualizationDefault, action) {
@@ -19,6 +20,12 @@ export function visualization(state = visualizationDefault, action) {
       return update(state, {
         selected: {
           $set: action.selected
+        }
+      })
+    case visualizationConstants.SELECT_LAYER:
+      return update(state, {
+        selectedLayer: {
+          $set: action.selectedLayer
         }
       })
     default:

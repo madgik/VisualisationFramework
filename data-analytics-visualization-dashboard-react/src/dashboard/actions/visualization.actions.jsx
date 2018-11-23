@@ -14,7 +14,8 @@ export const visualizationActions = {
   changeChartType,
   updateFilterAndReload,
   reloadData,
-  updateFilter
+  updateFilter,
+  selectLayer
 }
 
 /*
@@ -84,6 +85,10 @@ function reloadVisualization() {
 
 function changeVisualization(selected) {
   return { type: visualizationConstants.CHANGE_VISUALIZATION, selected };
+}
+
+function selectLayer(selectedLayer) {
+  return { type: visualizationConstants.SELECT_LAYER, selectedLayer };
 }
 
 function loadVisualization(data) {
