@@ -309,6 +309,10 @@ class ChartRenderer extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.visualization != this.props.visualization;
+}
+
   render() {
     var definition = this.isBarChart(this.props.visualization.type) ? this.getBarChartData() :
       this.isTupleChart(this.props.visualization.type) ? this.getTupleChartData() :
@@ -337,6 +341,9 @@ class ChartRenderer extends React.Component {
     )
   }
 }
+
+
+
 
 ChartRenderer.defaultProps = {
   visualization: {

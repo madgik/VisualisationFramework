@@ -14,6 +14,10 @@
     color: white;
   }
   
+  .App-style {
+    padding: 20px;
+    margin: 20px;
+  }
   .App-title {
     font-size: 1.5em;
   }
@@ -133,3 +137,20 @@
     stroke-opacity: 0.4;
     stroke-width: 1.5px;
   }
+
+  h1, h2, h3 {
+    display: inline;
+}
+div[style] {
+  overflow-x: visible !important;
+}
+
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  margin: 0px;
+  position: relative;
+  top: -20px;
+}

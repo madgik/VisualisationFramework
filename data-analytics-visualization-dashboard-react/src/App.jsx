@@ -49,7 +49,7 @@ App.defaultProps = {
   },
   chartsSize: {
     width: 900,
-    height: 200
+    height: 161
   }
 }
 

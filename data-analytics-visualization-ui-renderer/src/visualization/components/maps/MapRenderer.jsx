@@ -1,5 +1,8 @@
 import React from 'react';
 import { Map as LeafletMap, TileLayer, GeoJSON } from 'react-leaflet'
+import rd from 'leaflet-rd';
+import {CRS} from 'leaflet';
+
 
 class MapRenderer extends React.Component {
 
@@ -74,6 +77,7 @@ class MapRenderer extends React.Component {
   }
   render() {
     var features = JSON.parse(this.props.visualization.json);
+
     var style = {
       width: '100%',
       height: this.props.size.height + 'px',
