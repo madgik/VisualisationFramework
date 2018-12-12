@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-ui-renderer'
+import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-library'
 
 
 function mapStateToProps(state) {

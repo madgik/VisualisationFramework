@@ -26,9 +26,8 @@ class Dashboard extends React.Component {
         <br></br>
         <Columns columns={2} gap='8px' queries={queries}
         >
-          <div className='ui clearing segment'>
-            <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
-          </div>
+          <div className='ui clearing segment'></div>
+          <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
           <div >
             <div className='ui clearing segment'>
                 <ChartHeader></ChartHeader>
