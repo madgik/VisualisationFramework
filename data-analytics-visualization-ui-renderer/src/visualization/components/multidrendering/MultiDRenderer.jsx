@@ -1,5 +1,5 @@
 import React from 'react';
-import Plot from 'react-plotly.js';
+// import Plot from 'react-plotly.js';
 
 class MultiDRenderer extends React.Component {
 
@@ -9,7 +9,15 @@ class MultiDRenderer extends React.Component {
     window.multirenderer.figure = figure;
   }
 
-  render() {
+  componentDidMount() {
+    this.refresh();
+  }
+
+  componentDidUpdate() {
+    this.refresh();
+  }
+
+  refresh() {
     var visualization = this.props.visualization;
 
     var data = [{
@@ -49,13 +57,18 @@ class MultiDRenderer extends React.Component {
       displayModeBar: false
     }
 
+    Plotly.newPlot('multi-renderer', data, layout, config);
+  }
+
+  render() {
     return (
-      <Plot
-        className="plot-renderer"
-        onInitialized={this.onInitialized}
-        data={data}
-        layout={layout}
-        config={config} />
+      <div id="multi-renderer" style={{width:"100%",height:"100%"}}></div>
+      // <Plot
+      //   className="plot-renderer"
+      //   onInitialized={this.onInitialized}
+      //   data={data}
+      //   layout={layout}
+      //   config={config} />
     );
   }
 }
