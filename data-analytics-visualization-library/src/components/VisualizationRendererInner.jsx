@@ -8,7 +8,7 @@ import MultiDRenderer from './multidrendering/MultiDRenderer';
 import MapRenderer from './maps/MapRenderer';
 import WWMapRenderer from './maps/WWMapRenderer';
 import TableRenderer from './tables/TableRenderer';
-//import HeatMapRenderer from './heatmap/HeatMapRenderer'
+import HeatMapRenderer from './heatmap/HeatMapRenderer'
 
 class VisualizationRendererInner extends React.Component {
   render() {
@@ -27,8 +27,8 @@ class VisualizationRendererInner extends React.Component {
       return <WWMapRenderer {...this.props} />
     } else if (this.props.visualization.type === 'Table') {
       return <TableRenderer {...this.props} />
-    // } else if (this.props.visualization.type === 'HeatMap') {
-    //   return <HeatMapRenderer {...this.props} />
+    } else if (this.props.visualization.type === 'HeatMap') {
+      return <HeatMapRenderer {...this.props} />
     } else {
       return <ChartRenderer {...this.props} />
 
