@@ -44,7 +44,7 @@
     "webpack": "~3.12.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3006 && react-scripts start",
     "develop": "webpack --mode development --watch",
     "build": "npm run build:clean-react && npm run build:clean-portlet && npm run build:clean-portlet-assets && npm run build:webpack && npm run build:copy-bundle && npm run build:copy-assets && npm run build:replace-filenames",
     "build:clean-react": "rimraf dist",
