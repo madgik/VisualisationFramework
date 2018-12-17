@@ -1,11 +1,10 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Transformation;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.VisualizationDataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformation.UnpivotTransformer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
