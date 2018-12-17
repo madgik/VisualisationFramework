@@ -60,6 +60,18 @@ export function data(state = dataDefault, action) {
         },
         timeSeries: {
           $set: action.data.timeSeries
+        },
+        tuples: {
+          $set: action.data.tuples
+        },
+        tabularData: {
+          $set: action.data.tabularData
+        },
+        threeDData: {
+          $set: action.data.threeDData
+        },
+        heatMapData: {
+          $set: action.data.heatMapData
         }
       });
     default:

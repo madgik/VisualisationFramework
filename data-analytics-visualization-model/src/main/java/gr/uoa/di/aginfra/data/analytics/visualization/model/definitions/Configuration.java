@@ -44,6 +44,8 @@ public class Configuration {
 
 	private List<Parameter> parameters;
 
+	private Transformation transformations;
+
 	private List<Filter> filters;
 
 	private Configuration inner;
@@ -51,6 +53,8 @@ public class Configuration {
 	private String colorField;
 
 	private String documentField;
+
+	private int activeDocuments;
 
 	private Date createdAt;
 
@@ -246,5 +250,21 @@ public class Configuration {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Transformation getTransformations() {
+		return transformations;
+	}
+
+	public void setTransformations(Transformation transformations) {
+		this.transformations = transformations;
+	}
+
+	public int getActiveDocuments() {
+		return activeDocuments;
+	}
+
+	public void setActiveDocuments(int activeDocuments) {
+		this.activeDocuments = activeDocuments;
 	}
 }

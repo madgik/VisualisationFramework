@@ -11,11 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.5" />" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.6" />" />
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-        <script crossorigin src="https://unpkg.com/react@16.3.2/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16.3.2/umd/react-dom.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
     </head>
     <body>
     	<p id="portletInfo" data-namespace="<portlet:namespace/>" data-loginurl="<portlet:resourceURL />" hidden></p>
@@ -24,7 +24,7 @@
         <script type="text/javascript">
             window.staticFileBaseUrl = '<%=request.getContextPath()%>/static/';
         </script>
-        <script src="<%=request.getContextPath()%>/static/bundle.min.js?1.0.5"></script>
+        <script src="<%=request.getContextPath()%>/static/bundle.min.js?1.0.6"></script>
     </body>
 </html>
 

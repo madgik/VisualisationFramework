@@ -9,6 +9,7 @@ export const visualizationActions = {
   changeVisualizationAndLoad,
   changeVisualization,
   loadVisualization,
+  reloadVisualization,
   resetVisualization,
   changeChartType,
   updateFilterAndReload,
@@ -46,6 +47,28 @@ function changeVisualizationAndLoad(selected) {
     dispatch(resetVisualization());
 
     dispatch(changeVisualization(selected));
+
+    var resourceUrl = Ajax.buildUrl(Ajax.VISUALIZATIONS_BASE_PATH + '/' + selected);
+
+    return axios.get(resourceUrl)
+      .then(response => {
+        dispatch(loadVisualization(response.data))
+      })
+      .catch(response => {
+        alert(response);
+      })
+  }
+}
+
+function reloadVisualization() {
+
+  return function (dispatch, getState) {
+
+    var selected = getState().visualization.selected;
+
+    dispatch(documentActions.hideDocument());
+    
+    dispatch(resetVisualization());
 
     var resourceUrl = Ajax.buildUrl(Ajax.VISUALIZATIONS_BASE_PATH + '/' + selected);
 

@@ -2,7 +2,7 @@
 
 	<group>DataAnalysis</group>
 	<name>data-analytics-visualization</name>
-	<version>1.0.0</version>
+	<version>1.0.6</version>
 
 	<description>Data analytics visualization service</description>
 

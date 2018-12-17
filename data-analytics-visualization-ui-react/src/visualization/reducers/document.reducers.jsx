@@ -5,7 +5,7 @@ import { documentConstants } from '../constants'
 const documentDefault = {
   loading: false,
   isModalOpen: false,
-  modalSrc: ''
+  modalSrc: []
 }
 
 export function document(state = documentDefault, action) {
@@ -25,7 +25,7 @@ export function document(state = documentDefault, action) {
           $set: false
         },
         modalSrc: {
-          $set: ''
+          $set: []
         }
       });
     case documentConstants.SHOW_DOCUMENT_LOADER:

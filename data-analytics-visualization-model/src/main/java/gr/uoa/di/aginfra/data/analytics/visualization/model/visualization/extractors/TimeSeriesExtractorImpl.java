@@ -1,5 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.extractors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.AxisDataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;
@@ -85,6 +87,13 @@ public class TimeSeriesExtractorImpl extends DataSetManipulator implements TimeS
 
 		List<TimeSeries> list = new ArrayList<>();
 		list.add(timeSeries);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(timeSeries);
+			System.out.println("JSON = " + json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 

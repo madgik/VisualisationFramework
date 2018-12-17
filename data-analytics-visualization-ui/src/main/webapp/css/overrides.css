@@ -1,6 +1,15 @@
 /* Liferay overrides */
+.ui.form input[type=text] {
+    height: 38px
+}
+
 .chart-header label {
     display: inline
+}
+
+.menu {
+    position: relative;
+    width: auto;
 }
 
 .aui .container-fluid {

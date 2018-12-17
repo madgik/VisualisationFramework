@@ -120,6 +120,7 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 	private static Configuration mapTo(Document document) {
 		Configuration configuration = new Configuration();
 		configuration.setId(document.getObjectId("_id").toString());
+
 		if (document.containsKey("label")) configuration.setLabel(document.getString("label"));
 		if (document.containsKey("description")) configuration.setDescription(document.getString("description"));
 		if (document.containsKey("type")) configuration.setType(VisualizationType.valueOf(document.getString("type")));
@@ -145,8 +146,15 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 		if (document.containsKey("filters"))
 			configuration.setFilters(mapper.convertValue(document.get("filters"), new TypeReference<List<Filter>>() {
 			}));
+
+        if (document.containsKey("transformations"))
+            configuration.setTransformations(mapper.convertValue(document.get("transformations"), new TypeReference<Transformation>() {
+            }));
+
 		if (document.containsKey("colorField")) configuration.setColorField(document.getString("colorField"));
 		if (document.containsKey("documentField")) configuration.setDocumentField(document.getString("documentField"));
+		if (document.containsKey("activeDocuments")) configuration.setActiveDocuments(document.getInteger("activeDocuments"));
+
 		if (document.containsKey("createdAt") && document.getLong("createdAt") != null)
 			configuration.setCreatedAt(new Date(document.getLong("createdAt")));
 		if (document.containsKey("updatedAt") && document.getLong("updatedAt") != null)
@@ -193,6 +201,25 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 		} else {
 			document.append("dataSources", null);
 		}
+
+
+		if (configuration.getTransformations() != null && configuration.getTransformations().getTransformationColumns().size() > 0) {
+			///BasicBSONList list = new BasicBSONList();
+			BasicBSONObject object = new BasicBSONObject();
+			object.append("transformationLabel", configuration.getTransformations().getTransformationLabel());
+			object.append("transformationLabelValue", configuration.getTransformations().getTransformationLabelValue());
+			object.append("transformationColumns", configuration.getTransformations().getTransformationColumns()
+					.stream()
+					.map(x -> x.toString())
+					.collect(Collectors.toList()));
+			//list.add(object);
+
+			document.append("transformations", object);
+		} else {
+			document.append("transformations", null);
+		}
+
+		document.append("activeDocuments", configuration.getActiveDocuments());
 		if (configuration.getXAxis() != null) document.append("xAxis", configuration.getXAxis());
 		if (configuration.getXAxisLabel() != null) document.append("xAxisLabel", configuration.getXAxisLabel());
 		if (configuration.getYAxis() != null) document.append("yAxis", configuration.getYAxis());

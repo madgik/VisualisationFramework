@@ -51,7 +51,19 @@ public class ConfigurationDto {
 
 	private String documentField;
 
+	private int activeDocuments = 1;
+
     private ConfigurationDto inner;
+
+    private Transformation transformations;
+
+    public Transformation getTransformations() {
+        return transformations;
+    }
+
+    public void setTransformations(Transformation transformations) {
+        this.transformations = transformations;
+    }
 
     public String getId() {
         return id;
@@ -219,6 +231,13 @@ public class ConfigurationDto {
         this.filters = filters;
     }
 
+    public int getActiveDocuments() {
+        return activeDocuments;
+    }
+
+    public void setActiveDocuments(int activeDocuments) {
+        this.activeDocuments = activeDocuments;
+    }
 
     public ConfigurationDto getInner() {
         return inner;

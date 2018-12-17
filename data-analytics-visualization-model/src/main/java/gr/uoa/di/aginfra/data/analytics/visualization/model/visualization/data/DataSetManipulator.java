@@ -3,6 +3,8 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -45,4 +47,11 @@ public class DataSetManipulator {
 		}
 		return null;
 	}
+
+	protected LocalDate getDateWithoutTime(Date date) throws ParseException {
+		return date.toInstant()
+				.atZone(ZoneId.systemDefault())
+				.toLocalDate();
+	}
+
 }

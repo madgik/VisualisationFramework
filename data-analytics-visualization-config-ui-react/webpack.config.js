@@ -1,18 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
-var ReplacePlugin = require('replace-bundle-webpack-plugin')
+var ReplacePlugin = require('replace-bundle-webpack-plugin');
 
 let artifactId = "data-analytics-visualization-config-ui";
 
 module.exports = {
-  mode: "production",
   entry: './src/index.js',
   output: {
     filename: 'bundle.min.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'var',
     library: ['reactComponents', artifactId],
-    publicPath: '__data_analytics_visualization_config_public_path__',
+    publicPath: '__data_analytics_visualization_config_public_path__'
   },
 
 
@@ -54,6 +53,11 @@ module.exports = {
       replacement: function () {
         return 'window.staticFileBaseUrl';
       }
-    }])
+    }]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify("production")
+      }
+    })
   ]
 }

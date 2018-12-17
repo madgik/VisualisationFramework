@@ -15,6 +15,9 @@ public enum VisualizationType {
     Doughnut,
     Polar,
 
+    //HeatMap
+    HeatMap,
+
     //3d
 	ThreeD,
 

@@ -16,7 +16,10 @@ class Visualization extends React.Component {
 
     return (
       <div className="chart-container" style={sizeStyle}>
-        <ChartHeaderContainer mmRender={mmRenderRef} />
+        <ChartHeaderContainer
+          mmRender={mmRenderRef}
+          routing={this.props.routing}
+          isLocalDeployment={this.props.isLocalDeployment} />
         <DocumentRendererContainer />
         <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
         <FiltersRendererContainer />

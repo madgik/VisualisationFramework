@@ -38,7 +38,9 @@ class App extends React.Component {
     return (
       <Provider store={this.store}>
         <div className="App">
-          <CongigurationsEditor />
+          <CongigurationsEditor
+            routing={this.props.routing}
+            isLocalDeployment={Ajax.isLocalDeployment()} />
         </div>
       </Provider>
     );

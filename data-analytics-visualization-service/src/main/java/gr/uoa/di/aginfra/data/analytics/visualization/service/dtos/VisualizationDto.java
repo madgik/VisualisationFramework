@@ -31,6 +31,8 @@ public class VisualizationDto {
 
 	private boolean hasDocuments;
 
+    private int activeDocuments;
+
     private List<Parameter> parameters;
 
     private List<Filter> filters;
@@ -48,6 +50,8 @@ public class VisualizationDto {
     private MMNode freeMind;
 
     private ThreeDData threeDData;
+
+    private HeatMapData heatMapData;
 
 	private Collection<Tuple> tuples;
 
@@ -122,7 +126,15 @@ public class VisualizationDto {
 		this.zAxisLabel = zAxisLabel;
 	}
 
-	public boolean isHasColors() {
+    public HeatMapData getHeatMapData() {
+        return heatMapData;
+    }
+
+    public void setHeatMapData(HeatMapData heatMapData) {
+        this.heatMapData = heatMapData;
+    }
+
+    public boolean isHasColors() {
 		return hasColors;
 	}
 
@@ -232,5 +244,13 @@ public class VisualizationDto {
 
     public void setInner(Visualization inner) {
         this.inner = inner;
+    }
+
+    public int getActiveDocuments() {
+        return activeDocuments;
+    }
+
+    public void setActiveDocuments(int activeDocuments) {
+        this.activeDocuments = activeDocuments;
     }
 }

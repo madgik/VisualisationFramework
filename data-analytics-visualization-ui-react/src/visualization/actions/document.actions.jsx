@@ -7,19 +7,20 @@ export const documentActions = {
   showDocumentData,
   hideDocument,
   showDocumentLoader,
-  hideDocumentLoader
+  hideDocumentLoader,
+  updateDocumentData
 }
 
 /*
  * action creators
  */
 
-function showDocument(document) {
+function showDocument(document, modalSrc, activeDocuments) {
 
   return function (dispatch) {
 
     var resourceUrl = Ajax.buildUrl(Ajax.DOCUMENTS_BASE_PATH + '/' + document + '/data', null);
-
+    
     dispatch(showDocumentLoader())
 
     return axios({
@@ -34,13 +35,27 @@ function showDocument(document) {
       .then(response => {
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(response.data);
-        dispatch(showDocumentData(imageUrl))
+        if(modalSrc.length < activeDocuments){
+          modalSrc.push({"imageName":document, "url": imageUrl});}
+        else{
+          modalSrc.splice(0, 1);
+          modalSrc.push({"imageName":document, "url": imageUrl});
+        }
+        dispatch(showDocumentData(modalSrc))
 
-        dispatch(hideDocumentLoader(imageUrl))
+        dispatch(hideDocumentLoader(modalSrc))
       })
       .catch(response => {
         alert(response);
       })
+  }
+}
+
+
+function updateDocumentData(modalSrc){
+  return function (dispatch) {
+    dispatch(showDocumentData(modalSrc))
+    dispatch(hideDocumentLoader(modalSrc))
   }
 }
 

@@ -30,6 +30,8 @@ public enum DataType {
 		visualizationTypeDataTypeMap.put(VisualizationType.Map, DataType.JSON);
 		visualizationTypeDataTypeMap.put(VisualizationType.WorldWindMap, DataType.JSON);
 		visualizationTypeDataTypeMap.put(VisualizationType.Table, DataType.Records);
+		visualizationTypeDataTypeMap.put(VisualizationType.HeatMap, DataType.Records);
+
 	}
 
 	public static DataType of(VisualizationType visualizationType) {
