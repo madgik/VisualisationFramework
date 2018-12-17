@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations;
+package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformation;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Transformation;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;

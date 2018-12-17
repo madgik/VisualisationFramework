@@ -4,8 +4,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.services.Visualizati
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.extractors.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.DataSetFilterApplier;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.FilterOptionsExtractor;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations.UnpivotTransformer;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations.UnpivotTransformerImpl;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformation.UnpivotTransformerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
