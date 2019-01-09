@@ -31,6 +31,7 @@ public class VisualizationServiceImpl implements VisualizationService {
 
 	private UsageStatsService usageService;
 
+
 	@Autowired
 	public VisualizationServiceImpl(ConfigurationRepository configurationDAO,
 									VisualizationMapper visualizationMapper,

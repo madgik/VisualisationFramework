@@ -94,9 +94,6 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		dataDocument.setCreatedAt(new Date());
 		dataDocument.setUpdatedAt(new Date());
 
-
-
-
 		String id = dataDocumentDAO.store(dataDocument);
 
 		logger.info("Document stored with id " + id);
