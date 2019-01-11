@@ -1,7 +1,12 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
+
+import org.geojson.FeatureCollection;
+
+import java.util.Map;
+
 public interface DashBoardService {
 
-    String getDataset(String token) throws Exception;
+    FeatureCollection getDataset(Map<String, String> parameters) throws Exception;
 
 }

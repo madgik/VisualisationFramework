@@ -1,7 +1,17 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.http;
 
+import gr.uoa.di.aginfra.data.analytics.visualization.model.interceptors.RequestLoggingInterceptor;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.geojson.FeatureCollection;
 import org.springframework.http.*;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,18 +36,23 @@ public class HttpClient extends RestTemplate {
         return instance;
     }
 
-    public String getRequest(String url, Map<String, String> headers){
-        RestTemplate restTemplate = new RestTemplate();
+    public FeatureCollection  getRequest(String url, Map<String, String> headers, Map<String, String> parameters){
+        RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+        restTemplate.setInterceptors(Collections.singletonList(new RequestLoggingInterceptor()));
         HttpEntity<String> entity = null;
         if(headers != null){
             HttpHeaders httpHeaders = setHttpHeaders(headers);
             entity = new HttpEntity<String>(httpHeaders);
 
         }
-        //Execute the method writing your HttpEntity to the request
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-        System.out.println(response.getBody());
+        if(parameters != null){
+            url = setParameters(parameters, url);
+        }
+
+        //Execute the method writing your HttpEntity to the request
+        ResponseEntity<FeatureCollection > response = restTemplate.exchange(url, HttpMethod.GET, entity, FeatureCollection.class);
+
 
         return response.getBody();
     }
@@ -59,4 +74,30 @@ public class HttpClient extends RestTemplate {
         return httpHeaders;
 
     }
+
+
+    private String setParameters(Map<String, String> parameters, String url){
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
+
+        for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+            builder.queryParam(parameter.getKey(), parameter.getValue());
+        }
+
+        return builder.toUriString();
+    }
+
+    private ClientHttpRequestFactory getClientHttpRequestFactory() {
+        int timeout = 45 * 1000;
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(timeout)
+                .setConnectionRequestTimeout(timeout)
+                .setSocketTimeout(timeout)
+                .build();
+        CloseableHttpClient client = HttpClientBuilder
+                .create()
+                .setDefaultRequestConfig(config)
+                .build();
+        return new HttpComponentsClientHttpRequestFactory(client);
+    }
+
 }
