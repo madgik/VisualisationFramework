@@ -7,13 +7,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geojson.FeatureCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -21,6 +19,12 @@ import java.util.Map;
 @CrossOrigin(exposedHeaders = "Location")
 @RequestMapping("/" + DashBoardController.DASHBOARD_BASE_PATH)
 public class DashBoardController {
+
+    @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.fields}")
+    private String gCubeUrl;
+
+    @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.soiltypes}")
+    private String gCubeUrlSoil;
 
     private static final Logger logger = LogManager.getLogger(DashBoardController.class);
 
@@ -43,13 +47,49 @@ public class DashBoardController {
     }
 
 
-    @RequestMapping(value = "dataset", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "get", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> get(@RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection stats = dashBoardService.getDataset(params);
+        FeatureCollection stats = dashBoardService.get(gCubeUrl, params);
 
         return ResponseEntity.ok(stats);
+    }
+
+    @RequestMapping(value = "field/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getFieldCharacteristics(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId, params);
+
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "field/{id}/{info}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getFieldCharacteristics(@PathVariable("id") String fieldId, @PathVariable("info") String altitude, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
+
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "soilInfo/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getSoilTypeInfo(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldId , params);
+
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "meteostations/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getNearestMeteoStations(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + "meteostations", params);
+
+        return ResponseEntity.ok(fieldDetails);
     }
 
 }

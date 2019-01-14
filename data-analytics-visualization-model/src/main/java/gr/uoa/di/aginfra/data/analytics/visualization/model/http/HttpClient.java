@@ -49,7 +49,6 @@ public class HttpClient extends RestTemplate {
         if(parameters != null){
             url = setParameters(parameters, url);
         }
-
         //Execute the method writing your HttpEntity to the request
         ResponseEntity<FeatureCollection > response = restTemplate.exchange(url, HttpMethod.GET, entity, FeatureCollection.class);
 

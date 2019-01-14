@@ -7,6 +7,6 @@ import java.util.Map;
 
 public interface DashBoardService {
 
-    FeatureCollection getDataset(Map<String, String> parameters) throws Exception;
-
+    FeatureCollection get(String url, Map<String, String> parameters) throws Exception;
+    FeatureCollection getFieldDetails(String id, Map<String, String> parameters) throws Exception;
 }

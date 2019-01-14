@@ -26,7 +26,8 @@ public class RequestLoggingInterceptor implements ClientHttpRequestInterceptor {
                 new String(body, Charset.forName("UTF-8")),
                 response.getStatusCode(),
                 response.getHeaders(),
-                new String(ByteStreams.toByteArray(response.getBody()), Charset.forName("UTF-8")));
+                //new String(ByteStreams.toByteArray(response.getBody()),
+                        Charset.forName("UTF-8"));
 
         return response;
     }
