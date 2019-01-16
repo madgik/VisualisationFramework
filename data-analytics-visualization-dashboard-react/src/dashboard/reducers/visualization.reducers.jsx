@@ -5,7 +5,9 @@ import { visualizationConstants } from '../constants/visualization.constants'
 const visualizationDefault = {
   selected: '',
   options: [],
-  selectedLayer:''
+  selectedLayer:'',
+  selectedYear:'',
+  currentGeometry:''
 }
 
 export function visualization(state = visualizationDefault, action) {
@@ -26,6 +28,18 @@ export function visualization(state = visualizationDefault, action) {
       return update(state, {
         selectedLayer: {
           $set: action.selectedLayer
+        }
+      })
+    case visualizationConstants.SELECT_YEAR:
+      return update(state, {
+        selectedYear: {
+          $set: action.selectedYear
+        }
+      })
+      case visualizationConstants.UPDATE_CURRENT_GEOMETRY:
+      return update(state, {
+        currentGeometry: {
+          $set: action.currentGeometry
         }
       })
     default:

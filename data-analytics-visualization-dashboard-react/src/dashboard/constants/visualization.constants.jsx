@@ -10,5 +10,8 @@ export const visualizationConstants = {
 
   UPDATE_FILTER: 'update-filter',
   SELECT_LAYER: 'select-layer',
+  SELECT_YEAR: 'select-year',
+  UPDATE_CURRENT_GEOMETRY: 'update-current-geometry',
+
 
 }

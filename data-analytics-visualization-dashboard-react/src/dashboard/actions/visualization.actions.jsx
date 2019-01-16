@@ -15,7 +15,9 @@ export const visualizationActions = {
   updateFilterAndReload,
   reloadData,
   updateFilter,
-  selectLayer
+  selectLayer,
+  selectYear,
+  updateCurrentGeometry
 }
 
 /*
@@ -89,6 +91,14 @@ function changeVisualization(selected) {
 
 function selectLayer(selectedLayer) {
   return { type: visualizationConstants.SELECT_LAYER, selectedLayer };
+}
+
+function updateCurrentGeometry(currentGeometry) {
+  return { type: visualizationConstants.UPDATE_CURRENT_GEOMETRY, currentGeometry };
+}
+
+function selectYear(selectedYear) {
+  return { type: visualizationConstants.SELECT_YEAR, selectedYear };
 }
 
 function loadVisualization(data) {

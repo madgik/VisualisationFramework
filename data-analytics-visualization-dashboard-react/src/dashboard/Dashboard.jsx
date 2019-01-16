@@ -4,7 +4,10 @@ import ChartRenderContainer from './containers/ChartRenderContainer'
 import Chart2RenderContainer from './containers/Chart2RenderContainer'
 import ChartHeader from './components/ChartHeader'
 import HeaderMenu from './components/HeaderMenu'
+import MapConfiguration from './components/MapConfiguration'
+
 import Columns from 'react-columns';
+import MapConfigurationContainer from './containers/MapConfigurationContainer';
 
 
 class Dashboard extends React.Component {
@@ -28,6 +31,7 @@ class Dashboard extends React.Component {
         >
           <div className='ui clearing segment'>
             <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
+            <MapConfigurationContainer />
           </div>
           <div >
             <div className='ui clearing segment'>

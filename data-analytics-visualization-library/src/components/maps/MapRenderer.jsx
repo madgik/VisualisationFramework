@@ -44,6 +44,13 @@ class MapRenderer extends React.Component {
     });
   }
 
+  onZoomEvent= (map) => {
+
+    console.log(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
+    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
+    //alert(this.map.geometry);
+  };
+
   highlightFeature(feature, layer) {
     this.hasClickedOnLayer = true;
 
@@ -86,7 +93,7 @@ class MapRenderer extends React.Component {
 
     const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap  center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
+      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
@@ -97,6 +104,24 @@ class MapRenderer extends React.Component {
       </LeafletMap>
     )
   }
+
+
+   createPolygonFromBounds(latLngBounds) {
+    var center = latLngBounds.getCenter()
+      latlngs = [];
+  
+    latlngs.push(latLngBounds.getSouthWest());//bottom left
+    latlngs.push({ lat: latLngBounds.getSouth(), lng: center.lng });//bottom center
+    latlngs.push(latLngBounds.getSouthEast());//bottom right
+    latlngs.push({ lat: center.lat, lng: latLngBounds.getEast() });// center right
+    latlngs.push(latLngBounds.getNorthEast());//top right
+    latlngs.push({ lat: latLngBounds.getNorth(), lng: this.map.leafletElement.getCenter().lng });//top center
+    latlngs.push(latLngBounds.getNorthWest());//top left
+    latlngs.push({ lat: this.map.leafletElement.getCenter().lat, lng: latLngBounds.getWest() });//center left
+    let polygon = new L.polygon(latlngs);
+    return polygon.toGeoJSON();
+  }
+
 }
 
 export default MapRenderer;

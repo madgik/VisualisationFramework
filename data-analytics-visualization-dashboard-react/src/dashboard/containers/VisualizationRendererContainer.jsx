@@ -15,7 +15,10 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
   dispatch(visualizationActions.selectLayer(feature))
-  }
+  },
+  updateCurrentGeometry: (geometry) => {
+    dispatch(visualizationActions.updateCurrentGeometry(geometry))
+    }
 })
 
 export default connect(

@@ -26,6 +26,9 @@ public class DashBoardController {
     @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.soiltypes}")
     private String gCubeUrlSoil;
 
+    @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.meteodata}")
+    private String gCubeUrlMeteoData;
+
     private static final Logger logger = LogManager.getLogger(DashBoardController.class);
 
     protected static final String DASHBOARD_BASE_PATH = "dashboard";
@@ -88,6 +91,24 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + "meteostations", params);
+
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "meteodata", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMeteoData( @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrlMeteoData  , params);
+
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "ndvi/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMeteoData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params);
 
         return ResponseEntity.ok(fieldDetails);
     }
