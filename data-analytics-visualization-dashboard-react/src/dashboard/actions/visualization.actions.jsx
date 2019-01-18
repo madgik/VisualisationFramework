@@ -146,6 +146,7 @@ function getMapDataset() {
       page_offset: "0",
       year: getState().visualization.selectedYear,
       output_epsg: "4326",
+      epsg: "4326",
       geometry: JSON.stringify(getState().visualization.currentGeometry)
     })
     return axios.post(resourceUrl, data, {

@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
+import org.decimal4j.util.DoubleRounder;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 import org.geojson.LngLatAlt;
@@ -46,8 +47,9 @@ public class DashBoardServiceImpl implements DashBoardService {
                 if(!first)
                     stringBuilder.append(", ");
                   //  polugonParameter = polugonParameter + ", ";
-                //polugonParameter = polugonParameter + ((int) lngLatAlt.getLatitude() + " " + (int) lngLatAlt.getLongitude());
-                stringBuilder.append(((int) (lngLatAlt.getLatitude() * 1000000) + " " + (int) (lngLatAlt.getLongitude() * 1000000)));
+                //polugonParameter = polugonParameter + ((int)
+                System.out.println( DoubleRounder.round(lngLatAlt.getLongitude(), 1) + " " +  DoubleRounder.round(lngLatAlt.getLatitude(), 1));
+                stringBuilder.append( DoubleRounder.round(lngLatAlt.getLongitude(), 1)   + " " + DoubleRounder.round(lngLatAlt.getLatitude(), 1));
                 first = false;
             }
         }
