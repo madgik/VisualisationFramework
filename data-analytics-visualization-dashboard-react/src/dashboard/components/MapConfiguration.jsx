@@ -17,6 +17,10 @@ class MapConfiguration extends React.Component {
     this.props.onSelectYearElementClick(value);
   }
 
+  loadData(){
+      this.props.getMapData();
+      }
+
   render() {
     const options = [
         { key: 1, text: '2012', value: 2012 },
@@ -32,7 +36,7 @@ class MapConfiguration extends React.Component {
         
         <Dropdown options={options} placeholder='Select Year'  selection  
         onChange={(e, { value }) => this.handleDropDownChange( value)}/>
-        <Button floated='right' onClick={this.handleDropDownChange}>Fetch Data</Button>
+        <Button floated='right' onClick={this.loadData.bind(this)}>Fetch Data</Button>
         
   </div>
     );

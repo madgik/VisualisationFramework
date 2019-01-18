@@ -16,9 +16,11 @@ const mapDispatchToProps = dispatch => ({
   dispatch(visualizationActions.selectYear(year))
   },
 
-  updateCurrentGeometry: (geometry) => {
-    dispatch(visualizationActions.updateCurrentGeometry(geometry))
+ getMapData: () => {
+    dispatch(visualizationActions.getMapDataset())
     }
+
+ 
 })
 
 export default connect(

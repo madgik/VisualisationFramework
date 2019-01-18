@@ -3,7 +3,8 @@ class Ajax {
   CONFIGURATIONS_BASE_PATH = 'configurations'
   VISUALIZATIONS_BASE_PATH = 'visualizations'
   DOCUMENTS_BASE_PATH = 'dataDocuments'
-
+  DASHBOARD_BASE_PATH = "dashboard"
+  
   baseUrl = null
 
   getBaseUrl() {

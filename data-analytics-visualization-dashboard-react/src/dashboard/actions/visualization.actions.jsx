@@ -17,7 +17,8 @@ export const visualizationActions = {
   updateFilter,
   selectLayer,
   selectYear,
-  updateCurrentGeometry
+  updateCurrentGeometry,
+  getMapDataset
 }
 
 /*
@@ -134,6 +135,31 @@ function updateFilterAndReload(field, value) {
       })
   }
 }
+
+function getMapDataset() {
+  return function (dispatch, getState) {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/get');
+
+    
+    let data = JSON.stringify({
+      page_size: "200",
+      page_offset: "0",
+      year: getState().visualization.selectedYear,
+      output_epsg: "4326",
+      geometry: JSON.stringify(getState().visualization.currentGeometry)
+    })
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(reloadData(response.data))
+    })
+    .catch(response => {
+      alert(response);
+  });
+}
+}
+
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };

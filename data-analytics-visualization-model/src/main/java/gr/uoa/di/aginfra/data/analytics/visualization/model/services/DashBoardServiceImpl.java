@@ -1,7 +1,12 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
+import org.geojson.Feature;
 import org.geojson.FeatureCollection;
+import org.geojson.LngLatAlt;
+import org.geojson.Polygon;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,29 @@ public class DashBoardServiceImpl implements DashBoardService {
         boolean hasMoreData = true;
         Map<String, String> headers = new HashMap<>();
         headers.put(TOKEN_TAG,token);
+        ObjectMapper mapper = new ObjectMapper();
+        String geoJSON = parameters.get("geometry");
+        JSONObject obj = new JSONObject(geoJSON);
+        parameters.remove("geometry");
+        Feature feature = (Feature) mapper.readValue(geoJSON, Feature.class);
+        Polygon polygon = (Polygon) feature.getGeometry();
+        List<List<LngLatAlt>> coordinates = polygon.getCoordinates();
+        boolean first = true;
+        String polugonParameter = "POLYGON(( ";
+        StringBuilder stringBuilder = new StringBuilder(polugonParameter);
+        for(List<LngLatAlt> coordinate : coordinates){
+
+            for(LngLatAlt lngLatAlt : coordinate){
+                if(!first)
+                    stringBuilder.append(", ");
+                  //  polugonParameter = polugonParameter + ", ";
+                //polugonParameter = polugonParameter + ((int) lngLatAlt.getLatitude() + " " + (int) lngLatAlt.getLongitude());
+                stringBuilder.append(((int) (lngLatAlt.getLatitude() * 1000000) + " " + (int) (lngLatAlt.getLongitude() * 1000000)));
+                first = false;
+            }
+        }
+        stringBuilder.append("))");
+        parameters.put("geometry", stringBuilder.toString());
         int page_offset =  Integer.parseInt(parameters.get("page_offset"));
         int page_size = Integer.parseInt(parameters.get("page_size"));
        // List<FeatureCollection> collections = new ArrayList<>();

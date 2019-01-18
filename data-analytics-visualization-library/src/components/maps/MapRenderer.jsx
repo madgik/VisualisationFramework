@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map as LeafletMap, TileLayer, GeoJSON } from 'react-leaflet'
+import idGenerator from 'react-id-generator';
 
 
 
@@ -17,6 +18,15 @@ class MapRenderer extends React.Component {
     this.previousLayer = null;
     this.hasClickedOnLayer = false;
   }
+
+  componentDidUpdate(prevProps,prevState) {
+    // clear layers and redraw data
+   // if (prevProps.data !== this.props.data) {
+      //  this.map.leafletElement.
+        console.log("on map update");
+      //  this.map.addData(geojsonData);
+    // }
+   } 
 
   onMapClick(e) {
     if (!this.hasClickedOnLayer) {
@@ -84,6 +94,8 @@ class MapRenderer extends React.Component {
   }
   render() {
     var features = JSON.parse(this.props.visualization.json);
+    console.log(this.props.visualization.json);
+    console.log("on map render");
 
     var style = {
       width: '100%',
@@ -97,7 +109,7 @@ class MapRenderer extends React.Component {
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
-        <GeoJSON data={features}
+        <GeoJSON key={idGenerator()} data={features}
           onEachFeature={this.onEachFeature.bind(this)}
 
         />

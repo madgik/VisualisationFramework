@@ -96,29 +96,10 @@ export function data(state = dataDefault, action) {
       })
     case visualizationConstants.RELOAD_DATA:
       return update(state, {
-        tree: {
-          $set: action.data.tree
-        },
-        graph: {
-          $set: action.data.graph
-        },
-        barChartData: {
-          $set: action.data.barChartData
-        },
-        timeSeries: {
-          $set: action.data.timeSeries
-        },
-        tuples: {
-          $set: action.data.tuples
-        },
-        tabularData: {
-          $set: action.data.tabularData
-        },
-        threeDData: {
-          $set: action.data.threeDData
-        },
-        heatMapData: {
-          $set: action.data.heatMapData
+        map: {
+          json: {
+            $set: JSON.stringify(action.data)
+          }
         }
       });
     default:

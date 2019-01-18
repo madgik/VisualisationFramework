@@ -82,7 +82,7 @@ public class HttpClient extends RestTemplate {
             builder.queryParam(parameter.getKey(), parameter.getValue());
         }
 
-        return builder.toUriString();
+        return builder.build().toString();
     }
 
     private ClientHttpRequestFactory getClientHttpRequestFactory() {
