@@ -2,6 +2,7 @@ import axios from 'axios';
 import { visualizationConstants } from '../constants/visualization.constants'
 //import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
+import RequestPayload from '../utilities/RequestPayload';
 
 export const visualizationActions = {
   requestVisualizations,
@@ -18,7 +19,9 @@ export const visualizationActions = {
   selectLayer,
   selectYear,
   updateCurrentGeometry,
-  getMapDataset
+  getMapDataset,
+  getSelectedFieldDetails,
+  updateDashBoardTitle
 }
 
 /*
@@ -40,6 +43,10 @@ function requestVisualizations() {
 
 function loadVisualizations(options) {
   return { type: visualizationConstants.LOAD_VISUALIZATIONS, options };
+}
+
+function updateDashBoardTitle(dashboardTitle) {
+  return { type: visualizationConstants.CHANGE_DASHBOARD_TITLE, dashboardTitle };
 }
 
 function changeVisualizationAndLoad(selected) {
@@ -139,21 +146,14 @@ function updateFilterAndReload(field, value) {
 function getMapDataset() {
   return function (dispatch, getState) {
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/get');
-
     
-    let data = JSON.stringify({
-      page_size: "200",
-      page_offset: "0",
-      year: getState().visualization.selectedYear,
-      output_epsg: "4326",
-      epsg: "4326",
-      geometry: JSON.stringify(getState().visualization.currentGeometry)
-    })
+    let data = RequestPayload.buildMapRequestPayload(getState());
+
     return axios.post(resourceUrl, data, {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadData(response.data))
+      dispatch(reloadData(response.data));
     })
     .catch(response => {
       alert(response);
@@ -164,6 +164,30 @@ function getMapDataset() {
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
+}
+
+function reloadSelectedLayer(data) {
+  return { type: visualizationConstants.SELECTED_LAYER_FIELD_DETAILS, data };
+}
+
+function getSelectedFieldDetails(selectedLayer){
+
+  return function (dispatch, getState) 
+  {
+  //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid);
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(reloadSelectedLayer(response.data.features[0]))
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
 }
 
 function updateFilter(field, value) {

@@ -55,10 +55,11 @@ class MapRenderer extends React.Component {
   }
 
   onZoomEvent= (map) => {
-
-    console.log(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
     this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
-    //alert(this.map.geometry);
+  };
+
+  handleMoveend= (map) => {
+    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
   };
 
   highlightFeature(feature, layer) {
@@ -105,7 +106,7 @@ class MapRenderer extends React.Component {
 
     const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
+      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />

@@ -3,9 +3,7 @@ import VisualizationRendererContainer from './containers/VisualizationRendererCo
 import ChartRenderContainer from './containers/ChartRenderContainer'
 import Chart2RenderContainer from './containers/Chart2RenderContainer'
 import ChartHeader from './components/ChartHeader'
-import HeaderMenu from './components/HeaderMenu'
-import MapConfiguration from './components/MapConfiguration'
-
+import HeaderMenuContainer from './containers/HeaderMenuContainer'
 import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
 
@@ -24,7 +22,7 @@ class Dashboard extends React.Component {
 
       <div className='App-style'>
         <div>
-          <HeaderMenu> </HeaderMenu>
+          <HeaderMenuContainer> </HeaderMenuContainer>
         </div>
         <br></br>
         <Columns columns={2} gap='8px' queries={queries}

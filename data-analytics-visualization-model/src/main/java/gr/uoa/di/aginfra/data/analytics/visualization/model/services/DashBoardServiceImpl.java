@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +32,45 @@ public class DashBoardServiceImpl implements DashBoardService {
         boolean hasMoreData = true;
         Map<String, String> headers = new HashMap<>();
         headers.put(TOKEN_TAG,token);
+        String geoJSON = null;
+        geoJSON = parameters.get("geometry");
+
+        if(geoJSON != null){
+            parameters.remove("geometry");
+            parameters.put("geometry", getGeometryPolygon(geoJSON));
+        }
+
+        int page_offset =  Integer.parseInt(parameters.get("page_offset"));
+        int page_size = Integer.parseInt(parameters.get("page_size"));
+        FeatureCollection featureCollection = null;
+        while (hasMoreData) {
+            FeatureCollection response = httpClient.getRequest(url, headers, parameters);
+            if (response.getFeatures().size() >= page_size){
+                page_offset = page_offset + page_size;
+                parameters.replace("page_offset", String.valueOf(page_offset));
+            }
+            else
+                hasMoreData = false;
+            if(featureCollection == null)
+                featureCollection = response;
+            else
+                featureCollection.getFeatures().addAll(response.getFeatures());
+        }
+
+        return featureCollection;
+    }
+
+    @Override
+    public FeatureCollection getFieldDetails(String url, Map<String, String> parameters) throws Exception {
+
+        FeatureCollection features = get(url, parameters);
+
+       return features;
+    }
+
+    private String getGeometryPolygon(String geoJSON) throws IOException {
+
         ObjectMapper mapper = new ObjectMapper();
-        String geoJSON = parameters.get("geometry");
-        JSONObject obj = new JSONObject(geoJSON);
-        parameters.remove("geometry");
         Feature feature = (Feature) mapper.readValue(geoJSON, Feature.class);
         Polygon polygon = (Polygon) feature.getGeometry();
         List<List<LngLatAlt>> coordinates = polygon.getCoordinates();
@@ -46,47 +82,12 @@ public class DashBoardServiceImpl implements DashBoardService {
             for(LngLatAlt lngLatAlt : coordinate){
                 if(!first)
                     stringBuilder.append(", ");
-                  //  polugonParameter = polugonParameter + ", ";
-                //polugonParameter = polugonParameter + ((int)
-                System.out.println( DoubleRounder.round(lngLatAlt.getLongitude(), 1) + " " +  DoubleRounder.round(lngLatAlt.getLatitude(), 1));
+                //   System.out.println( DoubleRounder.round(lngLatAlt.getLongitude(), 1) + " " +  DoubleRounder.round(lngLatAlt.getLatitude(), 1));
                 stringBuilder.append( DoubleRounder.round(lngLatAlt.getLongitude(), 1)   + " " + DoubleRounder.round(lngLatAlt.getLatitude(), 1));
                 first = false;
             }
         }
         stringBuilder.append("))");
-        parameters.put("geometry", stringBuilder.toString());
-        int page_offset =  Integer.parseInt(parameters.get("page_offset"));
-        int page_size = Integer.parseInt(parameters.get("page_size"));
-       // List<FeatureCollection> collections = new ArrayList<>();
-        FeatureCollection featureCollection = null;
-        while (hasMoreData) {
-            FeatureCollection response = httpClient.getRequest(url, headers, parameters);
-            if (response.getFeatures().size() >= page_size){
-                page_offset = page_offset + page_size;
-                parameters.replace("page_offset", String.valueOf(page_offset));
-            }
-            else
-                hasMoreData = false;
-            if(featureCollection == null){
-                featureCollection = response;
-            }
-            else
-            {
-                featureCollection.getFeatures().addAll(response.getFeatures());
-            }
-            //collections.add(response);
-        }
-
-
-
-        return featureCollection;
-    }
-
-    @Override
-    public FeatureCollection getFieldDetails(String url, Map<String, String> parameters) throws Exception {
-
-        FeatureCollection features = get(url, parameters);
-
-       return features;
+        return stringBuilder.toString();
     }
 }

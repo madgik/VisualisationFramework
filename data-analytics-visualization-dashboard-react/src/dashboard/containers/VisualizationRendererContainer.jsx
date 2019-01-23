@@ -14,8 +14,12 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
-  dispatch(visualizationActions.selectLayer(feature))
+    dispatch(visualizationActions.selectLayer(feature));
+    if(feature !== "")
+      dispatch(visualizationActions.getSelectedFieldDetails(feature));
+
   },
+
   updateCurrentGeometry: (geometry) => {
     dispatch(visualizationActions.updateCurrentGeometry(geometry))
     }
