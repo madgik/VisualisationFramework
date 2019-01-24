@@ -26,15 +26,16 @@ class App extends React.Component {
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     this.store.dispatch(visualizationActions.requestVisualizations());
+
   }
 
   render() {
     return (
       <Provider store={this.store}>
-        <Dashboard
+         <Dashboard
           isLocalDeployment={Ajax.isLocalDeployment()}
           {...this.props} />
-      </Provider>
+      </Provider> 
     );
   }
 }

@@ -6,10 +6,15 @@ import ChartHeader from './components/ChartHeader'
 import HeaderMenuContainer from './containers/HeaderMenuContainer'
 import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
-
+import LoadingBar from 'react-redux-loading-bar'
+import FieldInfo from './components/FieldInfo';
 
 class Dashboard extends React.Component {
 
+  componentWillMount() {
+
+   
+  }
   render() {
     var queries = [{
       columns: 2,
@@ -21,6 +26,10 @@ class Dashboard extends React.Component {
     return (
 
       <div className='App-style'>
+       <header>
+        <LoadingBar updateTime={600} maxProgress={90} progressIncrease={5}/>
+        <br></br> 
+      </header>
         <div>
           <HeaderMenuContainer> </HeaderMenuContainer>
         </div>
@@ -33,8 +42,7 @@ class Dashboard extends React.Component {
           </div>
           <div >
             <div className='ui clearing segment'>
-                <ChartHeader></ChartHeader>
-                <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
+                <FieldInfo></FieldInfo>
             </div>
             <div className='ui clearing segment'>
                 <ChartHeader></ChartHeader>

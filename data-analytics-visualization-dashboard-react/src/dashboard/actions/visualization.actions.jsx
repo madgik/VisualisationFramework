@@ -3,6 +3,7 @@ import { visualizationConstants } from '../constants/visualization.constants'
 //import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
 import RequestPayload from '../utilities/RequestPayload';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export const visualizationActions = {
   requestVisualizations,
@@ -146,14 +147,17 @@ function updateFilterAndReload(field, value) {
 function getMapDataset() {
   return function (dispatch, getState) {
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/get');
-    
+    dispatch(showLoading());
+
     let data = RequestPayload.buildMapRequestPayload(getState());
 
     return axios.post(resourceUrl, data, {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadData(response.data));
+      dispatch(reloadData(response.data)
+      );
+      dispatch(hideLoading());
     })
     .catch(response => {
       alert(response);
