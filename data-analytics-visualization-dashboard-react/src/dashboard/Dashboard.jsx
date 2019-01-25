@@ -7,7 +7,7 @@ import HeaderMenuContainer from './containers/HeaderMenuContainer'
 import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
 import LoadingBar from 'react-redux-loading-bar'
-import FieldInfo from './components/FieldInfo';
+import FieldInfoContainer from './containers/FieldInfoContainer';
 
 class Dashboard extends React.Component {
 
@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
           </div>
           <div >
             <div className='ui clearing segment'>
-                <FieldInfo></FieldInfo>
+                <FieldInfoContainer></FieldInfoContainer>
             </div>
             <div className='ui clearing segment'>
                 <ChartHeader></ChartHeader>

@@ -8,7 +8,19 @@ const visualizationDefault = {
   selectedLayer:'',
   selectedYear:'',
   currentGeometry:'',
-  selectedLayerFieldDetails:'',
+  selectedLayerFieldDetails:{
+    columns: [
+      {
+        Header: "Field Property",
+        accessor: "key"
+      },
+      {
+        Header: "Value",
+        accessor: "value"
+      }
+    ]
+  },
+  selectedLayerFieldDetailsData: [],
   dashboardTitle:''
 }
 
@@ -40,8 +52,8 @@ export function visualization(state = visualizationDefault, action) {
       })
       case visualizationConstants.SELECTED_LAYER_FIELD_DETAILS:
       return update(state, {
-        selectedLayerFieldDetails: {
-          $set: action
+        selectedLayerFieldDetailsData: {
+          $set: action.data
         }
       })
     case visualizationConstants.SELECT_YEAR:

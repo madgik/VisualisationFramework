@@ -22,7 +22,8 @@ export const visualizationActions = {
   updateCurrentGeometry,
   getMapDataset,
   getSelectedFieldDetails,
-  updateDashBoardTitle
+  updateDashBoardTitle,
+  reloadSelectedLayer
 }
 
 /*
@@ -186,7 +187,7 @@ function getSelectedFieldDetails(selectedLayer){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadSelectedLayer(response.data.features[0]))
+      dispatch(reloadSelectedLayer(response.data))
     })
     .catch(response => {
       alert(response);

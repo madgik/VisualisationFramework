@@ -17,7 +17,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(visualizationActions.selectLayer(feature));
     if(feature !== "")
       dispatch(visualizationActions.getSelectedFieldDetails(feature));
-
+    else
+      dispatch(visualizationActions.reloadSelectedLayer([]));
   },
 
   updateCurrentGeometry: (geometry) => {
