@@ -36,11 +36,11 @@ class FieldInfo extends React.Component {
         {
           columns: [
             {
-              Header: "First Name",
+              Header: "Property",
               accessor: "name"
             },
             {
-              Header: "Last Name",
+              Header: "Value",
               accessor: "age"
             }
           ]
@@ -56,6 +56,8 @@ class FieldInfo extends React.Component {
                 columns={columns}
                 showPagination={false}
                 defaultPageSize={5}
+                resizable={false}
+
 
   />
   </div>
