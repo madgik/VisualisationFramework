@@ -1,5 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -63,7 +65,8 @@ public class DashBoardController {
     public ResponseEntity<?> getFieldCharacteristics(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId, params);
+        FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId, params);
+        List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties());
 
         return ResponseEntity.ok(fieldDetails);
     }
