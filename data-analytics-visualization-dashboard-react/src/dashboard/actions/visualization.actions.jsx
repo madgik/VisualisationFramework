@@ -23,7 +23,11 @@ export const visualizationActions = {
   getMapDataset,
   getSelectedFieldDetails,
   updateDashBoardTitle,
-  reloadSelectedLayer
+  reloadSelectedLayer,
+  enableFieldDetailsDropdown,
+  disableFieldDetailsDropdown,
+  setFieldDetailsDropdownValue,
+  updateFieldDetailsDropdownValue
 }
 
 /*
@@ -123,6 +127,37 @@ function changeChartType(chartType) {
   return { type: visualizationConstants.CHANGE_CHART_TYPE, chartType };
 }
 
+function enableFieldDetailsDropdown() {
+  return { type: visualizationConstants.ENABLE_FIELD_DETAILS_DROPDOWN };
+}
+
+function disableFieldDetailsDropdown() {
+  return { type: visualizationConstants.DISABLE_FIELD_DETAILS_DROPDOWN };
+}
+
+function setFieldDetailsDropdownValue(selected) {
+  return { type: visualizationConstants.SET_FIELD_DETAILS_DROPDOWN, selected };
+}
+
+function updateFieldDetailsDropdownValue(selected) {
+  return function (dispatch, getState) {
+
+    switch (selected){
+      case 1:{
+        dispatch(getSelectedFieldDetails(getState().visualization.selectedLayer));
+        return dispatch(setFieldDetailsDropdownValue(selected));
+      }
+      case 2:{
+        dispatch(getSelectedFieldAltitudeData(getState().visualization.selectedLayer));
+        return dispatch(setFieldDetailsDropdownValue(selected));
+      }
+      default:{
+        return dispatch(setFieldDetailsDropdownValue(''));
+      }
+    }
+   }
+}
+
 function updateFilterAndReload(field, value) {
 
   return function (dispatch, getState) {
@@ -181,6 +216,26 @@ function getSelectedFieldDetails(selectedLayer){
   {
   //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid);
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(reloadSelectedLayer(response.data))
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getSelectedFieldAltitudeData(selectedLayer){
+
+  return function (dispatch, getState) 
+  {
+  //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid + "/ahn");
     let data = RequestPayload.simpleRequestPayload();
 
     return axios.post(resourceUrl, data, {

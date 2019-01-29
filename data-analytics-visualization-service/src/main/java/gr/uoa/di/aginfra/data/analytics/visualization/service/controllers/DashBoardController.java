@@ -75,7 +75,8 @@ public class DashBoardController {
     public ResponseEntity<?> getFieldCharacteristics(@PathVariable("id") String fieldId, @PathVariable("info") String altitude, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
+        FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
+        List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties());
 
         return ResponseEntity.ok(fieldDetails);
     }

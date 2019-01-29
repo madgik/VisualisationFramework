@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { Dropdown, Header } from 'semantic-ui-react'
-import ChartHeader from './ChartHeader';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
+import ChartHeaderContainer from '../containers/ChartHeaderContainer';
 
 class FieldInfo extends React.Component {
 
   constructor(props) {
     super(props);
-    
-    let x = this.props.fieldDetails.columns;
-    // This binding is necessary to make `this` work in the callback
+        // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -47,7 +44,7 @@ class FieldInfo extends React.Component {
   render() {
     return (
     <div className='ui clearing '>
-        <ChartHeader  title={"Selected Field Info"}></ChartHeader>
+        <ChartHeaderContainer  title={"Selected Field Info"}></ChartHeaderContainer>
         <br/> 
         <ReactTable
                 data={this.props.fieldDetailsData} 

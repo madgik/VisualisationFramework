@@ -15,10 +15,17 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
     dispatch(visualizationActions.selectLayer(feature));
-    if(feature !== "")
+    if(feature !== ""){
       dispatch(visualizationActions.getSelectedFieldDetails(feature));
+      dispatch(visualizationActions.enableFieldDetailsDropdown());
+      dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
+    }
     else
+    {
       dispatch(visualizationActions.reloadSelectedLayer([]));
+      dispatch(visualizationActions.disableFieldDetailsDropdown());
+      dispatch(visualizationActions.setFieldDetailsDropdownValue(''));
+    }
   },
 
   updateCurrentGeometry: (geometry) => {

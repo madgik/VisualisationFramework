@@ -4,6 +4,10 @@ import { visualizationConstants } from '../constants/visualization.constants'
 
 const visualizationDefault = {
   selected: '',
+  fieldDetails:{
+    disabled: true,
+    selected: ""
+  },
   options: [],
   selectedLayer:'',
   selectedYear:'',
@@ -44,13 +48,40 @@ export function visualization(state = visualizationDefault, action) {
           $set: action.selectedLayer
         }
       })
-      case visualizationConstants.CHANGE_DASHBOARD_TITLE:
+    case visualizationConstants.ENABLE_FIELD_DETAILS_DROPDOWN:
+      return update(state, {
+        fieldDetails: 
+        {
+          disabled: {
+            $set: false
+        }
+      }
+      })
+    case visualizationConstants.DISABLE_FIELD_DETAILS_DROPDOWN:
+      return update(state, {
+        fieldDetails: 
+        {
+          disabled: {
+            $set: true
+        }
+      }
+      })
+    case visualizationConstants.SET_FIELD_DETAILS_DROPDOWN:
+      return update(state, {
+        fieldDetails: 
+        {
+          selected: {
+            $set: action.selected
+        }
+      }
+      })
+    case visualizationConstants.CHANGE_DASHBOARD_TITLE:
       return update(state, {
         dashboardTitle: {
           $set: action.dashboardTitle
         }
       })
-      case visualizationConstants.SELECTED_LAYER_FIELD_DETAILS:
+    case visualizationConstants.SELECTED_LAYER_FIELD_DETAILS:
       return update(state, {
         selectedLayerFieldDetailsData: {
           $set: action.data
@@ -62,7 +93,7 @@ export function visualization(state = visualizationDefault, action) {
           $set: action.selectedYear
         }
       })
-      case visualizationConstants.UPDATE_CURRENT_GEOMETRY:
+    case visualizationConstants.UPDATE_CURRENT_GEOMETRY:
       return update(state, {
         currentGeometry: {
           $set: action.currentGeometry
