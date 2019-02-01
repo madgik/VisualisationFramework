@@ -22,7 +22,7 @@ class ChartHeader extends React.Component {
             }
       ;
     return (
-    <div className='ui clearing '>
+    <div >
         <Header as='h3'>{this.props.title}</Header>
         <Dropdown style={styles} placeholder='Configure'  selection  />
   </div>
