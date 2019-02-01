@@ -16,7 +16,7 @@
   }
   
   .App-style {
-    padding: 20px;
+    padding: 10px;
     margin: 20px;
   }
   .App-title {
@@ -154,4 +154,23 @@ body{
   margin: 0px;
   position: relative;
   top: -20px;
+}
+.content
+{
+    position:absolute;
+    top: 0px;
+    left:10px;
+    right:0px;
+    bottom:0px;
+    overflow-y:scroll;     
+    padding: 10px;
+    margin: 10px;   
+}
+.headerMenu{
+  position:absolute;
+    top: 1px;
+    left:30px;
+    right:30px;
+    bottom:0px;
+    
 }
