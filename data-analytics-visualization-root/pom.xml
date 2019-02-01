@@ -6,7 +6,7 @@
 
     <groupId>gr.uoa.di.aginfra.data.analytics.visualization</groupId>
     <artifactId>data-analytics-visualization-root</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.7-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 

@@ -15,5 +15,8 @@ export const visualizationConstants = {
   SELECT_YEAR: 'select-year',
   UPDATE_CURRENT_GEOMETRY: 'update-current-geometry',
 
+  ENABLE_FIELD_DETAILS_DROPDOWN:'enable-field-details-dropdown',
+  DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',
+  SET_FIELD_DETAILS_DROPDOWN: 'field-details-dropdown',
 
 }
