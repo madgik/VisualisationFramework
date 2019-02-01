@@ -66,9 +66,10 @@ public class DashBoardController {
     public ResponseEntity<?> getCropHistory(@RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection stats = dashBoardService.get(gCubeUrl, params, GeometryType.Point);
+        FeatureCollection cropHistory = dashBoardService.get(gCubeUrl, params, GeometryType.Point);
+        List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(cropHistory.getFeatures().get(0).getProperties());
 
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(fieldDetails);
     }
 
     @RequestMapping(value = "field/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -154,24 +154,30 @@ function setFieldDetailsDropdownValue(selected) {
 function updateFieldDetailsDropdownValue(selected) {
   return function (dispatch, getState) {
 
+    dispatch(showLoading());
     switch (selected){
       case optionValues.field:{
         dispatch(getSelectedFieldDetails(getState().visualization.selectedLayer));
+        dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
       case optionValues.altitude:{
         dispatch(getSelectedFieldAltitudeData(getState().visualization.selectedLayer));
+        dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
       case optionValues.soil:{
         dispatch(getSelectedFieldSoilInformation(getState().visualization.selectedLayer));
+        dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
       case optionValues.crop:{
         dispatch(getCropHistory());
+        dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
       default:{
+        dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(''));
       }
     }
@@ -232,8 +238,8 @@ function getCropHistory() {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadData(response.data)
-      );
+        dispatch(reloadSelectedLayer(response.data));
+
       dispatch(hideLoading());
     })
     .catch(response => {
