@@ -51,5 +51,23 @@ public class DashBoardMapConverter {
         return fieldDetails;
     }
 
+    public static List<FieldDetails> soilDetailsConvert(Map<String,?> properties)
+    {
+        List<FieldDetails> fieldDetails = new ArrayList<>();
+        if(properties.get("soilcode") != null) {
+            FieldDetails fieldDetail = new FieldDetails("soilcode",String.valueOf((properties.get("soilcode"))));
+            fieldDetails.add(fieldDetail);
+        }
+        if(properties.get("soilname") != null) {
+            FieldDetails fieldDetail = new FieldDetails("soilname",String.valueOf((properties.get("soilname"))));
+            fieldDetails.add(fieldDetail);
+        }
+        if(properties.get("soiltype") != null) {
+            FieldDetails fieldDetail = new FieldDetails("soiltype",String.valueOf((properties.get("soiltype"))));
+            fieldDetails.add(fieldDetail);
+        }
+
+        return fieldDetails;
+    }
 
 }

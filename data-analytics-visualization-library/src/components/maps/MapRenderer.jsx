@@ -55,11 +55,11 @@ class MapRenderer extends React.Component {
   }
 
   onZoomEvent= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
+    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   handleMoveend= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()));
+    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   highlightFeature(feature, layer) {

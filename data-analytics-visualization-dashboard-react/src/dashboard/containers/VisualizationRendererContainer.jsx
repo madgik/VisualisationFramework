@@ -28,7 +28,8 @@ const mapDispatchToProps = dispatch => ({
     }
   },
 
-  updateCurrentGeometry: (geometry) => {
+  updateCurrentGeometry: (geometry, zoom) => {
+    console.log(zoom);
     dispatch(visualizationActions.updateCurrentGeometry(geometry))
     }
 })

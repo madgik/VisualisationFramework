@@ -49,8 +49,9 @@ class FieldInfo extends React.Component {
         <ReactTable
                 data={this.props.fieldDetailsData} 
                 columns={this.props.fieldDetails.columns}
-                showPagination={false}
+                showPagination={true}
                 defaultPageSize={5}
+                resizable={false}
         />
   </div>
     );

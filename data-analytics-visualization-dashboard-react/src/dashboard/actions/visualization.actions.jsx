@@ -4,6 +4,7 @@ import { visualizationConstants } from '../constants/visualization.constants'
 import Ajax from '../utilities/Ajax';
 import RequestPayload from '../utilities/RequestPayload';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import {optionValues} from '../components/ChartHeader';
 
 export const visualizationActions = {
   requestVisualizations,
@@ -143,12 +144,16 @@ function updateFieldDetailsDropdownValue(selected) {
   return function (dispatch, getState) {
 
     switch (selected){
-      case 1:{
+      case optionValues.field:{
         dispatch(getSelectedFieldDetails(getState().visualization.selectedLayer));
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
-      case 2:{
+      case optionValues.altitude:{
         dispatch(getSelectedFieldAltitudeData(getState().visualization.selectedLayer));
+        return dispatch(setFieldDetailsDropdownValue(selected));
+      }
+      case optionValues.soil:{
+        dispatch(getSelectedFieldSoilInformation(getState().visualization.selectedLayer));
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
       default:{
@@ -236,6 +241,26 @@ function getSelectedFieldAltitudeData(selectedLayer){
   {
   //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid + "/ahn");
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(reloadSelectedLayer(response.data))
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getSelectedFieldSoilInformation(selectedLayer){
+
+  return function (dispatch, getState) 
+  {
+  //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid + "/soiltypes");
     let data = RequestPayload.simpleRequestPayload();
 
     return axios.post(resourceUrl, data, {

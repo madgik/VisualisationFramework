@@ -78,6 +78,11 @@ public class DashBoardController {
         FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
         List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties());
 
+        if(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties().get("soilid") != null) {
+            FeatureCollection soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetailsFeatureCollection.getFeatures().get(0).getProperties().get("soilid"), params);
+            List<DashBoardMapConverter.FieldDetails> soil = DashBoardMapConverter.soilDetailsConvert(soilDetails.getFeatures().get(0).getProperties());
+            fieldDetails.addAll(soil);
+        }
         return ResponseEntity.ok(fieldDetails);
     }
 

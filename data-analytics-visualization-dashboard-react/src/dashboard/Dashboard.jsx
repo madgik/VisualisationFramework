@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
     </section>
   </StickyHeader> */}
        <header>
-        <LoadingBar updateTime={600} maxProgress={90} progressIncrease={5}/>
+        <LoadingBar updateTime={1200} maxProgress={90} progressIncrease={5}/>
         <br></br> 
       </header>
         <div>
