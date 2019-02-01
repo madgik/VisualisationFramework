@@ -16,31 +16,6 @@ class FieldInfo extends React.Component {
     this.props.clickButtonCallback(this.props.item);
   }
 
-  // getColumns() {
-    
-  //   if(this.props.fieldDetails && this.props.fieldDetails.data){
-  //     this.props.fieldDetails.data.columns.map(key => {
-  //       console.log(key);
-  //     });
-  //   }
-  //   else{
-  //       return  [
-  //       {
-  //         columns: [
-  //           {
-  //             Header: "First Name",
-  //             accessor: "name"
-  //           },
-  //           {
-  //             Header: "Last Name",
-  //             accessor: "age"
-  //           }
-  //         ]
-  //       }
-  //   ];
-  //   }
-  // }
-
   render() {
     return (
     <div className='ui clearing '>
