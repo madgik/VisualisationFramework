@@ -14,6 +14,8 @@ export const visualizationConstants = {
   SELECT_LAYER: 'select-layer',
   SELECT_YEAR: 'select-year',
   UPDATE_CURRENT_GEOMETRY: 'update-current-geometry',
+  UPDATE_CURRENT_ZOOM_LEVEL: 'update-current-zoom-level',
+  UPDATE_DISABLE_FETCH_DATA: 'update-disable-fetch-data',
 
   ENABLE_FIELD_DETAILS_DROPDOWN:'enable-field-details-dropdown',
   DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',

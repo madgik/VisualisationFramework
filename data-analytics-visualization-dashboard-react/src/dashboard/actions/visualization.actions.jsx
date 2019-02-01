@@ -28,7 +28,9 @@ export const visualizationActions = {
   enableFieldDetailsDropdown,
   disableFieldDetailsDropdown,
   setFieldDetailsDropdownValue,
-  updateFieldDetailsDropdownValue
+  updateFieldDetailsDropdownValue,
+  updateCurrentZoomLevel,
+  updateDibableFetchData
 }
 
 /*
@@ -110,6 +112,14 @@ function selectLayer(selectedLayer) {
 
 function updateCurrentGeometry(currentGeometry) {
   return { type: visualizationConstants.UPDATE_CURRENT_GEOMETRY, currentGeometry };
+}
+
+function updateCurrentZoomLevel(zoomlevel) {
+  return { type: visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL, zoomlevel };
+}
+
+function updateDibableFetchData(disableFetchData) {
+  return { type: visualizationConstants.UPDATE_DISABLE_FETCH_DATA, disableFetchData };
 }
 
 function selectYear(selectedYear) {

@@ -29,8 +29,16 @@ const mapDispatchToProps = dispatch => ({
   },
 
   updateCurrentGeometry: (geometry, zoom) => {
-    console.log(zoom);
-    dispatch(visualizationActions.updateCurrentGeometry(geometry))
+    dispatch(visualizationActions.updateCurrentGeometry(geometry));
+    dispatch(visualizationActions.updateCurrentZoomLevel(zoom));
+    if(zoom >=11 && zoom <16){
+      dispatch(visualizationActions.updateDibableFetchData(false));
+    }
+    else{
+      dispatch(visualizationActions.updateDibableFetchData(true));
+
+    }
+
     }
 })
 

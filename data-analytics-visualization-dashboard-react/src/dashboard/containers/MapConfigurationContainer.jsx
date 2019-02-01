@@ -5,7 +5,7 @@ import MapConfiguration from '../components/MapConfiguration'
 
 function mapStateToProps(state) {
   return {
-    visualization: state.data.map,
+    visualization: state.visualization,
     document: state.document
   };
 }

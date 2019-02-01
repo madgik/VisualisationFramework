@@ -10,8 +10,10 @@ const visualizationDefault = {
   },
   options: [],
   selectedLayer:'',
-  selectedYear:'',
+  selectedYear:'2018',
   currentGeometry:'',
+  disableFetchData:true,
+  zoomLevel:4,
   selectedLayerFieldDetails:{
     columns: [
       {
@@ -97,6 +99,18 @@ export function visualization(state = visualizationDefault, action) {
       return update(state, {
         currentGeometry: {
           $set: action.currentGeometry
+        }
+      })
+      case visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL:
+      return update(state, {
+        zoomLevel: {
+          $set: action.zoomlevel
+        }
+      })
+      case visualizationConstants.UPDATE_DISABLE_FETCH_DATA:
+      return update(state, {
+        disableFetchData: {
+          $set: action.disableFetchData
         }
       })
     default:
