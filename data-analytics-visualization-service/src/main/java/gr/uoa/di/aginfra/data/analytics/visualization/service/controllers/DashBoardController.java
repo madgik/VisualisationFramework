@@ -1,5 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
@@ -56,7 +57,16 @@ public class DashBoardController {
     public ResponseEntity<?> get(@RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection stats = dashBoardService.get(gCubeUrl, params);
+        FeatureCollection stats = dashBoardService.get(gCubeUrl, params, GeometryType.Polygon);
+
+        return ResponseEntity.ok(stats);
+    }
+
+    @RequestMapping(value = "getCropHistory", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getCropHistory(@RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection stats = dashBoardService.get(gCubeUrl, params, GeometryType.Point);
 
         return ResponseEntity.ok(stats);
     }
@@ -108,7 +118,7 @@ public class DashBoardController {
     public ResponseEntity<?> getMeteoData( @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrlMeteoData  , params);
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrlMeteoData  , params, GeometryType.Polygon);
 
         return ResponseEntity.ok(fieldDetails);
     }
@@ -117,7 +127,7 @@ public class DashBoardController {
     public ResponseEntity<?> getMeteoData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
-        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params);
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);
 
         return ResponseEntity.ok(fieldDetails);
     }

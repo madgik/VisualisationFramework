@@ -2,12 +2,13 @@ import React from 'react';
 
 import { Dropdown, Header } from 'semantic-ui-react'
 
-export const optionValues = Object.freeze({"field":1, "altitude":2, "soil":3})
+export const optionValues = Object.freeze({"field":1, "altitude":2, "soil":3, "crop":4})
 
 const options = [
   { key: optionValues.field, text: 'Basic field characteristics', value: optionValues.field },
   { key: optionValues.altitude, text: 'Field altitude data', value: optionValues.altitude },
   { key: optionValues.soil, text: 'Field soil information', value: optionValues.soil },
+  { key: optionValues.crop, text: 'Crop History', value: optionValues.crop }
 ]
 
 class ChartHeader extends React.Component {

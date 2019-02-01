@@ -1,12 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.bcel.internal.generic.GETFIELD;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import org.decimal4j.util.DoubleRounder;
-import org.geojson.Feature;
-import org.geojson.FeatureCollection;
-import org.geojson.LngLatAlt;
-import org.geojson.Polygon;
+import org.geojson.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class DashBoardServiceImpl implements DashBoardService {
     private HttpClient httpClient = HttpClient.getInstance();
 
     @Override
-    public FeatureCollection  get(String url, Map<String, String> parameters) throws Exception {
+    public FeatureCollection  get(String url, Map<String, String> parameters, GeometryType geometryType) throws Exception {
         boolean hasMoreData = true;
         Map<String, String> headers = new HashMap<>();
         headers.put(TOKEN_TAG,token);
@@ -37,7 +36,10 @@ public class DashBoardServiceImpl implements DashBoardService {
 
         if(geoJSON != null){
             parameters.remove("geometry");
-            parameters.put("geometry", getGeometryPolygon(geoJSON));
+            if(geometryType == GeometryType.Polygon)
+                parameters.put("geometry", getGeometryPolygon(geoJSON));
+            else if(geometryType == GeometryType.Point)
+                parameters.put("geometry", getGeometryPoint(geoJSON));
         }
 
         int page_offset =  Integer.parseInt(parameters.get("page_offset"));
@@ -63,7 +65,7 @@ public class DashBoardServiceImpl implements DashBoardService {
     @Override
     public FeatureCollection getFieldDetails(String url, Map<String, String> parameters) throws Exception {
 
-        FeatureCollection features = get(url, parameters);
+        FeatureCollection features = get(url, parameters, GeometryType.Polygon);
 
        return features;
     }
@@ -88,6 +90,19 @@ public class DashBoardServiceImpl implements DashBoardService {
             }
         }
         stringBuilder.append("))");
+        return stringBuilder.toString();
+    }
+
+    private String getGeometryPoint(String geoJSON) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        Point point = (Point) mapper.readValue(geoJSON, Point.class);
+        point.getCoordinates();
+        String pointParameter = "POINT( ";
+        StringBuilder stringBuilder = new StringBuilder(pointParameter);
+        stringBuilder.append( point.getCoordinates().getLongitude()   + " " + point.getCoordinates().getLatitude());
+
+        stringBuilder.append(")");
         return stringBuilder.toString();
     }
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { visualizationActions } from '../actions/visualization.actions';
 import { VisualizationRendererInnerContainer } from 'data-analytics-visualization-library'
-
+var polygonCenter = require('geojson-polygon-center')
 
 function mapStateToProps(state) {
   return {
@@ -13,9 +13,13 @@ function mapStateToProps(state) {
 
 
 const mapDispatchToProps = dispatch => ({
+  
   onMapElementClick: (feature) => {
     dispatch(visualizationActions.selectLayer(feature));
     if(feature !== ""){
+      let center = polygonCenter(feature.geometry);
+      console.log(center);
+
       dispatch(visualizationActions.getSelectedFieldDetails(feature));
       dispatch(visualizationActions.enableFieldDetailsDropdown());
       dispatch(visualizationActions.setFieldDetailsDropdownValue(1));

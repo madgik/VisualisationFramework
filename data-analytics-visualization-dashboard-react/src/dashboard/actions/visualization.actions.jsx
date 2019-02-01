@@ -30,7 +30,8 @@ export const visualizationActions = {
   setFieldDetailsDropdownValue,
   updateFieldDetailsDropdownValue,
   updateCurrentZoomLevel,
-  updateDibableFetchData
+  updateDibableFetchData,
+  getCropHistory
 }
 
 /*
@@ -166,6 +167,10 @@ function updateFieldDetailsDropdownValue(selected) {
         dispatch(getSelectedFieldSoilInformation(getState().visualization.selectedLayer));
         return dispatch(setFieldDetailsDropdownValue(selected));
       }
+      case optionValues.crop:{
+        dispatch(getCropHistory());
+        return dispatch(setFieldDetailsDropdownValue(selected));
+      }
       default:{
         return dispatch(setFieldDetailsDropdownValue(''));
       }
@@ -201,6 +206,27 @@ function getMapDataset() {
     dispatch(showLoading());
 
     let data = RequestPayload.buildMapRequestPayload(getState());
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(reloadData(response.data)
+      );
+      dispatch(hideLoading());
+    })
+    .catch(response => {
+      alert(response);
+  });
+}
+}
+
+function getCropHistory() {
+  return function (dispatch, getState) {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getCropHistory');
+    dispatch(showLoading());
+
+    let data = RequestPayload.buildCropHistoryRequestPayload(getState());
 
     return axios.post(resourceUrl, data, {
       headers: {
