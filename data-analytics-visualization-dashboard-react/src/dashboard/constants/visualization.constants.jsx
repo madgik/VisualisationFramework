@@ -16,6 +16,7 @@ export const visualizationConstants = {
   UPDATE_CURRENT_GEOMETRY: 'update-current-geometry',
   UPDATE_CURRENT_ZOOM_LEVEL: 'update-current-zoom-level',
   UPDATE_DISABLE_FETCH_DATA: 'update-disable-fetch-data',
+  UPDATE_FIELD_TABLE_HEADER: 'update-field-table-header',
 
   ENABLE_FIELD_DETAILS_DROPDOWN:'enable-field-details-dropdown',
   DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',

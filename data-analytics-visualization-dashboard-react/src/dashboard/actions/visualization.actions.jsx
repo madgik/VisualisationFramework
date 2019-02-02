@@ -31,12 +31,25 @@ export const visualizationActions = {
   updateFieldDetailsDropdownValue,
   updateCurrentZoomLevel,
   updateDibableFetchData,
-  getCropHistory
+  getCropHistory,
+  updateFieldTableHeader
 }
 
 /*
  * action creators
  */
+const defaultHeader = {
+  columns: [
+    {
+      Header: "Field Property",
+      accessor: "key"
+    },
+    {
+      Header: "Value",
+      accessor: "value"
+    }
+  ]
+}
 
 function requestVisualizations() {
   return function (dispatch) {
@@ -113,6 +126,10 @@ function selectLayer(selectedLayer) {
 
 function updateCurrentGeometry(currentGeometry) {
   return { type: visualizationConstants.UPDATE_CURRENT_GEOMETRY, currentGeometry };
+}
+
+function updateFieldTableHeader(header) {
+  return { type: visualizationConstants.UPDATE_FIELD_TABLE_HEADER, header };
 }
 
 function updateCurrentZoomLevel(zoomlevel) {
@@ -238,6 +255,42 @@ function getCropHistory() {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
+
+        let header = {
+          columns: [
+            {
+              width:'120',
+              Header: "Year",
+              accessor: "year"
+            },
+            {
+              width:'120',
+              Header: "Crop Code",
+              accessor: "crop_code"
+            },
+            {
+              width:'300',
+              Header: "Crop name",
+              accessor: "crop_name"
+            },
+            {
+              width:'120',
+              Header: "Field id",
+              accessor: "fieldid"
+            },
+            {
+              width:'120',
+              Header: "Area",
+              accessor: "area"
+            },
+            {
+              width:'120',
+              Header: "Perimeter",
+              accessor: "perimeter"
+            }
+          ]
+        }
+        dispatch(updateFieldTableHeader(header));
         dispatch(reloadSelectedLayer(response.data));
 
       dispatch(hideLoading());
@@ -269,6 +322,7 @@ function getSelectedFieldDetails(selectedLayer){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
+        dispatch(updateFieldTableHeader(defaultHeader));
       dispatch(reloadSelectedLayer(response.data))
     })
     .catch(response => {
@@ -289,6 +343,8 @@ function getSelectedFieldAltitudeData(selectedLayer){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
+        dispatch(updateFieldTableHeader(defaultHeader));
+
       dispatch(reloadSelectedLayer(response.data))
     })
     .catch(response => {
@@ -309,6 +365,8 @@ function getSelectedFieldSoilInformation(selectedLayer){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
+        dispatch(updateFieldTableHeader(defaultHeader));
+
       dispatch(reloadSelectedLayer(response.data))
     })
     .catch(response => {

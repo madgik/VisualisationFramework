@@ -10,6 +10,8 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -50,10 +52,17 @@ public class HttpClient extends RestTemplate {
             url = setParameters(parameters, url);
         }
         //Execute the method writing your HttpEntity to the request
-        ResponseEntity<FeatureCollection > response = restTemplate.exchange(url, HttpMethod.GET, entity, FeatureCollection.class);
+        try {
+            ResponseEntity<FeatureCollection> response = restTemplate.exchange(url, HttpMethod.GET, entity, FeatureCollection.class);
+            return response.getBody();
 
+        }
+        catch(HttpServerErrorException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getResponseBodyAsString());
+            return new FeatureCollection();
+        }
 
-        return response.getBody();
     }
 
     private String postRequest(String url){

@@ -67,9 +67,9 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection cropHistory = dashBoardService.get(gCubeUrl, params, GeometryType.Point);
-        List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(cropHistory.getFeatures().get(0).getProperties());
+        List<DashBoardMapConverter.CropDetails> cropDetails = DashBoardMapConverter.cropDetailsConvert(cropHistory.getFeatures());
 
-        return ResponseEntity.ok(fieldDetails);
+        return ResponseEntity.ok(cropDetails);
     }
 
     @RequestMapping(value = "field/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

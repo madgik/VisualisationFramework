@@ -113,6 +113,12 @@ export function visualization(state = visualizationDefault, action) {
           $set: action.disableFetchData
         }
       })
+      case visualizationConstants.UPDATE_FIELD_TABLE_HEADER:
+      return update(state, {
+        selectedLayerFieldDetails: {
+          $set: action.header
+        }
+      })
     default:
       return state;
   }
