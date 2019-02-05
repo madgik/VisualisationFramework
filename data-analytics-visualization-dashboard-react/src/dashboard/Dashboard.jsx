@@ -8,6 +8,7 @@ import MapConfigurationContainer from './containers/MapConfigurationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import FieldInfoContainer from './containers/FieldInfoContainer';
 import ChartHeaderContainer from './containers/ChartHeaderContainer';
+import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
 
 
 class Dashboard extends React.Component {
@@ -47,7 +48,10 @@ class Dashboard extends React.Component {
                 <FieldInfoContainer></FieldInfoContainer>
               </div>
               <div className='ui clearing segment'>
-                <ChartHeaderContainer></ChartHeaderContainer>
+                <TimeSeriesChartContainer></TimeSeriesChartContainer>
+                <br></br>
+                <br></br>
+                <br></br>
                 <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
               </div>
               <div className='ui clearing segment'>

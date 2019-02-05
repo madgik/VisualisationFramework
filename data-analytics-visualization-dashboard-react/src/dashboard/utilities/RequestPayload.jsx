@@ -17,7 +17,6 @@ class RequestPayload{
     buildCropHistoryRequestPayload(state)
     {
         let center = polygonCenter(state.visualization.currentGeometry);
-        console.log(center);
         return JSON.stringify({
             page_size: "200",
             page_offset: "0",
@@ -35,6 +34,19 @@ class RequestPayload{
             page_offset: "0",
           })
     }
+
+
+    buildMeteoRequestPayload(state)
+    {
+        return JSON.stringify({
+            page_size: "200",
+            page_offset: "0",
+            meteostation: state.visualization.nearestMeteoStation,
+            fromdate: state.data.weatherChartDetails.dateRange.start.format("YYYYMMDD"),
+            todate: state.data.weatherChartDetails.dateRange.end.format("YYYYMMDD")
+          })
+    }
+
 }
 
 export default new RequestPayload();

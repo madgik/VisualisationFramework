@@ -9,6 +9,10 @@ export const visualizationConstants = {
   CHANGE_CHART_TYPE: 'change-chart-type',
   RELOAD_DATA: 'reload-data',
   SELECTED_LAYER_FIELD_DETAILS: 'selected-layer-field-details',
+  GET_NEAREST_METEOSTATION: 'get-nearest-meteostation',
+  SET_DATE_RANGE: 'set-date-range',
+  SET_DATE_RANGE_OPEN: 'set-date-range-open',
+
 
   UPDATE_FILTER: 'update-filter',
   SELECT_LAYER: 'select-layer',
@@ -21,5 +25,6 @@ export const visualizationConstants = {
   ENABLE_FIELD_DETAILS_DROPDOWN:'enable-field-details-dropdown',
   DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',
   SET_FIELD_DETAILS_DROPDOWN: 'field-details-dropdown',
+  SET_FIELD_DATA_DROPDOWN: 'field-data-dropdown',
 
 }

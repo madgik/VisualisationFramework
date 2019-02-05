@@ -11,6 +11,9 @@ import rootReducer from './dashboard/reducers'
 
 import Dashboard from './dashboard/Dashboard'
 import Ajax from './dashboard/utilities/Ajax';
+import originalMoment from "moment";
+import { extendMoment } from "moment-range";
+const moment = extendMoment(originalMoment);
 
 class App extends React.Component {
 
@@ -26,6 +29,9 @@ class App extends React.Component {
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     this.store.dispatch(visualizationActions.requestVisualizations());
+    const today = moment();
+    this.value = moment.range(today.clone().subtract(7, "days"), today.clone());
+    this.store.dispatch(visualizationActions.setDateRange(this.value));
 
   }
 

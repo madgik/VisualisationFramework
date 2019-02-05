@@ -106,13 +106,15 @@ public class DashBoardController {
         return ResponseEntity.ok(fieldDetails);
     }
 
-    @RequestMapping(value = "meteostations/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "meteostation/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getNearestMeteoStations(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + "meteostations", params);
 
-        return ResponseEntity.ok(fieldDetails);
+        if(fieldDetails.getFeatures().isEmpty())
+            return ResponseEntity.ok(null);
+        return ResponseEntity.ok(fieldDetails.getFeatures().get(fieldDetails.getFeatures().size() -1).getProperties().get("meteostationid"));
     }
 
     @RequestMapping(value = "meteodata", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -125,7 +127,7 @@ public class DashBoardController {
     }
 
     @RequestMapping(value = "ndvi/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getMeteoData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+    public ResponseEntity<?> getNdviData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);

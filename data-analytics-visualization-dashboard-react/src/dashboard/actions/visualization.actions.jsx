@@ -5,6 +5,7 @@ import Ajax from '../utilities/Ajax';
 import RequestPayload from '../utilities/RequestPayload';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {optionValues} from '../components/ChartHeader';
+import {dataValues} from '../components/TimeSeriesChartHeader';
 
 export const visualizationActions = {
   requestVisualizations,
@@ -32,7 +33,15 @@ export const visualizationActions = {
   updateCurrentZoomLevel,
   updateDibableFetchData,
   getCropHistory,
-  updateFieldTableHeader
+  updateFieldTableHeader,
+  getNearestMeteoStation,
+  getSelectedFieldMeteoStation,
+  setDateRange,
+  setDateRangeOpen,
+  setFieldDataDropdownValue,
+  updateFieldDataDropdownValue,
+  getSelectedFieldData,
+  getNDVIFieldData
 }
 
 /*
@@ -168,6 +177,18 @@ function setFieldDetailsDropdownValue(selected) {
   return { type: visualizationConstants.SET_FIELD_DETAILS_DROPDOWN, selected };
 }
 
+function setFieldDataDropdownValue(selected) {
+  return { type: visualizationConstants.SET_FIELD_DATA_DROPDOWN, selected };
+}
+
+function setDateRange(dateRange) {
+  return { type: visualizationConstants.SET_DATE_RANGE, dateRange };
+}
+
+function setDateRangeOpen(isOpen) {
+  return { type: visualizationConstants.SET_DATE_RANGE_OPEN, isOpen };
+}
+
 function updateFieldDetailsDropdownValue(selected) {
   return function (dispatch, getState) {
 
@@ -196,6 +217,29 @@ function updateFieldDetailsDropdownValue(selected) {
       default:{
         dispatch(hideLoading());
         return dispatch(setFieldDetailsDropdownValue(''));
+      }
+    }
+   }
+}
+
+function updateFieldDataDropdownValue(selected) {
+  return function (dispatch, getState) {
+
+    dispatch(showLoading());
+    switch (selected){
+      case dataValues.weather:{
+        dispatch(getSelectedFieldData(getState()));
+        dispatch(hideLoading());
+        return dispatch(setFieldDataDropdownValue(selected));
+      }
+      case dataValues.ndvi:{
+        dispatch(getNDVIFieldData());
+        dispatch(hideLoading());
+        return dispatch(setFieldDataDropdownValue(selected));
+      }
+      default:{
+        dispatch(hideLoading());
+        return dispatch(setFieldDataDropdownValue(''));
       }
     }
    }
@@ -310,6 +354,10 @@ function reloadSelectedLayer(data) {
   return { type: visualizationConstants.SELECTED_LAYER_FIELD_DETAILS, data };
 }
 
+function getNearestMeteoStation(meteostation) {
+  return { type: visualizationConstants.GET_NEAREST_METEOSTATION, meteostation };
+}
+
 function getSelectedFieldDetails(selectedLayer){
 
   return function (dispatch, getState) 
@@ -368,6 +416,68 @@ function getSelectedFieldSoilInformation(selectedLayer){
         dispatch(updateFieldTableHeader(defaultHeader));
 
       dispatch(reloadSelectedLayer(response.data))
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getSelectedFieldMeteoStation(selectedLayer){
+
+  return function (dispatch, getState) 
+  {
+  //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteostation/' + selectedLayer.properties.fieldid);
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+      dispatch(getNearestMeteoStation(response.data));
+      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
+
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getSelectedFieldData(){
+
+  return function (dispatch, getState) 
+  {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata' );
+    let data = RequestPayload.buildMeteoRequestPayload(getState());
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+       
+        console.log(response);
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getNDVIFieldData(){
+
+  return function (dispatch, getState) 
+  {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/' + getState().visualization.selectedLayer.properties.fieldid);
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+       
+        console.log(response);
     })
     .catch(response => {
       alert(response);

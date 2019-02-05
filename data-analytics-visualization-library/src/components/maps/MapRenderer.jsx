@@ -8,7 +8,6 @@ class MapRenderer extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(props);
     this.state = {
       lat: 48,
       lng: 8,
@@ -20,12 +19,7 @@ class MapRenderer extends React.Component {
   }
 
   componentDidUpdate(prevProps,prevState) {
-    // clear layers and redraw data
-   // if (prevProps.data !== this.props.data) {
-      //  this.map.leafletElement.
-        console.log("on map update");
-      //  this.map.addData(geojsonData);
-    // }
+   
    } 
 
   onMapClick(e) {
@@ -95,9 +89,6 @@ class MapRenderer extends React.Component {
   }
   render() {
     var features = JSON.parse(this.props.visualization.json);
-    console.log(this.props.visualization.json);
-    console.log("on map render");
-
     var style = {
       width: '100%',
       height: this.props.size.height + 'px',

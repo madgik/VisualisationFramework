@@ -6,11 +6,13 @@ const visualizationDefault = {
   selected: '',
   fieldDetails:{
     disabled: true,
-    selected: ""
+    selected: "",
+    selectedFieldData:""
   },
   options: [],
   selectedLayer:'',
   selectedYear:'2018',
+  nearestMeteoStation:'',
   currentGeometry:'',
   disableFetchData:true,
   zoomLevel:4,
@@ -50,6 +52,12 @@ export function visualization(state = visualizationDefault, action) {
           $set: action.selectedLayer
         }
       })
+    case visualizationConstants.GET_NEAREST_METEOSTATION:
+      return update(state, {
+        nearestMeteoStation: {
+          $set: action.meteostation
+        }
+      })
     case visualizationConstants.ENABLE_FIELD_DETAILS_DROPDOWN:
       return update(state, {
         fieldDetails: 
@@ -65,6 +73,15 @@ export function visualization(state = visualizationDefault, action) {
         {
           disabled: {
             $set: true
+        }
+      }
+      })
+    case visualizationConstants.SET_FIELD_DATA_DROPDOWN:
+      return update(state, {
+        fieldDetails: 
+        {
+          selectedFieldData: {
+            $set: action.selected
         }
       }
       })
@@ -156,6 +173,11 @@ const dataDefault = {
       yAxisLabel: "Plant Height",
       type:"Line",
       json:null
+    },
+    weatherChartDetails:{
+      dateRange: null,
+      isOpen: false,
+
     }
 }
 
@@ -176,6 +198,22 @@ export function data(state = dataDefault, action) {
         map: {
           json: {
             $set: JSON.stringify(action.data)
+          }
+        }
+      });
+     case visualizationConstants.SET_DATE_RANGE:
+      return update(state, {
+        weatherChartDetails: {
+          dateRange: {
+            $set: action.dateRange
+          }
+        }
+      });
+      case visualizationConstants.SET_DATE_RANGE_OPEN:
+      return update(state, {
+        weatherChartDetails: {
+          isOpen: {
+            $set: action.isOpen
           }
         }
       });
