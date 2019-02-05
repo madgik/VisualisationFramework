@@ -53,8 +53,7 @@ class TimeSeriesHeader extends React.Component {
   }
 
   onSelect = (value, states) => {
-    console.log(value);
-    this.props.setDateRange(value);
+    this.props.setDateRange(value, this.props.fieldDetails.selectedFieldData);
   };
 
   render() {

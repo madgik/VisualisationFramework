@@ -20,8 +20,10 @@ const mapDispatchToProps = dispatch => ({
         console.log(inputFocus);
     },
 
-    setDateRange : (dateRange) => {
+    setDateRange : (dateRange, dropdownValue) => {
         dispatch(visualizationActions.setDateRange(dateRange));
+        dispatch(visualizationActions.updateFieldDataDropdownValue(dropdownValue));
+
     },
     clickButtonCallback(isOpen) {
         dispatch(visualizationActions.setDateRangeOpen(isOpen) )
