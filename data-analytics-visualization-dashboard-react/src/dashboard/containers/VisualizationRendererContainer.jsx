@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.enableFieldDetailsDropdown());
       dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
-      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
 
     }
     else

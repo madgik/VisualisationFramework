@@ -1,5 +1,5 @@
 {
-  "name": "data-analytics-visualization-dashboard",
+  "name": "data-analytics-visualization-ui",
   "version": "0.0.1",
   "private": false,
   "dependencies": {
@@ -38,12 +38,12 @@
     "develop": "webpack --mode development --watch",
     "build": "npm run build:clean-react && npm run build:clean-portlet && npm run build:clean-portlet-assets && npm run build:webpack && npm run build:copy-bundle && npm run build:copy-assets && npm run build:replace-filenames",
     "build:clean-react": "rimraf dist",
-    "build:clean-portlet": "rimraf '../data-analytics-visualization-dashboard/src/main/webapp/static/bundle.*'",
-    "build:clean-portlet-assets": "rimraf '../data-analytics-visualization-dashboard/src/main/webapp/static/assets/*.*'",
+    "build:clean-portlet": "rimraf '../data-analytics-visualization-ui/src/main/webapp/static/bundle.*'",
+    "build:clean-portlet-assets": "rimraf '../data-analytics-visualization-ui/src/main/webapp/static/assets/*.*'",
     "build:webpack": "webpack -p --config webpack.config.js",
-    "build:mvn": "mvn -f ../data-analytics-visualization-dashboard/pom.xml clean package",
-    "build:copy-bundle": "copyfiles -f \"./dist/*.*\" ../data-analytics-visualization-dashboard/src/main/webapp/static/",
-    "build:copy-assets": "copyfiles -f \"./dist/assets/*.*\" ../data-analytics-visualization-dashboard/src/main/webapp/static/assets/",
+    "build:mvn": "mvn -f ../data-analytics-visualization-ui/pom.xml clean package",
+    "build:copy-bundle": "copyfiles -f \"./dist/*.*\" ../data-analytics-visualization-ui/src/main/webapp/static/",
+    "build:copy-assets": "copyfiles -f \"./dist/assets/*.*\" ../data-analytics-visualization-ui/src/main/webapp/static/assets/",
     "build:replace-filenames": "node replace-filenames.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
