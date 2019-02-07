@@ -52,11 +52,11 @@ App.defaultProps = {
   },
   size: {
     width: 1000,
-    height: 630
+    height: 660
   },
   chartsSize: {
     width: 900,
-    height: 161
+    height: 237
   }
 }
 

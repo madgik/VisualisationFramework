@@ -92,7 +92,9 @@ class MapRenderer extends React.Component {
     var style = {
       width: '100%',
       height: this.props.size.height + 'px',
-      touchExtend: false
+      touchExtend: false,
+      zIndex: 0
+
     }
 
     const position = [this.state.lat, this.state.lng];

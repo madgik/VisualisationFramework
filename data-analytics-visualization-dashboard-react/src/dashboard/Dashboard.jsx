@@ -54,10 +54,10 @@ class Dashboard extends React.Component {
                 <br></br>
                 <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
               </div>
-              <div className='ui clearing segment'>
+              {/* <div className='ui clearing segment'>
                 <ChartHeaderContainer></ChartHeaderContainer>
                 <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-              </div>
+              </div> */}
             </div>
           </Columns>
         </div>
