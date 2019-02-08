@@ -350,6 +350,10 @@ function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
 }
 
+function reloadRelatedFieldData(timeSeries) {
+  return { type: visualizationConstants.SET_RELEATED_DATA, timeSeries };
+}
+
 function reloadSelectedLayer(data) {
   return { type: visualizationConstants.SELECTED_LAYER_FIELD_DETAILS, data };
 }
@@ -449,7 +453,7 @@ function getSelectedFieldData(){
 
   return function (dispatch, getState) 
   {
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata' );
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata/' + getState().data.chart1.selectedFieldInYAxis);
     let data = RequestPayload.buildMeteoRequestPayload(getState());
 
     return axios.post(resourceUrl, data, {
@@ -457,7 +461,9 @@ function getSelectedFieldData(){
           'Content-Type': 'application/json',
       }}).then(response => {
        
-        console.log(response);
+        let jsonData = JSON.stringify(response.data);
+        console.log(jsonData);
+        dispatch(reloadRelatedFieldData(jsonData));
     })
     .catch(response => {
       alert(response);

@@ -11,6 +11,8 @@ export const visualizationConstants = {
   SELECTED_LAYER_FIELD_DETAILS: 'selected-layer-field-details',
   GET_NEAREST_METEOSTATION: 'get-nearest-meteostation',
   SET_DATE_RANGE: 'set-date-range',
+  SET_RELEATED_DATA: 'set-releated-data',
+
   SET_DATE_RANGE_OPEN: 'set-date-range-open',
 
 

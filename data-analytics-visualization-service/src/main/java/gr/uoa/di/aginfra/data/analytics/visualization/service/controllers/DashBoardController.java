@@ -3,6 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,13 +119,15 @@ public class DashBoardController {
         return ResponseEntity.ok(fieldDetails.getFeatures().get(fieldDetails.getFeatures().size() -1).getProperties().get("meteostationid"));
     }
 
-    @RequestMapping(value = "meteodata", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getMeteoData( @RequestBody  Map<String, String> params) throws Exception {
+    @RequestMapping(value = "meteodata/{yAxisColumn}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMeteoData(@PathVariable("yAxisColumn") String yAxisColumn, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.get(gCubeUrlMeteoData  , params, GeometryType.Polygon);
-
-        return ResponseEntity.ok(fieldDetails);
+        List<TimeSeries> timeSeriesList = new ArrayList<>();
+        TimeSeries timeSeries = dashBoardService.getTimeSeries(yAxisColumn, fieldDetails);
+        timeSeriesList.add(timeSeries);
+        return ResponseEntity.ok(timeSeriesList);
     }
 
     @RequestMapping(value = "ndvi/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

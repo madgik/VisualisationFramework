@@ -9,7 +9,7 @@ import Modal from '@trendmicro/react-modal';
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-modal/dist/react-modal.css';
 
-export const dataValues = Object.freeze({"weather":1, "ndvi":2})
+export const dataValues = Object.freeze({ "weather": 1, "ndvi": 2 })
 
 const options = [
   { key: dataValues.weather, text: 'Weather Data', value: dataValues.weather },
@@ -25,18 +25,18 @@ class TimeSeriesHeader extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
-    
+
 
   }
 
-   setDateRange(dateRange) {
+  setDateRange(dateRange) {
 
     return function (dispatch) {
 
       dispatch(visualizationActions.setDateRange(dateRange))
     }
   }
-  
+
 
   handleClick() {
     this.props.clickButtonCallback(true);
@@ -59,25 +59,25 @@ class TimeSeriesHeader extends React.Component {
   };
 
   render() {
-    const styles = {   
-            position: 'absolute',
-            right: 25,
-            
-            }
-    const buttonStyle = {   
-              position: 'absolute',
-              right: 25,
-              top: 70
+    const styles = {
+      position: 'absolute',
+      right: 25,
 
-              }
+    }
+    const buttonStyle = {
+      position: 'absolute',
+      right: 25,
+      top: 70
+
+    }
 
       ;
-      const centerStyle = {
-        fontFamily: "sans-serif",
-        textAlign: "center"
-      };
+    const centerStyle = {
+      fontFamily: "sans-serif",
+      textAlign: "center"
+    };
     return (
-    <div >
+      <div >
         <Header as='h3'>Chart of field related data from AgroDataCube</Header>
 
         <Dropdown
@@ -87,32 +87,23 @@ class TimeSeriesHeader extends React.Component {
           disabled={this.props.fieldDetails.disabled}
           style={styles}
           value={this.props.fieldDetails.selectedFieldData}
-          onChange={(e, { value }) => this.onFieldChange(value)} 
+          onChange={(e, { value }) => this.onFieldChange(value)}
         />
-        {/* <Modal open={this.props.weatherChartDetails.isOpen } onClose={this.onCloseModal} center> */}
-          {/* <DateRangePicker
-              value={this.props.weatherChartDetails.dateRange}
-              onSelect={this.onSelect}
-              singleDateRange={true}
-            /> */}
-        
-        {/* </Modal> */}
 
-
-        <Modal center showOverlay={true} show={this.props.weatherChartDetails.isOpen } onClose={this.onCloseModal} >
+        <Modal center showOverlay={true} show={this.props.weatherChartDetails.isOpen} onClose={this.onCloseModal} >
           <Modal.Header>
-              <Modal.Title>
-                  Modal title
+            <Modal.Title>
+              Select date range
               </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <DateRangePicker
-                      value={this.props.weatherChartDetails.dateRange}
-                      onSelect={this.onSelect}
-                      singleDateRange={true}
-                    />
+              value={this.props.weatherChartDetails.dateRange}
+              onSelect={this.onSelect}
+              singleDateRange={true}
+            />
           </Modal.Body>
-</Modal>
+        </Modal>
 
         {this.props.fieldDetails.selectedFieldData === dataValues.weather && (<div>
           <div style={centerStyle}>
@@ -126,8 +117,9 @@ class TimeSeriesHeader extends React.Component {
           <Button style={buttonStyle} onClick={this.handleClick.bind(this)} >Open date picker</Button>
         </div>)}
 
-  </div>
-    )}
+      </div>
+    )
+  }
 }
 
 export default TimeSeriesHeader;

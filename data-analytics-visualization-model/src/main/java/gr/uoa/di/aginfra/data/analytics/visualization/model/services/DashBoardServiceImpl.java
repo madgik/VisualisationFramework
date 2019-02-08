@@ -4,14 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.AxisDataType;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import org.decimal4j.util.DoubleRounder;
 import org.geojson.*;
 import org.json.JSONObject;
+import org.omg.CORBA.TIMEOUT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +72,25 @@ public class DashBoardServiceImpl implements DashBoardService {
         FeatureCollection features = get(url, parameters, GeometryType.Polygon);
 
        return features;
+    }
+
+    @Override
+    public TimeSeries getTimeSeries(String yAxisField, FeatureCollection featureCollection) {
+
+        TimeSeries timeSeries = new TimeSeries("All");
+        List<Object> xAxisData = new ArrayList<>();
+        List<BigDecimal> yAxisData = new ArrayList<>();
+
+        for(Feature feature : featureCollection){
+            BigDecimal value = BigDecimal.valueOf(Double.parseDouble( String.valueOf(feature.getProperties().get(yAxisField))));
+            yAxisData.add(value);
+            xAxisData.add(feature.getProperties().get("datum"));
+        }
+
+        timeSeries.setXAxisData(xAxisData);
+        timeSeries.setYAxisData(yAxisData);
+        timeSeries.setXAxisDataType(AxisDataType.Date);
+        return timeSeries;
     }
 
     private String getGeometryPolygon(String geoJSON) throws IOException {
