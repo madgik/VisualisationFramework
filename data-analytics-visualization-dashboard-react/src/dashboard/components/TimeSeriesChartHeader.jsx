@@ -4,8 +4,10 @@ import { Dropdown, Header, Button } from 'semantic-ui-react'
 import DateRangePicker from "react-daterange-picker";
 import "react-daterange-picker/dist/css/react-calendar.css";
 import { visualizationActions } from '../actions/visualization.actions';
-import Modal from "react-responsive-modal";
+import Modal from '@trendmicro/react-modal';
 
+// Be sure to include styles at some point, probably during your bootstraping
+import '@trendmicro/react-modal/dist/react-modal.css';
 
 export const dataValues = Object.freeze({"weather":1, "ndvi":2})
 
@@ -22,7 +24,7 @@ class TimeSeriesHeader extends React.Component {
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
     this.onSelect = this.onSelect.bind(this);
-
+    this.onCloseModal = this.onCloseModal.bind(this);
     
 
   }
@@ -87,14 +89,31 @@ class TimeSeriesHeader extends React.Component {
           value={this.props.fieldDetails.selectedFieldData}
           onChange={(e, { value }) => this.onFieldChange(value)} 
         />
-        <Modal open={this.props.weatherChartDetails.isOpen } onClose={this.onCloseModal} center>
-          <DateRangePicker
+        {/* <Modal open={this.props.weatherChartDetails.isOpen } onClose={this.onCloseModal} center> */}
+          {/* <DateRangePicker
               value={this.props.weatherChartDetails.dateRange}
               onSelect={this.onSelect}
               singleDateRange={true}
-            />
+            /> */}
         
-        </Modal>
+        {/* </Modal> */}
+
+
+        <Modal center showOverlay={true} show={this.props.weatherChartDetails.isOpen } onClose={this.onCloseModal} >
+          <Modal.Header>
+              <Modal.Title>
+                  Modal title
+              </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <DateRangePicker
+                      value={this.props.weatherChartDetails.dateRange}
+                      onSelect={this.onSelect}
+                      singleDateRange={true}
+                    />
+          </Modal.Body>
+</Modal>
+
         {this.props.fieldDetails.selectedFieldData === dataValues.weather && (<div>
           <div style={centerStyle}>
             <Header as='h4'>Date Range</Header>
