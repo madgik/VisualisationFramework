@@ -155,13 +155,27 @@ const dataDefault = {
     tree: null,
     graph: null,
     barChartData: null,
-    timeSeries: [{"name":"Dashboard visual by: mean_temperature","color":null,"documents":[],"xaxisData":["2019-02-01","2019-02-02","2019-02-03","2019-02-04","2019-02-05","2019-02-06"],"yaxisData":[1.2,2.8,1.9,2.5,4.4,5.4],"xAxisDataType":"Date"}],
+    timeSeries: null,
     filters: [],
-    xAxisLabel: "Date",
-    yAxisLabel: "Plant Height",
+    xAxisLabel: "",
+    yAxisLabel: "",
     type:"Line",
     json:null,
-    selectedFieldInYAxis:'mean_temperature'
+    selectedFieldInYAxis:'mean_temperature',
+    selectedFieldInYAxisId:2,
+    fieldDataProperties:[],
+    ndviDataProperties:[],
+    freeMind: null,
+    hasColors: false,
+    hasDocuments: false,
+    heatMapData: null,
+    id: "test",
+    inner: null,
+    parameters: null,
+    tabularData: null,
+    threeDData: null,
+    tuples: null,
+    zAxisLabel: null
   },
   chart2:{
     tree: null,
@@ -210,6 +224,23 @@ export function data(state = dataDefault, action) {
           }
         }
       });
+    case visualizationConstants.SET_FIELD_DATA_PROPERTIES:
+      return update(state, {
+        chart1: {
+          fieldDataProperties: {
+            $set: action.fieldDataProperties
+          }
+        }
+      }); 
+
+    case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
+      return update(state, {
+        chart1: {
+          ndviDataProperties: {
+            $set: action.ndviDataProperties
+          }
+        }
+      }); 
      case visualizationConstants.SET_DATE_RANGE:
       return update(state, {
         weatherChartDetails: {

@@ -1,5 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DropdownProperties;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
@@ -130,6 +131,23 @@ public class DashBoardController {
         return ResponseEntity.ok(timeSeriesList);
     }
 
+    @RequestMapping(value = "meteodata/properties", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMeteoDataProperties(@RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrlMeteoData  , params, GeometryType.Polygon);
+        if(fieldDetails.getFeatures().isEmpty())
+            return ResponseEntity.ok(new ArrayList<String>());
+        List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
+        List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
+        for(int i=0 ; i< properties.size(); i++){
+            if(!properties.get(i).equals("meteostationid") && !properties.get(i).equals("datum"))
+                dropdownPropertiesList.add(new DropdownProperties(i,properties.get(i),i));
+        }
+
+        return ResponseEntity.ok(dropdownPropertiesList);
+    }
+
     @RequestMapping(value = "ndvi/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getNdviData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
@@ -137,6 +155,20 @@ public class DashBoardController {
         FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);
 
         return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "ndvi/properties/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getNdviProperties(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);
+        List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
+        List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
+        for(int i=0 ; i< properties.size(); i++){
+            dropdownPropertiesList.add(new DropdownProperties(i,properties.get(i),i));
+        }
+
+        return ResponseEntity.ok(dropdownPropertiesList);
     }
 
 }

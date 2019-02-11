@@ -115,6 +115,15 @@ class TimeSeriesHeader extends React.Component {
             </Header>
           </div>
           <Button style={buttonStyle} onClick={this.handleClick.bind(this)} >Open date picker</Button>
+          <br></br>
+          <Dropdown
+            placeholder='Properties'
+            selection
+            options={this.props.chart.fieldDataProperties}
+            style={styles}
+            value={this.props.chart.selectedFieldInYAxisId}
+            // onChange={(e, { value }) => this.onFieldChange(value)}
+        />
         </div>)}
 
       </div>

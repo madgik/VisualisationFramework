@@ -74,13 +74,13 @@ class ChartRenderer extends React.Component {
 
     var steppedLine = this.steppedLine(this.props.visualization.type);
     var noInterpolation = this.noInterpolation(this.props.visualization.type);
-
     var isXAxisTimeSeriesDate = this.isXAxisTimeSeriesDate(data);
 
     var hasColors = this.props.visualization.hasColors;
 
     for (var i = 0; i < data.length; i++) {
       var series = data[i];
+
       var name = series.name;
       if (name === null || name.length === 0) continue;
 

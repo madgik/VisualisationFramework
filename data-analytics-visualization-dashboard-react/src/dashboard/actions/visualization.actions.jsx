@@ -41,7 +41,11 @@ export const visualizationActions = {
   setFieldDataDropdownValue,
   updateFieldDataDropdownValue,
   getSelectedFieldData,
-  getNDVIFieldData
+  getNDVIFieldData,
+  reloadRelatedFieldDataProperties,
+  reloadRelatedNDVIDataProperties,
+  getNDVIFieldDataProperties,
+  getSelectedFieldDataProperties
 }
 
 /*
@@ -228,11 +232,13 @@ function updateFieldDataDropdownValue(selected) {
     dispatch(showLoading());
     switch (selected){
       case dataValues.weather:{
+        dispatch(getSelectedFieldDataProperties());
         dispatch(getSelectedFieldData(getState()));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
       case dataValues.ndvi:{
+        dispatch(getNDVIFieldDataProperties());
         dispatch(getNDVIFieldData());
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
@@ -354,6 +360,14 @@ function reloadRelatedFieldData(timeSeries) {
   return { type: visualizationConstants.SET_RELEATED_DATA, timeSeries };
 }
 
+function reloadRelatedFieldDataProperties(fieldDataProperties) {
+  return { type: visualizationConstants.SET_FIELD_DATA_PROPERTIES, fieldDataProperties };
+}
+
+function reloadRelatedNDVIDataProperties(ndviDataProperties) {
+  return { type: visualizationConstants.SET_NDVI_DATA_PROPERTIES, ndviDataProperties };
+}
+
 function reloadSelectedLayer(data) {
   return { type: visualizationConstants.SELECTED_LAYER_FIELD_DETAILS, data };
 }
@@ -460,10 +474,26 @@ function getSelectedFieldData(){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-       
-        let jsonData = JSON.stringify(response.data);
-        console.log(jsonData);
-        dispatch(reloadRelatedFieldData(jsonData));
+            dispatch(reloadRelatedFieldData(response.data));
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getSelectedFieldDataProperties(){
+
+  return function (dispatch, getState) 
+  {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata/properties');
+    let data = RequestPayload.buildMeteoRequestPayload(getState());
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+            dispatch(reloadRelatedFieldDataProperties(response.data));
     })
     .catch(response => {
       alert(response);
@@ -482,7 +512,28 @@ function getNDVIFieldData(){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-       
+
+        console.log(response);
+    })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function getNDVIFieldDataProperties(){
+
+  return function (dispatch, getState) 
+  {
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/properties/' + getState().visualization.selectedLayer.properties.fieldid);
+    let data = RequestPayload.simpleRequestPayload();
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+        dispatch(reloadRelatedNDVIDataProperties(response.data));
+
         console.log(response);
     })
     .catch(response => {

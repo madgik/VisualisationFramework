@@ -8,6 +8,7 @@ function mapStateToProps(state) {
   return{
     weatherChartDetails: state.data.weatherChartDetails,
     fieldDetails: state.visualization.fieldDetails,
+    chart: state.data.chart1
   };
 };
 

@@ -29,8 +29,9 @@ class App extends React.Component {
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     this.store.dispatch(visualizationActions.requestVisualizations());
-    const today = moment();
-    this.value = moment.range(today.clone().subtract(7, "days"), today.clone());
+    const dateToFormat = '2018-12-31';
+    const today = moment(dateToFormat);
+    this.value = moment.range(today.clone().subtract(1, "years"), today.clone());
     this.store.dispatch(visualizationActions.setDateRange(this.value));
 
   }
