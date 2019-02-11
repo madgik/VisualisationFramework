@@ -31,7 +31,13 @@ const mapDispatchToProps = dispatch => ({
     },
     onFieldCharacteristicsChange : (selected) => {
         dispatch(visualizationActions.updateFieldDataDropdownValue(selected))
-        }
+        },
+    setWeatherPropertiesDropdownValue : (value, text) => {
+      dispatch(visualizationActions.setWeatherPropertiesDropdownValue(value));
+      dispatch(visualizationActions.setWeatherPropertiesDropdownText(text));
+      dispatch(visualizationActions.getSelectedFieldData());
+
+    }
 })
 
 export default connect(

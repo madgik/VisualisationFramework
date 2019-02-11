@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setFieldDetailsDropdownValue(''));
       dispatch(visualizationActions.getNearestMeteoStation(''));
       dispatch(visualizationActions.updateFieldDataDropdownValue(''));
+      dispatch(visualizationActions.reloadRelatedFieldData(null));
 
     }
   },

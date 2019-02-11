@@ -140,9 +140,12 @@ public class DashBoardController {
             return ResponseEntity.ok(new ArrayList<String>());
         List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
         List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
-        for(int i=0 ; i< properties.size(); i++){
-            if(!properties.get(i).equals("meteostationid") && !properties.get(i).equals("datum"))
-                dropdownPropertiesList.add(new DropdownProperties(i,properties.get(i),i));
+        for(int i=0,j=0 ; i< properties.size(); i++){
+            if(!properties.get(i).equals("meteostationid") && !properties.get(i).equals("datum")) {
+                dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
+                j++;
+
+            }
         }
 
         return ResponseEntity.ok(dropdownPropertiesList);

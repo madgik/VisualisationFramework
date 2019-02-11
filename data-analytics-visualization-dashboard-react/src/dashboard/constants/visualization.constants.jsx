@@ -30,5 +30,8 @@ export const visualizationConstants = {
   DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',
   SET_FIELD_DETAILS_DROPDOWN: 'field-details-dropdown',
   SET_FIELD_DATA_DROPDOWN: 'field-data-dropdown',
+  SET_WEATHER_PROPERTIES_DROPDOWN: 'set-weather-properties-dropdown',
+  SET_WEATHER_PROPERTIES_DROPDOWN_TEXT: 'set-weather-properties-dropdown-text',
+
 
 }

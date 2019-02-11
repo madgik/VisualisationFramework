@@ -45,7 +45,10 @@ export const visualizationActions = {
   reloadRelatedFieldDataProperties,
   reloadRelatedNDVIDataProperties,
   getNDVIFieldDataProperties,
-  getSelectedFieldDataProperties
+  getSelectedFieldDataProperties,
+  setWeatherPropertiesDropdownValue,
+  setWeatherPropertiesDropdownText,
+  reloadRelatedFieldData
 }
 
 /*
@@ -187,6 +190,14 @@ function setFieldDataDropdownValue(selected) {
 
 function setDateRange(dateRange) {
   return { type: visualizationConstants.SET_DATE_RANGE, dateRange };
+}
+
+function setWeatherPropertiesDropdownValue(selected) {
+  return { type: visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN, selected };
+}
+
+function setWeatherPropertiesDropdownText(selected) {
+  return { type: visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN_TEXT, selected };
 }
 
 function setDateRangeOpen(isOpen) {

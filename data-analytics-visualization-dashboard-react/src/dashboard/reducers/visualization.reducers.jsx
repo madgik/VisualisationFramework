@@ -158,11 +158,11 @@ const dataDefault = {
     timeSeries: null,
     filters: [],
     xAxisLabel: "",
-    yAxisLabel: "",
+    yAxisLabel: "Date",
     type:"Line",
     json:null,
     selectedFieldInYAxis:'mean_temperature',
-    selectedFieldInYAxisId:2,
+    selectedFieldInYAxisId:0,
     fieldDataProperties:[],
     ndviDataProperties:[],
     freeMind: null,
@@ -232,7 +232,24 @@ export function data(state = dataDefault, action) {
           }
         }
       }); 
-
+    case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN:
+    return update(state, {
+      chart1: 
+      {
+        selectedFieldInYAxisId: {
+          $set: action.selected
+      }
+    }
+    })
+    case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN_TEXT:
+      return update(state, {
+        chart1: 
+        {
+          selectedFieldInYAxis: {
+            $set: action.selected
+        }
+      }
+      })
     case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
       return update(state, {
         chart1: {

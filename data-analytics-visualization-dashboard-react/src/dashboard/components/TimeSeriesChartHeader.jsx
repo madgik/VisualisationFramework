@@ -3,7 +3,6 @@ import React from 'react';
 import { Dropdown, Header, Button } from 'semantic-ui-react'
 import DateRangePicker from "react-daterange-picker";
 import "react-daterange-picker/dist/css/react-calendar.css";
-import { visualizationActions } from '../actions/visualization.actions';
 import Modal from '@trendmicro/react-modal';
 
 // Be sure to include styles at some point, probably during your bootstraping
@@ -25,16 +24,15 @@ class TimeSeriesHeader extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
-
+    this.updateWeatherDataDropdown = this.updateWeatherDataDropdown.bind(this);
 
   }
 
-  setDateRange(dateRange) {
-
-    return function (dispatch) {
-
-      dispatch(visualizationActions.setDateRange(dateRange))
-    }
+  updateWeatherDataDropdown= (value) =>{
+    
+    console.log(value, this.props.chart.fieldDataProperties[0].text);
+    this.props.setWeatherPropertiesDropdownValue(value, this.props.chart.fieldDataProperties[value].text);
+    
   }
 
 
@@ -122,7 +120,7 @@ class TimeSeriesHeader extends React.Component {
             options={this.props.chart.fieldDataProperties}
             style={styles}
             value={this.props.chart.selectedFieldInYAxisId}
-            // onChange={(e, { value }) => this.onFieldChange(value)}
+             onChange={(e, { value }) => this.updateWeatherDataDropdown(value)}
         />
         </div>)}
 
