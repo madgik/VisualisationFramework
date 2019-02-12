@@ -12,6 +12,9 @@ export const visualizationConstants = {
   GET_NEAREST_METEOSTATION: 'get-nearest-meteostation',
   SET_DATE_RANGE: 'set-date-range',
   SET_RELEATED_DATA: 'set-releated-data',
+  SET_FIELD_DATA_X_AXIS_LABEL: 'set-field-data-x-axis-label',
+  SET_FIELD_DATA_Y_AXIS_LABEL: 'set-field-data-y-axis-label',
+
   SET_FIELD_DATA_PROPERTIES: 'set-field-data-properties',
   SET_NDVI_DATA_PROPERTIES: 'set-ndvi-data-properties',
 

@@ -82,9 +82,11 @@ public class DashBoardServiceImpl implements DashBoardService {
         List<BigDecimal> yAxisData = new ArrayList<>();
 
         for(Feature feature : featureCollection){
-            BigDecimal value = BigDecimal.valueOf(Double.parseDouble( String.valueOf(feature.getProperties().get(yAxisField))));
-            yAxisData.add(value);
-            xAxisData.add(feature.getProperties().get("datum"));
+            if(feature.getProperties().get(yAxisField) != null) {
+                BigDecimal value = BigDecimal.valueOf(Double.parseDouble(String.valueOf(feature.getProperties().get(yAxisField))));
+                yAxisData.add(value);
+                xAxisData.add(feature.getProperties().get("datum"));
+            }
         }
 
         timeSeries.setXAxisData(xAxisData);

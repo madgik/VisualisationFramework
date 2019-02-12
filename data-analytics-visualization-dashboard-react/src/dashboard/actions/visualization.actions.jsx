@@ -48,7 +48,9 @@ export const visualizationActions = {
   getSelectedFieldDataProperties,
   setWeatherPropertiesDropdownValue,
   setWeatherPropertiesDropdownText,
-  reloadRelatedFieldData
+  reloadRelatedFieldData,
+  setXaxisFieldDataLabel,
+  setYaxisFieldDataLabel
 }
 
 /*
@@ -369,6 +371,14 @@ function reloadData(data) {
 
 function reloadRelatedFieldData(timeSeries) {
   return { type: visualizationConstants.SET_RELEATED_DATA, timeSeries };
+}
+
+function setXaxisFieldDataLabel(xAxisLabel) {
+  return { type: visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL, xAxisLabel };
+}
+
+function setYaxisFieldDataLabel(yAxisLabel) {
+  return { type: visualizationConstants.SET_FIELD_DATA_Y_AXIS_LABEL, yAxisLabel };
 }
 
 function reloadRelatedFieldDataProperties(fieldDataProperties) {

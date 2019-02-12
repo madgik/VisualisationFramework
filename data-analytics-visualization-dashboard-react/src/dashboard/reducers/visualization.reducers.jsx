@@ -158,7 +158,7 @@ const dataDefault = {
     timeSeries: null,
     filters: [],
     xAxisLabel: "",
-    yAxisLabel: "Date",
+    yAxisLabel: "",
     type:"Line",
     json:null,
     selectedFieldInYAxis:'mean_temperature',
@@ -224,6 +224,22 @@ export function data(state = dataDefault, action) {
           }
         }
       });
+    case visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL:
+      return update(state, {
+        chart1: {
+          xAxisLabel: {
+            $set: action.xAxisLabel
+          }
+        }
+      });
+    case visualizationConstants.SET_FIELD_DATA_Y_AXIS_LABEL:
+      return update(state, {
+        chart1: {
+          yAxisLabel: {
+            $set: action.yAxisLabel
+          }
+        }
+    });  
     case visualizationConstants.SET_FIELD_DATA_PROPERTIES:
       return update(state, {
         chart1: {

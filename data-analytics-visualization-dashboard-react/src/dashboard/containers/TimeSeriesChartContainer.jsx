@@ -36,6 +36,9 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setWeatherPropertiesDropdownValue(value));
       dispatch(visualizationActions.setWeatherPropertiesDropdownText(text));
       dispatch(visualizationActions.getSelectedFieldData());
+      dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
+      dispatch(visualizationActions.setYaxisFieldDataLabel(text));
+
 
     }
 })

@@ -1,13 +1,13 @@
 import React from 'react';
 import VisualizationRendererContainer from './containers/VisualizationRendererContainer'
-import ChartRenderContainer from './containers/ChartRenderContainer'
+//import ChartRenderContainer from './containers/ChartRenderContainer'
 import Chart2RenderContainer from './containers/Chart2RenderContainer'
 import HeaderMenuContainer from './containers/HeaderMenuContainer'
 import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import FieldInfoContainer from './containers/FieldInfoContainer';
-import ChartHeaderContainer from './containers/ChartHeaderContainer';
+//import ChartHeaderContainer from './containers/ChartHeaderContainer';
 import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
 
 

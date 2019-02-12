@@ -20,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.enableFieldDetailsDropdown());
       dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
+      dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
+      dispatch(visualizationActions.setYaxisFieldDataLabel("mean_temperature"));
 
     }
     else
@@ -30,6 +32,11 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.getNearestMeteoStation(''));
       dispatch(visualizationActions.updateFieldDataDropdownValue(''));
       dispatch(visualizationActions.reloadRelatedFieldData(null));
+      dispatch(visualizationActions.setXaxisFieldDataLabel(""));
+      dispatch(visualizationActions.setYaxisFieldDataLabel(""));
+      dispatch(visualizationActions.setWeatherPropertiesDropdownValue(0));
+      dispatch(visualizationActions.setWeatherPropertiesDropdownText("mean_temperature"));
+
 
     }
   },
