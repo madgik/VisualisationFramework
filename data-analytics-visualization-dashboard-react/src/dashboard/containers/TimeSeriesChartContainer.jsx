@@ -40,6 +40,16 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setYaxisFieldDataLabel(text));
 
 
+    },
+    setNdviPropertiesDropdownValue : (value, text) => {
+      dispatch(visualizationActions.setNdviPropertiesDropdownValue(value));
+      dispatch(visualizationActions.setNdviPropertiesDropdownText(text));
+      dispatch(visualizationActions.getNDVIFieldData());
+      dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
+      dispatch(visualizationActions.setYaxisFieldDataLabel(text));
+
+      console.log(value, text);
+
     }
 })
 

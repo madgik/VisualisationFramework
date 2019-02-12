@@ -151,13 +151,15 @@ public class DashBoardController {
         return ResponseEntity.ok(dropdownPropertiesList);
     }
 
-    @RequestMapping(value = "ndvi/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getNdviData(@PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
+    @RequestMapping(value = "ndvi/{id}/{yAxisColumn}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getNdviData(@PathVariable("yAxisColumn") String yAxisColumn, @PathVariable("id") String fieldId, @RequestBody  Map<String, String> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);
-
-        return ResponseEntity.ok(fieldDetails);
+        List<TimeSeries> timeSeriesList = new ArrayList<>();
+        TimeSeries timeSeries = dashBoardService.getTimeSeries(yAxisColumn, fieldDetails);
+        timeSeriesList.add(timeSeries);
+        return ResponseEntity.ok(timeSeriesList);
     }
 
     @RequestMapping(value = "ndvi/properties/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -165,10 +167,16 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetails = dashBoardService.get(gCubeUrl +"/" + fieldId + "/ndvi"  , params, GeometryType.Polygon);
+        if(fieldDetails.getFeatures().isEmpty())
+            return ResponseEntity.ok(new ArrayList<String>());
         List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
         List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
-        for(int i=0 ; i< properties.size(); i++){
-            dropdownPropertiesList.add(new DropdownProperties(i,properties.get(i),i));
+        for(int i=0,j=0 ; i< properties.size(); i++) {
+            if (!properties.get(i).equals("fieldid") && !properties.get(i).equals("datum") && !properties.get(i).equals("id")
+                    && !properties.get(i).equals("daynr")) {
+                dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
+                j++;
+            }
         }
 
         return ResponseEntity.ok(dropdownPropertiesList);

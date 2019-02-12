@@ -163,6 +163,8 @@ const dataDefault = {
     json:null,
     selectedFieldInYAxis:'mean_temperature',
     selectedFieldInYAxisId:0,
+    selectedNDVIFieldInYAxis:'ndvi_avg',
+    selectedNDVIFieldInYAxisId:0,
     fieldDataProperties:[],
     ndviDataProperties:[],
     freeMind: null,
@@ -266,6 +268,24 @@ export function data(state = dataDefault, action) {
         }
       }
       })
+      case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN:
+      return update(state, {
+        chart1: 
+        {
+          selectedNDVIFieldInYAxisId: {
+            $set: action.selected
+        }
+      }
+      })
+      case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT:
+        return update(state, {
+          chart1: 
+          {
+            selectedNDVIFieldInYAxis: {
+              $set: action.selected
+          }
+        }
+        })
     case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
       return update(state, {
         chart1: {

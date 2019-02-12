@@ -28,13 +28,13 @@ class TimeSeriesHeader extends React.Component {
 
   }
 
-  updateWeatherDataDropdown= (value) =>{
-    
-    console.log(value, this.props.chart.fieldDataProperties[0].text);
-    this.props.setWeatherPropertiesDropdownValue(value, this.props.chart.fieldDataProperties[value].text);
-    
+  updateWeatherDataDropdown = (value) => { 
+    this.props.setWeatherPropertiesDropdownValue(value, this.props.chart.fieldDataProperties[value].text);    
   }
 
+  updateNdviDataDropdown = (value) => {
+    this.props.setNdviPropertiesDropdownValue(value, this.props.chart.ndviDataProperties[value].text);
+  }
 
   handleClick() {
     this.props.clickButtonCallback(true);
@@ -121,6 +121,19 @@ class TimeSeriesHeader extends React.Component {
             style={styles}
             value={this.props.chart.selectedFieldInYAxisId}
              onChange={(e, { value }) => this.updateWeatherDataDropdown(value)}
+        />
+        </div>)}
+
+
+        {this.props.fieldDetails.selectedFieldData === dataValues.ndvi && (<div>
+          <br></br>
+          <Dropdown
+            placeholder='Properties'
+            selection
+            options={this.props.chart.ndviDataProperties}
+            style={styles}
+            value={this.props.chart.selectedNDVIFieldInYAxisId}
+             onChange={(e, { value }) => this.updateNdviDataDropdown(value)}
         />
         </div>)}
 

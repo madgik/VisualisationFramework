@@ -35,6 +35,8 @@ export const visualizationConstants = {
   SET_FIELD_DATA_DROPDOWN: 'field-data-dropdown',
   SET_WEATHER_PROPERTIES_DROPDOWN: 'set-weather-properties-dropdown',
   SET_WEATHER_PROPERTIES_DROPDOWN_TEXT: 'set-weather-properties-dropdown-text',
+  SET_NDVI_PROPERTIES_DROPDOWN: 'set-ndvi-properties-dropdown',
+  SET_NDVI_PROPERTIES_DROPDOWN_TEXT: 'set-ndvi-properties-dropdown-text',
 
 
 }

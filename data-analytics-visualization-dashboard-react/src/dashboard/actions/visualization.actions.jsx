@@ -50,7 +50,9 @@ export const visualizationActions = {
   setWeatherPropertiesDropdownText,
   reloadRelatedFieldData,
   setXaxisFieldDataLabel,
-  setYaxisFieldDataLabel
+  setYaxisFieldDataLabel,
+  setNdviPropertiesDropdownValue,
+  setNdviPropertiesDropdownText
 }
 
 /*
@@ -202,6 +204,14 @@ function setWeatherPropertiesDropdownText(selected) {
   return { type: visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN_TEXT, selected };
 }
 
+function setNdviPropertiesDropdownValue(selected) {
+  return { type: visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN, selected };
+}
+
+function setNdviPropertiesDropdownText(selected) {
+  return { type: visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT, selected };
+}
+
 function setDateRangeOpen(isOpen) {
   return { type: visualizationConstants.SET_DATE_RANGE_OPEN, isOpen };
 }
@@ -247,12 +257,14 @@ function updateFieldDataDropdownValue(selected) {
       case dataValues.weather:{
         dispatch(getSelectedFieldDataProperties());
         dispatch(getSelectedFieldData(getState()));
+        dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedFieldInYAxis));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
       case dataValues.ndvi:{
         dispatch(getNDVIFieldDataProperties());
         dispatch(getNDVIFieldData());
+        dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedNDVIFieldInYAxis));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
@@ -526,7 +538,7 @@ function getNDVIFieldData(){
 
   return function (dispatch, getState) 
   {
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/' + getState().visualization.selectedLayer.properties.fieldid);
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/' + getState().visualization.selectedLayer.properties.fieldid + "/" +  getState().data.chart1.selectedNDVIFieldInYAxis);
     let data = RequestPayload.simpleRequestPayload();
 
     return axios.post(resourceUrl, data, {
@@ -534,8 +546,8 @@ function getNDVIFieldData(){
           'Content-Type': 'application/json',
       }}).then(response => {
 
-        console.log(response);
-    })
+        dispatch(reloadRelatedFieldData(response.data));
+      })
     .catch(response => {
       alert(response);
     });
