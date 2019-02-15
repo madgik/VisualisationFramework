@@ -49,10 +49,11 @@ export const visualizationActions = {
   setWeatherPropertiesDropdownValue,
   setWeatherPropertiesDropdownText,
   reloadRelatedFieldData,
-  setXaxisFieldDataLabel,
-  setYaxisFieldDataLabel,
+  // setXaxisFieldDataLabel,
+  // setYaxisFieldDataLabel,
   setNdviPropertiesDropdownValue,
-  setNdviPropertiesDropdownText
+  setNdviPropertiesDropdownText,
+  cleanRelatedFieldData
 }
 
 /*
@@ -257,14 +258,14 @@ function updateFieldDataDropdownValue(selected) {
       case dataValues.weather:{
         dispatch(getSelectedFieldDataProperties());
         dispatch(getSelectedFieldData(getState()));
-        dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedFieldInYAxis));
+     //   dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedFieldInYAxis));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
       case dataValues.ndvi:{
         dispatch(getNDVIFieldDataProperties());
         dispatch(getNDVIFieldData());
-        dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedNDVIFieldInYAxis));
+   //     dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedNDVIFieldInYAxis));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
@@ -381,17 +382,28 @@ function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
 }
 
-function reloadRelatedFieldData(timeSeries) {
-  return { type: visualizationConstants.SET_RELEATED_DATA, timeSeries };
+function reloadRelatedFieldData(chart1) {
+  return { type: visualizationConstants.SET_RELEATED_DATA, chart1 };
 }
 
-function setXaxisFieldDataLabel(xAxisLabel) {
-  return { type: visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL, xAxisLabel };
+function cleanRelatedFieldData(){
+  return function (dispatch, getState) 
+  {
+    let chart1 =  Object.assign({}, getState().data.chart1);
+    chart1.timeSeries = null;
+    chart1.xAxisLabel = "";
+    chart1.yAxisLabel = "";
+    dispatch(reloadRelatedFieldData(chart1));
+  }
 }
 
-function setYaxisFieldDataLabel(yAxisLabel) {
-  return { type: visualizationConstants.SET_FIELD_DATA_Y_AXIS_LABEL, yAxisLabel };
-}
+// function setXaxisFieldDataLabel(xAxisLabel) {
+//   return { type: visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL, xAxisLabel };
+// }
+
+// function setYaxisFieldDataLabel(yAxisLabel) {
+//   return { type: visualizationConstants.SET_FIELD_DATA_Y_AXIS_LABEL, yAxisLabel };
+// }
 
 function reloadRelatedFieldDataProperties(fieldDataProperties) {
   return { type: visualizationConstants.SET_FIELD_DATA_PROPERTIES, fieldDataProperties };
@@ -500,14 +512,18 @@ function getSelectedFieldData(){
 
   return function (dispatch, getState) 
   {
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata/' + getState().data.chart1.selectedFieldInYAxis);
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/meteodata/' + getState().data.chart1Properties.selectedFieldInYAxis);
     let data = RequestPayload.buildMeteoRequestPayload(getState());
 
     return axios.post(resourceUrl, data, {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-            dispatch(reloadRelatedFieldData(response.data));
+        let chart1 =  Object.assign({}, getState().data.chart1);
+        chart1.timeSeries = response.data;
+        chart1.xAxisLabel = "Date";
+        chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis;
+        dispatch(reloadRelatedFieldData(chart1));
     })
     .catch(response => {
       alert(response);
@@ -538,7 +554,7 @@ function getNDVIFieldData(){
 
   return function (dispatch, getState) 
   {
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/' + getState().visualization.selectedLayer.properties.fieldid + "/" +  getState().data.chart1.selectedNDVIFieldInYAxis);
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/ndvi/' + getState().visualization.selectedLayer.properties.fieldid + "/" +  getState().data.chart1Properties.selectedNDVIFieldInYAxis);
     let data = RequestPayload.simpleRequestPayload();
 
     return axios.post(resourceUrl, data, {
@@ -546,7 +562,11 @@ function getNDVIFieldData(){
           'Content-Type': 'application/json',
       }}).then(response => {
 
-        dispatch(reloadRelatedFieldData(response.data));
+        let chart1 =  Object.assign({}, getState().data.chart1);
+        chart1.timeSeries = response.data;
+        chart1.xAxisLabel = "Date";
+        chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis;
+        dispatch(reloadRelatedFieldData(chart1));
       })
     .catch(response => {
       alert(response);

@@ -8,7 +8,9 @@ function mapStateToProps(state) {
   return{
     weatherChartDetails: state.data.weatherChartDetails,
     fieldDetails: state.visualization.fieldDetails,
-    chart: state.data.chart1
+    chart: state.data.chart1,
+    chartProperties: state.data.chart1Properties
+
   };
 };
 
@@ -36,8 +38,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setWeatherPropertiesDropdownValue(value));
       dispatch(visualizationActions.setWeatherPropertiesDropdownText(text));
       dispatch(visualizationActions.getSelectedFieldData());
-      dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
-      dispatch(visualizationActions.setYaxisFieldDataLabel(text));
+      // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
+      // dispatch(visualizationActions.setYaxisFieldDataLabel(text));
 
 
     },
@@ -45,8 +47,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setNdviPropertiesDropdownValue(value));
       dispatch(visualizationActions.setNdviPropertiesDropdownText(text));
       dispatch(visualizationActions.getNDVIFieldData());
-      dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
-      dispatch(visualizationActions.setYaxisFieldDataLabel(text));
+      // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
+      // dispatch(visualizationActions.setYaxisFieldDataLabel(text));
 
       console.log(value, text);
 

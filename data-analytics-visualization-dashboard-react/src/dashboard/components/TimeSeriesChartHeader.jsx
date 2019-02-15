@@ -29,11 +29,11 @@ class TimeSeriesHeader extends React.Component {
   }
 
   updateWeatherDataDropdown = (value) => { 
-    this.props.setWeatherPropertiesDropdownValue(value, this.props.chart.fieldDataProperties[value].text);    
+    this.props.setWeatherPropertiesDropdownValue(value, this.props.chartProperties.fieldDataProperties[value].text);    
   }
 
   updateNdviDataDropdown = (value) => {
-    this.props.setNdviPropertiesDropdownValue(value, this.props.chart.ndviDataProperties[value].text);
+    this.props.setNdviPropertiesDropdownValue(value, this.props.chartProperties.ndviDataProperties[value].text);
   }
 
   handleClick() {
@@ -117,9 +117,9 @@ class TimeSeriesHeader extends React.Component {
           <Dropdown
             placeholder='Properties'
             selection
-            options={this.props.chart.fieldDataProperties}
+            options={this.props.chartProperties.fieldDataProperties}
             style={styles}
-            value={this.props.chart.selectedFieldInYAxisId}
+            value={this.props.chartProperties.selectedFieldInYAxisId}
              onChange={(e, { value }) => this.updateWeatherDataDropdown(value)}
         />
         </div>)}
@@ -130,9 +130,9 @@ class TimeSeriesHeader extends React.Component {
           <Dropdown
             placeholder='Properties'
             selection
-            options={this.props.chart.ndviDataProperties}
+            options={this.props.chartProperties.ndviDataProperties}
             style={styles}
-            value={this.props.chart.selectedNDVIFieldInYAxisId}
+            value={this.props.chartProperties.selectedNDVIFieldInYAxisId}
              onChange={(e, { value }) => this.updateNdviDataDropdown(value)}
         />
         </div>)}

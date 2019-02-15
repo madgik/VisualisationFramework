@@ -161,12 +161,6 @@ const dataDefault = {
     yAxisLabel: "",
     type:"Line",
     json:null,
-    selectedFieldInYAxis:'mean_temperature',
-    selectedFieldInYAxisId:0,
-    selectedNDVIFieldInYAxis:'ndvi_avg',
-    selectedNDVIFieldInYAxisId:0,
-    fieldDataProperties:[],
-    ndviDataProperties:[],
     freeMind: null,
     hasColors: false,
     hasDocuments: false,
@@ -178,6 +172,14 @@ const dataDefault = {
     threeDData: null,
     tuples: null,
     zAxisLabel: null
+  },
+  chart1Properties:{
+    selectedFieldInYAxis:'mean_temperature',
+    selectedFieldInYAxisId:0,
+    selectedNDVIFieldInYAxis:'ndvi_avg',
+    selectedNDVIFieldInYAxisId:0,
+    fieldDataProperties:[],
+    ndviDataProperties:[]
   },
   chart2:{
     tree: null,
@@ -221,9 +223,8 @@ export function data(state = dataDefault, action) {
     case visualizationConstants.SET_RELEATED_DATA:
       return update(state, {
         chart1: {
-          timeSeries: {
-            $set: action.timeSeries
-          }
+            $set: action.chart1
+          
         }
       });
     case visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL:
@@ -244,7 +245,7 @@ export function data(state = dataDefault, action) {
     });  
     case visualizationConstants.SET_FIELD_DATA_PROPERTIES:
       return update(state, {
-        chart1: {
+        chart1Properties: {
           fieldDataProperties: {
             $set: action.fieldDataProperties
           }
@@ -252,7 +253,7 @@ export function data(state = dataDefault, action) {
       }); 
     case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN:
     return update(state, {
-      chart1: 
+      chart1Properties: 
       {
         selectedFieldInYAxisId: {
           $set: action.selected
@@ -261,7 +262,7 @@ export function data(state = dataDefault, action) {
     })
     case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN_TEXT:
       return update(state, {
-        chart1: 
+        chart1Properties: 
         {
           selectedFieldInYAxis: {
             $set: action.selected
@@ -270,7 +271,7 @@ export function data(state = dataDefault, action) {
       })
       case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN:
       return update(state, {
-        chart1: 
+        chart1Properties: 
         {
           selectedNDVIFieldInYAxisId: {
             $set: action.selected
@@ -279,7 +280,7 @@ export function data(state = dataDefault, action) {
       })
       case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT:
         return update(state, {
-          chart1: 
+          chart1Properties: 
           {
             selectedNDVIFieldInYAxis: {
               $set: action.selected
@@ -288,7 +289,7 @@ export function data(state = dataDefault, action) {
         })
     case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
       return update(state, {
-        chart1: {
+        chart1Properties: {
           ndviDataProperties: {
             $set: action.ndviDataProperties
           }
