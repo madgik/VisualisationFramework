@@ -83,9 +83,14 @@ public class DashBoardServiceImpl implements DashBoardService {
 
         for(Feature feature : featureCollection){
             if(feature.getProperties().get(yAxisField) != null) {
-                BigDecimal value = BigDecimal.valueOf(Double.parseDouble(String.valueOf(feature.getProperties().get(yAxisField))));
-                yAxisData.add(value);
-                xAxisData.add(feature.getProperties().get("datum"));
+                boolean skip = false;
+                if(yAxisField.equals("ndvi_avg") && Double.parseDouble(String.valueOf(feature.getProperties().get(yAxisField))) == 0.0)
+                    skip = true;
+                if(!skip) {
+                    BigDecimal value = BigDecimal.valueOf(Double.parseDouble(String.valueOf(feature.getProperties().get(yAxisField))));
+                    yAxisData.add(value);
+                    xAxisData.add(feature.getProperties().get("datum"));
+                }
             }
         }
 

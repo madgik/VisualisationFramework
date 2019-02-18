@@ -26,7 +26,9 @@ class FieldInfo extends React.Component {
                 columns={this.props.fieldDetails.columns}
                 showPagination={true}
                 defaultPageSize={8}
-                resizable={false}
+                resizable={true}
+                showPageSizeOptions= {false}
+
         />
   </div>
     );
