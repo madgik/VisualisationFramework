@@ -52,7 +52,7 @@ public class DashBoardServiceImpl implements DashBoardService {
         while (hasMoreData) {
             FeatureCollection response = httpClient.getRequest(url, headers, parameters);
             if (response.getFeatures().size() >= page_size){
-                page_offset = page_offset + page_size;
+                page_offset++; // = page_offset + page_size;
                 parameters.replace("page_offset", String.valueOf(page_offset));
             }
             else

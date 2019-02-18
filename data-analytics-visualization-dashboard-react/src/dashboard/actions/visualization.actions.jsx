@@ -565,7 +565,7 @@ function getNDVIFieldData(){
         let chart1 =  Object.assign({}, getState().data.chart1);
         chart1.timeSeries = response.data;
         chart1.xAxisLabel = "Date";
-        chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis;
+        chart1.yAxisLabel = getState().data.chart1Properties.selectedNDVIFieldInYAxis;
         dispatch(reloadRelatedFieldData(chart1));
       })
     .catch(response => {

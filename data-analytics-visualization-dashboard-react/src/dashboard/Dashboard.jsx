@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
       <div className='App-style'>
 
         <div  className="headerMenu">
-        <LoadingBar updateTime={1200} maxProgress={90} progressIncrease={5} showFastActions />
+        <LoadingBar updateTime={2200} maxProgress={90} progressIncrease={5} showFastActions />
 
         </div>
 

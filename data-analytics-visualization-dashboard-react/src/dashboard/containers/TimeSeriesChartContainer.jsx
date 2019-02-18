@@ -16,11 +16,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     onDatesChange : (startDate, endDate) => {
-        console.log(startDate + " ," + endDate);
     },
 
     onFocusChange : (inputFocus) => {
-        console.log(inputFocus);
     },
 
     setDateRange : (dateRange, dropdownValue) => {
@@ -38,20 +36,11 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.setWeatherPropertiesDropdownValue(value));
       dispatch(visualizationActions.setWeatherPropertiesDropdownText(text));
       dispatch(visualizationActions.getSelectedFieldData());
-      // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
-      // dispatch(visualizationActions.setYaxisFieldDataLabel(text));
-
-
     },
     setNdviPropertiesDropdownValue : (value, text) => {
       dispatch(visualizationActions.setNdviPropertiesDropdownValue(value));
       dispatch(visualizationActions.setNdviPropertiesDropdownText(text));
       dispatch(visualizationActions.getNDVIFieldData());
-      // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
-      // dispatch(visualizationActions.setYaxisFieldDataLabel(text));
-
-      console.log(value, text);
-
     }
 })
 
