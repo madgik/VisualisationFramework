@@ -49,11 +49,12 @@ export const visualizationActions = {
   setWeatherPropertiesDropdownValue,
   setWeatherPropertiesDropdownText,
   reloadRelatedFieldData,
-  // setXaxisFieldDataLabel,
-  // setYaxisFieldDataLabel,
   setNdviPropertiesDropdownValue,
   setNdviPropertiesDropdownText,
-  cleanRelatedFieldData
+  cleanRelatedFieldData,
+  setFieldDataSubComponent,
+  updateSoilTableHeader,
+  reloadSelectedLayerSoilData
 }
 
 /*
@@ -153,6 +154,10 @@ function updateFieldTableHeader(header) {
   return { type: visualizationConstants.UPDATE_FIELD_TABLE_HEADER, header };
 }
 
+function updateSoilTableHeader(header) {
+  return { type: visualizationConstants.UPDATE_FIELD_TABLE_HEADER, header };
+}
+
 function updateCurrentZoomLevel(zoomlevel) {
   return { type: visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL, zoomlevel };
 }
@@ -223,28 +228,30 @@ function updateFieldDetailsDropdownValue(selected) {
     dispatch(showLoading());
     switch (selected){
       case optionValues.field:{
+        dispatch(setFieldDetailsDropdownValue(selected))
         dispatch(getSelectedFieldDetails(getState().visualization.selectedLayer));
-        dispatch(hideLoading());
-        return dispatch(setFieldDetailsDropdownValue(selected));
+        return dispatch(hideLoading());
       }
       case optionValues.altitude:{
+        dispatch(setFieldDetailsDropdownValue(selected))
         dispatch(getSelectedFieldAltitudeData(getState().visualization.selectedLayer));
-        dispatch(hideLoading());
-        return dispatch(setFieldDetailsDropdownValue(selected));
+        return dispatch(hideLoading());
       }
       case optionValues.soil:{
+        dispatch(setFieldDetailsDropdownValue(selected))
         dispatch(getSelectedFieldSoilInformation(getState().visualization.selectedLayer));
-        dispatch(hideLoading());
-        return dispatch(setFieldDetailsDropdownValue(selected));
+        return dispatch(hideLoading());
       }
       case optionValues.crop:{
+        dispatch(setFieldDetailsDropdownValue(selected))
         dispatch(getCropHistory());
-        dispatch(hideLoading());
-        return dispatch(setFieldDetailsDropdownValue(selected));
+        return dispatch(hideLoading());
+
       }
       default:{
-        dispatch(hideLoading());
-        return dispatch(setFieldDetailsDropdownValue(''));
+        dispatch(setFieldDetailsDropdownValue(''));
+        return dispatch(hideLoading());
+         
       }
     }
    }
@@ -382,6 +389,10 @@ function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
 }
 
+function setFieldDataSubComponent(subComponent) {
+  return { type: visualizationConstants.SET_FIELD_DATA_SUBCOMPONENT, subComponent };
+}
+
 function reloadRelatedFieldData(chart1) {
   return { type: visualizationConstants.SET_RELEATED_DATA, chart1 };
 }
@@ -415,6 +426,9 @@ function reloadRelatedNDVIDataProperties(ndviDataProperties) {
 
 function reloadSelectedLayer(data) {
   return { type: visualizationConstants.SELECTED_LAYER_FIELD_DETAILS, data };
+}
+function reloadSelectedLayerSoilData(data) {
+  return { type: visualizationConstants.SELECTED_LAYER_FIELD_SOIL_DETAILS, data };
 }
 
 function getNearestMeteoStation(meteostation) {
@@ -469,16 +483,29 @@ function getSelectedFieldSoilInformation(selectedLayer){
   return function (dispatch, getState) 
   {
   //  let selectedLayer = selectedLayer;getState().visualization.selectedLayer;
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/field/' + selectedLayer.properties.fieldid + "/soiltypes");
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/soil/' + selectedLayer.properties.fieldid + "/soiltypes");
     let data = RequestPayload.simpleRequestPayload();
 
     return axios.post(resourceUrl, data, {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-        dispatch(updateFieldTableHeader(defaultHeader));
-
-      dispatch(reloadSelectedLayer(response.data))
+      //  let header = 
+       // dispatch(updateSoilTableHeader(header));
+        // let subComponent = {JSON.stringify(}row => {
+        //   return (
+        //     <div style={{ padding: "20px" }}>
+        //       <em>
+        //         You can put any component you want here, even another React
+        //         Table!
+        //       </em>
+        //       <br />
+        //       <br />
+        //     </div>
+        //   );
+        // };
+        // dispatch(setFieldDataSubComponent(subComponent));
+      dispatch(reloadSelectedLayerSoilData(response.data))
     })
     .catch(response => {
       alert(response);
@@ -587,7 +614,6 @@ function getNDVIFieldDataProperties(){
       }}).then(response => {
         dispatch(reloadRelatedNDVIDataProperties(response.data));
 
-        console.log(response);
     })
     .catch(response => {
       alert(response);

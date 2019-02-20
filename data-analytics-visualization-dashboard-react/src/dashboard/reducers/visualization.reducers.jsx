@@ -7,7 +7,8 @@ const visualizationDefault = {
   fieldDetails:{
     disabled: true,
     selected: "",
-    selectedFieldData:""
+    selectedFieldData:"",
+    subComponent: undefined
   },
   options: [],
   selectedLayer:'',
@@ -29,6 +30,27 @@ const visualizationDefault = {
     ]
   },
   selectedLayerFieldDetailsData: [],
+  selectedLayerFieldSoilDetails:{
+    columns: [
+      {
+        Header: "Field Id",
+        accessor: "fieldid"
+      },
+      {
+        Header: "Soil Id",
+        accessor: "soilid"
+      },
+      {
+        Header: "Soil Code",
+        accessor: "soilcode"
+      },
+      {
+        Header: "Area",
+        accessor: "area"
+      }
+    ]
+  },
+  selectedLayerFieldSoilDetailsData: [],
   dashboardTitle:''
 }
 
@@ -85,6 +107,15 @@ export function visualization(state = visualizationDefault, action) {
         }
       }
       })
+    case visualizationConstants.SET_FIELD_DATA_SUBCOMPONENT:
+      return update(state, {
+        fieldDetails: 
+        {
+          subComponent: {
+            $set: action.subComponent
+        }
+      }
+    })  
     case visualizationConstants.SET_FIELD_DETAILS_DROPDOWN:
       return update(state, {
         fieldDetails: 
@@ -103,6 +134,13 @@ export function visualization(state = visualizationDefault, action) {
     case visualizationConstants.SELECTED_LAYER_FIELD_DETAILS:
       return update(state, {
         selectedLayerFieldDetailsData: {
+          $set: action.data
+        }
+      })
+
+    case visualizationConstants.SELECTED_LAYER_FIELD_SOIL_DETAILS:
+      return update(state, {
+        selectedLayerFieldSoilDetailsData: {
           $set: action.data
         }
       })
@@ -133,6 +171,12 @@ export function visualization(state = visualizationDefault, action) {
       case visualizationConstants.UPDATE_FIELD_TABLE_HEADER:
       return update(state, {
         selectedLayerFieldDetails: {
+          $set: action.header
+        }
+      })
+      case visualizationConstants.UPDATE_FIELD_SOIL_HEADER:
+      return update(state, {
+        selectedLayerFieldSoilDetails: {
           $set: action.header
         }
       })

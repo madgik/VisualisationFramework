@@ -111,6 +111,67 @@ public class DashBoardMapConverter {
         }
     }
 
+    public static class SoilDetails{
+        private String fieldid;
+        private String soilid;
+        private String soilcode;
+        private String area;
+        private String perimeter;
+
+
+        public SoilDetails(){
+        }
+
+        public SoilDetails(String fieldid, String soilid, String soilcode, String area, String perimeter){
+            this.fieldid = fieldid;
+            this.soilid = soilid;
+            this.soilcode = soilcode;
+            this.area = area;
+            this.perimeter = perimeter;
+
+        }
+
+        public String getPerimeter() {
+            return perimeter;
+        }
+
+        public void setPerimeter(String perimeter) {
+            this.perimeter = perimeter;
+        }
+
+        public String getFieldid() {
+            return fieldid;
+        }
+
+        public void setFieldid(String fieldid) {
+            this.fieldid = fieldid;
+        }
+
+        public String getSoilid() {
+            return soilid;
+        }
+
+        public void setSoilid(String soilid) {
+            this.soilid = soilid;
+        }
+
+        public String getSoilcode() {
+            return soilcode;
+        }
+
+        public void setSoilcode(String soilcode) {
+            this.soilcode = soilcode;
+        }
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+    }
+
     public static List<FieldDetails> fieldInfoConvert(Map<String,?> properties)
     {
         List<FieldDetails> fieldDetails = new ArrayList<>();
@@ -123,7 +184,7 @@ public class DashBoardMapConverter {
         return fieldDetails;
     }
 
-    public static List<FieldDetails> soilDetailsConvert(Map<String,?> properties)
+    public static List<FieldDetails> FieldDetailsConvert(Map<String,?> properties)
     {
         List<FieldDetails> fieldDetails = new ArrayList<>();
         if(properties.get("soilcode") != null) {
@@ -140,6 +201,20 @@ public class DashBoardMapConverter {
         }
 
         return fieldDetails;
+    }
+
+    public static List<SoilDetails> soilDetailsConvert(List<Feature> features)
+    {
+        List<SoilDetails> soilDetailsList = new ArrayList<>();
+        for(Feature feature : features){
+            Map<String, ?> properties = feature.getProperties();
+            SoilDetails soilDetails = new SoilDetails(String.valueOf((properties.get("fieldid"))), String.valueOf((properties.get("soilid"))), String.valueOf((properties.get("soilcode")))
+                    , String.valueOf(properties.get("area")), String.valueOf((properties.get("perimeter"))));
+
+            soilDetailsList.add(soilDetails);
+        }
+
+        return soilDetailsList;
     }
 
     public static List<CropDetails> cropDetailsConvert(List<Feature> features){

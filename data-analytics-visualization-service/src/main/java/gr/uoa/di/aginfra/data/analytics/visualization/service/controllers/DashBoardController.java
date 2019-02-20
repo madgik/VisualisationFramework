@@ -94,9 +94,28 @@ public class DashBoardController {
 
         if(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties().get("soilid") != null) {
             FeatureCollection soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetailsFeatureCollection.getFeatures().get(0).getProperties().get("soilid"), params);
-            List<DashBoardMapConverter.FieldDetails> soil = DashBoardMapConverter.soilDetailsConvert(soilDetails.getFeatures().get(0).getProperties());
+            List<DashBoardMapConverter.FieldDetails> soil = DashBoardMapConverter.FieldDetailsConvert(soilDetails.getFeatures().get(0).getProperties());
             fieldDetails.addAll(soil);
         }
+        return ResponseEntity.ok(fieldDetails);
+    }
+
+    @RequestMapping(value = "soil/{id}/{info}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getSoilCharacteristics(@PathVariable("id") String fieldId, @PathVariable("info") String altitude, @RequestBody  Map<String, String> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
+        List<DashBoardMapConverter.SoilDetails> fieldDetails = DashBoardMapConverter.soilDetailsConvert(fieldDetailsFeatureCollection.getFeatures());
+
+//        if(fieldDetailsFeatureCollection.getFeatures().size() > 1) {
+//            for(int i=0; i < fieldDetailsFeatureCollection.getFeatures().size() ; i++) {
+//                if (fieldDetailsFeatureCollection.getFeatures().get(i).getProperties().get("soilid") != null) {
+//                    FeatureCollection soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetailsFeatureCollection.getFeatures().get(i).getProperties().get("soilid"), params);
+//                    List<DashBoardMapConverter.SoilDetails> soil = DashBoardMapConverter.soilDetailsConvert(soilDetails.getFeatures());
+//                    fieldDetails.addAll(soil);
+//                }
+//            }
+//        }
         return ResponseEntity.ok(fieldDetails);
     }
 

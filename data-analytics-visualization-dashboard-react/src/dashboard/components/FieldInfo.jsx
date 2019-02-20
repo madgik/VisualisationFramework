@@ -21,15 +21,37 @@ class FieldInfo extends React.Component {
     <div className='ui clearing '>
         <ChartHeaderContainer  title={"Selected Field Info"}></ChartHeaderContainer>
         <br/> 
-        <ReactTable
+
+        {this.props.selectedProperty !== 3 && (<ReactTable
                 data={this.props.fieldDetailsData} 
                 columns={this.props.fieldDetails.columns}
                 showPagination={true}
                 defaultPageSize={8}
                 resizable={true}
                 showPageSizeOptions= {false}
+                
+        />)}
 
-        />
+        {this.props.selectedProperty === 3 && (<ReactTable
+                data={this.props.soilDetailsData} 
+                columns={this.props.soilDetails.columns}
+                showPagination={true}
+                defaultPageSize={8}
+                resizable={true}
+                showPageSizeOptions= {false}
+                SubComponent={row => {
+                  return (
+                    <div style={{ padding: "20px" }}>
+                      <em>
+                        You can put any component you want here, even another React
+                        Table!
+                      </em>
+                      <br />
+                      <br />
+                                  </div>
+                  );
+                }}
+        />)}
   </div>
     );
   }
