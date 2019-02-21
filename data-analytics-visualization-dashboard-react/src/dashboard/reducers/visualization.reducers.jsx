@@ -1,4 +1,5 @@
 import update from 'immutability-helper'
+import React from "react";
 
 import { visualizationConstants } from '../constants/visualization.constants'
 
@@ -47,6 +48,24 @@ const visualizationDefault = {
       {
         Header: "Area",
         accessor: "area"
+      },
+      {
+        expander: true,
+        Header: () => <strong>Details</strong>,
+        width: 65,
+        Expander: ({ isExpanded, ...rest }) =>
+          <div>
+            {isExpanded
+              ? <span>&#x2299;</span>
+              : <span>&#x2295;</span>}
+          </div>,
+        style: {
+          cursor: "pointer",
+          fontSize: 25,
+          padding: "0",
+          textAlign: "center",
+          userSelect: "none"
+        },
       }
     ]
   },

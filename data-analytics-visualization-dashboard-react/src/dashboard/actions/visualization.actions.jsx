@@ -342,32 +342,26 @@ function getCropHistory() {
         let header = {
           columns: [
             {
-              width:'120',
               Header: "Year",
               accessor: "year"
             },
             {
-              width:'120',
               Header: "Crop Code",
               accessor: "crop_code"
             },
             {
-              width:'300',
               Header: "Crop name",
               accessor: "crop_name"
             },
             {
-              width:'120',
               Header: "Field id",
               accessor: "fieldid"
             },
             {
-              width:'120',
               Header: "Area",
               accessor: "area"
             },
             {
-              width:'120',
               Header: "Perimeter",
               accessor: "perimeter"
             }
@@ -375,6 +369,7 @@ function getCropHistory() {
         }
         dispatch(updateFieldTableHeader(header));
         dispatch(reloadSelectedLayer(response.data));
+        dispatch(reloadSelectedLayerSoilData([]));
 
       dispatch(hideLoading());
     })
@@ -448,7 +443,9 @@ function getSelectedFieldDetails(selectedLayer){
           'Content-Type': 'application/json',
       }}).then(response => {
         dispatch(updateFieldTableHeader(defaultHeader));
-      dispatch(reloadSelectedLayer(response.data))
+      dispatch(reloadSelectedLayer(response.data));
+      dispatch(reloadSelectedLayerSoilData([]));
+
     })
     .catch(response => {
       alert(response);
@@ -471,6 +468,8 @@ function getSelectedFieldAltitudeData(selectedLayer){
         dispatch(updateFieldTableHeader(defaultHeader));
 
       dispatch(reloadSelectedLayer(response.data))
+      dispatch(reloadSelectedLayerSoilData([]));
+
     })
     .catch(response => {
       alert(response);
@@ -490,22 +489,10 @@ function getSelectedFieldSoilInformation(selectedLayer){
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      //  let header = 
-       // dispatch(updateSoilTableHeader(header));
-        // let subComponent = {JSON.stringify(}row => {
-        //   return (
-        //     <div style={{ padding: "20px" }}>
-        //       <em>
-        //         You can put any component you want here, even another React
-        //         Table!
-        //       </em>
-        //       <br />
-        //       <br />
-        //     </div>
-        //   );
-        // };
-        // dispatch(setFieldDataSubComponent(subComponent));
+      
       dispatch(reloadSelectedLayerSoilData(response.data))
+      dispatch(reloadSelectedLayer([]));
+
     })
     .catch(response => {
       alert(response);

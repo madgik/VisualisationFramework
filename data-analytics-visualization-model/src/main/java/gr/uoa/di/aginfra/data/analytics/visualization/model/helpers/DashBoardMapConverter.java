@@ -117,6 +117,7 @@ public class DashBoardMapConverter {
         private String soilcode;
         private String area;
         private String perimeter;
+        private Soil soil;
 
 
         public SoilDetails(){
@@ -129,6 +130,14 @@ public class DashBoardMapConverter {
             this.area = area;
             this.perimeter = perimeter;
 
+        }
+
+        public Soil getSoil() {
+            return soil;
+        }
+
+        public void setSoil(Soil soil) {
+            this.soil = soil;
         }
 
         public String getPerimeter() {
@@ -169,6 +178,79 @@ public class DashBoardMapConverter {
 
         public void setArea(String area) {
             this.area = area;
+        }
+    }
+
+    public static class Soil {
+        private String entityid;
+        private String soilcode;
+        private String soilname;
+        private String soiltype;
+        private String area;
+        private String perimeter;
+
+
+        public  Soil(){
+
+        }
+
+        public Soil(String entityid,String soilcode,String soilname,String soiltype,String area,String perimeter){
+
+            this.entityid = entityid;
+            this.soilcode = soilcode;
+            this.soilname = soilname;
+            this.soiltype = soiltype;
+            this.area = area;
+            this.perimeter = perimeter;
+
+        }
+
+        public String getEntityid() {
+            return entityid;
+        }
+
+        public void setEntityid(String entityid) {
+            this.entityid = entityid;
+        }
+
+        public String getSoilcode() {
+            return soilcode;
+        }
+
+        public void setSoilcode(String soilcode) {
+            this.soilcode = soilcode;
+        }
+
+        public String getSoilname() {
+            return soilname;
+        }
+
+        public void setSoilname(String soilname) {
+            this.soilname = soilname;
+        }
+
+        public String getSoiltype() {
+            return soiltype;
+        }
+
+        public void setSoiltype(String soiltype) {
+            this.soiltype = soiltype;
+        }
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+
+        public String getPerimeter() {
+            return perimeter;
+        }
+
+        public void setPerimeter(String perimeter) {
+            this.perimeter = perimeter;
         }
     }
 
@@ -215,6 +297,15 @@ public class DashBoardMapConverter {
         }
 
         return soilDetailsList;
+    }
+
+    public static Soil soilConvert(Feature feature)
+    {
+            Map<String, ?> properties = feature.getProperties();
+            Soil soil = new Soil(String.valueOf((properties.get("entityid"))), String.valueOf((properties.get("soilcode"))), String.valueOf((properties.get("soilname")))
+                    , String.valueOf(properties.get("soiltype")), String.valueOf((properties.get("area"))), String.valueOf((properties.get("perimeter"))));
+
+        return soil;
     }
 
     public static List<CropDetails> cropDetailsConvert(List<Feature> features){

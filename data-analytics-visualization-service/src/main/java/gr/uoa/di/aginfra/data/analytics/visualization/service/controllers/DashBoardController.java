@@ -107,15 +107,15 @@ public class DashBoardController {
         FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
         List<DashBoardMapConverter.SoilDetails> fieldDetails = DashBoardMapConverter.soilDetailsConvert(fieldDetailsFeatureCollection.getFeatures());
 
-//        if(fieldDetailsFeatureCollection.getFeatures().size() > 1) {
-//            for(int i=0; i < fieldDetailsFeatureCollection.getFeatures().size() ; i++) {
-//                if (fieldDetailsFeatureCollection.getFeatures().get(i).getProperties().get("soilid") != null) {
-//                    FeatureCollection soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetailsFeatureCollection.getFeatures().get(i).getProperties().get("soilid"), params);
-//                    List<DashBoardMapConverter.SoilDetails> soil = DashBoardMapConverter.soilDetailsConvert(soilDetails.getFeatures());
-//                    fieldDetails.addAll(soil);
-//                }
-//            }
-//        }
+        FeatureCollection soilDetails = null;
+        for(int i=0; i < fieldDetails.size() ; i++) {
+             soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
+             DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
+             fieldDetails.get(i).setSoil(soil);
+
+        }
+        soilDetails.hashCode();
+
         return ResponseEntity.ok(fieldDetails);
     }
 
