@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Message, Image } from 'semantic-ui-react'
+import { Message, Image, Checkbox } from 'semantic-ui-react'
 
 import csvImage from '../imgs/csv.png'
 import pieImage from '../imgs/pie.png'
@@ -8,6 +8,8 @@ import treeImage from '../imgs/tree.png'
 import graphImage from '../imgs/graph.png'
 import freeMindImage from '../imgs/freemind.png'
 import geoJsonImage from '../imgs/geojson.png'
+import update from 'immutability-helper';
+
 
 class UploadDataMessage extends React.Component {
 
@@ -47,12 +49,33 @@ class UploadDataMessage extends React.Component {
     Table: csvImage
   }
 
+  handleCheckLayers = (value, e) =>{
+    // const checked = update(this.props.checked, {
+    //   [checked]: { $set: value }
+    // });
+    console.log(this.props.onCheckLayerChange)
+    console.log("im in update1:"+value+"and checked:");
+    // this.props.checked = value;
+    this.props.onCheckLayerChange(value);
+  }
+
   render() {
     return <Message warning visible>
       <Message.Header>{this.typeToMessage[this.props.type]}</Message.Header>
       <p>
         <Image src={this.typeToImage[this.props.type]} alt='tree.json' />
       </p>
+
+       {(this.props.type === "Map") ? 
+          <div>
+            <p>Or select a layer from list</p>
+            <Checkbox
+              type="checkbox"
+              checked={this.props.checked} 
+              onChange={(e, { checked }) => this.handleCheckLayers(checked)}
+              />
+          </div>
+        : ''}
     </Message>;
   }
 }

@@ -15,10 +15,12 @@ export const configItemConstants = {
   UPDATE_TRANSFORMATION: 'update-transformation-item',
   UPDATE_FILTER: 'update-filter',
   REMOVE_FILTER: 'remove-filter',
+  SET_GEOANALYTICS_LAYERS: 'set-geoanalytics-layers',
   SET_UPLOADED_FILE_METADATA: 'set-uploaded-file-metadata',
   UPDATE_MENU_ITEM: 'update-menu-item',
   END_STORE_ITEM: 'end-store-item',
   END_DELETE_ITEM: 'end-delete-item',
   SHOW_VALIDATION_RESULT: 'show-validation-result',
-  SHOW_MODAL_ERROR: 'show-modal-error'
+  SHOW_MODAL_ERROR: 'show-modal-error',
+  UPDATE_CHECK_LAYER: 'update-check-layer'
 }

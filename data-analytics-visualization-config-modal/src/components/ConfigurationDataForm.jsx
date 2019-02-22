@@ -6,6 +6,8 @@ import { Grid, Header, Divider, List, Icon } from 'semantic-ui-react'
 
 import ConfigurationDataJoinEditor from './ConfigurationDataJoinEditor'
 import UploadDataMessage from './UploadDataMessage';
+import ConfigurationDataGeoanalyticsSelector from './ConfigurationDataGeoanalyticsSelector';
+
 
 class ConfigurationDataForm extends React.Component {
 
@@ -22,7 +24,8 @@ class ConfigurationDataForm extends React.Component {
       <ConfigurationDataJoinEditor
         dataSources={this.props.data.dataSources}
         joins={this.props.data.joins}
-        onJoinFieldChange={this.props.onJoinFieldChange} />
+        onJoinFieldChange={this.props.onJoinFieldChange} 
+        />
       <Grid>
         {(this.props.data.dataSources || []).map((item, index) => {
           return <Grid.Column key={item.source} mobile={16} tablet={8} computer={6}>
@@ -35,15 +38,29 @@ class ConfigurationDataForm extends React.Component {
               })}
             </List>
             <Icon name='remove' className="remove-icon" onClick={() => this.handleRemoveFileClick(index)} />
+                
           </Grid.Column>
         })}
       </Grid>
       {(this.props.data.dataSources || []).length > 0 ?
         <Divider /> : ''}
-      <UploadDataMessage type={this.props.data.type} />
-      <Dropzone onDrop={this.handleFileDropped.bind(this)}>
-        <p>Drop a file here or click to select one</p>
-      </Dropzone>
+          <div>
+            <UploadDataMessage 
+              type={this.props.data.type} 
+              checked={this.props.geoanalytics.checked}
+              onCheckLayerChange={this.props.onCheckLayerChange}
+              />
+           
+            {(!this.props.geoanalytics.checked) ? 
+              <Dropzone onDrop={this.handleFileDropped.bind(this)}>
+                <p>Drop a file here or click to select one</p>
+              </Dropzone>
+              : 
+              <ConfigurationDataGeoanalyticsSelector
+                layers={this.props.geoanalytics.layers}/>
+            }
+          </div>
+    
     </div>);
   }
 }

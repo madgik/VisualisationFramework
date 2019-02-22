@@ -1,6 +1,7 @@
 import { configItemConstants } from '../constants'
 import { configurationService } from '../services'
 import { documentService } from '../services'
+import { geoanalyticsService } from '../services'
 
 import ConfigurationValidators from '../validation/ConfigurationValidators'
 
@@ -20,7 +21,9 @@ export const configItemActions = {
   storeConfiguration,
   deleteConfiguration,
   closeItemEdit,
-  showErrorMessage
+  showErrorMessage,
+  updateGeoanalyticsLayers,
+  updateCheckLayer
 }
 
 /*
@@ -70,6 +73,23 @@ const visualizationToDataTypeMap = {
 
 function visualizationToDataType(type) {
   return visualizationToDataTypeMap[type];
+}
+
+function updateGeoanalyticsLayers(){
+  return function (dispatch) {
+    return geoanalyticsService.getLayers().then(response => {
+      dispatch(setGeoanalyticsLayers(response.data));
+    }).catch(_ => { });
+  }
+}
+
+function setGeoanalyticsLayers(layers){
+  return {type: configItemConstants.SET_GEOANALYTICS_LAYERS, layers}
+}
+
+function updateCheckLayer(value) {
+  console.log("im in update:"+value);
+  return {type:configItemConstants.UPDATE_CHECK_LAYER, value}
 }
 
 function uploadFile(files, type) {

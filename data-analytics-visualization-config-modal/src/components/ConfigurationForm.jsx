@@ -52,9 +52,11 @@ class ConfigurationForm extends React.Component {
             {this.isDataMenuItemSelected() ?
               <ConfigurationDataForm
                 data={this.props.data}
+                geoanalytics={this.props.geoanalytics}
                 onFileDropped={this.props.onFileDropped}
                 onRemoveFileClick={this.props.onRemoveFileClick}
-                onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
+                onJoinFieldChange={this.props.onJoinFieldChange} 
+                onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor
                 transformations={this.props.data.transformations}

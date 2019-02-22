@@ -38,7 +38,11 @@ function defaultState() {
     validation: validation,
     isFormValid: true,
     validationPanelMessages: [],
-    errorMessage: null
+    errorMessage: null,
+    geoanalytics: {
+      layers: [],
+      checked: false
+    }
   }
 }
 
@@ -231,8 +235,26 @@ export function configItem(state = defaultState(), action) {
           $set: action.message
         }
       });
+    case configItemConstants.SET_GEOANALYTICS_LAYERS:
+      if (!state.geoanalytics.layers) state.geoanalytics.layers = [];
+      return update(state, {
+        geoanalytics: {
+          layers: {
+            $set: action.geoanalytics.layers 
+          }
+        }
+      });
+    case configItemConstants.UPDATE_CHECK_LAYER:
+      return update(state, {
+        geoanalytics: {
+          checked: {
+            $set: action.value
+          }
+        }
+      });
     default:
       return state;
   }
+  
 }
 

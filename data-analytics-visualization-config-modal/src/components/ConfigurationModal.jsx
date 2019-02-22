@@ -26,7 +26,11 @@ class ConfigurationModal extends React.Component {
       }))
     );
   }
-
+  
+  extractGeoanalyticsLayers() {
+      this.store.dispatch(configItemActions.updateGeoanalyticsLayers());
+  }
+  
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     Ajax.setIsLocalDeployment(this.props.isLocalDeployment);
@@ -40,6 +44,7 @@ class ConfigurationModal extends React.Component {
   componentDidUpdate() {
     this.checkRefresh();
   }
+
 
   checkRefresh() {
     if (this.props.isNew !== this.isNew ||

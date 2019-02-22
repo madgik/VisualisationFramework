@@ -26,6 +26,7 @@ class ConfigurationModalInner extends React.Component {
       }))
     );
   }
+  
 
   render() {
     return (
@@ -35,6 +36,7 @@ class ConfigurationModalInner extends React.Component {
           <ConfigurationForm
             data={this.props.data}
             menuState={this.props.menu}
+            geoanalytics={this.props.geoanalytics}
             validation={this.props.validation}
             onFieldChange={this.props.onFieldChange}
             onFileDropped={this.props.onFileDropped}
@@ -44,7 +46,9 @@ class ConfigurationModalInner extends React.Component {
             onFilterAddition={this.props.onFilterAddition}
             onFilterFieldChange={this.props.onFilterFieldChange}
             onFilterRemoval={this.props.onFilterRemoval}
-            onTransformationAddition={this.props.onTransformationAddition} />
+            onTransformationAddition={this.props.onTransformationAddition}
+            onCheckLayerChange={this.props.onCheckLayerChange}
+            />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
@@ -81,7 +85,8 @@ const mapDispatchToProps = dispatch => ({
   //onModalClose: () => dispatch(configItemActions.closeItemEdit()),
   onSavePressed: (callback) => dispatch(configItemActions.storeConfiguration(callback)),
   onDeletePressed: (callback) => dispatch(configItemActions.deleteConfiguration(callback)),
-  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation))
+  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
+  onCheckLayerChange: (value) => dispatch(configItemActions.updateCheckLayer(value))
 })
 
 export default connect(
