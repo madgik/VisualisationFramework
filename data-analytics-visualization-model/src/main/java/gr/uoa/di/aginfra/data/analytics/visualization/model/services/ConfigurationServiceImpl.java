@@ -1,15 +1,13 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporterFactory;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.ConfigurationCriteriaDto;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFormatException;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.MMReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.querying.ConfigurationCriteria;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,9 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {

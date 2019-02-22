@@ -69,6 +69,9 @@ export function data(state = dataDefault, action) {
         },
         threeDData: {
           $set: action.data.threeDData
+        },
+        heatMapData: {
+          $set: action.data.heatMapData
         }
       });
     default:

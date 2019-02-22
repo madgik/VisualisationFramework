@@ -8,7 +8,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.extrac
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.DataSetFilterApplier;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.Filter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.filters.FilterOptionsExtractor;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations.UnpivotTransformer;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformation.UnpivotTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;

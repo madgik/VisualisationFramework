@@ -30,7 +30,8 @@ function defaultState() {
   return {
     isNew: true,
     data: {
-      type: 'Line'
+      type: 'Line',
+      activeDocuments:1
     },
     menu: {
       activeItem: 'general'

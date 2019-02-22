@@ -68,7 +68,9 @@ const visualizationToDataTypeMap = {
   'Step': 'Records',
   'Map': 'JSON',
   'WorldWindMap': 'JSON',
-  'Table': 'Records'
+  'Table': 'Records',
+  'HeatMap': 'Records'
+
 }
 
 function visualizationToDataType(type) {

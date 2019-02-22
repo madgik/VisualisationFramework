@@ -54,6 +54,8 @@ public class Configuration {
 
 	private String documentField;
 
+	private int activeDocuments;
+
 	private Date createdAt;
 
 	private Date updatedAt;
@@ -256,5 +258,13 @@ public class Configuration {
 
 	public void setTransformations(Transformation transformations) {
 		this.transformations = transformations;
+	}
+
+	public int getActiveDocuments() {
+		return activeDocuments;
+	}
+
+	public void setActiveDocuments(int activeDocuments) {
+		this.activeDocuments = activeDocuments;
 	}
 }

@@ -8,6 +8,9 @@ import ConfigurationValidators from '../validation/ConfigurationValidators'
 
 import TransformationFiltering from '../utilities/TransformationsFiltering';
 
+import InputNumber from 'rc-input-number';
+
+
 
 class ConfigurationDocumentsForm extends React.Component {
 
@@ -35,6 +38,10 @@ class ConfigurationDocumentsForm extends React.Component {
     return suggestions;
   }
 
+  onChange = (v) => {
+    this.handleFieldChange('activeDocuments', v)
+  }
+
   render() {
     return (<React.Fragment>
       <Form.Field>
@@ -45,7 +52,22 @@ class ConfigurationDocumentsForm extends React.Component {
           options={this.extractFieldSuggestions(true)}
           value={this.props.data.documentField}
           onChange={(e, { value }) => this.handleFieldChange('documentField', value)} />
+
       </Form.Field>
+
+      <Form.Field>
+        <label>Active Documents</label>
+        <InputNumber
+          min={1}
+          max={10}
+          step={1}
+          value={this.props.data.activeDocuments}
+          style={{ width: 100 }}
+          onChange={this.onChange}
+        />
+      </Form.Field>
+
+
     </React.Fragment>);
   }
 }
