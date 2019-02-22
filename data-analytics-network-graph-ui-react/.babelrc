@@ -1,0 +1,11 @@
+{
+    "presets": [
+      ["es2015","es2016"],
+      "react"
+    ],
+    "plugins": [
+      "babel-plugin-transform-class-properties",
+      "transform-object-rest-spread",
+      "transform-react-remove-prop-types"
+    ]
+  }
