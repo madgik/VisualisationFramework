@@ -29,11 +29,7 @@ class DocumentRenderer extends React.Component {
         position: 'relative'
 
       }
-      var columnStyle = {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-      }
+      
     return (
       <div style={positionRelative} >
         <Loader active={this.props.loading}>Loading</Loader>
