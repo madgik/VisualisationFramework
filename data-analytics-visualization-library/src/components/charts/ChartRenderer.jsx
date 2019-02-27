@@ -5,6 +5,7 @@ import RC2 from 'react-chartjs-2';
 import { Chart } from 'react-chartjs-2';
 
 import $ from 'jquery';
+import { Point } from '../../utils/Point';
 
 class ChartRenderer extends React.Component {
 
@@ -294,6 +295,7 @@ class ChartRenderer extends React.Component {
   }
 
   cachedData = null
+  selectedPoints =  new Array();
 
   onElementClick(e) {
     if (this.props.visualization.hasDocuments) {
@@ -302,31 +304,41 @@ class ChartRenderer extends React.Component {
         var _index = e[0]._index;
         var _chart = e[0]._chart
 
-        this.cachedData.datasets[_datasetIndex].pointBackgroundColor[_index] = 'rgba(255, 0, 0, 0.8)';
-        this.cachedData.datasets[_datasetIndex].pointRadius[_index] = 7;
-        _chart.update();
-
         if (this.isBarChart(this.props.visualization.type)) {
           //TODO...
         } else {
-          var position = this.props.document.modalSrc.findIndex(image => image.imageName === this.cachedData.datasets[_datasetIndex].data[_index].doc);
+          console.log(this.props.document.modalSrc);
+          console.log(this.cachedData.datasets[_datasetIndex].data[_index].doc + "-" + _datasetIndex);
+
+          var position = this.props.document.modalSrc.findIndex(image => image.imageName + "-" + image.lineChartId === this.cachedData.datasets[_datasetIndex].data[_index].doc + "-" + _datasetIndex);
+          console.log(_datasetIndex +"  , " + _index);
+          console.log(position);
+          console.log(this.selectedPoints);
           
           if (this.cachedData.datasets[_datasetIndex].data[_index].doc && position === -1) {
-            console.log(this.cachedData);
-            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments);
+            let point = new Point();
+            point.chart_index = _datasetIndex;
+            point.data_index = _index;
+            this.shouldPointTableUpdate(point);
+            this.cachedData.datasets[_datasetIndex].pointBackgroundColor[_index] = 'rgba(243, 0, 17, 0.8)';
+            this.cachedData.datasets[_datasetIndex].pointRadius[_index] = 6;
+            _chart.update();
+            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments, _datasetIndex);
           }
           else {
             var image = this.props.document.modalSrc[position];
             var clone = this.props.document.modalSrc.slice(0);
             clone.splice(position, 1);
             clone.push(image);
-            this.props.onUpdateDocuments(clone)
+            var firstPointElement = this.selectedPoints[0];
+            this.selectedPoints.splice(0,1);
+            this.selectedPoints.push(firstPointElement);
+
+            this.props.onUpdateDocuments(clone);
           }
           }
         } else {
 
-          console.log(this.chartReference);
-          console.log(this.cachedData.datasets);
           for(var k=0 ;k< this.cachedData.datasets.length ; k++ )
           {
             var initialBackgroundColors = new Array();
@@ -337,6 +349,7 @@ class ChartRenderer extends React.Component {
             }
             this.cachedData.datasets[k].pointBackgroundColor = initialBackgroundColors;
             this.cachedData.datasets[k].pointRadius = pointRadius;
+            this.selectedPoints =  new Array();
             this.chartReference.chartInstance.update();
             this.props.onChartCanvasClick();
           }
@@ -347,6 +360,17 @@ class ChartRenderer extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.visualization !== this.props.visualization;
 }
+
+  shouldPointTableUpdate(point){
+
+    if(this.selectedPoints.length >= this.props.visualization.activeDocuments){
+      let p = this.selectedPoints[0];
+      this.cachedData.datasets[p.chart_index].pointBackgroundColor[p.data_index] = "rgba(0,0,0,0.1)";
+      this.cachedData.datasets[p.chart_index].pointRadius[p.data_index] = 3;
+      this.selectedPoints.splice(0,1);
+    }
+    this.selectedPoints.push(point);
+  }
 
   render() {
     

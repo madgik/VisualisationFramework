@@ -15,7 +15,7 @@ export const documentActions = {
  * action creators
  */
 
-function showDocument(document, modalSrc, activeDocuments) {
+function showDocument(document, modalSrc, activeDocuments, lineChartId) {
 
   return function (dispatch) {
 
@@ -36,10 +36,10 @@ function showDocument(document, modalSrc, activeDocuments) {
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(response.data);
         if(modalSrc.length < activeDocuments){
-          modalSrc.push({"imageName":document, "url": imageUrl});}
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId});}
         else{
           modalSrc.splice(0, 1);
-          modalSrc.push({"imageName":document, "url": imageUrl});
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId});
         }
         dispatch(showDocumentData(modalSrc))
 
