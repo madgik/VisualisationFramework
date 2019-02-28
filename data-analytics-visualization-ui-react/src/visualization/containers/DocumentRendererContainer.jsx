@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import DocumentRenderer from '../components/documents/DocumentRenderer'
+import { documentActions } from '../actions';
 
 const mapStateToProps = state => ({
   loading: state.document.loading,
@@ -10,7 +11,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
- 
+  onChartCanvasClick: () => {
+    dispatch(documentActions.resetSelectedPoints())
+  }
 })
 
 export default connect(
