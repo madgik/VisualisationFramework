@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { Image, Loader, Grid } from 'semantic-ui-react'
 import NoImageIcon from './NoImageIcon';
 import idGenerator from 'react-id-generator';
+import { Button, Icon } from 'semantic-ui-react'
+import Center from 'react-center';
 
 class DocumentRenderer extends React.Component {
 
@@ -42,9 +45,13 @@ class DocumentRenderer extends React.Component {
               </Grid.Column>
             }
         </Grid.Row>
-
         </Grid>
-      </div>
+        <Center>
+          <Button className="chart-printer" icon onClick={this.props.onConfigurationClick}>
+            <Icon name='cogs' />
+          </Button>
+        </Center>
+        </div>
     );
   }
 }

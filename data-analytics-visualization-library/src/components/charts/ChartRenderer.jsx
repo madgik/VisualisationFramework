@@ -310,7 +310,7 @@ class ChartRenderer extends React.Component {
           console.log(this.props.document.modalSrc);
           console.log(this.cachedData.datasets[_datasetIndex].data[_index].doc + "-" + _datasetIndex);
 
-          var position = this.props.document.modalSrc.findIndex(image => image.imageName + "-" + image.lineChartId === this.cachedData.datasets[_datasetIndex].data[_index].doc + "-" + _datasetIndex);
+          var position = this.props.document.modalSrc.findIndex(image => image.imageName + "-" + image.lineChartId + "-" + image.pointId === this.cachedData.datasets[_datasetIndex].data[_index].doc + "-" + _datasetIndex + "-" + _index);
           console.log(_datasetIndex +"  , " + _index);
           console.log(position);
           console.log(this.selectedPoints);
@@ -323,7 +323,7 @@ class ChartRenderer extends React.Component {
             this.cachedData.datasets[_datasetIndex].pointBackgroundColor[_index] = 'rgba(243, 0, 17, 0.8)';
             this.cachedData.datasets[_datasetIndex].pointRadius[_index] = 6;
             _chart.update();
-            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments, _datasetIndex);
+            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments, _datasetIndex, _index);
           }
           else {
             var image = this.props.document.modalSrc[position];
