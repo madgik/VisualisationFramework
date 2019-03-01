@@ -22,6 +22,8 @@ const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
     // dispatch(documentActions.showDocument(url, modalSrc, activeDocuments))
     console.log(feature);
+   },
+   updateCurrentGeometry: (geometry, zoom) => {
    }
 })
 
