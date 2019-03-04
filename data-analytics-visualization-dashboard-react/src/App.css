@@ -143,9 +143,10 @@
     display: inline;
 }
 
-div[style] {
+/* div[style] {
   overflow-x: visible !important;
-}
+
+} */
 
 
 /* .styleDiv{

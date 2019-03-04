@@ -54,7 +54,8 @@ export const visualizationActions = {
   cleanRelatedFieldData,
   setFieldDataSubComponent,
   updateSoilTableHeader,
-  reloadSelectedLayerSoilData
+  reloadSelectedLayerSoilData,
+  loadRelatedData
 }
 
 /*
@@ -400,6 +401,23 @@ function cleanRelatedFieldData(){
     chart1.xAxisLabel = "";
     chart1.yAxisLabel = "";
     dispatch(reloadRelatedFieldData(chart1));
+  }
+}
+
+function loadRelatedData(feature){
+  return function (dispatch, getState) 
+  {
+    let fieldDetails =  Object.assign({}, getState().visualization.fieldDetails);
+    console.log(fieldDetails);
+    if(fieldDetails.selected === ""){
+      dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
+      dispatch(visualizationActions.getSelectedFieldDetails(feature));
+    }
+    else{
+      dispatch(visualizationActions.setFieldDetailsDropdownValue(fieldDetails.selected));
+      dispatch(visualizationActions.updateFieldDetailsDropdownValue(fieldDetails.selected));
+      dispatch(visualizationActions.getSelectedFieldMeteoStation(feature));
+    }
   }
 }
 

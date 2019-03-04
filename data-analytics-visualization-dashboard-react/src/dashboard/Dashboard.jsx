@@ -37,10 +37,9 @@ class Dashboard extends React.Component {
         <div className="content">
         <HeaderMenuContainer> </HeaderMenuContainer>
 
-          <Columns columns={2} gap='8px' queries={queries}  
-          >
+          <Columns columns={2} gap='8px' queries={queries} rootStyles={{overflowX:'visible'}} >
             <div className='ui clearing segment '  >
-              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} className="styleDiv" />
+              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef}  />
               <MapConfigurationContainer />
             </div>
             <div >
