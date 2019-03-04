@@ -12,7 +12,7 @@ export const dataValues = Object.freeze({ "weather": 1, "ndvi": 2 })
 
 const options = [
   { key: dataValues.weather, text: 'Weather Data', value: dataValues.weather },
-  { key: dataValues.ndvi, text: 'Ndvi', value: dataValues.ndvi }
+  { key: dataValues.ndvi, text: 'NDVI', value: dataValues.ndvi }
 ]
 
 class TimeSeriesHeader extends React.Component {
@@ -76,7 +76,7 @@ class TimeSeriesHeader extends React.Component {
     };
     return (
       <div >
-        <Header as='h3'>Chart of field related data from AgroDataCube</Header>
+        <Header as='h3'>Field time series</Header>
 
         <Dropdown
           placeholder='Field data'

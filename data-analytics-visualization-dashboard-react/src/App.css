@@ -142,10 +142,19 @@
   h1, h2, h3 {
     display: inline;
 }
+
 div[style] {
   overflow-x: visible !important;
 }
 
+
+/* .styleDiv{
+  overflow-x: hidden !important;
+
+} */
+/* element[style] {
+  display: inline !important;
+} */
 html{
   height: 100%;
 }

@@ -20,7 +20,7 @@ class FieldInfo extends React.Component {
   render() {
     return (
       <div className='ui clearing '>
-        <ChartHeaderContainer title={"Selected Field Info"}></ChartHeaderContainer>
+        <ChartHeaderContainer title={"Field information"}></ChartHeaderContainer>
         <br />
 
         {this.props.selectedProperty !== 3 && (<ReactTable
@@ -28,7 +28,7 @@ class FieldInfo extends React.Component {
           columns={this.props.fieldDetails.columns}
           showPagination={true}
           defaultPageSize={8}
-          resizable={false}
+          resizable={true}
           showPageSizeOptions={false}
 
         />)}
@@ -38,7 +38,7 @@ class FieldInfo extends React.Component {
           columns={this.props.soilDetails.columns}
           showPagination={true}
           defaultPageSize={8}
-          resizable={false}
+          resizable={true}
           className="-striped -highlight"
           showPageSizeOptions={false}
           SubComponent={row => {

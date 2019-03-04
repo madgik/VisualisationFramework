@@ -317,6 +317,7 @@ public class DashBoardMapConverter {
 
             cropDetails.add(cropDetail);
         }
+        cropDetails.sort(Comparator.comparing(CropDetails::getYear));
 
         return cropDetails;
     }

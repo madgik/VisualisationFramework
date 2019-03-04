@@ -34,10 +34,10 @@ class HeaderMenu extends React.Component {
             />
             </div>
         </Header>
-        <Button floated='right'>Save</Button>
+        {/* <Button floated='right'>Save</Button>
         <Button floated='right'>Open</Button>
         <Button floated='right'>Share</Button>
-        <Button floated='right'>Remove</Button>
+        <Button floated='right'>Remove</Button> */}
 
   </div>
     );
