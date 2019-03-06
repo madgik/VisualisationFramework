@@ -16,9 +16,12 @@ const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
     dispatch(visualizationActions.selectLayer(feature));
     if(feature !== ""){
+      dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
+      
+      dispatch(visualizationActions.enableFieldDetailsDropdown())
+
       // dispatch(visualizationActions.getSelectedFieldDetails(feature));
-       dispatch(visualizationActions.enableFieldDetailsDropdown());
-       dispatch(visualizationActions.loadRelatedData(feature));
+     
       // dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       // dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
       // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));

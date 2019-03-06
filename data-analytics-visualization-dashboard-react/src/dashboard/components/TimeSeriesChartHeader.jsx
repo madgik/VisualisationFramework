@@ -112,13 +112,14 @@ class TimeSeriesHeader extends React.Component {
               {this.props.weatherChartDetails.dateRange.end.format("YYYY-MM-DD")}
             </Header>
           </div>
-          <Button style={buttonStyle} onClick={this.handleClick.bind(this)} >Open date picker</Button>
+          <Button style={buttonStyle} onClick={this.handleClick.bind(this)} disabled={this.props.fieldDetails.disabled}>Open date picker</Button>
           <br></br>
           <Dropdown
             placeholder='Properties'
             selection
             options={this.props.chartProperties.fieldDataProperties}
             style={styles}
+            disabled={this.props.fieldDetails.disabled}
             value={this.props.chartProperties.selectedFieldInYAxisId}
              onChange={(e, { value }) => this.updateWeatherDataDropdown(value)}
         />
@@ -132,6 +133,7 @@ class TimeSeriesHeader extends React.Component {
             selection
             options={this.props.chartProperties.ndviDataProperties}
             style={styles}
+            disabled={this.props.fieldDetails.disabled}
             value={this.props.chartProperties.selectedNDVIFieldInYAxisId}
              onChange={(e, { value }) => this.updateNdviDataDropdown(value)}
         />

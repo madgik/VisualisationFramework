@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Header, Input } from 'semantic-ui-react'
+import {  Header, Input } from 'semantic-ui-react'
 
 class HeaderMenu extends React.Component {
 

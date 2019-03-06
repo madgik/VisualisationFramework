@@ -412,11 +412,18 @@ function loadRelatedData(feature){
     if(fieldDetails.selected === ""){
       dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       dispatch(visualizationActions.getSelectedFieldDetails(feature));
+      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
+      
+
     }
     else{
-      dispatch(visualizationActions.setFieldDetailsDropdownValue(fieldDetails.selected));
+      // dispatch(visualizationActions.setFieldDetailsDropdownValue(fieldDetails.selected));
+      // dispatch(visualizationActions.getSelectedFieldDetails(feature));
       dispatch(visualizationActions.updateFieldDetailsDropdownValue(fieldDetails.selected));
-      dispatch(visualizationActions.getSelectedFieldMeteoStation(feature));
+      dispatch(visualizationActions.updateFieldDataDropdownValue(fieldDetails.selectedFieldData));
+
+      
+    //  dispatch(visualizationActions.getSelectedFieldMeteoStation(feature));
     }
   }
 }
@@ -531,7 +538,7 @@ function getSelectedFieldMeteoStation(selectedLayer){
           'Content-Type': 'application/json',
       }}).then(response => {
       dispatch(getNearestMeteoStation(response.data));
-      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
+      dispatch(loadRelatedData(selectedLayer))
 
     })
     .catch(response => {
