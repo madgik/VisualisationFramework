@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
             integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
             crossorigin="" />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.7" />" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.0" />" />
     </head>
     <body>
     	<p id="portletInfo" data-namespace="<portlet:namespace/>" data-loginurl="<portlet:resourceURL />" hidden></p>
@@ -31,7 +31,7 @@
         <script type="text/javascript">
         	window.staticFileBaseUrl = '<%=request.getContextPath()%>/static/';
         </script>
-        <script src="<%=request.getContextPath()%>/static/bundle.min.js?1.0.7"></script>
+        <script src="<%=request.getContextPath()%>/static/bundle.min.js?1.0.0"></script>
     </body>
 </html>
 
