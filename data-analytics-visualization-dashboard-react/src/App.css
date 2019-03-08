@@ -177,7 +177,7 @@ body{
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 23px;  /* for liferay  */
+  top: 29px;  /* 23px for dl013 liferay  */
   z-index: 1;
   width: 100%;
   height: 41px;
