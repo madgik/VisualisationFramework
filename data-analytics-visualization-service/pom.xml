@@ -157,6 +157,12 @@
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>5.0.4.Final</version>
         </dependency>
+        <dependency>
+            <groupId>gr.uoa.di.aginfra</groupId>
+            <artifactId>data-analytics-visualization-model</artifactId>
+            <version>1.0.7-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

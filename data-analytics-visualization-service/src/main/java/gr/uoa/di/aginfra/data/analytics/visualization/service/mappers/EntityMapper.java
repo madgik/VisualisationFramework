@@ -1,8 +1,10 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.mappers;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.Visualization;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.ConfigurationDto;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.VisualizationDto;
 import org.bson.types.ObjectId;
 import org.modelmapper.Converter;
@@ -57,5 +59,10 @@ public class EntityMapper {
 
 	public Visualization map(VisualizationDto dto) {
 		return this.modelMapper.map(dto, Visualization.class);
+	}
+
+	public NetworkGraph map(NetworkGraphDto dto) {
+		//TODO config NetworkGraphDto first and then mapping
+		return null;
 	}
 }
