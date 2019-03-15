@@ -181,7 +181,7 @@ function shouldDisableibableFetchData(zoom) {
     let state = getState();
     if(state.loadingBar.default === undefined || state.loadingBar.default === 0){
       if(state.visualization.disableFetchData === false || state.visualization.zoomLevel !== zoom ){
-        if(zoom >=13 && zoom <16){
+        if(zoom >=14 && zoom <=18){
           dispatch(updateDibableFetchData(false));
         }
         else{
