@@ -115,7 +115,7 @@ public class DashBoardServiceImpl implements DashBoardService {
                 if(!first)
                     stringBuilder.append(", ");
                 //   System.out.println( DoubleRounder.round(lngLatAlt.getLongitude(), 1) + " " +  DoubleRounder.round(lngLatAlt.getLatitude(), 1));
-                stringBuilder.append( DoubleRounder.round(lngLatAlt.getLongitude(), 1)   + " " + DoubleRounder.round(lngLatAlt.getLatitude(), 1));
+                stringBuilder.append( DoubleRounder.round(lngLatAlt.getLongitude(), 17)   + " " + DoubleRounder.round(lngLatAlt.getLatitude(), 17));
                 first = false;
             }
         }
