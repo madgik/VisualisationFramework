@@ -6,6 +6,8 @@ import RequestPayload from '../utilities/RequestPayload';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {optionValues} from '../components/ChartHeader';
 import {dataValues} from '../components/TimeSeriesChartHeader';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export const visualizationActions = {
   requestVisualizations,
@@ -55,7 +57,8 @@ export const visualizationActions = {
   setFieldDataSubComponent,
   updateSoilTableHeader,
   reloadSelectedLayerSoilData,
-  loadRelatedData
+  loadRelatedData,
+  shouldDisableibableFetchData
 }
 
 /*
@@ -70,6 +73,15 @@ const defaultHeader = {
     {
       Header: "Value",
       accessor: "value"
+    }
+  ]
+}
+const options = {
+  title: '',
+  message: 'No fields found for the specified region',
+  buttons: [
+    {
+      label: 'Close'
     }
   ]
 }
@@ -161,6 +173,23 @@ function updateSoilTableHeader(header) {
 
 function updateCurrentZoomLevel(zoomlevel) {
   return { type: visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL, zoomlevel };
+}
+
+function shouldDisableibableFetchData(zoom) {
+  
+  return function (dispatch, getState) {
+    let state = getState();
+    if(state.loadingBar.default === undefined || state.loadingBar.default === 0){
+      if(state.visualization.disableFetchData === false || state.visualization.zoomLevel !== zoom ){
+        if(zoom >=13 && zoom <16){
+          dispatch(updateDibableFetchData(false));
+        }
+        else{
+          dispatch(updateDibableFetchData(true));
+        }
+      }
+    }
+  }
 }
 
 function updateDibableFetchData(disableFetchData) {
@@ -309,6 +338,7 @@ function updateFilterAndReload(field, value) {
 
 function getMapDataset() {
   return function (dispatch, getState) {
+    dispatch(visualizationActions.updateDibableFetchData(true));
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/get');
     dispatch(showLoading());
 
@@ -318,11 +348,22 @@ function getMapDataset() {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadData(response.data)
-      );
+
+      dispatch(reloadData(response.data));
+      dispatch(visualizationActions.updateDibableFetchData(false));
       dispatch(hideLoading());
+
+      if(response.data.features.length === 0){
+          confirmAlert(options);
+      }
+      else if(response.data.features[0].geometry.coordinates === undefined)
+        confirmAlert(options);
+        
+      
     })
     .catch(response => {
+      dispatch(visualizationActions.updateDibableFetchData(false));
+      dispatch(hideLoading());
       alert(response);
   });
 }
