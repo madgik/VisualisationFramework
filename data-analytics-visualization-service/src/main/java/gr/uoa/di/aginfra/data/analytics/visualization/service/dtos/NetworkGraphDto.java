@@ -1,14 +1,18 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
 
+
+
 import java.util.List;
-import java.util.Map;
 
 public class NetworkGraphDto {
+
     String id;
 
     String name;
 
-    Map<String, String> nodes;
+    List<NodeDto> nodes;
+
+    List<EdgeDto> edgeDtos;
 
     public String getId() {
         return id;
@@ -26,11 +30,19 @@ public class NetworkGraphDto {
         this.name = name;
     }
 
-    public Map<String, String> getNodes() {
+    public List<NodeDto> getNodes() {
         return nodes;
     }
 
-    public void setNodes(Map<String, String> nodes) {
+    public void setNodes(List<NodeDto> nodes) {
         this.nodes = nodes;
+    }
+
+    public List<EdgeDto> getEdgeDtos() {
+        return edgeDtos;
+    }
+
+    public void setEdgeDtos(List<EdgeDto> edgeDtos) {
+        this.edgeDtos = edgeDtos;
     }
 }

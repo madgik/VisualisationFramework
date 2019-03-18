@@ -1,9 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.ConfigurationService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +28,14 @@ public class NetworkGraphController {
     protected static final String NETWORK_GRAPH_BASE_PATH = "ngraph";
     private NetworkGraphService networkGraphService;
     private EntityMapper modelMapper;
+    private static final ObjectMapper mapper = new ObjectMapper();
 
 
     @Autowired
     public NetworkGraphController(NetworkGraphService networkGraphService){
         this.networkGraphService = networkGraphService;
+        this.modelMapper = modelMapper;
+
     }
 
     @RequestMapping(value = "graph/data", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,6 +49,7 @@ public class NetworkGraphController {
                                             String name,
                                             Boolean isDataReference) throws Exception {
 
+        NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
 
 
         String id = networkGraphService.storeNetworkGraph(null);

@@ -1,6 +1,10 @@
 import { configGraphConstants } from '../constants'
+import axios from 'axios';
+import Ajax from '../utilities/Ajax';
 
 export const configGraphActions = {
+  uploadFile,
+  updateUploadedFile,
   storeGraphData,
   editGraphConfiguration,
   showGraphEdit,
@@ -11,6 +15,31 @@ export const configGraphActions = {
 /*
  * action creators
  */
+function uploadFile(file) {
+  return function (dispatch) {
+    // Initial FormData
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", file.name);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH);
+    return axios.post(resourceUrl, formData, {
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    }).then(response => {
+      console.log("file uploaded"+response)
+    }).catch(_ => { });
+
+  }
+}
+
+function updateUploadedFile(id) {
+  return function (dispatch) {
+
+    // dispatch(addDataSource(id))
+
+  
+  }
+}
+
 function storeGraphData() {
   return { type: configGraphConstants.CREATE_GRAPH}
 }

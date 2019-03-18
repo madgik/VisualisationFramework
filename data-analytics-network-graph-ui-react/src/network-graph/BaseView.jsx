@@ -17,6 +17,7 @@ class BaseView extends React.Component {
         <BaseViewMenuContainer           
           mmRender={mmRenderRef}/>
         <ConfigDataContainer
+          onFileDropped={this.props.onFileDropped}
           mmRender={mmRenderRef} />
       </div>
     );
