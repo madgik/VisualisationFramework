@@ -49,7 +49,8 @@ class App extends React.Component {
 
 App.defaultProps = {
   routing: {
-    baseUrl: 'http://localhost:8081/data-analytics-visualization-service'
+    baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
+    workspaceUrl: 'http://workspace-repository.d4science.org/storagehub/workspace'
   },
   size: {
     width: 1000,
