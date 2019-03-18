@@ -70,7 +70,7 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection cropHistory = dashBoardService.get(gCubeUrl, params, GeometryType.Point);
-        List<DashBoardMapConverter.CropDetails> cropDetails = DashBoardMapConverter.cropDetailsConvert(cropHistory.getFeatures());
+        List<DashBoardMapConverter.CropDetails> cropDetails = DashBoardMapConverter.cropDetailsConvert(cropHistory.getFeatures(), dashBoardService, gCubeUrl, params);
 
         return ResponseEntity.ok(cropDetails);
     }

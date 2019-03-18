@@ -1,5 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 import org.json.JSONArray;
@@ -308,12 +310,17 @@ public class DashBoardMapConverter {
         return soil;
     }
 
-    public static List<CropDetails> cropDetailsConvert(List<Feature> features){
+    public static List<CropDetails> cropDetailsConvert(List<Feature> features, DashBoardService dashBoardService, String gCubeUrl, Map<String, String> params) throws Exception {
         List<CropDetails> cropDetails = new ArrayList<>();
+        params.remove("geometry");
         for(Feature feature : features){
             Map<String, ?> properties = feature.getProperties();
+            FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + properties.get("fieldid"), params);
+            List<DashBoardMapConverter.FieldDetails> fieldDetails = DashBoardMapConverter.fieldInfoConvert(fieldDetailsFeatureCollection.getFeatures().get(0).getProperties());
+
+
             CropDetails cropDetail = new CropDetails(String.valueOf((properties.get("year"))), String.valueOf((properties.get("crop_code"))), String.valueOf((properties.get("crop_name")))
-            , String.valueOf((properties.get("fieldid"))), String.valueOf((properties.get("area"))), String.valueOf((properties.get("perimeter"))));
+            , String.valueOf((properties.get("fieldid"))), String.valueOf((fieldDetails.get(5).value)), String.valueOf((fieldDetails.get(6).value)));
 
             cropDetails.add(cropDetail);
         }
