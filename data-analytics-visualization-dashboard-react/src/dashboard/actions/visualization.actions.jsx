@@ -58,7 +58,9 @@ export const visualizationActions = {
   updateSoilTableHeader,
   reloadSelectedLayerSoilData,
   loadRelatedData,
-  shouldDisableibableFetchData
+  shouldDisableibableFetchData,
+  setWorkspaceUsername,
+  setWorkspaceToken
 }
 
 /*
@@ -421,6 +423,13 @@ function getCropHistory() {
 }
 }
 
+function setWorkspaceUsername(username) {
+  return { type: visualizationConstants.SET_WORKSPACE_USERNAME, username };
+}
+
+function setWorkspaceToken(token) {
+  return { type: visualizationConstants.SET_WORKSPACE_TOKEN, token };
+}
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };

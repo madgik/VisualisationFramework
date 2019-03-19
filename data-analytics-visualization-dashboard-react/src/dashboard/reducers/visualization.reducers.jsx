@@ -260,6 +260,10 @@ const dataDefault = {
       dateRange: null,
       isOpen: false,
 
+    },
+    workspaceDetails: {
+      workspaceUsername: '',
+      workspaceToken: ''
     }
 }
 
@@ -269,6 +273,22 @@ export function data(state = dataDefault, action) {
       return action.data;
     case visualizationConstants.RESET_VISUALIZATION:
       return dataDefault;
+    case visualizationConstants.SET_WORKSPACE_USERNAME:
+      return update(state, {
+        workspaceDetails: {
+          workspaceUsername: {
+            $set: action.username
+          }
+        }
+      });  
+    case visualizationConstants.SET_WORKSPACE_TOKEN:
+      return update(state, {
+        workspaceDetails: {
+          workspaceToken: {
+            $set: action.token
+          }
+        }
+      });  
     case visualizationConstants.CHANGE_CHART_TYPE:
       return update(state, {
         type: {
