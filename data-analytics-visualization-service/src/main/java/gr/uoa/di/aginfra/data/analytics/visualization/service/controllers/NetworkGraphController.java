@@ -25,30 +25,31 @@ import java.util.Map;
 public class NetworkGraphController {
     private static final Logger logger = LogManager.getLogger(NetworkGraphController.class);
 
-    protected static final String NETWORK_GRAPH_BASE_PATH = "ngraph";
+    protected static final String NETWORK_GRAPH_BASE_PATH = "graph";
     private NetworkGraphService networkGraphService;
     private EntityMapper modelMapper;
     private static final ObjectMapper mapper = new ObjectMapper();
 
 
     @Autowired
-    public NetworkGraphController(NetworkGraphService networkGraphService){
+    public NetworkGraphController(NetworkGraphService networkGraphService,  EntityMapper modelMapper){
         this.networkGraphService = networkGraphService;
         this.modelMapper = modelMapper;
 
     }
 
-    @RequestMapping(value = "graph/data", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "data", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importData(@RequestBody String data) {
 
         return null;
     }
 
-    @RequestMapping(value = "graph/file", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "file", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
-                                            String name,
+                                            @RequestParam("name") String name,
                                             Boolean isDataReference) throws Exception {
 
+        System.out.println("--------");
         NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
 
 
