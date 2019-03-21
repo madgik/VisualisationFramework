@@ -1,9 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NodeDto {
     private String id;
 

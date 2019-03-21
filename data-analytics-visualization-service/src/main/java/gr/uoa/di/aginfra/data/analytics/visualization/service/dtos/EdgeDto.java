@@ -1,8 +1,14 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EdgeDto {
+
+    private String id;
+
     private String source;
 
     private String target;
@@ -10,6 +16,16 @@ public class EdgeDto {
     private Map<String, String> attributes;
 
     private int value;
+
+    private String color;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getSource() {
         return source;
@@ -41,6 +57,14 @@ public class EdgeDto {
 
     public void setAttributes(Map<String, String> attributes) {
         this.attributes = attributes;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
 

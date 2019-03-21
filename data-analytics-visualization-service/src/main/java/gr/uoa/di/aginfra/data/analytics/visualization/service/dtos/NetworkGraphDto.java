@@ -2,6 +2,8 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class NetworkGraphDto {
@@ -10,9 +12,11 @@ public class NetworkGraphDto {
 
     String name;
 
+    @JsonProperty("nodes")
     List<NodeDto> nodes;
 
-    List<EdgeDto> edgeDtos;
+    @JsonProperty("edges")
+    List<EdgeDto> edges;
 
     public String getId() {
         return id;
@@ -38,11 +42,11 @@ public class NetworkGraphDto {
         this.nodes = nodes;
     }
 
-    public List<EdgeDto> getEdgeDtos() {
-        return edgeDtos;
+    public List<EdgeDto> getEdges() {
+        return edges;
     }
 
-    public void setEdgeDtos(List<EdgeDto> edgeDtos) {
-        this.edgeDtos = edgeDtos;
+    public void setEdges(List<EdgeDto> edges) {
+        this.edges = edges;
     }
 }

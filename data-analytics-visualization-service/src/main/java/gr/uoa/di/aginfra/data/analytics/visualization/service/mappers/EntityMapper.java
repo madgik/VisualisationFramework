@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.mappers;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.Visualization;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.ConfigurationDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.NetworkGraphDto;
@@ -12,6 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Component
 public class EntityMapper {
@@ -62,7 +67,11 @@ public class EntityMapper {
 	}
 
 	public NetworkGraph map(NetworkGraphDto dto) {
-		//TODO config NetworkGraphDto first and then mapping
+			List<Node> nodes = dto.getNodes().stream().map( node ->
+					new Node(node.getId(), node.getLatitude(), node.getLongitude())
+				)
+				.collect(Collectors.toList());
+
 		return null;
 	}
 }

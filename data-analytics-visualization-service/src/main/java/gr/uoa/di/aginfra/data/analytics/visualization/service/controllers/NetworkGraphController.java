@@ -21,7 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/" + GraphQLController.GRAPHQL_BASE_PATH)
+@CrossOrigin(exposedHeaders = "Location")
+@RequestMapping("/" + NetworkGraphController.NETWORK_GRAPH_BASE_PATH)
 public class NetworkGraphController {
     private static final Logger logger = LogManager.getLogger(NetworkGraphController.class);
 
@@ -44,16 +45,16 @@ public class NetworkGraphController {
         return null;
     }
 
-    @RequestMapping(value = "file", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
-                                            @RequestParam("name") String name,
-                                            Boolean isDataReference) throws Exception {
+                                            @RequestParam("name") String name
+                                           ) throws Exception {
 
-        System.out.println("--------");
         NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
+        System.out.println("--------");
 
-
-        String id = networkGraphService.storeNetworkGraph(null);
+        NetworkGraph networkGraph = modelMapper.map(networkGraphDto);
+        String id = networkGraphService.storeNetworkGraph(networkGraph);
 
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
                 .path(NETWORK_GRAPH_BASE_PATH + "/{id}")
