@@ -6,6 +6,15 @@ class Ajax {
   DASHBOARD_BASE_PATH = "dashboard"
   
   baseUrl = null
+  workspaceUrl = null
+
+  getWorkspaceUrl() {
+    return this.workspaceUrl;
+  }
+
+  setWorkspaceUrl(workspaceUrl) {
+    this.workspaceUrl = workspaceUrl;
+  }
 
   getBaseUrl() {
     return this.baseUrl;
@@ -33,6 +42,27 @@ class Ajax {
 
   buildPortlet(path, parameters) {
     var resourceURL = this.baseUrl.replace('%7Burl%7D', path);
+    return resourceURL.replace('%7Bparameters%7D', parameters ? parameters : '');
+  }
+
+  buildWorkspaceUrl(path, parameters) {
+    var url = this.isLocalDeployment() ?
+      this.buildWWorkspaceLocal(path, parameters) :
+      this.buildWWorkspacePortlet(path, parameters);
+      
+    return url;
+  }
+
+  buildWWorkspaceLocal(path, parameters) {
+    var url = this.workspaceUrl + '/' + path;
+    if (parameters) {
+      url += ('?' + parameters);
+    }
+    return url;
+  }
+
+  buildWWorkspacePortlet(path, parameters) {
+    var resourceURL = this.workspaceUrl.replace('%7Burl%7D', path);
     return resourceURL.replace('%7Bparameters%7D', parameters ? parameters : '');
   }
 

@@ -310,7 +310,7 @@ public class DashBoardMapConverter {
         return soil;
     }
 
-    public static List<CropDetails> cropDetailsConvert(List<Feature> features, DashBoardService dashBoardService, String gCubeUrl, Map<String, String> params) throws Exception {
+    public static List<CropDetails> cropDetailsConvert(List<Feature> features, DashBoardService dashBoardService, String gCubeUrl, Map<String, Object> params) throws Exception {
         List<CropDetails> cropDetails = new ArrayList<>();
         params.remove("geometry");
         for(Feature feature : features){

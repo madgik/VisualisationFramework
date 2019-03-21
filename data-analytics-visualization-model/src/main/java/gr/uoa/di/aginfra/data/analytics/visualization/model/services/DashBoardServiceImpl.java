@@ -31,23 +31,23 @@ public class DashBoardServiceImpl implements DashBoardService {
     private HttpClient httpClient = HttpClient.getInstance();
 
     @Override
-    public FeatureCollection  get(String url, Map<String, String> parameters, GeometryType geometryType) throws Exception {
+    public FeatureCollection  get(String url, Map<String, Object> parameters, GeometryType geometryType) throws Exception {
         boolean hasMoreData = true;
         Map<String, String> headers = new HashMap<>();
         headers.put(TOKEN_TAG,token);
-        String geoJSON = null;
+        Object geoJSON = null;
         geoJSON = parameters.get("geometry");
 
         if(geoJSON != null){
             parameters.remove("geometry");
             if(geometryType == GeometryType.Polygon)
-                parameters.put("geometry", getGeometryPolygon(geoJSON));
+                parameters.put("geometry", getGeometryPolygon(String.valueOf(geoJSON)));
             else if(geometryType == GeometryType.Point)
-                parameters.put("geometry", getGeometryPoint(geoJSON));
+                parameters.put("geometry", getGeometryPoint(String.valueOf(geoJSON)));
         }
 
-        int page_offset =  Integer.parseInt(parameters.get("page_offset"));
-        int page_size = Integer.parseInt(parameters.get("page_size"));
+        int page_offset =  Integer.parseInt(String.valueOf(parameters.get("page_offset")));
+        int page_size = Integer.parseInt(String.valueOf(parameters.get("page_size")));
         FeatureCollection featureCollection = null;
         while (hasMoreData) {
             FeatureCollection response = httpClient.getRequest(url, headers, parameters);
@@ -67,7 +67,7 @@ public class DashBoardServiceImpl implements DashBoardService {
     }
 
     @Override
-    public FeatureCollection getFieldDetails(String url, Map<String, String> parameters) throws Exception {
+    public FeatureCollection getFieldDetails(String url, Map<String, Object> parameters) throws Exception {
 
         FeatureCollection features = get(url, parameters, GeometryType.Polygon);
 
