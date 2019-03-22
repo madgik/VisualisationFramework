@@ -2,7 +2,7 @@ import React from 'react';
 
 import BaseViewMenuContainer from './containers/BaseViewMenuContainer';
 import ConfigDataContainer from './containers/ConfigDataContainer';
-
+import GraphVisualizationContainer from './containers/GraphVisualizationContainer';
 
 class BaseView extends React.Component {
 
@@ -14,11 +14,13 @@ class BaseView extends React.Component {
 
     return (
       <div className="base-container" style={sizeStyle}>
-        <BaseViewMenuContainer           
-          mmRender={mmRenderRef}/>
+    
         <ConfigDataContainer
           onFileDropped={this.props.onFileDropped}
+          onFileUpload={this.props.onFileUpload}
           mmRender={mmRenderRef} />
+        <GraphVisualizationContainer
+          mmRender={mmRenderRef}/>
       </div>
     );
   }

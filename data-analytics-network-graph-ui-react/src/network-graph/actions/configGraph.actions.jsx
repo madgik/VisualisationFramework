@@ -9,7 +9,8 @@ export const configGraphActions = {
   editGraphConfiguration,
   showGraphEdit,
   closeGraphEdit,
-  showErrorMessage
+  showErrorMessage,
+  setFileValidation
 }
 
 /*
@@ -21,9 +22,11 @@ function uploadFile(file) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", file.name);
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
     return axios.post(resourceUrl, formData, {
-      headers: { "X-Requested-With": "XMLHttpRequest" }
+      headers: { 
+        'content-type': 'multipart/form-data'
+       }
     }).then(response => {
       console.log("file uploaded"+response)
     }).catch(_ => { });
@@ -78,4 +81,8 @@ function showErrorMessage(message) {
 
 function setErrorMessage(message) {
   return { type: configGraphConstants.SHOW_MODAL_ERROR, message };
+}
+
+function setFileValidation(valid) {
+  return { type: configGraphConstants.SET_FILE_VALIDATION, valid };
 }

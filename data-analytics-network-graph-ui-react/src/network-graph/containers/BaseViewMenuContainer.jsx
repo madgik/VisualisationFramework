@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { graphActions, configGraphActions } from '../actions'
+import { controlGraphActions, configGraphActions } from '../actions'
 
 import BaseViewMenu from '../components/menu/BaseViewMenu';
 

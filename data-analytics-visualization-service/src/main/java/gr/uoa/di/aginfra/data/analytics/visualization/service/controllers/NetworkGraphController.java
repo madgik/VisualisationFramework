@@ -47,20 +47,25 @@ public class NetworkGraphController {
 
     @RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
-                                            @RequestParam("name") String name
+                                            @RequestParam("name") String graphName
                                            ) throws Exception {
 
         NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
-        System.out.println("--------");
+        String tenantName= "testTenant";
 
-        NetworkGraph networkGraph = modelMapper.map(networkGraphDto);
-        String id = networkGraphService.storeNetworkGraph(networkGraph);
+        NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, tenantName);
+
+        int results= networkGraphService.storeNetworkGraph(networkGraph);
+
+        if (results > 0) {
+
+        }
 
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
                 .path(NETWORK_GRAPH_BASE_PATH + "/{id}")
-                .buildAndExpand(id);
+                .buildAndExpand(networkGraph.getGraphId());
 
-        return ResponseEntity.created(uriComponents.toUri()).body(id);
+        return ResponseEntity.created(uriComponents.toUri()).body(results);
     }
 
     

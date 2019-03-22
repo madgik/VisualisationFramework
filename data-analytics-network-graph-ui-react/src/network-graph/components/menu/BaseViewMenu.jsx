@@ -12,9 +12,9 @@ class BaseViewMenu extends React.Component {
 
     return (
     <Menu fluid horizontal tabular>
-        <Menu.Item name='general' active={activeItem === 'general'} onClick={this.handleItemClick} />
+        {/* <Menu.Item name='general' active={activeItem === 'general'} onClick={this.handleItemClick} />
         <Menu.Item name='data' active={activeItem === 'data'} onClick={this.handleItemClick} />
-        <Menu.Item name='visualization' active={activeItem === 'filters'} onClick={this.handleItemClick} />
+        <Menu.Item name='visualization' active={activeItem === 'filters'} onClick={this.handleItemClick} /> */}
     </Menu>);
   }
 }
