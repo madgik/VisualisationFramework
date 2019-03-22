@@ -4,9 +4,11 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class NetworkGraphServiceImpl implements NetworkGraphService {
     @Override
     public NetworkGraph getNetworkGraph(String id) throws Exception {
