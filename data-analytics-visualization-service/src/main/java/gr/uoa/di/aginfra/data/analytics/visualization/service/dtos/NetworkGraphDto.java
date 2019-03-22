@@ -1,14 +1,22 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
 
+
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
-import java.util.Map;
 
 public class NetworkGraphDto {
+
     String id;
 
     String name;
 
-    Map<String, String> nodes;
+    @JsonProperty("nodes")
+    List<NodeDto> nodes;
+
+    @JsonProperty("edges")
+    List<EdgeDto> edges;
 
     public String getId() {
         return id;
@@ -26,11 +34,19 @@ public class NetworkGraphDto {
         this.name = name;
     }
 
-    public Map<String, String> getNodes() {
+    public List<NodeDto> getNodes() {
         return nodes;
     }
 
-    public void setNodes(Map<String, String> nodes) {
+    public void setNodes(List<NodeDto> nodes) {
         this.nodes = nodes;
+    }
+
+    public List<EdgeDto> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(List<EdgeDto> edges) {
+        this.edges = edges;
     }
 }

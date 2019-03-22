@@ -2,14 +2,30 @@ import update from 'immutability-helper'
 
 import { configGraphConstants } from '../constants'
 
-const defaultState = {
+const dataDefault = {
   open: false,
   isNew: false,
-  editGraphId: ''
+  uploaded: true,
+  editGraphId: '',
+  fileDetails:{
+    valid: false
+  },
 }
 
-export function configGraph(state = defaultState, action) {
+
+
+export function configGraph(state = dataDefault, action) {
   switch (action.type) {
+    case configGraphConstants.UPLOAD_FILE: {
+      return update(state, {
+        uploaded: {
+          $set: true
+        },
+        isNew: {
+          $set:true
+        }
+      });
+    }
     case configGraphConstants.CREATE_GRAPH: {
       return update(state, {
         open: {
@@ -34,7 +50,7 @@ export function configGraph(state = defaultState, action) {
         }
       });
     }
-    case configGraphConstants.CLOSE_GRAPH_EDIT:
+    case configGraphConstants.CLOSE_GRAPH_EDIT: {
       return update(state, {
         open: {
           $set: false
@@ -46,6 +62,16 @@ export function configGraph(state = defaultState, action) {
           $set: ''
         }
       });
+    }
+    case configGraphConstants.SET_FILE_VALIDATION: {
+      return update(state, {
+        fileDetails: {
+          valid: {
+            $set: action.valid
+          }
+        }
+      })
+    }
     default:
       return state;
   }

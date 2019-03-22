@@ -1,7 +1,9 @@
 class Ajax {
 
-  NETWORK_GRAPH_BASE_PATH = 'network-graph'
-  DOCUMENTS_BASE_PATH = 'dataDocuments'
+  NETWORK_GRAPH_BASE_PATH = 'graph'
+
+  NETWORK_GRAPH_FILE_PATH ='file'
+  // DOCUMENTS_BASE_PATH = 'dataDocuments'
 
   baseUrl = null
 

@@ -1,19 +1,55 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph;
 
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.RelationshipEntity;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@RelationshipEntity
-public class Edge {
+@NodeEntity
+public class Edge extends SubGraphEntity{
+
+
+    private String edgeId;
+
     private String source;
 
     private String target;
 
-    private Map<String, String> timeWeights;
+    private Map<String, String> properties;
 
-    private int value;
+    private Set<HasWeight> transfers;
+
+    public Edge(String id, Node source, Node target, Map<String, String> attributes, String graphId, String graphName, String tenantName) {
+        this.edgeId = id;
+        this.source = source.getNodeId();
+        this.target = target.getNodeId();
+        this.properties = new HashMap<>();
+
+        for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, String> entry = it.next();
+            if(entry.getKey().matches("[a-zA-Z]+")) {
+                properties.put(entry.getKey(),entry.getValue());
+                it.remove();
+            }
+        }
+
+        transfers = attributes.entrySet().stream().map(dNode-> {
+
+                    System.out.println("Source:"+source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey())).findAny().orElse(null).getTarget().getDate());
+                    return  new HasWeight(this.edgeId,
+                            source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey())).findAny().orElse(null).getTarget(),
+                            target.getHasDateNodes().stream().filter((t -> t.getTarget().getDate().equals(dNode.getKey()))).findAny().orElse(null).getTarget(),
+                            dNode.getKey(), Double.parseDouble(dNode.getValue()));
+                }
+        ).collect(Collectors.toSet());
+
+        this.setSubGraphId(graphId);
+        this.setSubGraphName(graphName);
+        this.setTenantName(tenantName);
+    }
 
     public String getSource() {
         return source;
@@ -31,19 +67,27 @@ public class Edge {
         this.target = target;
     }
 
-    public int getValue() {
-        return value;
+    public String getEdgeId() {
+        return edgeId;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setEdgeId(String edgeId) {
+        this.edgeId = edgeId;
     }
 
-    public Map<String, String> getTimeWeights() {
-        return timeWeights;
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
-    public void setTimeWeights(Map<String, String> timeWeights) {
-        this.timeWeights = timeWeights;
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
+    public Set<HasWeight> getTransfers() {
+        return transfers;
+    }
+
+    public void setTransfers(Set<HasWeight> transfers) {
+        this.transfers = transfers;
     }
 }

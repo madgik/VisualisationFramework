@@ -16,8 +16,7 @@ public interface NetworkGraphService {
 
     DataDocumentMetadata getDataDocumentMetadata(String id) throws Exception;
 
-    String storeNetworkGraph(NetworkGraph graph) throws Exception;
-
+    int storeNetworkGraph(NetworkGraph graph) throws Exception;
 
     void deleteNetworkGraph(String id) throws Exception;
 }

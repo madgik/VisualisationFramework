@@ -1,42 +1,43 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph;
 
+import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.id.UuidStrategy;
 
 @NodeEntity
 public abstract class TenantEntity{
 
-    @Id
-    private String id;
+    private String tenantId;
 
-    private String name;
+    private String tenantName;
 
-    private String eMaill;
+    private String eMail;
 
     private String code;
 
-    public String getId() {
-        return id;
+    public String getTenantId() {
+        return tenantId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
-    public String getName() {
-        return name;
+    public String getTenantName() {
+        return tenantName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
-    public String getEMaill() {
-        return eMaill;
+    public String geteMail() {
+        return eMail;
     }
 
-    public void setEMaill(String eMaill) {
-        this.eMaill = eMaill;
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
     }
 
     public String getCode() {

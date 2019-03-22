@@ -1,16 +1,48 @@
 import { configGraphConstants } from '../constants'
+import axios from 'axios';
+import Ajax from '../utilities/Ajax';
 
 export const configGraphActions = {
+  uploadFile,
+  updateUploadedFile,
   storeGraphData,
   editGraphConfiguration,
   showGraphEdit,
   closeGraphEdit,
-  showErrorMessage
+  showErrorMessage,
+  setFileValidation
 }
 
 /*
  * action creators
  */
+function uploadFile(file) {
+  return function (dispatch) {
+    // Initial FormData
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", file.name);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
+    return axios.post(resourceUrl, formData, {
+      headers: { 
+        'content-type': 'multipart/form-data'
+       }
+    }).then(response => {
+      console.log("file uploaded"+response)
+    }).catch(_ => { });
+
+  }
+}
+
+function updateUploadedFile(id) {
+  return function (dispatch) {
+
+    // dispatch(addDataSource(id))
+
+  
+  }
+}
+
 function storeGraphData() {
   return { type: configGraphConstants.CREATE_GRAPH}
 }
@@ -49,4 +81,8 @@ function showErrorMessage(message) {
 
 function setErrorMessage(message) {
   return { type: configGraphConstants.SHOW_MODAL_ERROR, message };
+}
+
+function setFileValidation(valid) {
+  return { type: configGraphConstants.SET_FILE_VALIDATION, valid };
 }
