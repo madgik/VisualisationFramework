@@ -17,15 +17,15 @@ import java.util.List;
 @Service
 public class NetworkGraphServiceImpl implements NetworkGraphService {
 
-    private TransferRepository tranferRepository;
+    private TransferRepository transferRepository;
 
     private DateNodeRepository dateNodeRepository;
 
     private NodeRepository nodeRepository;
 
     @Autowired
-    public NetworkGraphServiceImpl(TransferRepository tranferRepository, DateNodeRepository dateNodeRepository, NodeRepository nodeRepository) {
-        this.tranferRepository = tranferRepository;
+    public NetworkGraphServiceImpl(TransferRepository transferRepository, DateNodeRepository dateNodeRepository, NodeRepository nodeRepository) {
+        this.transferRepository = transferRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
     }
@@ -54,22 +54,11 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     public int storeNetworkGraph(NetworkGraph graph) throws Exception {
 
         List<Long> insertedNodes = new ArrayList<>();
-        graph.getNodes().entrySet().stream().forEach(nodeEntry -> {
-
-                    nodeEntry.getValue().getHasDateNodes().stream().forEach(dateNode -> {
-                            dateNodeRepository.save(dateNode.getTarget());
-                        System.out.println("asdasd"+dateNode.getTarget().getDateNodeId());
-                           }
-                    );
-                    nodeRepository.save(nodeEntry.getValue());
-                }
-        );
-        System.out.println("Inserted successfully:" + insertedNodes.size() + "nodes");
 
         List<Long> insertedEdges = new ArrayList<>();
         graph.getLinks().stream().forEach(edge ->
                 edge.getTransfers().stream().forEach(transfer ->
-                        insertedEdges.add(tranferRepository.save(transfer).getId())
+                        insertedEdges.add(transferRepository.save(transfer).getId())
                 )
         );
 

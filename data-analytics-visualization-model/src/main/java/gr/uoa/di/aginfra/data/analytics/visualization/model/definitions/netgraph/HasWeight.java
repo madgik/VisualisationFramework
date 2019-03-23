@@ -21,6 +21,9 @@ public class HasWeight {
 
     private Double weight;
 
+    public HasWeight() {
+    }
+
     public HasWeight(String id, DateNode source, DateNode target, String date, Double weight) {
         this.parentId = id;
         this.source = source;

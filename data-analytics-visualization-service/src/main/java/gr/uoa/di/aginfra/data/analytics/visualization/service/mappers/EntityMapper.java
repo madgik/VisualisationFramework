@@ -80,7 +80,6 @@ public class EntityMapper {
         ).collect(Collectors.toMap(Node::getNodeId, Function.identity()));
 
 
-
         List<Edge> edges = dto.getEdges().stream().map(edge ->
                 new Edge(edge.getId(), nodeMap.get(edge.getSource()), nodeMap.get(edge.getTarget()), edge.getAtributes(),  graphId, graphName, tenantName)
         ).collect(Collectors.toList());

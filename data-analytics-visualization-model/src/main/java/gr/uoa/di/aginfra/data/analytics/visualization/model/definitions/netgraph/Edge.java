@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@NodeEntity
 public class Edge extends SubGraphEntity{
 
 
@@ -21,6 +20,8 @@ public class Edge extends SubGraphEntity{
     private Map<String, String> properties;
 
     private Set<HasWeight> transfers;
+
+
 
     public Edge(String id, Node source, Node target, Map<String, String> attributes, String graphId, String graphName, String tenantName) {
         this.edgeId = id;

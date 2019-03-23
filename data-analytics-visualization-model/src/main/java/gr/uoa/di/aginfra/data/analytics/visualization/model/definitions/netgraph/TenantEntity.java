@@ -1,9 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.id.UuidStrategy;
 
 @NodeEntity
 public abstract class TenantEntity{
