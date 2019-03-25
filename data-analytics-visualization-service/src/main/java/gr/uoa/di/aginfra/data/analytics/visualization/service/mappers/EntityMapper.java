@@ -4,10 +4,9 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configur
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Edge;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.Visualization;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.ConfigurationDto;
-import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.NetworkGraphDto;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.VisualizationDto;
 import org.bson.types.ObjectId;
 import org.modelmapper.Converter;

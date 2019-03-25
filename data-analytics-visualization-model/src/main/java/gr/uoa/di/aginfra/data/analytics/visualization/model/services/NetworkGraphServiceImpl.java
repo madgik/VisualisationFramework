@@ -1,7 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
@@ -10,12 +14,17 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgrap
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NetworkGraphServiceImpl implements NetworkGraphService {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private TransferRepository transferRepository;
 
@@ -55,6 +64,16 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
         List<Long> insertedNodes = new ArrayList<>();
 
+//        graph.getNodes().entrySet().stream().forEach(nodeEntry -> {
+//                    nodeEntry.getValue().getHasDateNodes().stream().forEach(dateNode -> {
+////                        nodeRepository.save(nodeEntry.getValue());
+////                        dateNodeRepository.save(dateNode.getTarget());
+//                        System.out.println("asdasd"+dateNode.getTarget().getDate());
+//                           }
+//                    );
+//                }
+//        );
+
         List<Long> insertedEdges = new ArrayList<>();
         graph.getLinks().stream().forEach(edge ->
                 edge.getTransfers().stream().forEach(transfer ->
@@ -68,7 +87,21 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
+    public List<DateNode> getTopNodesOfGraph(String id) throws Exception {
+        return null;
+    }
+
+    @Override
     public void deleteNetworkGraph(String id) throws Exception {
 
+    }
+
+    @Override
+    public Map<String, String> getAllGraphsByTenant(String tenant) throws IOException {
+        List<Node> nodes = nodeRepository.findAllDistinctSubGraphId();
+
+        Map<String, String> results = mapper.readValue((JsonParser) nodes, new TypeReference<HashMap<String,String>>() {});
+
+        return results;
     }
 }

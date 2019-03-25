@@ -5,7 +5,9 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface NetworkGraphService {
     NetworkGraph getNetworkGraph(String id) throws Exception;
@@ -18,5 +20,9 @@ public interface NetworkGraphService {
 
     int storeNetworkGraph(NetworkGraph graph) throws Exception;
 
+    List<DateNode> getTopNodesOfGraph(String id) throws Exception;
+
     void deleteNetworkGraph(String id) throws Exception;
+
+    Map<String, String> getAllGraphsByTenant(String tenant) throws IOException;
 }

@@ -20,7 +20,7 @@ public class DateNode extends SubGraphEntity {
 
     private String date;
 
-    private String weight;
+    private String property;
 
     @Relationship(type = "HAS_DATENODE", direction = "INCOMING")
     private Node parentNode;
@@ -28,9 +28,9 @@ public class DateNode extends SubGraphEntity {
     public DateNode() {
     }
 
-    public DateNode(String date, String weight, Node node) {
-        this.date = date;
-        this.weight = weight;
+    public DateNode(String date, String property, Node node) {
+        this.date = date.replace(".", "");
+        this.property = property;
         this.parentId = node.getNodeId();
         this.parentNode = node;
         this.setSubGraphId(node.getSubGraphId());
@@ -62,12 +62,12 @@ public class DateNode extends SubGraphEntity {
         this.date = date;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getProperty() {
+        return property;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setProperty(String property) {
+        this.property = property;
     }
 
     public Node getParentNode() {
