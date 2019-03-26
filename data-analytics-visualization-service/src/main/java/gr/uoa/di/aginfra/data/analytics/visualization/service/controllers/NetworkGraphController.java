@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
@@ -73,7 +74,7 @@ public class NetworkGraphController {
     ResponseEntity<?> getAvailableGraphs() {
 
         try {
-            Map<String, String> result = networkGraphService.getAllGraphsByTenant("tenant");
+            List<Map<String, String>> result = networkGraphService.getAllGraphsByTenant("tenant");
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (IOException e) {

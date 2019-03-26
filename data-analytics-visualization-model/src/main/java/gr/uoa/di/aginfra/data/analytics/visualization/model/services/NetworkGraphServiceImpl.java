@@ -1,23 +1,19 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.NodeRepository;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.SubGraphRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +28,15 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     private NodeRepository nodeRepository;
 
+    private SubGraphRepository subGraphRepository;
+
     @Autowired
-    public NetworkGraphServiceImpl(TransferRepository transferRepository, DateNodeRepository dateNodeRepository, NodeRepository nodeRepository) {
+    public NetworkGraphServiceImpl(TransferRepository transferRepository, DateNodeRepository dateNodeRepository,
+                                   NodeRepository nodeRepository, SubGraphRepository subGraphRepository) {
         this.transferRepository = transferRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
+        this.subGraphRepository = subGraphRepository;
     }
 
     @Override
@@ -97,10 +97,10 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    public Map<String, String> getAllGraphsByTenant(String tenant) throws IOException {
-        List<Node> nodes = nodeRepository.findAllDistinctSubGraphId();
+    public List<Map<String, String>> getAllGraphsByTenant(String tenant) throws IOException {
+        List<Map<String, String>> results = subGraphRepository.findAllDistinctSubGraphId();
 
-        Map<String, String> results = mapper.readValue((JsonParser) nodes, new TypeReference<HashMap<String,String>>() {});
+//        Map<String, String> results = mapper.readValue((JsonParser) nodes, new TypeReference<HashMap<String,String>>() {});
 
         return results;
     }

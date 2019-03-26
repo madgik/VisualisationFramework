@@ -3,10 +3,12 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgrap
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 
 @NodeEntity
 public abstract class SubGraphEntity extends TenantEntity {
 
+    @Property
     private String subGraphId;
 
     private String subGraphName;

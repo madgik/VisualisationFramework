@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Edge extends SubGraphEntity{
+public class Edge extends SubGraphEntity {
 
 
     private String edgeId;
@@ -22,29 +22,25 @@ public class Edge extends SubGraphEntity{
     private Set<HasWeight> transfers;
 
 
-
     public Edge(String id, Node source, Node target, Map<String, String> attributes, String graphId, String graphName, String tenantName) {
         this.edgeId = id;
         this.source = source.getNodeId();
         this.target = target.getNodeId();
         this.properties = new HashMap<>();
 
-        for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
-            if(entry.getKey().matches("[a-zA-Z]+")) {
-                properties.put(entry.getKey(),entry.getValue());
+            if (entry.getKey().matches("[a-zA-Z]+")) {
+                properties.put(entry.getKey(), entry.getValue());
                 it.remove();
             }
         }
 
-        transfers = attributes.entrySet().stream().map(dNode-> {
-
-                    System.out.println("Source:"+source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey())).findAny().orElse(null).getTarget().getDate());
-                    return  new HasWeight(this.edgeId,
-                            source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey())).findAny().orElse(null).getTarget(),
-                            target.getHasDateNodes().stream().filter((t -> t.getTarget().getDate().equals(dNode.getKey()))).findAny().orElse(null).getTarget(),
-                            dNode.getKey(), Double.parseDouble(dNode.getValue()));
-                }
+        transfers = attributes.entrySet().stream().map(dNode ->
+                new HasWeight(this.edgeId,
+                        source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
+                        target.getHasDateNodes().stream().filter((t -> t.getTarget().getDate().equals(dNode.getKey().replace(".", "")))).findAny().orElse(null).getTarget(),
+                        dNode.getKey(), Double.parseDouble(dNode.getValue()))
         ).collect(Collectors.toSet());
 
         this.setSubGraphId(graphId);

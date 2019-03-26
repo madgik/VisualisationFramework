@@ -24,5 +24,5 @@ public interface NetworkGraphService {
 
     void deleteNetworkGraph(String id) throws Exception;
 
-    Map<String, String> getAllGraphsByTenant(String tenant) throws IOException;
+    List<Map<String, String>> getAllGraphsByTenant(String tenant) throws IOException;
 }

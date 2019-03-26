@@ -19,6 +19,7 @@ public class Node extends SubGraphEntity{
 
     private double longitude;
 
+
     @Relationship(type = "HAS_PROPERTY")
     private List<NodeProperty> properties;
 
@@ -42,7 +43,7 @@ public class Node extends SubGraphEntity{
             if(entry.getKey().matches("[a-zA-Z]+")) {
                 NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
                 properties.add(nodeProperty);
-                System.out.println(entry.getKey() + " = " + entry.getValue());
+//                System.out.println(entry.getKey() + " = " + entry.getValue());
                 it.remove();
             }
         }
@@ -87,7 +88,6 @@ public class Node extends SubGraphEntity{
     }
 
 
-
     public Set<HasDateNode> getHasDateNodes() {
         return hasDateNodes;
     }
@@ -95,4 +95,13 @@ public class Node extends SubGraphEntity{
     public void setHasDateNodes(Set<HasDateNode> hasDateNodes) {
         this.hasDateNodes = hasDateNodes;
     }
+
+    public List<NodeProperty> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<NodeProperty> properties) {
+        this.properties = properties;
+    }
+
 }

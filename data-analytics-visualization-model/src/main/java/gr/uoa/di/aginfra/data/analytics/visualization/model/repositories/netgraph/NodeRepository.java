@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface NodeRepository extends Neo4jRepository<Node, Long> {
-
-    List<Node> findAllDistinctSubGraphId();
 }
 

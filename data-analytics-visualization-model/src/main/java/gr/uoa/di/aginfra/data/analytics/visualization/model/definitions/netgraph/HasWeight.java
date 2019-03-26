@@ -28,7 +28,7 @@ public class HasWeight {
         this.parentId = id;
         this.source = source;
         this.target = target;
-        this.date = date;
+        this.date = date.replace(".", "");
         this.weight = weight;
     }
 
