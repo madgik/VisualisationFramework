@@ -3,6 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgrap
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.*;
@@ -18,23 +19,29 @@ public class Node extends SubGraphEntity{
 
     private double longitude;
 
-    private Map<String,String> properties;
+    @Relationship(type = "HAS_PROPERTY")
+    private List<NodeProperty> properties;
 
 
     @Relationship(type = "HAS_DATENODE")
     private Set<HasDateNode> hasDateNodes = new HashSet<>();
 
-    public Node(String id, double latitude, double longitude, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
-        System.out.println("My id is:"+id);
-        this.nodeId = id;
+    public Node() {
+    }
+
+    public Node(String nodeId, double latitude, double longitude, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
+
+        System.out.println("ID node:"+nodeId);
+        this.nodeId = nodeId;
         this.latitude = latitude;
         this.longitude = longitude;
-        properties = new HashMap<>();
+        this.properties = new ArrayList<>();
 
         for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
             if(entry.getKey().matches("[a-zA-Z]+")) {
-                properties.put(entry.getKey(),entry.getValue());
+                NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
+                properties.add(nodeProperty);
                 System.out.println(entry.getKey() + " = " + entry.getValue());
                 it.remove();
             }
@@ -79,13 +86,7 @@ public class Node extends SubGraphEntity{
         this.longitude = longitude;
     }
 
-    public Map<String, String> getProperties() {
-        return properties;
-    }
 
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
-    }
 
     public Set<HasDateNode> getHasDateNodes() {
         return hasDateNodes;

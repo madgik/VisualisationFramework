@@ -13,20 +13,24 @@ import java.util.UUID;
 public class DateNode extends SubGraphEntity {
 
     @Id
-    private String dateNodeId;
+    @GeneratedValue
+    private Long dateNodeId;
 
     private String parentId;
 
     private String date;
 
-    private String weight;
+    private String property;
 
+    @Relationship(type = "HAS_DATENODE", direction = "INCOMING")
+    private Node parentNode;
 
-    public DateNode(String date, String weight, Node node) {
-        UUID uuid = UUID.randomUUID();
-        this.dateNodeId = uuid.toString();
-        this.date = date;
-        this.weight = weight;
+    public DateNode() {
+    }
+
+    public DateNode(String date, String property, Node node) {
+        this.date = date.replace(".", "");
+        this.property = property;
         this.parentId = node.getNodeId();
         this.parentNode = node;
         this.setSubGraphId(node.getSubGraphId());
@@ -34,20 +38,12 @@ public class DateNode extends SubGraphEntity {
         this.setTenantName(node.getTenantName());
     }
 
-    public String getDateNodeId() {
+    public Long getDateNodeId() {
         return dateNodeId;
     }
 
-    public void setDateNodeId(String dateNodeId) {
+    public void setDateNodeId(Long dateNodeId) {
         this.dateNodeId = dateNodeId;
-    }
-
-    public Node getParentNode() {
-        return parentNode;
-    }
-
-    public void setParentNode(Node parentNode) {
-        this.parentNode = parentNode;
     }
 
     public String getParentId() {
@@ -66,13 +62,19 @@ public class DateNode extends SubGraphEntity {
         this.date = date;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getProperty() {
+        return property;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setProperty(String property) {
+        this.property = property;
     }
 
+    public Node getParentNode() {
+        return parentNode;
+    }
 
+    public void setParentNode(Node parentNode) {
+        this.parentNode = parentNode;
+    }
 }

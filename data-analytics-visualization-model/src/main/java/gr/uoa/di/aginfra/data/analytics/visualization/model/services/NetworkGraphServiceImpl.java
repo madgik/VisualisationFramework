@@ -1,7 +1,11 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
@@ -10,22 +14,27 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgrap
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NetworkGraphServiceImpl implements NetworkGraphService {
 
-    private TransferRepository tranferRepository;
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+    private TransferRepository transferRepository;
 
     private DateNodeRepository dateNodeRepository;
 
     private NodeRepository nodeRepository;
 
     @Autowired
-    public NetworkGraphServiceImpl(TransferRepository tranferRepository, DateNodeRepository dateNodeRepository, NodeRepository nodeRepository) {
-        this.tranferRepository = tranferRepository;
+    public NetworkGraphServiceImpl(TransferRepository transferRepository, DateNodeRepository dateNodeRepository, NodeRepository nodeRepository) {
+        this.transferRepository = transferRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
     }
@@ -54,22 +63,21 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     public int storeNetworkGraph(NetworkGraph graph) throws Exception {
 
         List<Long> insertedNodes = new ArrayList<>();
-        graph.getNodes().entrySet().stream().forEach(nodeEntry -> {
 
+//        graph.getNodes().entrySet().stream().forEach(nodeEntry -> {
 //                    nodeEntry.getValue().getHasDateNodes().stream().forEach(dateNode -> {
-//                            dateNodeRepository.save(dateNode.getTarget());
-//                        System.out.println("asdasd"+dateNode.getTarget().getDateNodeId());
+////                        nodeRepository.save(nodeEntry.getValue());
+////                        dateNodeRepository.save(dateNode.getTarget());
+//                        System.out.println("asdasd"+dateNode.getTarget().getDate());
 //                           }
 //                    );
-                    nodeRepository.save(nodeEntry.getValue());
-                }
-        );
-        System.out.println("Inserted successfully:" + insertedNodes.size() + "nodes");
+//                }
+//        );
 
         List<Long> insertedEdges = new ArrayList<>();
         graph.getLinks().stream().forEach(edge ->
                 edge.getTransfers().stream().forEach(transfer ->
-                        insertedEdges.add(tranferRepository.save(transfer).getId())
+                        insertedEdges.add(transferRepository.save(transfer).getId())
                 )
         );
 
@@ -79,7 +87,21 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
+    public List<DateNode> getTopNodesOfGraph(String id) throws Exception {
+        return null;
+    }
+
+    @Override
     public void deleteNetworkGraph(String id) throws Exception {
 
+    }
+
+    @Override
+    public Map<String, String> getAllGraphsByTenant(String tenant) throws IOException {
+        List<Node> nodes = nodeRepository.findAllDistinctSubGraphId();
+
+        Map<String, String> results = mapper.readValue((JsonParser) nodes, new TypeReference<HashMap<String,String>>() {});
+
+        return results;
     }
 }

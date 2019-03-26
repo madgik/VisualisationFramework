@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos;
+package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,15 +1,14 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.services.ConfigurationService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
-import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.NetworkGraphDto;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -68,6 +69,19 @@ public class NetworkGraphController {
         return ResponseEntity.created(uriComponents.toUri()).body(results);
     }
 
-    
+    @RequestMapping(value = "graphs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getAvailableGraphs() {
+
+        try {
+            Map<String, String> result = networkGraphService.getAllGraphsByTenant("tenant");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
 
 }
