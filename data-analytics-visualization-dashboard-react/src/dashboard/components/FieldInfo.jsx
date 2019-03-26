@@ -3,7 +3,7 @@ import React from 'react';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import ChartHeaderContainer from '../containers/ChartHeaderContainer';
-import { Header, List } from 'semantic-ui-react'
+import {  List } from 'semantic-ui-react'
 
 class FieldInfo extends React.Component {
 
@@ -47,20 +47,35 @@ class FieldInfo extends React.Component {
               <div style={{ padding: "20px" }}>
 
                 <List divided relaxed>
-                  <List.Item>
-                    <List.Content>
-                      Area: :   {row.original.soil.area}
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
+                <List.Item>
                     <List.Content>
                       Entity id : {row.original.soil.entityid}
                     </List.Content>
                   </List.Item>
                   <List.Item>
                     <List.Content>
-                      Field id : 23.3
-                          </List.Content>
+                      Soil Code : {row.original.soil.soilcode}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      Soil name : {row.original.soil.soilname}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      Entity id : {row.original.soil.soiltype}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      Area :   {row.original.soil.area}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      Perimeter : {row.original.soil.perimeter}
+                    </List.Content>
                   </List.Item>
                 </List>
 
