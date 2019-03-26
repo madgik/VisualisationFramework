@@ -13,8 +13,7 @@ import java.util.UUID;
 public class DateNode extends SubGraphEntity {
 
     @Id
-    @GeneratedValue
-    private Long dateNodeId;
+    private String dateNodeId;
 
     private String parentId;
 
@@ -22,10 +21,10 @@ public class DateNode extends SubGraphEntity {
 
     private String weight;
 
-    @Relationship(type = "HAS_DATENODE", direction = "INCOMING")
-    private Node parentNode;
 
     public DateNode(String date, String weight, Node node) {
+        UUID uuid = UUID.randomUUID();
+        this.dateNodeId = uuid.toString();
         this.date = date;
         this.weight = weight;
         this.parentId = node.getNodeId();
@@ -35,12 +34,20 @@ public class DateNode extends SubGraphEntity {
         this.setTenantName(node.getTenantName());
     }
 
-    public Long getDateNodeId() {
+    public String getDateNodeId() {
         return dateNodeId;
     }
 
-    public void setDateNodeId(Long dateNodeId) {
+    public void setDateNodeId(String dateNodeId) {
         this.dateNodeId = dateNodeId;
+    }
+
+    public Node getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(Node parentNode) {
+        this.parentNode = parentNode;
     }
 
     public String getParentId() {
