@@ -60,7 +60,8 @@ export const visualizationActions = {
   loadRelatedData,
   shouldDisableibableFetchData,
   setWorkspaceUsername,
-  setWorkspaceToken
+  setWorkspaceToken,
+  requestWorkspaceListing
 }
 
 /*
@@ -94,6 +95,21 @@ function requestVisualizations() {
     return axios.get(resourceUrl)
       .then(response => {
         dispatch(loadVisualizations(response.data))
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function requestWorkspaceListing() {
+  return function (dispatch, getState) {
+    let gcube_token = getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl("",{ "gcube-token": gcube_token });
+    return axios.get(resourceUrl)
+      .then(response => {
+        //dispatch(loadVisualizations(response.data))
+        console.log(response);
       })
       .catch(response => {
         alert(response);

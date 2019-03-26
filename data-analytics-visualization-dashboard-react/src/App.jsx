@@ -36,6 +36,7 @@ class App extends React.Component {
     this.store.dispatch(visualizationActions.setDateRange(this.value));
     this.store.dispatch(visualizationActions.setWorkspaceUsername(this.props.routing.workspaceUsername));
     this.store.dispatch(visualizationActions.setWorkspaceToken(this.props.routing.workspaceToken));
+    this.store.dispatch(visualizationActions.requestWorkspaceListing());
 
   }
 
