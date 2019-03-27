@@ -3,6 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasDateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NodeProperty;
 
 import java.util.*;
 
@@ -18,18 +19,23 @@ public class D3Helper {
         while (result.hasNext()) {
             Node node = result.next();
 
-            nodes.add(map("id", node.getNodeId(), "label", "movie"));
-            int target = i;
+            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            for(NodeProperty property: node.getProperties()){
+                nodeMap.put(property.getName(), property.getValue());
+            }
+            nodes.add(nodeMap);
+
+            int source = i;
             i++;
             for (HasDateNode hasDateNode : node.getHasDateNodes()) {
-                Map<String, Object> actor = map("id", node.getNodeId(), "label", "actor");
+                Map<String, Object> targetNodes = map("id", node.getNodeId(), "label", "actor");
 
-                int source = nodes.indexOf(actor);
-                if (source == -1) {
-                    nodes.add(actor);
-                    source = i++;
-                }
-                rels.add(map("source", source, "target", target));
+//                int source = nodes.indexOf();
+//                if (source == -1) {
+//                    nodes.add(actor);
+//                    source = i++;
+//                }
+//                rels.add(map("source", source, "target", target));
             }
         }
         return map("nodes", nodes, "links", rels);

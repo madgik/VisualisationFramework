@@ -37,7 +37,7 @@ public class Edge extends SubGraphEntity {
         }
 
         transfers = attributes.entrySet().stream().map(dNode ->
-                new HasWeight(this.edgeId,
+                new HasWeight(this.edgeId, source.getNodeId(),
                         source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
                         target.getHasDateNodes().stream().filter((t -> t.getTarget().getDate().equals(dNode.getKey().replace(".", "")))).findAny().orElse(null).getTarget(),
                         dNode.getKey(), Double.parseDouble(dNode.getValue()))
