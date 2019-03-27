@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
@@ -41,11 +42,6 @@ public class NetworkGraphController {
 
     }
 
-    @RequestMapping(value = "data", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> importData(@RequestBody String data) {
-
-        return null;
-    }
 
     @RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
@@ -82,7 +78,33 @@ public class NetworkGraphController {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
 
+
+    @RequestMapping(value = "neighbors/{subGraphId}/{nodeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getNeighbors(@PathVariable String subGraphId, @PathVariable String nodeId ) {
+
+        try {
+            List<Node> result = networkGraphService.getNeighborNodes(subGraphId, nodeId);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "next/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getNextTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes") List<String> nodes, @RequestParam("date") String currentDate ) {
+
+        try {
+            Map<String, Object> result = networkGraphService.getNextTimestampSubGraph(graphId, nodes, currentDate);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

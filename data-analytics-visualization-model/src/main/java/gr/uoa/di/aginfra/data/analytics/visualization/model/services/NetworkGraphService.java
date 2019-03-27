@@ -2,6 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 
@@ -12,9 +13,9 @@ import java.util.Map;
 public interface NetworkGraphService {
     NetworkGraph getNetworkGraph(String id) throws Exception;
 
-    List<DateNode> getNeighborNodes(NodeDto node, String graphId) throws Exception;
+    List<Node> getNeighborNodes(String graphId, String nodeId) throws Exception;
 
-    SubGraphEntity getNextSubGraph(String id) throws Exception;
+    Map<String, Object> getNextTimestampSubGraph(String subGraphId, List<String> nodes, String date) throws Exception;
 
     DataDocumentMetadata getDataDocumentMetadata(String id) throws Exception;
 
