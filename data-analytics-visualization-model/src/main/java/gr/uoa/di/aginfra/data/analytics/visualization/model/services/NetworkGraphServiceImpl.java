@@ -80,9 +80,11 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    public List<DateNode> getTopNodesOfGraph(String id) throws Exception {
+    public List<Node> getTopNodesOfGraph(String subGraphId, int num) throws Exception {
         return null;
     }
+
+
 
     @Override
     public void deleteNetworkGraph(String id) throws Exception {

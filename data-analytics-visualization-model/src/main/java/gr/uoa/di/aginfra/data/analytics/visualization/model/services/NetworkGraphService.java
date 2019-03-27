@@ -21,7 +21,7 @@ public interface NetworkGraphService {
 
     int storeNetworkGraph(NetworkGraph graph) throws Exception;
 
-    List<DateNode> getTopNodesOfGraph(String id) throws Exception;
+    List<Node> getTopNodesOfGraph(String subGraphId, int num) throws Exception;
 
     void deleteNetworkGraph(String id) throws Exception;
 
