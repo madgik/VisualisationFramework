@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import { visualizationConstants } from '../constants/visualization.constants'
 //import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
@@ -61,7 +62,11 @@ export const visualizationActions = {
   shouldDisableibableFetchData,
   setWorkspaceUsername,
   setWorkspaceToken,
-  requestWorkspaceListing
+  requestWorkspaceListing,
+  setWorkspaceParentDirDetails,
+  setWorkspaceDashboardDirDetails,
+  getDashboardFolder,
+  createDashboardFolder
 }
 
 /*
@@ -104,18 +109,63 @@ function requestVisualizations() {
 
 function requestWorkspaceListing() {
   return function (dispatch, getState) {
-    let gcube_token = getState().data.workspaceDetails.workspaceToken;
-    var resourceUrl = Ajax.buildWorkspaceUrl("",{ "gcube-token": gcube_token });
+    let gcube_token = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl("",gcube_token);
     return axios.get(resourceUrl)
       .then(response => {
-        //dispatch(loadVisualizations(response.data))
-        console.log(response);
+        dispatch(setWorkspaceParentDirDetails(response.data))
+        dispatch(getDashboardFolder());
       })
       .catch(response => {
         alert(response);
       });
   }
 }
+
+function getDashboardFolder() {
+  return function (dispatch, getState) {
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceParentDirDetails.item.id + "/items/" + visualizationConstants.DASHBOARD_DIR, parameters);
+    return axios.get(resourceUrl)
+      .then(response => {
+        if(response.data.itemlist.length === 0)
+          dispatch(createDashboardFolder());
+        else
+          dispatch(setWorkspaceDashboardDirDetails(response.data.itemlist[0]))  
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function createDashboardFolder() {
+  return function (dispatch, getState) {
+
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceParentDirDetails.item.id + "/create/FOLDER", parameters);
+
+    const data = qs.stringify({
+      name: visualizationConstants.DASHBOARD_DIR,
+      description: visualizationConstants.DASHBOARD_DIR,
+      hidden: false
+      });
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+
+    return axios.post(resourceUrl,data,headers)
+      .then(response => { 
+        dispatch(getDashboardFolder());
+      })
+      .catch(response => {
+        alert(response);
+  });
+  
+  }
+}
+
 
 function loadVisualizations(options) {
   return { type: visualizationConstants.LOAD_VISUALIZATIONS, options };
@@ -445,6 +495,14 @@ function setWorkspaceUsername(username) {
 
 function setWorkspaceToken(token) {
   return { type: visualizationConstants.SET_WORKSPACE_TOKEN, token };
+}
+
+function setWorkspaceParentDirDetails(workspaceParentDirDetails) {
+  return { type: visualizationConstants.SET_WORKSPACE_PARENT_DIR_DETAILS, workspaceParentDirDetails };
+}
+
+function setWorkspaceDashboardDirDetails(workspaceDashboardDirDetails) {
+  return { type: visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS, workspaceDashboardDirDetails };
 }
 
 function reloadData(data) {

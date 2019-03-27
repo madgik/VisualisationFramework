@@ -263,7 +263,9 @@ const dataDefault = {
     },
     workspaceDetails: {
       workspaceUsername: '',
-      workspaceToken: ''
+      workspaceToken: '',
+      workspaceParentDirDetails: '',
+      workspaceDashboardDirDetails: ''
     }
 }
 
@@ -289,6 +291,22 @@ export function data(state = dataDefault, action) {
           }
         }
       });  
+    case visualizationConstants.SET_WORKSPACE_PARENT_DIR_DETAILS:
+      return update(state, {
+        workspaceDetails: {
+          workspaceParentDirDetails: {
+            $set: action.workspaceParentDirDetails
+          }
+        }
+      });  
+    case visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS:
+      return update(state, {
+        workspaceDetails: {
+          workspaceDashboardDirDetails: {
+            $set: action.workspaceDashboardDirDetails
+          }
+        }
+      });    
     case visualizationConstants.CHANGE_CHART_TYPE:
       return update(state, {
         type: {

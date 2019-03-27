@@ -5,6 +5,8 @@ class Ajax {
   DOCUMENTS_BASE_PATH = 'dataDocuments'
   DASHBOARD_BASE_PATH = "dashboard"
   
+  WORKSPACE_ITEMS = "items"
+
   baseUrl = null
   workspaceUrl = null
 
