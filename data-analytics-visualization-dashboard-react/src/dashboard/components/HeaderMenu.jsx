@@ -1,7 +1,43 @@
 import React from 'react';
+import {Treebeard} from 'react-treebeard';
+import style from '../../style';
 
-import {  Header, Input } from 'semantic-ui-react'
+import {  Header, Input, Button } from 'semantic-ui-react'
+import Modal from '@trendmicro/react-modal';
 
+// Be sure to include styles at some point, probably during your bootstraping
+import '@trendmicro/react-modal/dist/react-modal.css';
+
+const data = {
+  name: 'root',
+  toggled: true,
+  children: [
+      {
+          name: 'parent',
+          children: [
+              { name: 'child1' },
+              { name: 'child2' }
+          ]
+      },
+      {
+          name: 'loading parent',
+          loading: true,
+          children: []
+      },
+      {
+          name: 'parent',
+          children: [
+              {
+                  name: 'nested parent',
+                  children: [
+                      { name: 'nested child 1' },
+                      { name: 'nested child 2' }
+                  ]
+              }
+          ]
+      }
+  ]
+};
 class HeaderMenu extends React.Component {
 
   constructor(props) {
@@ -14,6 +50,10 @@ class HeaderMenu extends React.Component {
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
+  }
+
+  openDashboardWorkspaceDirectory() {
+    this.props.openDashboardWorkspaceDirectory();
   }
 
   onSave(e) {
@@ -34,11 +74,22 @@ class HeaderMenu extends React.Component {
             />
             </div>
         </Header>
-        {/* <Button floated='right'>Save</Button>
+        <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Save</Button>
         <Button floated='right'>Open</Button>
-        <Button floated='right'>Share</Button>
-        <Button floated='right'>Remove</Button> */}
-
+        <Modal center showOverlay={true} show={true} onClose={this.onCloseModal} >
+          <Modal.Header>
+            <Modal.Title>
+              Dashboard Workspace Directory
+              </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Treebeard
+                data={data}
+                onToggle={this.onToggle}
+                style= {style}
+            />
+          </Modal.Body>
+        </Modal>
   </div>
     );
   }

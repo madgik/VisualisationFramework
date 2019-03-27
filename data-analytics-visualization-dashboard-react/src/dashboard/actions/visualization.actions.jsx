@@ -66,7 +66,8 @@ export const visualizationActions = {
   setWorkspaceParentDirDetails,
   setWorkspaceDashboardDirDetails,
   getDashboardFolder,
-  createDashboardFolder
+  createDashboardFolder,
+  getDashboardFolderListing
 }
 
 /*
@@ -130,8 +131,24 @@ function getDashboardFolder() {
       .then(response => {
         if(response.data.itemlist.length === 0)
           dispatch(createDashboardFolder());
-        else
-          dispatch(setWorkspaceDashboardDirDetails(response.data.itemlist[0]))  
+        else{
+          dispatch(setWorkspaceDashboardDirDetails(response.data.itemlist[0]))
+          dispatch(getDashboardFolderListing());  
+        }
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function getDashboardFolderListing() {
+  return function (dispatch, getState) {
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/children", parameters);
+    return axios.get(resourceUrl)
+      .then(response => {
+        console.log(response.data)
       })
       .catch(response => {
         alert(response);
