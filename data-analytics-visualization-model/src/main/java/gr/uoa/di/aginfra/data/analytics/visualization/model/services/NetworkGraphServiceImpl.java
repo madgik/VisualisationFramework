@@ -46,15 +46,16 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    public List<Node> getNeighborNodes(String graphId) throws Exception {
+    public List<Node> getNeighborNodes(String graphId, String nodeId) throws Exception {
         return null;
     }
-
 
     @Override
-    public SubGraphEntity getNextSubGraph(String id) throws Exception {
+    public Map<String, Object> getNextTimestampSubGraph(String subGraphId, List<String> nodes, String date) throws Exception {
         return null;
     }
+
+
 
     @Override
     public DataDocumentMetadata getDataDocumentMetadata(String id) throws Exception {
