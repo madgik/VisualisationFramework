@@ -47,7 +47,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     @Override
     public List<Node> getNeighborNodes(String graphId, String nodeId) throws Exception {
-        return null;
+        return nodeRepository.findNeighboursOfNodeById(graphId, nodeId);
     }
 
     @Override
