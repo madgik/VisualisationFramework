@@ -5,6 +5,6 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransferRepository extends Neo4jRepository<HasWeight, Long> {
+public interface HasWeightRepository extends Neo4jRepository<HasWeight, Long> {
 
 }

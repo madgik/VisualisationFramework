@@ -7,9 +7,9 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.HasWeightRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.NodeRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.SubGraphRepository;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    private TransferRepository transferRepository;
+    private HasWeightRepository hasWeightRepository;
 
     private DateNodeRepository dateNodeRepository;
 
@@ -32,9 +32,9 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     private SubGraphRepository subGraphRepository;
 
     @Autowired
-    public NetworkGraphServiceImpl(TransferRepository transferRepository, DateNodeRepository dateNodeRepository,
+    public NetworkGraphServiceImpl(HasWeightRepository hasWeightRepository, DateNodeRepository dateNodeRepository,
                                    NodeRepository nodeRepository, SubGraphRepository subGraphRepository) {
-        this.transferRepository = transferRepository;
+        this.hasWeightRepository = hasWeightRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
         this.subGraphRepository = subGraphRepository;
@@ -70,7 +70,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         List<Long> insertedEdges = new ArrayList<>();
         graph.getLinks().stream().forEach(edge ->
                 edge.getTransfers().stream().forEach(transfer ->
-                        insertedEdges.add(transferRepository.save(transfer).getId())
+                        insertedEdges.add(hasWeightRepository.save(transfer).getId())
                 )
         );
 
