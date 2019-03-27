@@ -33,6 +33,7 @@ public class HasWeight {
         this.target = target;
         this.date = date.replace(".", "");
         this.weight = weight;
+        this.source.setHasWeight(this);
     }
 
     public Long getId() {

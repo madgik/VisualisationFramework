@@ -67,16 +67,6 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
         List<Long> insertedNodes = new ArrayList<>();
 
-//        graph.getNodes().entrySet().stream().forEach(nodeEntry -> {
-//                    nodeEntry.getValue().getHasDateNodes().stream().forEach(dateNode -> {
-////                        nodeRepository.save(nodeEntry.getValue());
-////                        dateNodeRepository.save(dateNode.getTarget());
-//                        System.out.println("asdasd"+dateNode.getTarget().getDate());
-//                           }
-//                    );
-//                }
-//        );
-
         List<Long> insertedEdges = new ArrayList<>();
         graph.getLinks().stream().forEach(edge ->
                 edge.getTransfers().stream().forEach(transfer ->

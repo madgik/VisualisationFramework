@@ -22,6 +22,9 @@ public class DateNode extends SubGraphEntity {
 
     private String property;
 
+    @Relationship(type = "HAS_WEIGHT", direction = "OUTGOING")
+    private HasWeight hasWeight;
+
     @Relationship(type = "HAS_DATENODE", direction = "INCOMING")
     private Node parentNode;
 
@@ -76,5 +79,13 @@ public class DateNode extends SubGraphEntity {
 
     public void setParentNode(Node parentNode) {
         this.parentNode = parentNode;
+    }
+
+    public HasWeight getHasWeight() {
+        return hasWeight;
+    }
+
+    public void setHasWeight(HasWeight hasWeight) {
+        this.hasWeight = hasWeight;
     }
 }
