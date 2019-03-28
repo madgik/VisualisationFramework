@@ -44,23 +44,41 @@ const Div = styled('Div', {
   shouldForwardProp: prop => ['className', 'children'].indexOf(prop) !== -1
 })(({style}) => style);
 
-const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
 // Example: Customising The Header Decorator To Include Icons
-decorators.Header = ({style, node}) => {
-  const iconType = node.children ? 'folder' : 'file-text';
-  const iconClass = `fa fa-${iconType}`;
-  const iconStyle = {marginRight: '5px'};
-
-  return (
-      <Div style={style.base}>
-          <Div style={style.title}>
-              <i className={iconClass} style={iconStyle}/>
-
-              {node.name}
-          </Div>
-      </Div>
-  );
+const decorators1 = {
+  Loading: (props) => {
+      return (
+          <div style={props.style}>
+              loading...
+          </div>
+      );
+  },
+  Toggle: (props) => {
+      return (
+          <div style={props.style}>
+              <svg height={props.height} width={props.width}>
+                  // Vector Toggle Here
+              </svg>
+          </div>
+      );
+  },
+  Header: (props) => {
+      return (
+          <div style={props.style}>
+              {props.node.name}
+          </div>
+      );
+  },
+  Container: (props) => {
+      return (
+          <div onClick={this.onClick}>
+              // Hide Toggle When Terminal Here
+              <this.props.decorators.Toggle/>
+              <this.props.decorators.Header/>
+          </div>
+      );
+  }
 };
 
 
@@ -76,6 +94,10 @@ class HeaderMenu extends React.Component {
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
+  }
+
+  onClick(){
+
   }
 
   openDashboardWorkspaceDirectory() {
@@ -113,7 +135,7 @@ class HeaderMenu extends React.Component {
                 data={data}
                 onToggle={this.onToggle}
                 style= {style}
-                decorators={decorators}
+                decorators={decorators1}
 
             />
           </Modal.Body>
