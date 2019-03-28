@@ -1,6 +1,7 @@
 import update from 'immutability-helper'
 
 import { configGraphConstants } from '../constants'
+import { CardActions } from '@material-ui/core';
 
 const dataDefault = {
   open: false,
@@ -10,6 +11,9 @@ const dataDefault = {
   fileDetails:{
     valid: false
   },
+  graphSource: 'new',
+  selectedGraph: '-',
+  allGraphsMetadata: ''
 }
 
 
@@ -69,6 +73,27 @@ export function configGraph(state = dataDefault, action) {
           valid: {
             $set: action.valid
           }
+        }
+      })
+    }
+    case configGraphConstants.SET_GRAPH_SOURCE: {
+      return update(state, {
+        graphSource: {
+          $set: action.graphSource
+        }
+      })
+    }
+    case configGraphConstants.SET_SELECTED_GRAPH: {
+      return update(state, {
+        selectedGraph: {
+          $set: action.selectedGraph
+        }
+      })
+    }
+    case configGraphConstants.SET_ALL_GRAPHS_METADATA: {
+      return update( state, {
+        allGraphsMetadata: {
+          $set: action.allGraphsMetadata
         }
       })
     }

@@ -8,18 +8,59 @@ import Ajax from '../utilities/Ajax';
 const dataDefault = {
     type: '',
     tree: null,
-    graph: null,
+    selectedNode: '',
+    graph: {
+        links: '',
+        nodes: ''
+    },
+    linkColor: 'blue',
+    prevGraphState: {
+        links: '',
+        nodes: ''
+    },
+    graphData: null,
     barChartData: null,
     timeSeries: [],
     filters: []
-  }
+}
 
 export function controlGraph(state = dataDefault, action) {
     switch (action.type) {
-        case controlGraphConstants.LOAD_GRAPH:
-            return action.data;
-        case controlGraphConstants.RESET_GRAPH:
-            return dataDefault;
+
+        case controlGraphConstants.SET_GRAPH_DATA:
+            return update(state, {
+                graphData: {
+                    $set: action.graphData
+                }
+            })
+        case controlGraphConstants.SET_GRAPH_LINKS:
+            return update(state, {
+                graph: {
+                    links: {
+                        $set: action.links
+                    }
+                }
+            })
+        case controlGraphConstants.SET_GRAPH_NODES:
+            return update(state, {
+                graph: {
+                    nodes: {
+                        $set: action.nodes
+                    }
+                }
+            })
+        case controlGraphConstants.SET_LINK_COLOR:
+            return update(state, {
+                linkColor: {
+                    $set: action.color
+                }
+            })
+        case controlGraphConstants.SET_SELECTED_NODE:
+            return update(state, {
+                selectedNode: {
+                    $set: action.nodeId
+                }
+            })
         //   case visualizationConstants.CHANGE_TIME:
         //     return update(state, {
         //       type: {

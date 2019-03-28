@@ -19,6 +19,8 @@ public class Node extends SubGraphEntity{
 
     private double longitude;
 
+    private int startingDate;
+
 
     @Relationship(type = "HAS_PROPERTY")
     private List<NodeProperty> nodeProperties;
@@ -37,10 +39,14 @@ public class Node extends SubGraphEntity{
         this.latitude = latitude;
         this.longitude = longitude;
         this.nodeProperties = new ArrayList<>();
-
+        int i=0;
         for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
             if(entry.getKey().matches("[a-zA-Z ]+")) {
+                if(i == 0) {
+                    this.setStartingDate(Integer.parseInt(entry.getKey().replace(".","")));
+                }
+                i++;
                 NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
                 nodeProperties.add(nodeProperty);
                 System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -51,7 +57,6 @@ public class Node extends SubGraphEntity{
         this.setSubGraphId(graphId);
         this.setSubGraphName(graphName);
         this.setTenantName(tenantName);
-
         this.hasDateNodes = attributes.entrySet()
                 .stream()
                 .map(e -> new HasDateNode(this, new DateNode(e.getKey(),e.getValue(),this)))
@@ -102,5 +107,13 @@ public class Node extends SubGraphEntity{
 
     public void setNodeProperties(List<NodeProperty> nodeProperties) {
         this.nodeProperties = nodeProperties;
+    }
+
+    public int getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(int startingDate) {
+        this.startingDate = startingDate;
     }
 }

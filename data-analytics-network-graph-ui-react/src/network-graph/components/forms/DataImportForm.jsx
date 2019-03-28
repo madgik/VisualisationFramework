@@ -83,7 +83,7 @@ class DataImportForm extends React.Component {
                             variant="contained" color="primary"
                             disabled={!this.props.fileDetails.valid}>
                             Upload
-                    </Button>
+                        </Button>
                     </form>
                 </div>
                 <div>

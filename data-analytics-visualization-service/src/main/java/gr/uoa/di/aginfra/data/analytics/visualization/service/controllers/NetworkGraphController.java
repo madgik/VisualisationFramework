@@ -86,7 +86,7 @@ public class NetworkGraphController {
         try {
             System.out.println("IVE BENN CALLED");
             List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, true);
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
@@ -105,7 +105,8 @@ public class NetworkGraphController {
 
         try {
             List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, false);
+            System.out.println(d3Results.size());
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
         } catch (Exception e) {

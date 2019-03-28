@@ -32,18 +32,37 @@
   }
 }
 
-.base-container {
+.content{
   position: relative;
+  margin-top:10px;
+  z-index: 0;
+  position:relative;
 }
 
 .main-content {
-  width: 70%;
+  width: 65%;
+  height: 100%;
+  float: left;
+
+}
+
+.config-controls {
+  margin: 2em;
+}
+
+.sidebar{
+  width: 35%;
   height: 100%;
   float: left;
 }
 
-.sidebar{
-  width: 30%;
-  height: 100%;
-  float: left;
+.headerMenu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 23px;  /* for liferay  */
+  z-index: 1;
+  width: 100%;
+  height: 41px;
 }

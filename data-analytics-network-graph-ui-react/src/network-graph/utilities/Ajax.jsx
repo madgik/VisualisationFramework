@@ -3,7 +3,12 @@ class Ajax {
   NETWORK_GRAPH_BASE_PATH = 'graph'
 
   NETWORK_GRAPH_FILE_PATH ='file'
-  // DOCUMENTS_BASE_PATH = 'dataDocuments'
+
+  NETWORK_GRAPH_GRAPHS_PATH = 'graphs' 
+
+  NETWORK_GRAPH_TOP_NODES = 'top'
+
+  NETWORK_GRAPH_NEIGHBORS = 'neighbors'
 
   baseUrl = null
 
