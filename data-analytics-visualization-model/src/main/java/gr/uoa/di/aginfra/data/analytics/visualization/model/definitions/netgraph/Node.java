@@ -40,10 +40,10 @@ public class Node extends SubGraphEntity{
 
         for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
-            if(entry.getKey().matches("[a-zA-Z]+")) {
+            if(entry.getKey().matches("[a-zA-Z ]+")) {
                 NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
                 nodeProperties.add(nodeProperty);
-//                System.out.println(entry.getKey() + " = " + entry.getValue());
+                System.out.println(entry.getKey() + " = " + entry.getValue());
                 it.remove();
             }
         }

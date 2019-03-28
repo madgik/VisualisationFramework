@@ -18,7 +18,7 @@ public class DateNode extends SubGraphEntity {
 
     private String parentId;
 
-    private String date;
+    private int date;
 
     private String property;
 
@@ -32,7 +32,7 @@ public class DateNode extends SubGraphEntity {
     }
 
     public DateNode(String date, String property, Node node) {
-        this.date = date.replace(".", "");
+        this.date = Integer.parseInt(date.replace(".", ""));
         this.property = property;
         this.parentId = node.getNodeId();
         this.parentNode = node;
@@ -57,11 +57,11 @@ public class DateNode extends SubGraphEntity {
         this.parentId = parentId;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 

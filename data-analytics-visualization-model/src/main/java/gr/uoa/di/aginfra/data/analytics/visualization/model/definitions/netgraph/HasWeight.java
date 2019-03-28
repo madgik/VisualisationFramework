@@ -19,7 +19,7 @@ public class HasWeight {
     @EndNode
     DateNode target;
 
-    private String date;
+    private int date;
 
     private Double weight;
 
@@ -31,7 +31,7 @@ public class HasWeight {
         this.edgeParentId = edgeParentId;
         this.source = source;
         this.target = target;
-        this.date = date.replace(".", "");
+        this.date = Integer.parseInt(date.replace(".", ""));
         this.weight = weight;
         this.source.setHasWeight(this);
     }
@@ -68,11 +68,11 @@ public class HasWeight {
         this.target = target;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 

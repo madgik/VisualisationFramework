@@ -81,7 +81,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     @Override
     public List<Node> getTopNodesOfGraph(String subGraphId, int num) throws Exception {
-        return null;
+        return nodeRepository.findTopNodes(subGraphId, num);
     }
 
 

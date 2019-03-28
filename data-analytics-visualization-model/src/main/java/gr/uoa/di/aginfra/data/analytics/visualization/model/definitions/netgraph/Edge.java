@@ -35,11 +35,13 @@ public class Edge extends SubGraphEntity {
                 it.remove();
             }
         }
-
-        transfers = attributes.entrySet().stream().map(dNode ->
+        transfers = attributes.entrySet().stream()
+                //TODO TEST WITH FILTER ENABLED
+                //.filter(dNode -> Double.parseDouble(dNode.getValue()) > 0)
+                .map(dNode ->
                 new HasWeight(this.edgeId, source.getNodeId(),
-                        source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate().equals(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
-                        target.getHasDateNodes().stream().filter((t -> t.getTarget().getDate().equals(dNode.getKey().replace(".", "")))).findAny().orElse(null).getTarget(),
+                        source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate() == Integer.parseInt(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
+                        target.getHasDateNodes().stream().filter(t -> t.getTarget().getDate() == Integer.parseInt(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
                         dNode.getKey(), Double.parseDouble(dNode.getValue()))
         ).collect(Collectors.toSet());
 
