@@ -3,7 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.D3Helper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
@@ -80,13 +80,33 @@ public class NetworkGraphController {
 
     }
 
+    @RequestMapping(value = "graphs/{subGraphId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getTopNodes(@PathVariable String subGraphId, @RequestParam("number") int number) {
+
+        try {
+            System.out.println("IVE BENN CALLED");
+            List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results);
+
+            return new ResponseEntity<>(d3Results, HttpStatus.OK);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
+
 
     @RequestMapping(value = "neighbors/{subGraphId}/{nodeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> getNeighbors(@PathVariable String subGraphId, @PathVariable String nodeId ) {
 
         try {
-            List<Node> result = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results);
+            return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();
