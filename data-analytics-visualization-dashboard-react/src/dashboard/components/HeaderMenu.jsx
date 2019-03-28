@@ -1,6 +1,7 @@
 import React from 'react';
-import {Treebeard} from 'react-treebeard';
+import {Treebeard, decorators} from 'react-treebeard';
 import style from '../../style';
+import styled from '@emotion/styled';
 
 import {  Header, Input, Button } from 'semantic-ui-react'
 import Modal from '@trendmicro/react-modal';
@@ -38,6 +39,31 @@ const data = {
       }
   ]
 };
+
+const Div = styled('Div', {
+  shouldForwardProp: prop => ['className', 'children'].indexOf(prop) !== -1
+})(({style}) => style);
+
+const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
+
+// Example: Customising The Header Decorator To Include Icons
+decorators.Header = ({style, node}) => {
+  const iconType = node.children ? 'folder' : 'file-text';
+  const iconClass = `fa fa-${iconType}`;
+  const iconStyle = {marginRight: '5px'};
+
+  return (
+      <Div style={style.base}>
+          <Div style={style.title}>
+              <i className={iconClass} style={iconStyle}/>
+
+              {node.name}
+          </Div>
+      </Div>
+  );
+};
+
+
 class HeaderMenu extends React.Component {
 
   constructor(props) {
@@ -87,6 +113,8 @@ class HeaderMenu extends React.Component {
                 data={data}
                 onToggle={this.onToggle}
                 style= {style}
+                decorators={decorators}
+
             />
           </Modal.Body>
         </Modal>
