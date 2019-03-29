@@ -1,86 +1,17 @@
 import React from 'react';
-import {Treebeard, decorators} from 'react-treebeard';
-import style from '../../style';
-import styled from '@emotion/styled';
+
 
 import {  Header, Input, Button } from 'semantic-ui-react'
 import Modal from '@trendmicro/react-modal';
-
 // Be sure to include styles at some point, probably during your bootstraping
-import '@trendmicro/react-modal/dist/react-modal.css';
+// import '@trendmicro/react-modal/dist/react-modal.css';
+import FileBrowser, {  Icons } from 'react-keyed-file-browser'
+import Moment from 'moment'
+import '../../../node_modules/react-keyed-file-browser/dist/react-keyed-file-browser.css';
 
-const data = {
-  name: 'root',
-  toggled: true,
-  children: [
-      {
-          name: 'parent',
-          children: [
-              { name: 'child1' },
-              { name: 'child2' }
-          ]
-      },
-      {
-          name: 'loading parent',
-          loading: true,
-          children: []
-      },
-      {
-          name: 'parent',
-          children: [
-              {
-                  name: 'nested parent',
-                  children: [
-                      { name: 'nested child 1' },
-                      { name: 'nested child 2' }
-                  ]
-              }
-          ]
-      }
-  ]
-};
-
-const Div = styled('Div', {
-  shouldForwardProp: prop => ['className', 'children'].indexOf(prop) !== -1
-})(({style}) => style);
-
-
-// Example: Customising The Header Decorator To Include Icons
-const decorators1 = {
-  Loading: (props) => {
-      return (
-          <div style={props.style}>
-              loading...
-          </div>
-      );
-  },
-  Toggle: (props) => {
-      return (
-          <div style={props.style}>
-              <svg height={props.height} width={props.width}>
-                  // Vector Toggle Here
-              </svg>
-          </div>
-      );
-  },
-  Header: (props) => {
-      return (
-          <div style={props.style}>
-              {props.node.name}
-          </div>
-      );
-  },
-  Container: (props) => {
-      return (
-          <div onClick={this.onClick}>
-              // Hide Toggle When Terminal Here
-              <this.props.decorators.Toggle/>
-              <this.props.decorators.Header/>
-          </div>
-      );
-  }
-};
-
+function EmptyRenderer() { 
+    
+    return ( <div></div> ) }
 
 class HeaderMenu extends React.Component {
 
@@ -90,7 +21,13 @@ class HeaderMenu extends React.Component {
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
     this.onSave = this.onSave.bind(this);
+
   }
+  handleItemClick = (event) => {
+    console.log(event);  
+}
+
+
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
@@ -109,8 +46,57 @@ class HeaderMenu extends React.Component {
  //   visualizationActions.updateDashBoardTitle(e);
   }
 
+
+  handleCreateFiles = (files, prefix) => {
+    this.setState(state => {
+      const newFiles = files.map((file) => {
+        let newKey = prefix
+        if (prefix !== '' && prefix.substring(prefix.length - 1, prefix.length) !== '/') {
+          newKey += '/'
+        }
+        newKey += file.name
+        return {
+          key: newKey,
+          size: file.size,
+          modified: +Moment(),
+        }
+      })
+
+      const uniqueNewFiles = []
+      newFiles.map((newFile) => {
+        let exists = false
+        state.files.map((existingFile) => {
+          if (existingFile.key === newFile.key) {
+            exists = true
+          }
+        })
+        if (!exists) {
+          uniqueNewFiles.push(newFile)
+        }
+      })
+      state.files = state.files.concat(uniqueNewFiles)
+      return state
+    })
+  }
+  
+  handleDeleteFile = (fileKey) => {
+    this.setState(state => {
+      const newFiles = []
+      state.files.map((file) => {
+        if (file.key !== fileKey) {
+          newFiles.push(file)
+        }
+      })
+      state.files = newFiles
+      return state
+    })
+  }
+
+
+
   render() {
     return (
+        
     <div className='ui clearing segment'>
 
         <Header as='h1'>
@@ -124,22 +110,74 @@ class HeaderMenu extends React.Component {
         </Header>
         <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Save</Button>
         <Button floated='right'>Open</Button>
-        <Modal center showOverlay={true} show={true} onClose={this.onCloseModal} >
+
+        <Modal center showOverlay={true}  onClose={this.onCloseModal} >
           <Modal.Header>
             <Modal.Title>
-              Dashboard Workspace Directory
+              Select date range
               </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Treebeard
-                data={data}
-                onToggle={this.onToggle}
-                style= {style}
-                decorators={decorators1}
+            <FileBrowser
 
-            />
+                files={[
+                    {
+                      key: 'cat.txt',
+                      modified: +Moment().subtract(1, 'hours'),
+                      size: 1.5 * 1024 * 1024,
+                    },
+                    {
+                      key: 'kitten.png',
+                      modified: +Moment().subtract(3, 'days'),
+                      size: 545 * 1024,
+                    },
+                    {
+                      key: 'elephant.png',
+                      modified: +Moment().subtract(3, 'days'),
+                      size: 52 * 1024,
+                    },
+                    {
+                      key: 'dog.png',
+                      modified: +Moment().subtract(1, 'hours'),
+                      size: 1.5 * 1024 * 1024,
+                    },
+                    {
+                      key: 'turtle.png',
+                      modified: +Moment().subtract(3, 'months'),
+                      size: 545 * 1024,
+                    },
+                    {
+                      key: 'gecko.png',
+                      modified: +Moment().subtract(2, 'days'),
+                      size: 52 * 1024,
+                    },
+                    {
+                      key: 'centipede.png',
+                      modified: +Moment().subtract(0.5, 'hours'),
+                      size: 1.5 * 1024 * 1024,
+                    },
+                    {
+                      key: 'possum.png',
+                      modified: +Moment().subtract(32, 'days'),
+                      size: 545 * 1024,
+                    },
+                  ]}
+                  icons={Icons.FontAwesome(4)}
+                  canFilter= {false}
+
+                  onCreateFolder={this.handleCreateFolder}
+                  onSelectFile={this.handleItemClick}
+                  onDeleteFolder={this.handleDeleteFolder}
+                  onDeleteFile={this.handleDeleteFile}
+                detailRenderer={EmptyRenderer}
+
+                
+
+            />   
           </Modal.Body>
         </Modal>
+
+        
   </div>
     );
   }
