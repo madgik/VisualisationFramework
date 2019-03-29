@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.*;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -105,26 +106,41 @@ public class D3Helper {
     }
 
 
-    public static Map<String, Object> hasWeightToD3Format(Collection<HasWeight> nodeEntities, boolean isInitialization) {
+    public static Map<String, Object> hasWeightToD3Format(Collection<HasWeight> nodeEntities, String graphId, NetworkGraphService networkGraphService) {
         List<Map<String, Object>> nodes = new ArrayList<>();
         List<Map<String, Object>> rels = new ArrayList<>();
         int i = 0;
         Iterator<HasWeight> result = nodeEntities.iterator();
+        Map<String, Node> existedNodes = new HashMap<>();
+        List<String> targetIds = new ArrayList<>();
         while (result.hasNext()) {
             HasWeight hasWeight= result.next();
             Node node = hasWeight.getSource().getParentNode();
-
-            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            if(node == null ) {
+                node= networkGraphService.findNodeById(hasWeight.getSource().getParentId(),graphId);
+                existedNodes.put(hasWeight.getSource().getParentId(),node);
+            }
+            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude(),"value", hasWeight.getSource().getProperty());
             for(NodeProperty property: node.getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
 
             nodes.add(nodeMap);
 
-
+            targetIds.add(hasWeight.getTarget().getParentId());
             rels.add(map("source", node.getNodeId(), "target", hasWeight.getTarget().getParentId(),"weight",hasWeight.getWeight(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
 
         }
+        targetIds.stream().forEach(t->{
+            if( existedNodes.get(t) == null) {
+                Node node= networkGraphService.findNodeById(t,graphId);
+                Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+                for(NodeProperty property: node.getNodeProperties()){
+                    nodeMap.put(property.getName(), property.getValue());
+                }
+                nodes.add(nodeMap);
+            }
+        });
 
         return map("nodes", nodes, "links", rels);
     }

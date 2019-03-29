@@ -19,6 +19,8 @@ public interface NetworkGraphService {
 
     List<HasWeight> getCurrentTimestampGraph(String subGraphId, List<String> nodes, String date) throws Exception;
 
+    Node findNodeById(String nodeId, String graphId);
+
     DataDocumentMetadata getDataDocumentMetadata(String id) throws Exception;
 
     int storeNetworkGraph(NetworkGraph graph) throws Exception;

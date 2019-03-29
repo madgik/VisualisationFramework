@@ -86,7 +86,6 @@ public class NetworkGraphController {
     ResponseEntity<?> getTopNodes(@PathVariable String subGraphId, @RequestParam("number") int number) {
 
         try {
-            System.out.println("IVE BENN CALLED");
             List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
             Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, true);
 
@@ -137,12 +136,12 @@ public class NetworkGraphController {
 
         try {
             List<String> nodeList = Arrays.asList(nodes);
-//            List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
-//            System.out.println("RESULTS:"+result.size());
-//            Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, false);
-            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
+            List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
             System.out.println("RESULTS:"+result.size());
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+            Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
+//            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
+//            System.out.println("RESULTS:"+result.size());
+//            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 

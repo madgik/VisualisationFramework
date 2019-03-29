@@ -64,6 +64,11 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         return hasWeightRepository.findNodesAndHasWeightByDate(subGraphId,nodes,Integer.parseInt(date.replace(".","")));
     }
 
+    @Override
+    public Node findNodeById(String nodeId, String graphId) {
+        return nodeRepository.findNodeByNodeId(nodeId, graphId);
+    }
+
 
     @Override
     public DataDocumentMetadata getDataDocumentMetadata(String id) throws Exception {
