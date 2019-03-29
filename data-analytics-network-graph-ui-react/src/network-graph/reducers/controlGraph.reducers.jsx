@@ -12,6 +12,7 @@ const dataDefault = {
     startingDate: '2012.01',
     lastDate: '2015.12',
     currentDate: '2012.01',
+    selectedWeight:'',
     graph: {
         links: '',
         nodes: ''
@@ -24,7 +25,8 @@ const dataDefault = {
     graphData: null,
     barChartData: null,
     timeSeries: [],
-    filters: []
+    filters: [],
+    paused: false
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -68,6 +70,18 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 currentDate: {
                     $set: action.date
+                }
+            })
+        case controlGraphConstants.SET_PAUSED:
+            return update(state, {
+                paused: {
+                    $set: action.paused
+                }
+            })
+        case controlGraphConstants.SET_SELECTED_WEIGHT:
+            return update(state, {
+                selectedWeight: {
+                    $set: action.weight
                 }
             })
         //   case visualizationConstants.CHANGE_TIME:

@@ -16,7 +16,8 @@ class GraphControls extends React.Component {
   }
   
   handlePlayClick() {
-
+    this.props.setPaused(false);
+    this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
   }
 
 
@@ -29,7 +30,7 @@ class GraphControls extends React.Component {
   }
 
   handlePauseClick() {
-
+    this.props.setPaused(true);
   }
 
 

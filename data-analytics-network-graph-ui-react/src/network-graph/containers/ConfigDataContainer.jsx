@@ -15,7 +15,9 @@ const mapStateToProps = state => ({
    selectedNode: state.controlGraph.selectedNode,
    graph: state.controlGraph.graph,
    graphData: state.controlGraph.graphData,
-   currentDate: state.controlGraph.currentDate
+   currentDate: state.controlGraph.currentDate,
+   paused: state.controlGraph.paused,
+   selectedWeight: state.controlGraph.selectedWeight
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -31,6 +33,7 @@ const mapDispatchToProps = dispatch => ({
     setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
     getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
     playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
+    setPaused: (paused) => dispatch(controlGraphActions.setPaused(paused))
 });
 
 export default connect(

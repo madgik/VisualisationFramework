@@ -13,8 +13,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setSelectedNode: (nodeId) => dispatch(controlGraphActions.setSelectedNode(nodeId)),
-    getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData))
-
+    getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData)),
+    setSelectedWeight: (weight) => dispatch(controlGraphActions.setSelectedWeight(weight))
 });
 
 export default connect(

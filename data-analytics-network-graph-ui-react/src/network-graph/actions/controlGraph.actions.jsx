@@ -24,7 +24,9 @@ export const controlGraphActions = {
   setPrevGraphStateData,
   setPrevGraphStateNodes,
   setPrevGraphStateLinks,
-  setCurrentDate
+  setCurrentDate,
+  setPaused,
+  setSelectedWeight
 }
 
 /*
@@ -72,8 +74,10 @@ function getNeighbors(graphId, nodeId, graphData){
 /* OTHERS */
 function addGraphData(data,graphData) {
   return function (dispatch) {
-    var newGraphData = mergeDeep(graphData, data);
-    dispatch(loadGraph(newGraphData));
+    var newGraphDataNodes= mergeDeep(graphData.nodes, data.nodes);
+    graphData.links= data.links;
+    graphData.nodes= newGraphDataNodes
+    dispatch(loadGraph(graphData));
   }
 }
 
@@ -93,6 +97,8 @@ function getDateGraph(date, graphData, graphId) {
       }
     })
       .then(response => {
+        // dispatch(loadGraph(response.data));
+
         dispatch(addGraphData(response.data,graphData))
         dispatch(setCurrentDate(date))
       })
@@ -102,17 +108,21 @@ function getDateGraph(date, graphData, graphId) {
   }
 }
 
-function playTimeGraph(date, graphData, graphId) {
+function playTimeGraph(date, graphData, graphId, paused) {
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.CONFIGURATIONS_BASE_PATH);
-    return axios.get(resourceUrl)
-      .then(response => {
+    var index = DateUtils.dates.indexOf(date);
+    for (var i = index; i < DateUtils.dates.length; i++) {
+      if(paused != true){
+        setInterval(function(){
+          dispatch( getDateGraph(date, graphData, graphId));
+        }, 3000);
         
-        dispatch(addGraphData(response.data,graphData))
-      })
-      .catch(response => {
-        alert(response);
-      });
+      }
+      else{
+        return;
+      }
+     
+    }
   }
 }
 /* SET GRAPH DATA */
@@ -125,11 +135,13 @@ function setSelectedNode(nodeId) {
 
 function loadGraph(graphData) {
   return function (dispatch) {
-
-    dispatch(setGraphData(graphData));
-    dispatch(setGraphLinks(graphData.links));
-    dispatch(setGraphNodes(graphData.nodes));
-
+    console.log("-"+graphData.nodes)
+    // if(graphData.nodes != ''){
+      dispatch(setGraphData(graphData));
+      dispatch(setGraphLinks(graphData.links));
+      dispatch(setGraphNodes(graphData.nodes));
+    // }
+  
   }
 }
 
@@ -173,6 +185,14 @@ function setPrevGraphStateNodes(prevGraphNodes) {
 
 function setCurrentDate(date) {
   return { type: controlGraphConstants.SET_CURRENT_DATE, date };
+}
+
+function setPaused(paused) {
+  return { type: controlGraphConstants.SET_PAUSED, paused };
+}
+
+function setSelectedWeight(weight) {
+  return { type: controlGraphConstants.SET_SELECTED_WEIGHT, weight };
 }
 
 

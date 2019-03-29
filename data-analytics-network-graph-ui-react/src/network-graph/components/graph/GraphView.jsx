@@ -4,7 +4,6 @@ import './graph.css';
 
 import Force from '../../utilities/Force';
 
-import Link from './Link';
 import Node from './Node';
 import { Graph } from 'react-d3-graph';
 
@@ -49,6 +48,7 @@ class GraphView extends React.Component {
     // This binding is necessary to make `this` work in the callback
     // this.submit = this.submit.bind(this);
     this.onClickNode = this.onClickNode.bind(this);
+    this.onClickLink = this.onClickLink.bind(this);
   }
 
   myConfig = {
@@ -74,8 +74,22 @@ class GraphView extends React.Component {
 
   onClickNode(nodeId) {
     this.props.setSelectedNode(nodeId);
+    this.props.setSelectedWeight('');
+
   };
 
+  onClickLink(source, target) {
+    var links = this.props.graph.links
+    for (var i = 0; i < links.length; i++){
+      // look for the entry with a matching `code` value
+      if (links[i].source == source && links[i].target){
+        this.props.setSelectedWeight(links[i].weight);
+        this.props.setSelectedNode('');
+
+      }
+    }
+    console.log()
+  };
   
   render() {
     return (
@@ -100,7 +114,7 @@ class GraphView extends React.Component {
                 onClickNode={this.onClickNode}
                 // onRightClickNode={onRightClickNode}
                 // onClickGraph={onClickGraph}
-                // onClickLink={onClickLink}
+                onClickLink={this.onClickLink}
                 // onRightClickLink={onRightClickLink}
                 // onMouseOverNode={onMouseOverNode}
                 // onMouseOutNode={onMouseOutNode}

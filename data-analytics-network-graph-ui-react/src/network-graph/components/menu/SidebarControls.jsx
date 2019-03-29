@@ -9,6 +9,7 @@ import GraphControls from "../controls/GraphControls";
 import SelectGraphForm from "../forms/SelectGraphForm";
 import GraphSelection from "./GraphSelection";
 import NodePropeties from "../graph/NodeProperties";
+import LinkProperties from "../graph/LinkProperties";
 
 const styles = theme => ({
   root: {
@@ -62,6 +63,11 @@ class SidebarControls extends React.Component {
             />
           </Grid>
           <Grid>
+            <LinkProperties
+              selectedWeight={this.props.selectedWeight}
+              />
+          </Grid>
+          <Grid>
             <GraphFilter
               graphData={this.props.graphData}
               currentDate={this.props.currentDate}
@@ -74,6 +80,9 @@ class SidebarControls extends React.Component {
               currentDate={this.props.currentDate}
               getDateGraph={this.props.getDateGraph}
               selectedGraph={this.props.selectedGraph}
+              playTimeGraph={this.props.playTimeGraph}
+              paused={this.props.paused}
+              setPaused={this.props.setPaused}
             />
           </Grid>
           {/* <GraphFilter /> */}
