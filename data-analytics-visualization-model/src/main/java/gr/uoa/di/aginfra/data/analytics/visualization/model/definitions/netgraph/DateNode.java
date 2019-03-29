@@ -22,7 +22,7 @@ public class DateNode extends SubGraphEntity {
 
     private String property;
 
-    @Relationship(type = "HAS_WEIGHT", direction = "OUTGOING")
+    @Relationship(type = "HAS_WEIGHT")
     private HasWeight hasWeight;
 
     @Relationship(type = "HAS_DATENODE", direction = "INCOMING")

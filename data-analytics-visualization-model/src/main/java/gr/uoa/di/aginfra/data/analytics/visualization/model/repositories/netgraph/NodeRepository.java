@@ -22,8 +22,10 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
             "RETURN n,h,p")
     List<Node> findTopNodes(String subGraphId, int number);
 
-    @Query("MATCH (n:Node)-[h:HAS_DATENODE]-(dn1:DateNode)-[hw:HAS_WEIGHT]-(dn2:DateNode)-[h2:HAS_DATENODE]-(n2:Node), " +
-            "(n)-[hp:HAS_PROPERTY]-(p:NodeProperty) " +
+    @Query("MATCH (dn1:DateNode)-[hw:HAS_WEIGHT]-(dn2:DateNode) " +
+            "MATCH (n:Node)-[h:HAS_DATENODE]-(dn1:DateNode) " +
+            "MATCH (dn2:DateNode)-[h2:HAS_DATENODE]-(n2:Node) " +
+            "Match (n)-[hp:HAS_PROPERTY]-(p:NodeProperty)" +
             "WHERE n.nodeId in {1} and n.subGraphId={0} " +
             "and hw.date = {2} and hw.weight>0 return n,h,dn1,hw,dn2,h2,n2,hp,p")
     List<Node> findNodesAndHasWeightByDate(String subGraphId, List<String> nodes, int date);
