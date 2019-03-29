@@ -10,7 +10,7 @@ export const controlGraphConstants = {
   SET_GRAPH_NODES: 'set_graph_nodes',
   SET_LINK_COLOR: 'set_link_color',
   SET_SELECTED_NODE: 'set_selected_node',
-
+  SET_CURRENT_DATE: 'set_current_date',
 
   SET_PREV_GRAPH_STATE_DATA: 'set_prev_graph_state_data',
   SET_PREV_GRAPH_STATE_LINKS: 'set_prev_graph_state_links',

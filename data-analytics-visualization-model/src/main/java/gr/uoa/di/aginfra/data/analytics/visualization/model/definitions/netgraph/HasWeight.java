@@ -12,7 +12,10 @@ public class HasWeight {
 
     private String edgeParentId;
 
-    private String parentNodeId;
+    private String sourceNodeId;
+
+    private String targetNodeId;
+
 
     @StartNode
     DateNode source;
@@ -26,8 +29,9 @@ public class HasWeight {
     public HasWeight() {
     }
 
-    public HasWeight(String edgeParentId, String nodeId, DateNode source, DateNode target, String date, Double weight) {
-        this.parentNodeId = nodeId;
+    public HasWeight(String edgeParentId, String sourceNodeId, String targetNodeId, DateNode source, DateNode target, String date, Double weight) {
+        this.sourceNodeId = sourceNodeId;
+        this.targetNodeId = targetNodeId;
         this.edgeParentId = edgeParentId;
         this.source = source;
         this.target = target;
@@ -44,12 +48,20 @@ public class HasWeight {
         this.id = id;
     }
 
-    public String getParentNodeId() {
-        return parentNodeId;
+    public String getSourceNodeId() {
+        return sourceNodeId;
     }
 
-    public void setParentNodeId(String parentNodeId) {
-        this.parentNodeId = parentNodeId;
+    public void setSourceNodeId(String sourceNodeId) {
+        this.sourceNodeId = sourceNodeId;
+    }
+
+    public String getTargetNodeId() {
+        return targetNodeId;
+    }
+
+    public void setTargetNodeId(String targetNodeId) {
+        this.targetNodeId = targetNodeId;
     }
 
     public DateNode getSource() {

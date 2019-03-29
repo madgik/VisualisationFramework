@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.D3Helper;
@@ -20,6 +21,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -105,8 +107,8 @@ public class NetworkGraphController {
 
         try {
             List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, false);
-            System.out.println(d3Results.size());
+            Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results,nodeId, false);
+            System.out.println();
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -116,10 +118,11 @@ public class NetworkGraphController {
     }
 
     @RequestMapping(value = "next/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getNextTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes") List<String> nodes, @RequestParam("date") String currentDate ) {
+    ResponseEntity<?> getNextTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String [] nodes, @RequestParam("date") String currentDate ) {
 
+        List<String> nodeList = Arrays.asList(nodes);
         try {
-            Map<String, Object> result = networkGraphService.getNextTimestampSubGraph(graphId, nodes, currentDate);
+            Map<String, Object> result = networkGraphService.getNextTimestampSubGraph(graphId, nodeList, currentDate);
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -128,4 +131,24 @@ public class NetworkGraphController {
         }
     }
 
+
+    @RequestMapping(value = "date/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String[] nodes, @RequestParam("date") String currentDate ) {
+
+        try {
+            List<String> nodeList = Arrays.asList(nodes);
+            List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
+            System.out.println("RESULTS:"+result.size());
+            Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, false);
+//            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
+            System.out.println("RESULTS:"+result.size());
+//            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+
+            return new ResponseEntity<>(d3Results, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

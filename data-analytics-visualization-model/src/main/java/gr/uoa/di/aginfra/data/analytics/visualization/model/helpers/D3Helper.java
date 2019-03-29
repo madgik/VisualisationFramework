@@ -1,9 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasDateNode;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NodeProperty;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +25,7 @@ public class D3Helper {
             nodes.add(nodeMap);
 
             for (HasDateNode hasDateNode : node.getHasDateNodes()) {
-                rels.add(map("source", hasDateNode.getSource(), "target", hasDateNode, "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
+                rels.add(map("source", node.getNodeId(), "target", hasDateNode.getTarget().getHasWeight().getTarget().getParentId(),"weight",hasDateNode.getTarget().getHasWeight().getWeight(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
             }
         }
         //spoof links for visualization
@@ -39,6 +36,43 @@ public class D3Helper {
                 for (Node node : nodeEntities) {
                     if (i > 0) {
                         rels.add(map("source", source.getNodeId(), "target", node.getNodeId(), "color", "transparent", "highlightColor", "lightblue"));
+                    } else {
+                        source = node;
+                    }
+                    i++;
+                }
+            }
+        }
+        return map("nodes", nodes, "links", rels);
+    }
+
+    public static Map<String, Object> neighborsNodesToD3Format(Collection<Node> nodeEntities, String sourceId, boolean isInitialization) {
+        List<Map<String, Object>> nodes = new ArrayList<>();
+        List<Map<String, Object>> rels = new ArrayList<>();
+        int i = 0;
+        Iterator<Node> result = nodeEntities.iterator();
+        while (result.hasNext()) {
+            Node node = result.next();
+
+            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            for(NodeProperty property: node.getNodeProperties()){
+                nodeMap.put(property.getName(), property.getValue());
+            }
+
+            nodes.add(nodeMap);
+
+
+            rels.add(map("source", sourceId, "target", node.getNodeId(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
+
+        }
+        //spoof links for visualization
+        if( isInitialization) {
+
+            if (rels.size() == 0) {
+                Node source = null;
+                for (Node node : nodeEntities) {
+                    if (i > 0) {
+                        rels.add(map("source", source.getNodeId(), "target", node.getNodeId(), "color", "transparent", "highlightColor", "transparent"));
                     } else {
                         source = node;
                     }
@@ -67,6 +101,31 @@ public class D3Helper {
                     "weight", dateNode.getHasWeight().getWeight()));
 
         }
+        return map("nodes", nodes, "links", rels);
+    }
+
+
+    public static Map<String, Object> hasWeightToD3Format(Collection<HasWeight> nodeEntities, boolean isInitialization) {
+        List<Map<String, Object>> nodes = new ArrayList<>();
+        List<Map<String, Object>> rels = new ArrayList<>();
+        int i = 0;
+        Iterator<HasWeight> result = nodeEntities.iterator();
+        while (result.hasNext()) {
+            HasWeight hasWeight= result.next();
+            Node node = hasWeight.getSource().getParentNode();
+
+            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            for(NodeProperty property: node.getNodeProperties()){
+                nodeMap.put(property.getName(), property.getValue());
+            }
+
+            nodes.add(nodeMap);
+
+
+            rels.add(map("source", node.getNodeId(), "target", hasWeight.getTarget().getParentId(),"weight",hasWeight.getWeight(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
+
+        }
+
         return map("nodes", nodes, "links", rels);
     }
 

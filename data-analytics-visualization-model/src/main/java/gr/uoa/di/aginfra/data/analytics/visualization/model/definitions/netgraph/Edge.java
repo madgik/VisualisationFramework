@@ -37,9 +37,9 @@ public class Edge extends SubGraphEntity {
         }
         transfers = attributes.entrySet().stream()
                 //TODO TEST WITH FILTER ENABLED
-                //.filter(dNode -> Double.parseDouble(dNode.getValue()) > 0)
+//                .filter(dNode -> Double.parseDouble(dNode.getValue()) > 0)
                 .map(dNode ->
-                new HasWeight(this.edgeId, source.getNodeId(),
+                new HasWeight(this.edgeId, source.getNodeId(), target.getNodeId(),
                         source.getHasDateNodes().stream().filter(n -> n.getTarget().getDate() == Integer.parseInt(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
                         target.getHasDateNodes().stream().filter(t -> t.getTarget().getDate() == Integer.parseInt(dNode.getKey().replace(".", ""))).findAny().orElse(null).getTarget(),
                         dNode.getKey(), Double.parseDouble(dNode.getValue()))

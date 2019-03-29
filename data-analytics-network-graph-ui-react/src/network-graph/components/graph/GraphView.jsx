@@ -6,73 +6,108 @@ import Force from '../../utilities/Force';
 
 import Link from './Link';
 import Node from './Node';
-// import * as d3 from 'd3';
+import { Graph } from 'react-d3-graph';
+
+// graph event callbacks
+// const onClickGraph = function () {
+//   // window.alert(`Clicked the graph background`);
+// };
+
+ 
+
+// const onRightClickNode = function (event, nodeId) {
+//   // window.alert(`Right clicked node ${nodeId}`);
+// };
+
+// const onMouseOverNode = function (nodeId) {
+//   // window.alert(`Mouse over node ${nodeId}`);
+// };
+
+// const onMouseOutNode = function (nodeId) {
+//   // window.alert(`Mouse out node ${nodeId}`);
+// };
+
+// const onClickLink = function (source, target) {
+//   // window.alert(`Clicked link between ${source} and ${target}`);
+// };
+
+// const onRightClickLink = function (event, source, target) {
+//   // window.alert(`Right clicked link between ${source} and ${target}`);
+// };
+
+// const onMouseOverLink = function (source, target) {
+//   // window.alert(`Mouse over in link between ${source} and ${target}`);
+// };
+
+// const onMouseOutLink = function (source, target) {
+//   // window.alert(`Mouse out link between ${source} and ${target}`);
+// };
 
 class GraphView extends React.Component {
-
-  componentDidMount() {
-    Force.initForce(this.props.nodes, this.props.links)
-    Force.tick(this)
-    Force.drag()
+  constructor(props) {
+    super(props);
+    // This binding is necessary to make `this` work in the callback
+    // this.submit = this.submit.bind(this);
+    this.onClickNode = this.onClickNode.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.nodes !== this.props.nodes || prevState.links !== this.props.links) {
-      Force.initForce(this.props.nodes, this.props.links)
-      Force.tick(this)
-      Force.drag()
+  myConfig = {
+    height: 800,
+    nodeHighlightBehavior: true,
+    d3: {
+      gravity:-100
+    },
+    node: {
+      color: 'lightgreen',
+      size: 520,
+      highlightStrokeColor: 'blue'
+    },
+    link: {
+      // highlightColor: 'lightblue'  
     }
   }
-
-  handleAddNode(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
-  addNode(e) {
-    e.preventDefault();
-    this.setState(prevState => ({
-      nodes: [...prevState.nodes, {
-        name: this.props.name,
-        id: prevState.nodes.length + 1,
-        x: Force.width / 2,
-        y: Force.height / 2
-      }],
-      name: ''
-    }));
-  }
-
-  mapLinks() {
-    this.props.links = this.props.links.map((link) => {
-      return ( <Link key={link.id}
-      data={link}
-    />);
-   });
-  }
   
-  mapNodes() {
-    this.props.nodes = this.props.nodes.map((node) => {
-      return ( <Node data={node}
-      name={node.name}
-      key={node.id} />);
-      });
+  data = {
+    nodes: this.props.graph.nodes,
+    links: this.props.graph.links
   }
-   
 
+  onClickNode(nodeId) {
+    this.props.setSelectedNode(nodeId);
+  };
+
+  
   render() {
     return (
       <div className="main-content">
-        <h1>NetworkGraph</h1>
-        <div className='chartContainer'>
-          <div className="graph__container">
-            <svg className="graph"
+        <div className='graph-container'>
+          
+            {/* <svg className="graph"
               width={Force.width}
               height={Force.height} >
-              <g> {this.props.links} </g>
-              <g> {this.props.nodes} </g>
-            </svg>
-          </div>
+              <g> {this.props.graph.links} </g>
+              <g> {this.props.graph.nodes} </g> 
+              </svg>*/}
+            {(this.props.graph.nodes === '') ?
+              <div className='unavailable'>
+                <h2>Select Graph and top Nodes</h2>
+              </div>
+              :
+              <Graph
+                id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+                data={this.props.graphData}
+                config={this.myConfig}
+                onClickNode={this.onClickNode}
+                // onRightClickNode={onRightClickNode}
+                // onClickGraph={onClickGraph}
+                // onClickLink={onClickLink}
+                // onRightClickLink={onRightClickLink}
+                // onMouseOverNode={onMouseOverNode}
+                // onMouseOutNode={onMouseOutNode}
+                // onMouseOverLink={onMouseOverLink}
+                // onMouseOutLink={onMouseOutLink}
+              />}
+
           </div>
       </div>
     );

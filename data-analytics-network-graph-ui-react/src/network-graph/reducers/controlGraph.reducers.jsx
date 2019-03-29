@@ -9,6 +9,9 @@ const dataDefault = {
     type: '',
     tree: null,
     selectedNode: '',
+    startingDate: '2012.01',
+    lastDate: '2015.12',
+    currentDate: '2012.01',
     graph: {
         links: '',
         nodes: ''
@@ -59,6 +62,12 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 selectedNode: {
                     $set: action.nodeId
+                }
+            })
+        case controlGraphConstants.SET_CURRENT_DATE:
+            return update(state, {
+                currentDate: {
+                    $set: action.date
                 }
             })
         //   case visualizationConstants.CHANGE_TIME:

@@ -24,7 +24,7 @@ const styles = theme => ({
 class SidebarControls extends React.Component {
 
   render() {
-    
+
     const { classes } = this.props;
 
 
@@ -35,40 +35,47 @@ class SidebarControls extends React.Component {
           justify="center"
           alignItems="center"
         >
-        <Grid>
-        <GraphSelection
-          //API CALLS
-          uploadFile={this.props.uploadFile}
-          getAllGraphsMetadata={this.props.getAllGraphsMetadata}
-          getTopNodes ={this.props.getTopNodes}
-          //SETTERS STATE
-          setFileValidation={this.props.setFileValidation}
-          setGraphSource={this.props.setGraphSource}
-          setSelectedGraph={this.props.setSelectedGraph}
-          //STATE PROPS
-          fileDetails={this.props.fileDetails}
-          graphSource={this.props.graphSource}
-          selectedGraph={this.props.selectedGraph}
-          allGraphsMetadata={this.props.allGraphsMetadata}
-        />
-        </Grid>
-        <Grid>
-          <NodePropeties
-            graph={this.props.graph}
-            selectedGraph={this.props.selectedGraph}
-            selectedNode={this.props.selectedNode}
-            getNeighbors={this.props.getNeighbors}
-            graphData={this.props.graphData}
-          />
-        </Grid>
-        <Grid>
-          <GraphFilter
-            currentDate={this.props.currentDate}
-          />
-        </Grid>
-        <Grid>
-          <GraphControls />
-        </Grid>
+          <Grid>
+            <GraphSelection
+              //API CALLS
+              uploadFile={this.props.uploadFile}
+              getAllGraphsMetadata={this.props.getAllGraphsMetadata}
+              getTopNodes={this.props.getTopNodes}
+              //SETTERS STATE
+              setFileValidation={this.props.setFileValidation}
+              setGraphSource={this.props.setGraphSource}
+              setSelectedGraph={this.props.setSelectedGraph}
+              //STATE PROPS
+              fileDetails={this.props.fileDetails}
+              graphSource={this.props.graphSource}
+              selectedGraph={this.props.selectedGraph}
+              allGraphsMetadata={this.props.allGraphsMetadata}
+            />
+          </Grid>
+          <Grid>
+            <NodePropeties
+              graph={this.props.graph}
+              selectedGraph={this.props.selectedGraph}
+              selectedNode={this.props.selectedNode}
+              getNeighbors={this.props.getNeighbors}
+              graphData={this.props.graphData}
+            />
+          </Grid>
+          <Grid>
+            <GraphFilter
+              graphData={this.props.graphData}
+              currentDate={this.props.currentDate}
+              getDateGraph={this.props.getDateGraph}
+            />
+          </Grid>
+          <Grid>
+            <GraphControls
+              graphData={this.props.graphData}
+              currentDate={this.props.currentDate}
+              getDateGraph={this.props.getDateGraph}
+              selectedGraph={this.props.selectedGraph}
+            />
+          </Grid>
           {/* <GraphFilter /> */}
 
 

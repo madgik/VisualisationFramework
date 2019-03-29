@@ -1,11 +1,9 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.SubGraphEntity;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.HasWeightRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.NodeRepository;
@@ -55,6 +53,16 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         return null;
     }
 
+    @Override
+    public List<Node> getCurrentTimestampSubGraph(String subGraphId, List<String> nodes, String date) throws Exception {
+
+        return nodeRepository.findNodesAndHasWeightByDate(subGraphId,nodes,Integer.parseInt(date.replace(".","")));
+    }
+
+    @Override
+    public List<HasWeight> getCurrentTimestampGraph(String subGraphId, List<String> nodes, String date) throws Exception {
+        return hasWeightRepository.findNodesAndHasWeightByDate(subGraphId,nodes,Integer.parseInt(date.replace(".","")));
+    }
 
 
     @Override

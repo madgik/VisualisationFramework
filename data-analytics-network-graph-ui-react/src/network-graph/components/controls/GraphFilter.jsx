@@ -1,61 +1,91 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Picker from 'react-month-picker'
+import './month-picker.css'
+import Button from '@material-ui/core/Button';
+import { get } from 'https';
 
-
-import { Dropdown } from 'semantic-ui-react'
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  }
+});
 
 class GraphFilter extends React.Component {
 
-  handleCheckboxListChange = (selected) => {
-    var filterString = this.stringifyFilter(selected);
-    this.props.onFilterChange(this.props.filter.field, filterString);
+  constructor(props) {
+    super(props);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleChangeDatepicker = this.handleChangeDatepicker.bind(this);
+    this.handleGetCurrent = this.handleGetCurrent.bind(this);
   }
 
-  handleDropDownChange = (e, { value }) => {
-    this.props.onFilterChange(this.props.filter.field, value);
+  handleDateChange(name) {
+
   }
 
-  extractCheckBoxOptions(options) {
-    var cOptions = [];
-    for (var i = 0; i < options.length; i++) {
-      var option = options[i];
-      cOptions.push({
-        value: option,
-        label: option,
-        checked: false
-      });
-    }
-    return cOptions;
+  handleChangeDatepicker() {
+
   }
 
-  extractDropDownOptions(options) {
-    return options.map((option) => {
-      return {
-        text: option,
-        value: option
-      }
-    });
-  }
-
-  stringifyFilter(selected) {
-    var stringified = '';
-    for (var j = 0; j < selected.length; j++) {
-      if (j > 0) stringified += ';';
-      stringified += selected[j];
-    }
-    return stringified;
+  handleGetCurrent() {
+    this.props.getDateGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph)
   }
 
   render() {
-    return (<div>
-      <label>Filters</label>
-      
-        <Dropdown
-          placeholder='Select Graph'
-          selection
-          
-          onChange={this.handleDropDownChange} />
-    </div>);
+
+    const { classes } = this.props;
+
+    if (this.props.graphData != null) {
+      return (
+
+        <div>
+          <h3>Filters</h3>
+          <TextField
+            id="current-date"
+            label="CurrentDate"
+            className={classes.textField}
+            value={this.props.currentDate}
+            onChange={this.handleDateChange('name')}
+            margin="normal"
+            editable="false"
+          >{this.props.currentDate}
+          </TextField>
+          <Button
+            variant="contained" className={classes.button}
+
+            onClick={this.handleGetCurrent}
+          >
+            Get Current's Date Graph
+        </Button>
+        </div>);
+    }
+    else {
+      return <div></div>
+    }
   }
 }
+GraphFilter.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default GraphFilter;
+export default withStyles(styles)(GraphFilter);

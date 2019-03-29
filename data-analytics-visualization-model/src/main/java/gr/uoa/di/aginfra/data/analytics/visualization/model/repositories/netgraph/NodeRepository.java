@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface NodeRepository extends Neo4jRepository<Node, Long> {
@@ -20,5 +21,11 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
             "Match (n)-[h:HAS_PROPERTY]-(p:NodeProperty) " +
             "RETURN n,h,p")
     List<Node> findTopNodes(String subGraphId, int number);
+
+    @Query("MATCH (n:Node)-[h:HAS_DATENODE]-(dn1:DateNode)-[hw:HAS_WEIGHT]-(dn2:DateNode)-[h2:HAS_DATENODE]-(n2:Node), " +
+            "(n)-[hp:HAS_PROPERTY]-(p:NodeProperty) " +
+            "WHERE n.nodeId in {1} and n.subGraphId={0} " +
+            "and hw.date = {2} and hw.weight>0 return n,h,dn1,hw,dn2,h2,n2,hp,p")
+    List<Node> findNodesAndHasWeightByDate(String subGraphId, List<String> nodes, int date);
 }
 

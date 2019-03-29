@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
    allGraphsMetadata: state.configGraph.allGraphsMetadata,
    selectedNode: state.controlGraph.selectedNode,
    graph: state.controlGraph.graph,
-   graphData: state.controlGraph.graphData
+   graphData: state.controlGraph.graphData,
+   currentDate: state.controlGraph.currentDate
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -26,7 +27,10 @@ const mapDispatchToProps = dispatch => ({
     setGraphSource: (graphSource) => dispatch(configGraphActions.setGraphSource(graphSource)),
     setSelectedGraph: (selectedGraph) => dispatch(configGraphActions.setSelectedGraph(selectedGraph)),
     getTopNodes: (graphId, number) => dispatch(controlGraphActions.getTopNodes(graphId, number)),
-    getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData))
+    getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData)),
+    setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
+    getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
+    playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
 });
 
 export default connect(

@@ -10,6 +10,9 @@ class Ajax {
 
   NETWORK_GRAPH_NEIGHBORS = 'neighbors'
 
+  NETWORK_GRAPH_DATE_PATH = 'date'
+
+
   baseUrl = null
 
   getBaseUrl() {

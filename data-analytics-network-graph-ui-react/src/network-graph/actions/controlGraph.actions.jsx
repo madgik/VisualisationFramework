@@ -1,18 +1,21 @@
 import axios from 'axios';
 import { controlGraphConstants } from '../constants'
 import Ajax from '../utilities/Ajax';
+import DateUtils from '../utilities/DateUtils';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { func } from 'prop-types';
+import { func, node } from 'prop-types';
 
 
 export const controlGraphActions = {
   //API CALLS
   getTopNodes,
-  requestGraphs,
   loadGraph,
   getNeighbors,
+  getDateGraph,
+  playTimeGraph,
   //OTHERS
   addGraphData,
+  deleteGraphLinks,
   //SETTERS
   setSelectedNode,
   setGraphData,
@@ -20,7 +23,8 @@ export const controlGraphActions = {
   setGraphLinks,
   setPrevGraphStateData,
   setPrevGraphStateNodes,
-  setPrevGraphStateLinks
+  setPrevGraphStateLinks,
+  setCurrentDate
 }
 
 /*
@@ -31,7 +35,6 @@ function getTopNodes(graphId, num) {
   return function (dispatch) {
     dispatch(showLoading());
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_GRAPHS_PATH + "/" + graphId);
-    console.log("num is" + num)
 
     return axios.get(resourceUrl, {
       params: {
@@ -42,27 +45,17 @@ function getTopNodes(graphId, num) {
         console.log(response.data);
         dispatch(loadGraph(response.data));
         dispatch(hideLoading());
-
+        return response
+      }).then(response=>{
+        setTimeout(function(){
+          dispatch(deleteGraphLinks(response.data));
+        }, 2000);
       })
       .catch(response => {
         alert(response);
       });
   }
 }
-
-function requestGraphs() {
-  return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.CONFIGURATIONS_BASE_PATH);
-    return axios.get(resourceUrl)
-      .then(response => {
-        dispatch(loadGraph(response.data))
-      })
-      .catch(response => {
-        alert(response);
-      });
-  }
-}
-
 function getNeighbors(graphId, nodeId, graphData){
   return function (dispatch) {
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_NEIGHBORS+ "/" +graphId + "/" + nodeId+ "");
@@ -79,32 +72,73 @@ function getNeighbors(graphId, nodeId, graphData){
 /* OTHERS */
 function addGraphData(data,graphData) {
   return function (dispatch) {
-    console.log("response:"+JSON.stringify(data));
     var newGraphData = mergeDeep(graphData, data);
-    console.log("newGra:"+JSON.stringify(newGraphData))
-
     dispatch(loadGraph(newGraphData));
   }
 }
+
+
+function getDateGraph(date, graphData, graphId) {
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
+    var nodeIds=[];
+    graphData.nodes.forEach(element => {
+      nodeIds.push(element.id)
+    });
+    console.log(JSON.stringify(nodeIds))
+    return axios.get(resourceUrl, {
+      params: {
+        nodes: nodeIds,
+        date: date
+      }
+    })
+      .then(response => {
+        dispatch(addGraphData(response.data,graphData))
+        dispatch(setCurrentDate(date))
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function playTimeGraph(date, graphData, graphId) {
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.CONFIGURATIONS_BASE_PATH);
+    return axios.get(resourceUrl)
+      .then(response => {
+        
+        dispatch(addGraphData(response.data,graphData))
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+/* SET GRAPH DATA */
+
 
 function setSelectedNode(nodeId) {
   return { type: controlGraphConstants.SET_SELECTED_NODE, nodeId };
 }
 
 
-/* SET GRAPH DATA */
-
 function loadGraph(graphData) {
   return function (dispatch) {
-    // if(graphData.links != []) {
-    //   dispatch(setLinkColor(graphData.links[0].color));
-    // }
 
     dispatch(setGraphData(graphData));
-    console.log("graph:"+graphData.nodes)
     dispatch(setGraphLinks(graphData.links));
     dispatch(setGraphNodes(graphData.nodes));
 
+  }
+}
+
+function deleteGraphLinks(graphData) {
+  return function (dispatch) {
+    
+    graphData.links = [];
+    dispatch(setGraphData(graphData));
+    dispatch(setGraphLinks([]));
   }
 }
 
@@ -135,6 +169,10 @@ function setPrevGraphStateLinks(prevGraphLinks) {
 
 function setPrevGraphStateNodes(prevGraphNodes) {
   return { type: controlGraphConstants.SET_PREV_GRAPH_STATE_NODES, prevGraphNodes };
+}
+
+function setCurrentDate(date) {
+  return { type: controlGraphConstants.SET_CURRENT_DATE, date };
 }
 
 
@@ -187,30 +225,6 @@ function resetGraph() {
   return { type: controlGraphConstants.RESET_VISUALIZATION };
 }
 
-function changeChartType(chartType) {
-  return { type: controlGraphConstants.CHANGE_CHART_TYPE, chartType };
-}
-
-function updateFilterAndReload(field, value) {
-
-  return function (dispatch, getState) {
-
-
-    dispatch(updateFilter(field, value));
-
-    var queryString = getFiltersQueryString(getState().filters);
-
-    var resourceUrl = Ajax.buildUrl(Ajax.VISUALIZATIONS_BASE_PATH + '/' + getState().data.id, (queryString.length > 0 ? queryString : null));
-
-    return axios.get(resourceUrl)
-      .then(response => {
-        dispatch(reloadData(response.data))
-      })
-      .catch(response => {
-        alert(response);
-      })
-  }
-}
 
 function reloadData(data) {
   return { type: controlGraphConstants.RELOAD_DATA, data };
