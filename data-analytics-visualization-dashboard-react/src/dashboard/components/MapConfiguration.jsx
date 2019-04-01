@@ -32,7 +32,7 @@ class MapConfiguration extends React.Component {
         { key: 7, text: '2018', value: 2018 }
       ]
     return (
-    <div className='ui clearing segment'>
+    <div className='ui clearing segment '>
         
         <Dropdown options={options} defaultValue={options[6].value} placeholder='Select Year'  selection  
         onChange={(e, { value }) => this.handleDropDownChange( value)}/>

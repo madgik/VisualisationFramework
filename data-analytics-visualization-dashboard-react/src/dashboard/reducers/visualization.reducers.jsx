@@ -260,6 +260,12 @@ const dataDefault = {
       dateRange: null,
       isOpen: false,
 
+    },
+    workspaceDetails: {
+      workspaceUsername: '',
+      workspaceToken: '',
+      workspaceParentDirDetails: '',
+      workspaceDashboardDirDetails: ''
     }
 }
 
@@ -269,6 +275,38 @@ export function data(state = dataDefault, action) {
       return action.data;
     case visualizationConstants.RESET_VISUALIZATION:
       return dataDefault;
+    case visualizationConstants.SET_WORKSPACE_USERNAME:
+      return update(state, {
+        workspaceDetails: {
+          workspaceUsername: {
+            $set: action.username
+          }
+        }
+      });  
+    case visualizationConstants.SET_WORKSPACE_TOKEN:
+      return update(state, {
+        workspaceDetails: {
+          workspaceToken: {
+            $set: action.token
+          }
+        }
+      });  
+    case visualizationConstants.SET_WORKSPACE_PARENT_DIR_DETAILS:
+      return update(state, {
+        workspaceDetails: {
+          workspaceParentDirDetails: {
+            $set: action.workspaceParentDirDetails
+          }
+        }
+      });  
+    case visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS:
+      return update(state, {
+        workspaceDetails: {
+          workspaceDashboardDirDetails: {
+            $set: action.workspaceDashboardDirDetails
+          }
+        }
+      });    
     case visualizationConstants.CHANGE_CHART_TYPE:
       return update(state, {
         type: {

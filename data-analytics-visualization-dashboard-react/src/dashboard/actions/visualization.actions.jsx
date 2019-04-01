@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import { visualizationConstants } from '../constants/visualization.constants'
 //import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
@@ -6,6 +7,8 @@ import RequestPayload from '../utilities/RequestPayload';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {optionValues} from '../components/ChartHeader';
 import {dataValues} from '../components/TimeSeriesChartHeader';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export const visualizationActions = {
   requestVisualizations,
@@ -54,7 +57,17 @@ export const visualizationActions = {
   cleanRelatedFieldData,
   setFieldDataSubComponent,
   updateSoilTableHeader,
-  reloadSelectedLayerSoilData
+  reloadSelectedLayerSoilData,
+  loadRelatedData,
+  shouldDisableibableFetchData,
+  setWorkspaceUsername,
+  setWorkspaceToken,
+  requestWorkspaceListing,
+  setWorkspaceParentDirDetails,
+  setWorkspaceDashboardDirDetails,
+  getDashboardFolder,
+  createDashboardFolder,
+  getDashboardFolderListing
 }
 
 /*
@@ -72,6 +85,15 @@ const defaultHeader = {
     }
   ]
 }
+const options = {
+  title: '',
+  message: 'No fields found for the specified region',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
 
 function requestVisualizations() {
   return function (dispatch) {
@@ -85,6 +107,82 @@ function requestVisualizations() {
       });
   }
 }
+
+function requestWorkspaceListing() {
+  return function (dispatch, getState) {
+    let gcube_token = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl("",gcube_token);
+    return axios.get(resourceUrl)
+      .then(response => {
+        dispatch(setWorkspaceParentDirDetails(response.data))
+        dispatch(getDashboardFolder());
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function getDashboardFolder() {
+  return function (dispatch, getState) {
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceParentDirDetails.item.id + "/items/" + visualizationConstants.DASHBOARD_DIR, parameters);
+    return axios.get(resourceUrl)
+      .then(response => {
+        if(response.data.itemlist.length === 0)
+          dispatch(createDashboardFolder());
+        else{
+          dispatch(setWorkspaceDashboardDirDetails(response.data.itemlist[0]))
+          dispatch(getDashboardFolderListing());  
+        }
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function getDashboardFolderListing() {
+  return function (dispatch, getState) {
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/children", parameters);
+    return axios.get(resourceUrl)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(response => {
+        alert(response);
+      });
+  }
+}
+
+function createDashboardFolder() {
+  return function (dispatch, getState) {
+
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceParentDirDetails.item.id + "/create/FOLDER", parameters);
+
+    const data = qs.stringify({
+      name: visualizationConstants.DASHBOARD_DIR,
+      description: visualizationConstants.DASHBOARD_DIR,
+      hidden: false
+      });
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+
+    return axios.post(resourceUrl,data,headers)
+      .then(response => { 
+        dispatch(getDashboardFolder());
+      })
+      .catch(response => {
+        alert(response);
+  });
+  
+  }
+}
+
 
 function loadVisualizations(options) {
   return { type: visualizationConstants.LOAD_VISUALIZATIONS, options };
@@ -160,6 +258,23 @@ function updateSoilTableHeader(header) {
 
 function updateCurrentZoomLevel(zoomlevel) {
   return { type: visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL, zoomlevel };
+}
+
+function shouldDisableibableFetchData(zoom) {
+  
+  return function (dispatch, getState) {
+    let state = getState();
+    if(state.loadingBar.default === undefined || state.loadingBar.default === 0){
+      if(state.visualization.disableFetchData === false || state.visualization.zoomLevel !== zoom ){
+        if(zoom >=14 && zoom <=18){
+          dispatch(updateDibableFetchData(false));
+        }
+        else{
+          dispatch(updateDibableFetchData(true));
+        }
+      }
+    }
+  }
 }
 
 function updateDibableFetchData(disableFetchData) {
@@ -308,6 +423,7 @@ function updateFilterAndReload(field, value) {
 
 function getMapDataset() {
   return function (dispatch, getState) {
+    dispatch(visualizationActions.updateDibableFetchData(true));
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/get');
     dispatch(showLoading());
 
@@ -317,11 +433,22 @@ function getMapDataset() {
       headers: {
           'Content-Type': 'application/json',
       }}).then(response => {
-      dispatch(reloadData(response.data)
-      );
+
+      dispatch(reloadData(response.data));
+      dispatch(visualizationActions.updateDibableFetchData(false));
       dispatch(hideLoading());
+
+      if(response.data.features.length === 0){
+          confirmAlert(options);
+      }
+      else if(response.data.features[0].geometry.coordinates === undefined)
+        confirmAlert(options);
+        
+      
     })
     .catch(response => {
+      dispatch(visualizationActions.updateDibableFetchData(false));
+      dispatch(hideLoading());
       alert(response);
   });
 }
@@ -379,6 +506,21 @@ function getCropHistory() {
 }
 }
 
+function setWorkspaceUsername(username) {
+  return { type: visualizationConstants.SET_WORKSPACE_USERNAME, username };
+}
+
+function setWorkspaceToken(token) {
+  return { type: visualizationConstants.SET_WORKSPACE_TOKEN, token };
+}
+
+function setWorkspaceParentDirDetails(workspaceParentDirDetails) {
+  return { type: visualizationConstants.SET_WORKSPACE_PARENT_DIR_DETAILS, workspaceParentDirDetails };
+}
+
+function setWorkspaceDashboardDirDetails(workspaceDashboardDirDetails) {
+  return { type: visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS, workspaceDashboardDirDetails };
+}
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
@@ -400,6 +542,30 @@ function cleanRelatedFieldData(){
     chart1.xAxisLabel = "";
     chart1.yAxisLabel = "";
     dispatch(reloadRelatedFieldData(chart1));
+  }
+}
+
+function loadRelatedData(feature){
+  return function (dispatch, getState) 
+  {
+    let fieldDetails =  Object.assign({}, getState().visualization.fieldDetails);
+    console.log(fieldDetails);
+    if(fieldDetails.selected === ""){
+      dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
+      dispatch(visualizationActions.getSelectedFieldDetails(feature));
+      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
+      
+
+    }
+    else{
+      // dispatch(visualizationActions.setFieldDetailsDropdownValue(fieldDetails.selected));
+      // dispatch(visualizationActions.getSelectedFieldDetails(feature));
+      dispatch(visualizationActions.updateFieldDetailsDropdownValue(fieldDetails.selected));
+      dispatch(visualizationActions.updateFieldDataDropdownValue(fieldDetails.selectedFieldData));
+
+      
+    //  dispatch(visualizationActions.getSelectedFieldMeteoStation(feature));
+    }
   }
 }
 
@@ -513,7 +679,7 @@ function getSelectedFieldMeteoStation(selectedLayer){
           'Content-Type': 'application/json',
       }}).then(response => {
       dispatch(getNearestMeteoStation(response.data));
-      dispatch(visualizationActions.updateFieldDataDropdownValue(1));
+      dispatch(loadRelatedData(selectedLayer))
 
     })
     .catch(response => {

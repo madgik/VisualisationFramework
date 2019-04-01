@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onChartElementClick: (url, modalSrc, activeDocuments) => {
-    dispatch(documentActions.showDocument(url, modalSrc, activeDocuments))
+  onChartElementClick: (url, modalSrc, activeDocuments, lineChartId, pointId) => {
+    dispatch(documentActions.showDocument(url, modalSrc, activeDocuments, lineChartId, pointId))
   },
   onChartCanvasClick: () => {
     dispatch(documentActions.hideDocument())
@@ -22,6 +22,8 @@ const mapDispatchToProps = dispatch => ({
   onMapElementClick: (feature) => {
     // dispatch(documentActions.showDocument(url, modalSrc, activeDocuments))
     console.log(feature);
+   },
+   updateCurrentGeometry: (geometry, zoom) => {
    }
 })
 

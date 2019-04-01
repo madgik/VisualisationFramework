@@ -3,6 +3,7 @@ import React from 'react';
 import { Image, Loader, Grid } from 'semantic-ui-react'
 import NoImageIcon from './NoImageIcon';
 import idGenerator from 'react-id-generator';
+import { Button, Icon } from 'semantic-ui-react'
 
 class DocumentRenderer extends React.Component {
 
@@ -29,26 +30,28 @@ class DocumentRenderer extends React.Component {
         position: 'relative'
 
       }
-      var columnStyle = {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-      }
+      
     return (
       <div style={positionRelative} >
         <Loader active={this.props.loading}>Loading</Loader>
         <Grid  columns='equal' > 
-        <Grid.Row>
-            {this.props.open ?
-              this.props.src.map(imageUrl => this.renderImage(imageUrl.url, imageStyle)) :
-              <Grid.Column textAlign={"center"}>
-                <NoImageIcon size='small' style={imageStyle} />       
-              </Grid.Column>
-            }
-        </Grid.Row>
-
+          <Grid.Row>
+              {this.props.open ?
+                this.props.src.map(imageUrl => this.renderImage(imageUrl.url, imageStyle)) :
+                <Grid.Column textAlign={"center"}>
+                  <NoImageIcon size='small' style={imageStyle} />       
+                </Grid.Column>
+              }
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column textAlign={"center"}>
+              <Button className="chart-printer" icon onClick={this.props.onChartCanvasClick}>
+                <Icon name='undo' />
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
-      </div>
+        </div>
     );
   }
 }

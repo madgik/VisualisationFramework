@@ -41,6 +41,11 @@ export const visualizationConstants = {
   SET_NDVI_PROPERTIES_DROPDOWN_TEXT: 'set-ndvi-properties-dropdown-text',
   SET_FIELD_DATA_DROPDOWN: 'set-field-data-dropdown',
 
+  SET_WORKSPACE_USERNAME: 'set-workspace-username',
+  SET_WORKSPACE_TOKEN: 'set-workspace-token',
+  SET_WORKSPACE_PARENT_DIR_DETAILS: 'set-workspace-parent-dir-details',
+  SET_WORKSPACE_DASHBOARD_DIR_DETAILS: 'set-workspace-dashboard-dir-details',
 
+  DASHBOARD_DIR: 'Dashboard Visualization Folder'
 
 }

@@ -38,7 +38,7 @@ public class HttpClient extends RestTemplate {
         return instance;
     }
 
-    public FeatureCollection  getRequest(String url, Map<String, String> headers, Map<String, String> parameters){
+    public FeatureCollection  getRequest(String url, Map<String, String> headers, Map<String, Object> parameters){
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         restTemplate.setInterceptors(Collections.singletonList(new RequestLoggingInterceptor()));
         HttpEntity<String> entity = null;
@@ -84,10 +84,10 @@ public class HttpClient extends RestTemplate {
     }
 
 
-    private String setParameters(Map<String, String> parameters, String url){
+    private String setParameters(Map<String, Object> parameters, String url){
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
 
-        for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+        for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
             builder.queryParam(parameter.getKey(), parameter.getValue());
         }
 
