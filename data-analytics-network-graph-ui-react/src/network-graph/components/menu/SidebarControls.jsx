@@ -76,6 +76,7 @@ class SidebarControls extends React.Component {
           </Grid>
           <Grid>
             <GraphControls
+              graph={this.props.graph}
               graphData={this.props.graphData}
               currentDate={this.props.currentDate}
               getDateGraph={this.props.getDateGraph}

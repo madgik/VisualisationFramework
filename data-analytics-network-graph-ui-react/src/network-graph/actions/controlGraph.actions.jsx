@@ -89,7 +89,7 @@ function getDateGraph(date, graphData, graphId) {
     graphData.nodes.forEach(element => {
       nodeIds.push(element.id)
     });
-    console.log(JSON.stringify(nodeIds))
+    console.log("get string:"+JSON.stringify(nodeIds))
     return axios.get(resourceUrl, {
       params: {
         nodes: nodeIds,
@@ -111,17 +111,34 @@ function getDateGraph(date, graphData, graphId) {
 function playTimeGraph(date, graphData, graphId, paused) {
   return function (dispatch) {
     var index = DateUtils.dates.indexOf(date);
-    for (var i = index; i < DateUtils.dates.length; i++) {
       if(paused != true){
-        setInterval(function(){
-          dispatch( getDateGraph(date, graphData, graphId));
-        }, 3000);
         
-      }
-      else{
-        return;
-      }
-     
+        var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
+        var nodeIds=[];
+        graphData.nodes.forEach(element => {
+          nodeIds.push(element.id)
+        });
+        console.log("get string:"+JSON.stringify(nodeIds))
+        return axios.get(resourceUrl, {
+          params: {
+            nodes: nodeIds,
+            date: date
+          }
+        })
+          .then(response => {
+            // dispatch(loadGraph(response.data));
+    
+            dispatch(addGraphData(response.data,graphData))
+            dispatch(setCurrentDate(date))
+            var nextDate=DateUtils.getNextDate(this.props.currentDate);
+            setInterval(function(){
+              dispatch( getDateGraph(nextDate, graphData, graphId));
+            }, 3000);
+
+          })
+          .catch(response => {
+            alert(response);
+          });
     }
   }
 }
