@@ -1,0 +1,28 @@
+.graph-container {
+    border: 1px solid black;
+    background-color: #f4f5f7;
+    min-height:800px;
+  }
+  
+  .graph {
+    background-color: steelblue;
+  }
+
+  .unavailable {
+    margin: auto;
+    text-align: center;
+    color: #565b63;
+
+  }
+  .unavailable .h2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: #c0c6d1;
+    text-align: center;
+
+  }
+  
+  .container__graph {
+    height:100%;
+  }

@@ -22,6 +22,8 @@ public class DataDocument {
 
 	private Graph graph;
 
+	private NetGraph netGraph;
+
 	private TreeNode tree;
 
 	private MMNode freeMind;
@@ -144,5 +146,13 @@ public class DataDocument {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public NetGraph getNetGraph() {
+		return netGraph;
+	}
+
+	public void setNetGraph(NetGraph netGraph) {
+		this.netGraph = netGraph;
 	}
 }

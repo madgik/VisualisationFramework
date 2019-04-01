@@ -36,6 +36,8 @@ public class ConfigurationController extends BaseController {
 
 	private VREResolver vreResolver;
 
+
+
 	@Autowired
 	public ConfigurationController(ConfigurationService configurationService,
 								   EntityMapper modelMapper,

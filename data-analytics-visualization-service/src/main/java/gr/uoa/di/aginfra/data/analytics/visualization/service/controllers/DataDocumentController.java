@@ -69,8 +69,6 @@ public class DataDocumentController extends BaseController {
 									   Boolean isDataReference) throws Exception {
 
 
-
-
 		String id = configurationService.storeDataDocument(
 				vreResolver.resolve(),
 				name,
