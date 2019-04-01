@@ -13,7 +13,7 @@
     <properties>
         <javax.servlet.servlet-api.version>3.1.0</javax.servlet.servlet-api.version>
         <log4j.version>2.9.1</log4j.version>
-        <org.springframework.version>4.3.12.RELEASE</org.springframework.version>
+        <org.springframework.version>5.1.5.RELEASE</org.springframework.version>
 
         <jackson.version>2.9.2</jackson.version>
 
@@ -151,17 +151,6 @@
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.common</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-            <version>5.0.4.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>gr.uoa.di.aginfra</groupId>
-            <artifactId>data-analytics-visualization-model</artifactId>
-            <version>1.0.7-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>
