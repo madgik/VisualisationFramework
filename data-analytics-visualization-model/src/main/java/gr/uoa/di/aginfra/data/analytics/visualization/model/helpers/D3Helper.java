@@ -18,7 +18,7 @@ public class D3Helper {
         while (result.hasNext()) {
             Node node = result.next();
 
-            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getX(), "longitude", node.getY());
             for(NodeProperty property: node.getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
@@ -55,7 +55,7 @@ public class D3Helper {
         while (result.hasNext()) {
             Node node = result.next();
 
-            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+            Map<String,Object> nodeMap = map("id", node.getNodeId()) ;//"latitude",  node.getX(), "longitude", node.getY()
             for(NodeProperty property: node.getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
@@ -63,7 +63,7 @@ public class D3Helper {
             nodes.add(nodeMap);
 
 
-            rels.add(map("source", sourceId, "target", node.getNodeId(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
+            rels.add(map("source", sourceId, "target", node.getNodeId(), "color", "lightblue","highlightColor", "blue")); // "color", "blue"
 
         }
         //spoof links for visualization
@@ -92,7 +92,7 @@ public class D3Helper {
         while (result.hasNext()) {
             DateNode dateNode = result.next();
 
-            Map<String,Object> nodeMap = map("id", dateNode.getParentId(), "latitude",  dateNode.getParentNode().getLatitude(), "longitude", dateNode.getParentNode().getLongitude());
+            Map<String,Object> nodeMap = map("id", dateNode.getParentId()); //"latitude",  dateNode.getParentNode().getX(), "longitude", dateNode.getParentNode().getY()
             for(NodeProperty property: dateNode.getParentNode().getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
@@ -108,33 +108,40 @@ public class D3Helper {
 
     public static Map<String, Object> hasWeightToD3Format(Collection<HasWeight> nodeEntities, String graphId, NetworkGraphService networkGraphService) {
         List<Map<String, Object>> nodes = new ArrayList<>();
-        List<Map<String, Object>> rels = new ArrayList<>();
+        Set<Map<String, Object>> rels = new HashSet<>();
         int i = 0;
         Iterator<HasWeight> result = nodeEntities.iterator();
         Map<String, Node> existedNodes = new HashMap<>();
-        List<String> targetIds = new ArrayList<>();
+        Map<String, String> existedLinks = new HashMap<>();
+
+        Set<String> targetIds = new HashSet<>();
         while (result.hasNext()) {
             HasWeight hasWeight= result.next();
             Node node = hasWeight.getSource().getParentNode();
             if(node == null ) {
                 node= networkGraphService.findNodeById(hasWeight.getSource().getParentId(),graphId);
-                existedNodes.put(hasWeight.getSource().getParentId(),node);
             }
-            Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude(),"value", hasWeight.getSource().getProperty());
-            for(NodeProperty property: node.getNodeProperties()){
-                nodeMap.put(property.getName(), property.getValue());
+            if(existedNodes.get(node.getNodeId()) == null) {
+                existedNodes.put(hasWeight.getSource().getParentId(), node);
+
+                Map<String, Object> nodeMap = map("id", node.getNodeId(),  "value", hasWeight.getSource().getProperty()); // "x", node.getX(), "y", node.getY(),
+                for (NodeProperty property : node.getNodeProperties()) {
+                    nodeMap.put(property.getName(), property.getValue());
+                }
+                nodes.add(nodeMap);
             }
 
-            nodes.add(nodeMap);
+            if( existedLinks.get(node.getNodeId() + "," + hasWeight.getTarget().getParentId()) == null) {
+                existedLinks.put(node.getNodeId() + "," + hasWeight.getTarget().getParentId(),"");
+                targetIds.add(hasWeight.getTarget().getParentId());
+                rels.add(map("source", node.getNodeId(), "target", hasWeight.getTarget().getParentId(), "weight", hasWeight.getWeight(), "color", "lightblue", "highlightColor", "blue")); // "color", "blue"
 
-            targetIds.add(hasWeight.getTarget().getParentId());
-            rels.add(map("source", node.getNodeId(), "target", hasWeight.getTarget().getParentId(),"weight",hasWeight.getWeight(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
-
+            }
         }
         targetIds.stream().forEach(t->{
             if( existedNodes.get(t) == null) {
                 Node node= networkGraphService.findNodeById(t,graphId);
-                Map<String,Object> nodeMap = map("id", node.getNodeId(), "latitude",  node.getLatitude(), "longitude", node.getLongitude());
+                Map<String,Object> nodeMap = map("id", node.getNodeId()); // "x",  node.getX(), "y"
                 for(NodeProperty property: node.getNodeProperties()){
                     nodeMap.put(property.getName(), property.getValue());
                 }

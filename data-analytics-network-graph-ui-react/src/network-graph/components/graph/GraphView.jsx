@@ -5,14 +5,19 @@ import './graph.css';
 import Force from '../../utilities/Force';
 
 import Node from './Node';
-import { Graph } from 'react-d3-graph';
+import { Graph, reactD3GraphUtils } from 'react-d3-graph';
+import { Sidebar } from 'semantic-ui-react';
+import SidebarProperties from '../menu/SidebarProperties';
+
+// import reactD3GraphUtils from "../src/utils";
+
 
 // graph event callbacks
 // const onClickGraph = function () {
 //   // window.alert(`Clicked the graph background`);
 // };
 
- 
+
 
 // const onRightClickNode = function (event, nodeId) {
 //   // window.alert(`Right clicked node ${nodeId}`);
@@ -51,27 +56,38 @@ class GraphView extends React.Component {
     this.onClickLink = this.onClickLink.bind(this);
   }
 
+  // componentDidUpdate() {
+  //   console.log("UPDATED")
+  // }
+
   myConfig = {
     height: 800,
     nodeHighlightBehavior: true,
-    d3: {
-      gravity:-100
-    },
     node: {
       color: 'lightgreen',
-      size: 520,
       highlightStrokeColor: 'blue'
     },
     link: {
+      highlightStrokeColor: 'blue'
       // highlightColor: 'lightblue'  
-    }
-  }
-  
-  data = {
-    nodes: this.props.graph.nodes,
-    links: this.props.graph.links
+    },
+    directed: true
   }
 
+  // data = {
+  //   nodes: this.props.graph.nodes,
+  //   links: this.props.graph.links
+  // }
+
+  refreshGraph = data => {
+    const { config, schemaPropsValues } = this._buildGraphConfig(data);
+
+    this.state.schema.properties = reactD3GraphUtils.merge(this.state.schema.properties, schemaPropsValues);
+  };
+
+  checkForGraphElementsChanges(nextProps, current) {
+    console.log("Im called")
+  }
   onClickNode(nodeId) {
     this.props.setSelectedNode(nodeId);
     this.props.setSelectedWeight('');
@@ -80,52 +96,73 @@ class GraphView extends React.Component {
 
   onClickLink(source, target) {
     var links = this.props.graph.links
-    for (var i = 0; i < links.length; i++){
+    for (var i = 0; i < links.length; i++) {
       // look for the entry with a matching `code` value
-      if (links[i].source == source && links[i].target){
+      if (links[i].source == source && links[i].target== target) {
         this.props.setSelectedWeight(links[i].weight);
+        // let selectedLink ={};
+        // selectedLink.source = source;
+        // selectedLink.target = target;
+        // selectedLink.weight = links[i].weight;
+        // console.log(selectedLink)
+        this.props.setSelectedLink({"source": source, "target": target, "weight": links[i].weight});
         this.props.setSelectedNode('');
 
       }
     }
     console.log()
   };
-  
+
   render() {
     return (
       <div className="main-content">
         <div className='graph-container'>
-          
-            {/* <svg className="graph"
+
+          {/* <svg className="graph"
               width={Force.width}
               height={Force.height} >
               <g> {this.props.graph.links} </g>
               <g> {this.props.graph.nodes} </g> 
               </svg>*/}
-            {(this.props.graph.nodes === '') ?
-              <div className='unavailable'>
-                <h2>Select Graph and top Nodes</h2>
-              </div>
-              :
-              <Graph
-                id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
-                data={this.props.graphData}
-                config={this.myConfig}
-                onClickNode={this.onClickNode}
-                // onRightClickNode={onRightClickNode}
-                // onClickGraph={onClickGraph}
-                onClickLink={this.onClickLink}
-                // onRightClickLink={onRightClickLink}
-                // onMouseOverNode={onMouseOverNode}
-                // onMouseOutNode={onMouseOutNode}
-                // onMouseOverLink={onMouseOverLink}
-                // onMouseOutLink={onMouseOutLink}
-              />}
-
-          </div>
+          {(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ?
+            <div className='unavailable'>
+              <h2>Select Graph and top Nodes</h2>
+            </div>
+            :
+            <Graph
+              id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+              data={(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0)  ? null : this.props.graph}
+              config={this.myConfig}
+              onClickNode={this.onClickNode}
+              checkForGraphElementsChanges={this.checkForGraphElementsChanges}
+              refreshGraph={this.refreshGraph}
+              // onRightClickNode={onRightClickNode}
+              // onClickGraph={onClickGraph}
+              onClickLink={this.onClickLink}
+            // onRightClickLink={onRightClickLink}
+            // onMouseOverNode={onMouseOverNode}
+            // onMouseOutNode={onMouseOutNode}
+            // onMouseOverLink={onMouseOverLink}
+            // onMouseOutLink={onMouseOutLink}
+            />}
+          
+        </div>
       </div>
+   
     );
   }
 }
 
 export default GraphView;
+   /* <SidebarProperties
+      graph={this.props.graph}
+      selectedGraph={this.props.selectedGraph}
+      selectedNode={this.props.selectedNode}
+      getNeighbors={this.props.getNeighbors}
+      graphData={this.props.graphData}
+      selectedWeight={this.props.selectedWeight}
+      selectedLink={this.props.selectedLink}
+      graph={this.props.graph}
+      currentDate={this.props.currentDate}
+      getDateGraph={this.props.getDateGraph}
+      /> */

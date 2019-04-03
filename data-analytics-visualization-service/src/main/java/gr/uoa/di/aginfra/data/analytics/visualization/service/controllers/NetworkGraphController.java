@@ -142,6 +142,8 @@ public class NetworkGraphController {
 //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
 //            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+            System.out.println(d3Results.get("nodes"));
+            System.out.println(d3Results.get("links"));
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 

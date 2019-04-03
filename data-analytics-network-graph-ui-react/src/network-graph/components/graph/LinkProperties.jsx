@@ -29,7 +29,6 @@ class LinkProperties extends React.Component {
 
 
         const { classes } = this.props;
-
         return (
             <div>
                 {(this.props.selectedWeight === '') ?
@@ -43,10 +42,26 @@ class LinkProperties extends React.Component {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell padding="checkbox">
+                                            Source
+                                        </TableCell>
+                                        <TableCell padding="checkbox">
+                                            {this.props.selectedLink.source}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell padding="checkbox">
+                                            Target
+                                        </TableCell>
+                                        <TableCell padding="checkbox">
+                                            {this.props.selectedLink.target}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell padding="checkbox">
                                             Weight
                                         </TableCell>
                                         <TableCell padding="checkbox">
-                                            {this.props.selectedWeight}
+                                            {this.props.selectedLink.weight}
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
