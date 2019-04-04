@@ -42,8 +42,8 @@ App.defaultProps = {
     baseUrl: 'http://localhost:8081/data-analytics-visualization-service'
   },
   size: {
-    width: 1200,
-    height: 600
+    width: 1600,
+    height: 800
   },
 }
 

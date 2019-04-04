@@ -8,6 +8,8 @@ import Picker from 'react-month-picker'
 import './month-picker.css'
 import Button from '@material-ui/core/Button';
 import { get } from 'https';
+import Grid from '@material-ui/core/Grid';
+
 
 const styles = theme => ({
   container: {
@@ -34,12 +36,18 @@ class GraphFilter extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handlePropertyChange = this.handlePropertyChange.bind(this);
+    this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleChangeDatepicker = this.handleChangeDatepicker.bind(this);
     this.handleGetCurrent = this.handleGetCurrent.bind(this);
   }
 
-  handleDateChange(name) {
+ 
+  handlePropertyChange(name) {
+
+  }
+
+  handleWeightChange(weight) {
 
   }
 
@@ -55,29 +63,52 @@ class GraphFilter extends React.Component {
 
     const { classes } = this.props;
 
-    if (this.props.graphData != null) {
+    if (this.props.graph.nodes.length != 0 && this.props.graph.nodes != undefined) {
       return (
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          alignContent="center"
+        >
+          <Grid item>
+            <h3>Filters</h3>
 
-        <div>
-          <h3>Filters</h3>
-          <TextField
-            id="current-date"
-            label="CurrentDate"
-            className={classes.textField}
-            value={this.props.currentDate}
-            onChange={this.handleDateChange('name')}
-            margin="normal"
-            editable="false"
-          >{this.props.currentDate}
-          </TextField>
-          <Button
-            variant="contained" className={classes.button}
+          </Grid>
+          <Grid item spacing={8}>
+            <TextField
+              id="property-filter"
+              label="Property"
+              className={classes.textField}
+              onChange={this.handlePropertyChange('name')}
+              margin="normal"
+            >{this.props.currentDate}
+            </TextField>
+          </Grid>
+          <Grid item spacing={8}>
+            <TextField
+              id="weight-filter"
+              label="Weight"
+              className={classes.textField}
+              onChange={this.handleWeightChange('weight')}
+              margin="normal"
+            >{this.props.currentDate}
+            </TextField>
+          </Grid>
+          <Grid item spacing={8}>
 
-            onClick={this.handleGetCurrent}
-          >
-            Get Current's Date Graph
-        </Button>
-        </div>);
+          </Grid>
+          <Grid item spacing={8}>
+            <Button
+              variant="contained" className={classes.button}
+              onClick={this.handleGetCurrent}
+            >
+              Apply Filters
+            </Button>
+          </Grid>
+        </Grid>
+      );
     }
     else {
       return <div></div>

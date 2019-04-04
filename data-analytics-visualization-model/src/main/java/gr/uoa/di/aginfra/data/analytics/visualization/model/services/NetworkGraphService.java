@@ -30,4 +30,6 @@ public interface NetworkGraphService {
     void deleteNetworkGraph(String id) throws Exception;
 
     List<Map<String, String>> getAllGraphsByTenant(String tenant) throws IOException;
+
+    List<String> getAllTimestamps() throws Exception;
 }

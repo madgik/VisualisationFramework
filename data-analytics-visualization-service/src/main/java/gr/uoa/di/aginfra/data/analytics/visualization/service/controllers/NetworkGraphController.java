@@ -131,7 +131,7 @@ public class NetworkGraphController {
     }
 
 
-    @RequestMapping(value = "date/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "dates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String[] nodes, @RequestParam("date") String currentDate ) {
 
         try {
@@ -151,5 +151,21 @@ public class NetworkGraphController {
             e.printStackTrace();
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "dates")
+    ResponseEntity<?> getTimestamps() {
+
+        List<String> results = null;
+        try {
+            results = networkGraphService.getAllTimestamps();
+            return new ResponseEntity<>(results, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
     }
 }

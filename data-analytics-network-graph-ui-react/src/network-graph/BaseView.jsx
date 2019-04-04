@@ -3,6 +3,8 @@ import React from 'react';
 import ConfigDataContainer from './containers/ConfigDataContainer';
 import GraphVisualizationContainer from './containers/GraphVisualizationContainer';
 import LoadingBar from 'react-redux-loading-bar'
+import SidebarProperties from './components/menu/SidebarProperties';
+import PropertiesContainer from './containers/PropertiesContainer';
 
 
 class BaseView extends React.Component {
@@ -25,6 +27,9 @@ class BaseView extends React.Component {
             mmRender={mmRenderRef} />
           <GraphVisualizationContainer
             mmRender={mmRenderRef} />
+            <PropertiesContainer
+            mmRender={mmRenderRef} 
+            />
         </div>
       </div>
     );

@@ -109,7 +109,13 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         List<Map<String, String>> results = subGraphRepository.findAllDistinctSubGraphId();
 
 //        Map<String, String> results = mapper.readValue((JsonParser) nodes, new TypeReference<HashMap<String,String>>() {});
-
         return results;
     }
+
+    @Override
+    public List<String> getAllTimestamps() throws Exception {
+        return nodeRepository.findAllDatesOrderByDate();
+    }
+
+
 }

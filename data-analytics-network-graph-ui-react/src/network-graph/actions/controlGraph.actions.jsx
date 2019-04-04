@@ -27,10 +27,12 @@ export const controlGraphActions = {
   setPrevGraphStateLinks,
   setCurrentDate,
   setPaused,
+  setStopped,
   setSelectedWeight,
   setGraph,
   setSliderValue,
-  setTimestamps
+  setTimestamps,
+  setPausedPromise
 }
 
 /*
@@ -79,7 +81,8 @@ function getNeighbors(graphId, nodeId, graphData) {
 function addGraphData(newData, graphData) {
   return function (dispatch) {
     console.log("new String:" + JSON.stringify(newData.links));
-    console.log("Old String:" + JSON.stringify(graphData.links));
+    
+    // console.log("Old String:" + JSON.stringify(graphData.links));
 
     var newGraphDataNodes = mergeJson(newData.nodes, graphData.nodes);//mergeDeep(newData.nodes, graphData.nodes);
 
@@ -135,6 +138,12 @@ function playTimeGraph(date, graphData, graphId, paused) {
 /* SET GRAPH DATA */
 
 
+function setPausedPromise(paused) {
+  return function (dispatch) {
+     return new Promise(() => dispatch(setPaused(paused)));
+  }
+}
+
 function setSelectedNode(nodeId) {
   return { type: controlGraphConstants.SET_SELECTED_NODE, nodeId };
 }
@@ -147,7 +156,7 @@ function loadGraph(graphData) {
     dispatch(setGraphNodes(newNodes));
     let newLinks = graphData.links.slice(0);
     dispatch(setGraphLinks(newLinks));
-    // console.log("GRAPH:" + JSON.stringify(graphData));
+    console.log("GRAPH:" + JSON.stringify(graphData));
   }
 }
 
@@ -195,6 +204,10 @@ function setCurrentDate(date) {
 
 function setPaused(paused) {
   return { type: controlGraphConstants.SET_PAUSED, paused };
+}
+
+function setStopped(stopped) {
+  return { type: controlGraphConstants.SET_STOPPED, stopped };
 }
 
 function setSelectedWeight(weight) {

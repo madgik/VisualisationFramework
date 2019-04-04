@@ -19,7 +19,7 @@ const style = () => ({
   },
   slider: {
     padding: '22px 0px',
-  },
+  }
 })
 
 
@@ -33,30 +33,42 @@ class GraphControls extends React.Component {
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleSliderChange = this.handleSliderChange.bind(this);
   }
- 
+  
+  boxClass =["player-controls"];
+
   componentWillMount(){
       this.maxValue = DateUtils.dates.length;
   }
 
 
   handlePlayClick() {
+    this.props.setStopped(false);
     this.props.setPaused(false);
-    this.playGraph(this.props.currentDate);
+     this.playGraph(this.props.currentDate);
+ 
     // this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
   }
 
 
   playGraph(date) {
     console.log("next date is:" + date + "and paused is:" + this.props.paused);
+    this.boxClass.push('shadow');
+
     if (this.props.paused != true && date != undefined) {
       setTimeout(() => {
-        this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
+        if (this.props.paused != true ) {
+          this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
           var nextDate = DateUtils.getNextDate(this.props.currentDate);
           this.props.setSliderValue(DateUtils.dates.indexOf(nextDate));
           this.playGraph(nextDate);
-        })
+        }) 
+        }
       }, 3000);
     }
+    else if(this.props.paused != true && date == undefined) {
+      this.props.setStopped(true);
+    }
+
   }
 
 
@@ -84,15 +96,20 @@ class GraphControls extends React.Component {
   }
 
   handleSliderChange(event, value) {
+    this.props.setPaused(true);
+
     this.props.setSliderValue(value);
     
     this.props.getDateGraph(DateUtils.dates[value], this.props.graph, this.props.selectedGraph);
+    // this.props.setPaused(false);
 
   }
 
 
   render() {
     const { classes } = this.props;
+    var playClass = (this.props.stopped || this.props.paused)  ? 'player-controls' : 'player-controls disabled';
+
 
     if (this.props.graph.nodes.length == 0 || this.props.graph.nodes == undefined) {
       return (
@@ -120,7 +137,7 @@ class GraphControls extends React.Component {
             </TextField>
           </Grid>
           <Grid item spacing={8}>
-            <IconButton className='player-controls' id='play'
+            <IconButton className={playClass} id='play'
               onClick={this.handlePlayClick}
             >
               <PlayerIcon.Play width={28} height={28} style={{ marginRight: 28 }} />

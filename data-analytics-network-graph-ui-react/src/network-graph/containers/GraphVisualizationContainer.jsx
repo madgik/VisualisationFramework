@@ -8,13 +8,17 @@ const mapStateToProps = state => ({
     prevGraphState: state.controlGraph.prevGraphState,
     graphData: state.controlGraph.graphData,
     linkColor: state.controlGraph.linkColor,
-    selectedNode: state.controlGraph.selectedNode
+    selectedNode: state.controlGraph.selectedNode,
+    selectedLink: state.controlGraph.selectedLink,
+    sliderValue: state.controlGraph.sliderValue
 });
 
 const mapDispatchToProps = dispatch => ({
     setSelectedNode: (nodeId) => dispatch(controlGraphActions.setSelectedNode(nodeId)),
     getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData)),
-    setSelectedWeight: (weight) => dispatch(controlGraphActions.setSelectedWeight(weight))
+    setSelectedWeight: (weight) => dispatch(controlGraphActions.setSelectedWeight(weight)),
+    setSelectedLink: (link) => dispatch(controlGraphActions.setSelectedLink(link)),
+    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue))
 });
 
 export default connect(

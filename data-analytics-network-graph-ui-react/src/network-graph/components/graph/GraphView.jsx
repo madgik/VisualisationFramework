@@ -62,6 +62,7 @@ class GraphView extends React.Component {
 
   myConfig = {
     height: 800,
+    width: 890,
     nodeHighlightBehavior: true,
     node: {
       color: 'lightgreen',
@@ -154,15 +155,3 @@ class GraphView extends React.Component {
 }
 
 export default GraphView;
-   /* <SidebarProperties
-      graph={this.props.graph}
-      selectedGraph={this.props.selectedGraph}
-      selectedNode={this.props.selectedNode}
-      getNeighbors={this.props.getNeighbors}
-      graphData={this.props.graphData}
-      selectedWeight={this.props.selectedWeight}
-      selectedLink={this.props.selectedLink}
-      graph={this.props.graph}
-      currentDate={this.props.currentDate}
-      getDateGraph={this.props.getDateGraph}
-      /> */
