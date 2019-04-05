@@ -30,6 +30,7 @@ class CongigurationsGrid extends React.Component {
           onNewItemClick={this.props.onNewItemClick}
           onEditItemClick={this.props.onEditItemClick}
           data={this.props.data}
+          disableChartCreation={this.props.disableChartCreation}
           loading={this.props.loading}
           columns={this.columns}
         />
@@ -43,14 +44,14 @@ const mapStateToProps = state => {
     data,
     loading,
     errorMessage,
-    enableChartCreation
+    disableChartCreation
   } = state.configList
 
   return {
     data,
     loading,
     errorMessage,
-    enableChartCreation
+    disableChartCreation
   }
 }
 

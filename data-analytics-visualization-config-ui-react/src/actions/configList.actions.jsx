@@ -29,9 +29,8 @@ function loadConfigurations() {
     dispatch(loadConfigurationsStarted())
 
     configurationService.getConfigurations().then(response => {
-      let disable = Object.create(false);
-
-      dispatch(disableChartCreation(disable));
+   
+     // dispatch(disableChartCreation(false));
 
       dispatch(setConfigurations(response.data))
    
