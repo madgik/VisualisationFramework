@@ -31,5 +31,5 @@ public interface NetworkGraphService {
 
     List<Map<String, String>> getAllGraphsByTenant(String tenant) throws IOException;
 
-    List<String> getAllTimestamps() throws Exception;
+    List<String> getAllTimestamps(String graphId) throws Exception;
 }
