@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.D3Helper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.NetworkGraphHelper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
@@ -87,7 +87,7 @@ public class NetworkGraphController {
 
         try {
             List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, true);
+            Map<String, Object> d3Results = NetworkGraphHelper.nodesToD3Format(results, true);
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
@@ -106,7 +106,7 @@ public class NetworkGraphController {
 
         try {
             List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-            Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results,nodeId, false);
+            Map<String, Object> d3Results = NetworkGraphHelper.neighborsNodesToD3Format(results,nodeId, false);
             System.out.println();
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
@@ -138,10 +138,10 @@ public class NetworkGraphController {
             List<String> nodeList = Arrays.asList(nodes);
             List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
             System.out.println("RESULTS:"+result.size());
-            Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
+            Map<String, Object> d3Results = NetworkGraphHelper.hasWeightToD3Format(result, graphId, networkGraphService);
 //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
-//            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+//            Map<String, Object> d3Results = NetworkGraphHelper.nodesToD3Format(result, false);
             System.out.println(d3Results.get("nodes"));
             System.out.println(d3Results.get("links"));
 
@@ -153,12 +153,13 @@ public class NetworkGraphController {
         }
     }
 
-    @RequestMapping(value = "dates")
-    ResponseEntity<?> getTimestamps() {
+    @RequestMapping(value = "dates/{graphID}")
+    ResponseEntity<?> getTimestamps(@PathVariable("graphId") String graphId) {
 
         List<String> results = null;
         try {
             results = networkGraphService.getAllTimestamps();
+            results = NetworkGraphHelper.datesToDateStrings(results);
             return new ResponseEntity<>(results, HttpStatus.OK);
 
         } catch (Exception e) {
