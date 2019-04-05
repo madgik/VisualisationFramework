@@ -38,13 +38,16 @@ class GraphControls extends React.Component {
 
   componentWillMount(){
       this.maxValue = DateUtils.dates.length;
+      if( this.props.timestamps != null) {
+        this.maxValue = this.props.timestamps.length
+      }
   }
 
 
   handlePlayClick() {
     this.props.setStopped(false);
     this.props.setPaused(false);
-     this.playGraph(this.props.currentDate);
+    this.playGraph(this.props.currentDate);
  
     // this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
   }
@@ -58,8 +61,8 @@ class GraphControls extends React.Component {
       setTimeout(() => {
         if (this.props.paused != true ) {
           this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
-          var nextDate = DateUtils.getNextDate(this.props.currentDate);
-          this.props.setSliderValue(DateUtils.dates.indexOf(nextDate));
+          var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
+          this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
           this.playGraph(nextDate);
         }) 
         }
@@ -73,10 +76,10 @@ class GraphControls extends React.Component {
 
 
   handleNextClick() {
-    var nextDate = DateUtils.getNextDate(this.props.currentDate);
+    var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
     if (nextDate !== undefined) {
       this.props.getDateGraph(nextDate, this.props.graph, this.props.selectedGraph);
-      this.props.setSliderValue(DateUtils.dates.indexOf(nextDate));
+      this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
     }
   }
 
@@ -86,11 +89,11 @@ class GraphControls extends React.Component {
 
 
   handlePreviousClick() {
-    var previousDate = DateUtils.getPreviousDate(this.props.currentDate);
+    var previousDate = DateUtils.getPreviousDate(this.props.currentDate, this.props.timestamps);
     console.log("previous date is:" + previousDate);
     if (previousDate !== undefined) {
       this.props.getDateGraph(previousDate, this.props.graph, this.props.selectedGraph);
-      this.props.setSliderValue(DateUtils.dates.indexOf(previousDate));
+      this.props.setSliderValue(this.props.timestamps.indexOf(previousDate));
 
     }
   }
@@ -100,7 +103,7 @@ class GraphControls extends React.Component {
 
     this.props.setSliderValue(value);
     
-    this.props.getDateGraph(DateUtils.dates[value], this.props.graph, this.props.selectedGraph);
+    this.props.getDateGraph(this.props.timestamps[value], this.props.graph, this.props.selectedGraph);
     // this.props.setPaused(false);
 
   }

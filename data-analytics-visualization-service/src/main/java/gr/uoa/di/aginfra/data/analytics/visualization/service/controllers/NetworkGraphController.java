@@ -153,7 +153,7 @@ public class NetworkGraphController {
         }
     }
 
-    @RequestMapping(value = "dates/{graphID}")
+    @RequestMapping(value = "timestamps/{graphId}")
     ResponseEntity<?> getTimestamps(@PathVariable("graphId") String graphId) {
 
         List<String> results = null;

@@ -9,7 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'commonjs',
     library: '',
-    publicPath: '__data_analytics_network_graph_public_path__'
+    publicPath: '__data_analytics_network_graphs_public_path__'
   },
   module: {
     rules: [{
@@ -45,7 +45,7 @@ module.exports = {
 
   plugins: [
     new ReplacePlugin([{
-      partten: /"__data_analytics_network_graph_public_path__"/g,
+      partten: /"__data_analytics_network_graphs_public_path__"/g,
       replacement: function () {
         return 'window.staticFileBaseUrl';
       }

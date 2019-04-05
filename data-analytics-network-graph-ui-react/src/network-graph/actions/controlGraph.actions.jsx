@@ -31,7 +31,6 @@ export const controlGraphActions = {
   setSelectedWeight,
   setGraph,
   setSliderValue,
-  setTimestamps,
   setPausedPromise
 }
 
@@ -220,10 +219,6 @@ function setSelectedLink(selectedLink) {
 
 function setSliderValue(sliderValue) {
   return { type: controlGraphConstants.SET_SLIDER_VALUE, sliderValue };
-}
-
-function setTimestamps(timestamps) {
-  return { type: controlGraphConstants.SET_TIMESTAMPS, timestamps };
 }
 
 function mergeDeep(o1, o2) {

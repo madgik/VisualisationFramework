@@ -41,6 +41,7 @@ class SidebarControls extends React.Component {
               uploadFile={this.props.uploadFile}
               getAllGraphsMetadata={this.props.getAllGraphsMetadata}
               getTopNodes={this.props.getTopNodes}
+              getAllTimestamps={this.props.getAllTimestamps}
               //SETTERS STATE
               setFileValidation={this.props.setFileValidation}
               setGraphSource={this.props.setGraphSource}
@@ -50,6 +51,7 @@ class SidebarControls extends React.Component {
               graphSource={this.props.graphSource}
               selectedGraph={this.props.selectedGraph}
               allGraphsMetadata={this.props.allGraphsMetadata}
+
             />
           </Grid>
           <Grid>
@@ -57,6 +59,7 @@ class SidebarControls extends React.Component {
               graph={this.props.graph}
               currentDate={this.props.currentDate}
               getDateGraph={this.props.getDateGraph}
+              timestamps={this.props.timestamps}
             />
           </Grid>
         
@@ -75,6 +78,7 @@ class SidebarControls extends React.Component {
               setStopped={this.props.setStopped}
               setSliderValue={this.props.setSliderValue}
               sliderValue={this.props.sliderValue}
+              timestamps={this.props.timestamps}
             />
           </Grid>
           {/* <GraphFilter /> */}

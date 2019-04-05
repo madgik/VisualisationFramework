@@ -73,7 +73,7 @@ function getAllGraphsMetadata() {
 
 function getAllTimestamps(graphId) {
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_DATES_PATH) + "/" + graphId;
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_TIMESTAMPS_PATH + "/" + graphId);
     return axios.get(resourceUrl, {
       headers: { 
         'content-type': 'application/json'
