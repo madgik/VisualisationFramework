@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static org.neo4j.ogm.session.Utils.map;
 
-public class D3Helper {
+public class NetworkGraphHelper {
 
     public static Map<String, Object> nodesToD3Format(Collection<Node> nodeEntities, boolean isInitialization) {
         List<Map<String, Object>> nodes = new ArrayList<>();
@@ -150,6 +150,16 @@ public class D3Helper {
         });
 
         return map("nodes", nodes, "links", rels);
+    }
+
+    public static List<String> datesToDateStrings(List<String> dates) {
+        List<String> dateStrings = dates.stream().map(date -> {
+            StringBuilder sb = new StringBuilder(date);
+            sb.insert(4, '.');
+            return sb.toString();
+        }).collect(Collectors.toList());
+
+        return dateStrings;
     }
 
 }

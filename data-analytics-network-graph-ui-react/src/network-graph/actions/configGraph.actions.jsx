@@ -8,15 +8,16 @@ export const configGraphActions = {
   uploadFile,
   updateUploadedFile,
   getAllGraphsMetadata,
+  getAllTimestamps,
   storeGraphData,
-  editGraphConfiguration,
   showGraphEdit,
   closeGraphEdit,
   showErrorMessage,
   setFileValidation,
   setGraphSource,
   setSelectedGraph,
-  setAllGraphsMetadata
+  setAllGraphsMetadata,
+  setTimestamps
 }
 
 function uploadFile(file) {
@@ -70,22 +71,26 @@ function getAllGraphsMetadata() {
   }
 }
 
+function getAllTimestamps(graphId) {
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_DATES_PATH) + "/" + graphId;
+    return axios.get(resourceUrl, {
+      headers: { 
+        'content-type': 'application/json'
+       }
+    }).then(response => {
+      console.log("get timestamps"+response.data)
+
+      dispatch(setTimestamps(response.data));
+    }).catch(_ => { });
+  }
+}
+
+
 function storeGraphData() {
   return { type: configGraphConstants.CREATE_GRAPH}
 }
 
-function editGraphConfiguration() {
-  return function (dispatch, getState) {
-
-    var id = getState().visualization.selected;
-
-    dispatch(editSelectedConfiguration(id))
-  }
-}
-
-function editSelectedConfiguration(id) {
-  return { type: configGraphConstants.EDIT_ITEM, id };
-}
 
 function showGraphEdit() {
   return { type: configGraphConstants.SHOW_ITEM_EDIT };
@@ -124,4 +129,8 @@ function setSelectedGraph(selectedGraph) {
 
 function setAllGraphsMetadata(allGraphsMetadata) {
   return { type: configGraphConstants.SET_ALL_GRAPHS_METADATA, allGraphsMetadata };
+}
+
+function setTimestamps(timestamps) {
+  return { type: configGraphConstants.SET_TIMESTAMPS, timestamps };
 }

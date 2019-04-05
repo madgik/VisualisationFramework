@@ -13,7 +13,8 @@ const dataDefault = {
   },
   graphSource: 'new',
   selectedGraph: '-',
-  allGraphsMetadata: ''
+  allGraphsMetadata: '',
+  timestamps: null
 }
 
 
@@ -94,6 +95,13 @@ export function configGraph(state = dataDefault, action) {
       return update( state, {
         allGraphsMetadata: {
           $set: action.allGraphsMetadata
+        }
+      })
+    }
+    case configGraphConstants.SET_TIMESTAMPS: {
+      return update( state, {
+        timestamps: {
+          $set: action.timestamps
         }
       })
     }

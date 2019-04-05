@@ -9,5 +9,6 @@ export const configGraphConstants = {
   SET_FILE_VALIDATION: 'set-file-validation',
   SET_GRAPH_SOURCE: 'set_graph_source',
   SET_SELECTED_GRAPH: 'set_selected_graph',
-  SET_ALL_GRAPHS_METADATA: 'set_all_graphs_metadata'
+  SET_ALL_GRAPHS_METADATA: 'set_all_graphs_metadata',
+  SET_TIMESTAMPS: 'set_timestamps'
 }
