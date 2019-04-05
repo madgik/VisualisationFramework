@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "~0.18.0",
     "immutability-helper": "~2.8.1",
+    "react-confirm-alert": "^2.4.0",
     "react-redux": "~5.0.7",
     "react-table": "~6.8.6",
     "redux": "~4.0.0",

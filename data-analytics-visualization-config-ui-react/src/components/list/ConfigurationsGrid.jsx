@@ -42,13 +42,15 @@ const mapStateToProps = state => {
   const {
     data,
     loading,
-    errorMessage
+    errorMessage,
+    enableChartCreation
   } = state.configList
 
   return {
     data,
     loading,
-    errorMessage
+    errorMessage,
+    enableChartCreation
   }
 }
 

@@ -5,7 +5,8 @@ import { configListConstants } from '../constants'
 const configListDefault = {
   data: [],
   loading: false,
-  errorMessage: null
+  errorMessage: null,
+  disableChartCreation: false
 }
 
 export function configList(state = configListDefault, action) {
@@ -34,6 +35,12 @@ export function configList(state = configListDefault, action) {
           $set: action.message
         }
       });
+    case configListConstants.DISABLE_CREATION_CHART:
+      return update(state, {
+        disableChartCreation: {
+          $set:action.disableChartCreation
+        }
+      });  
     default:
       return state;
   }

@@ -1,11 +1,24 @@
 import { configListConstants } from '../constants'
 import { configurationService } from '../services'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export const configListActions = {
   loadConfigurations,
-  showErrorMessage
+  showErrorMessage,
+  showNetworkError,
+  disableChartCreation
 }
 
+const options = {
+  title: 'Alert',
+  message: 'An unexpected error has occurred. Please try again later.',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
 /*
  * action creators
  */
@@ -16,11 +29,14 @@ function loadConfigurations() {
     dispatch(loadConfigurationsStarted())
 
     configurationService.getConfigurations().then(response => {
-      dispatch(setConfigurations(response.data))
+      let disable = Object.create(false);
 
+      dispatch(disableChartCreation(disable));
+
+      dispatch(setConfigurations(response.data))
+   
       dispatch(loadConfigurationsCompleted())
     }).catch(() => {
-      dispatch(loadConfigurationsCompleted())
     });
   }
 
@@ -32,9 +48,21 @@ function loadConfigurations() {
     return { type: configListConstants.SET_CONFIGURATIONS, data };
   }
   
-  function loadConfigurationsCompleted() {
-    return { type: configListConstants.LOAD_CONFIGURATIONS_COMPLETED };
+
+}
+
+function loadConfigurationsCompleted() {
+  return { type: configListConstants.LOAD_CONFIGURATIONS_COMPLETED };
+}
+
+function showNetworkError()
+{
+  return function (dispatch) {
+    confirmAlert(options);
+    dispatch(loadConfigurationsCompleted());
+    dispatch(disableChartCreation(true));
   }
+
 }
 
 function showErrorMessage(message) {
@@ -50,4 +78,8 @@ function showErrorMessage(message) {
 
 function setErrorMessage(message) {
   return { type: configListConstants.SHOW_GRID_ERROR, message };
+}
+
+function disableChartCreation(disableChartCreation) {
+  return { type: configListConstants.DISABLE_CREATION_CHART, disableChartCreation };
 }

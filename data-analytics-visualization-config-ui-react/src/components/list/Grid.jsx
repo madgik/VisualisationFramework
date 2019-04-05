@@ -39,7 +39,7 @@ class Grid extends React.Component {
 
     return (
       <div>
-        <div><Button onClick={this.handleNewItemClick} primary>Create</Button></div>
+        <div><Button disabled={this.props.enableEdit} onClick={this.handleNewItemClick} primary>Createee</Button></div>
         <ReactTable
           data={this.props.data}
           columns={finalColumns}
