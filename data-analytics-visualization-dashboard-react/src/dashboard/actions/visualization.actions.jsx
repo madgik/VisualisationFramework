@@ -67,7 +67,8 @@ export const visualizationActions = {
   setWorkspaceDashboardDirDetails,
   getDashboardFolder,
   createDashboardFolder,
-  getDashboardFolderListing
+  getDashboardFolderListing,
+  setWorkspaceListing
 }
 
 /*
@@ -148,7 +149,12 @@ function getDashboardFolderListing() {
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/children", parameters);
     return axios.get(resourceUrl)
       .then(response => {
-        console.log(response.data)
+        console.log(response.data.itemlist)
+        let files = [];
+        for(let item in response.data.itemlist){
+          console.log(item);
+        }
+        dispatch(setWorkspaceListing(response.data.itemlist));
       })
       .catch(response => {
         alert(response);
@@ -576,6 +582,10 @@ function loadRelatedData(feature){
 // function setYaxisFieldDataLabel(yAxisLabel) {
 //   return { type: visualizationConstants.SET_FIELD_DATA_Y_AXIS_LABEL, yAxisLabel };
 // }
+
+function setWorkspaceListing(workspaceFiles) {
+  return { type: visualizationConstants.SET_WORKSPACE_FILE_LISTING, workspaceFiles };
+}
 
 function reloadRelatedFieldDataProperties(fieldDataProperties) {
   return { type: visualizationConstants.SET_FIELD_DATA_PROPERTIES, fieldDataProperties };
