@@ -3,7 +3,6 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DropdownProperties;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class NetworkGraphDto {
     String name;
 
     @JsonProperty("nodes")
-    List<DropdownProperties.NodeDto> nodes;
+    List<NodeDto> nodes;
 
     @JsonProperty("edges")
     List<EdgeDto> edges;
@@ -35,11 +34,11 @@ public class NetworkGraphDto {
         this.name = name;
     }
 
-    public List<DropdownProperties.NodeDto> getNodes() {
+    public List<NodeDto> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<DropdownProperties.NodeDto> nodes) {
+    public void setNodes(List<NodeDto> nodes) {
         this.nodes = nodes;
     }
 
