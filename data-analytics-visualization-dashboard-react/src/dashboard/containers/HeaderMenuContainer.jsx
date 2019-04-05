@@ -6,7 +6,8 @@ import HeaderMenu from '../components/HeaderMenu'
 function mapStateToProps(state) {
   return {
     visualization: state.data.map,
-    document: state.document
+    document: state.document,
+    workspace: state.data.workspaceDetails
   };
 }
 

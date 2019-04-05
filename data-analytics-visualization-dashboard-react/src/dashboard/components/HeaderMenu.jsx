@@ -114,54 +114,13 @@ class HeaderMenu extends React.Component {
         <Modal center showOverlay={true}  onClose={this.onCloseModal} >
           <Modal.Header>
             <Modal.Title>
-              Select date range
+              Dashboard Visualization Folder
               </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <FileBrowser
 
-                files={[
-                    {
-                      key: 'cat.txt',
-                      modified: +Moment().subtract(1, 'hours'),
-                      size: 1.5 * 1024 * 1024,
-                    },
-                    {
-                      key: 'kitten.png',
-                      modified: +Moment().subtract(3, 'days'),
-                      size: 545 * 1024,
-                    },
-                    {
-                      key: 'elephant.png',
-                      modified: +Moment().subtract(3, 'days'),
-                      size: 52 * 1024,
-                    },
-                    {
-                      key: 'dog.png',
-                      modified: +Moment().subtract(1, 'hours'),
-                      size: 1.5 * 1024 * 1024,
-                    },
-                    {
-                      key: 'turtle.png',
-                      modified: +Moment().subtract(3, 'months'),
-                      size: 545 * 1024,
-                    },
-                    {
-                      key: 'gecko.png',
-                      modified: +Moment().subtract(2, 'days'),
-                      size: 52 * 1024,
-                    },
-                    {
-                      key: 'centipede.png',
-                      modified: +Moment().subtract(0.5, 'hours'),
-                      size: 1.5 * 1024 * 1024,
-                    },
-                    {
-                      key: 'possum.png',
-                      modified: +Moment().subtract(32, 'days'),
-                      size: 545 * 1024,
-                    },
-                  ]}
+                files= {this.props.workspace.workspaceFiles}
                   icons={Icons.FontAwesome(4)}
                   canFilter= {false}
 

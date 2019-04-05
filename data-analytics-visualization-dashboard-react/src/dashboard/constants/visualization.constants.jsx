@@ -45,6 +45,7 @@ export const visualizationConstants = {
   SET_WORKSPACE_TOKEN: 'set-workspace-token',
   SET_WORKSPACE_PARENT_DIR_DETAILS: 'set-workspace-parent-dir-details',
   SET_WORKSPACE_DASHBOARD_DIR_DETAILS: 'set-workspace-dashboard-dir-details',
+  SET_WORKSPACE_FILE_LISTING: 'set-workspace-file-listing',
 
   DASHBOARD_DIR: 'Dashboard Visualization Folder'
 

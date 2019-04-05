@@ -265,7 +265,8 @@ const dataDefault = {
       workspaceUsername: '',
       workspaceToken: '',
       workspaceParentDirDetails: '',
-      workspaceDashboardDirDetails: ''
+      workspaceDashboardDirDetails: '',
+      workspaceFiles:[]
     }
 }
 
@@ -275,6 +276,14 @@ export function data(state = dataDefault, action) {
       return action.data;
     case visualizationConstants.RESET_VISUALIZATION:
       return dataDefault;
+    case visualizationConstants.SET_WORKSPACE_FILE_LISTING:
+      return update(state, {
+        workspaceDetails: {
+          workspaceFiles: {
+            $set: action.workspaceFiles
+          }
+        }
+      });    
     case visualizationConstants.SET_WORKSPACE_USERNAME:
       return update(state, {
         workspaceDetails: {
