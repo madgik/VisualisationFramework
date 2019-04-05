@@ -34,10 +34,11 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
     Node findNodeByNodeId(String nodeId, String graphId);
 
     @Query("MATCH (dn:DateNode)" +
+            "where dn.subGraphId={0} "+
             "with dn" +
             "order by dn.date asc " +
             "return  collect(distinct dn.date)")
-    List<String> findAllDatesOrderByDate();
+    List<String> findAllDatesOrderByDate(String graphId);
 
 }
 

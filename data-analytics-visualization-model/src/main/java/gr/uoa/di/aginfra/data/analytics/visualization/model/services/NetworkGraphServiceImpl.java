@@ -113,8 +113,8 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    public List<String> getAllTimestamps() throws Exception {
-        return nodeRepository.findAllDatesOrderByDate();
+    public List<String> getAllTimestamps(String graphId) throws Exception {
+        return nodeRepository.findAllDatesOrderByDate(graphId);
     }
 
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static org.neo4j.ogm.session.Utils.map;
 
-public class NetworkGraphHelper {
+public class D3Helper {
 
     public static Map<String, Object> nodesToD3Format(Collection<Node> nodeEntities, boolean isInitialization) {
         List<Map<String, Object>> nodes = new ArrayList<>();
