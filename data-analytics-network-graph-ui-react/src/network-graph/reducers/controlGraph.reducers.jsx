@@ -12,10 +12,10 @@ const dataDefault = {
     startingDate: '2012.01',
     lastDate: '2015.12',
     currentDate: '2012.01',
-    selectedWeight:'',
+    selectedWeight: '',
     graph: {
-        links: '',
-        nodes: ''
+        links: [],
+        nodes: []
     },
     linkColor: 'blue',
     prevGraphState: {
@@ -26,16 +26,22 @@ const dataDefault = {
     barChartData: null,
     timeSeries: [],
     filters: [],
-    paused: false
+    paused: false,
+    stopped: true,
+    selectedLink: {
+        source: '',
+        target: '',
+        weight: ''
+    },
+    sliderValue: 0,
 }
 
 export function controlGraph(state = dataDefault, action) {
     switch (action.type) {
-
-        case controlGraphConstants.SET_GRAPH_DATA:
+        case controlGraphConstants.SET_GRAPH:
             return update(state, {
-                graphData: {
-                    $set: action.graphData
+                graph: {
+                    $set: action.graph
                 }
             })
         case controlGraphConstants.SET_GRAPH_LINKS:
@@ -66,6 +72,18 @@ export function controlGraph(state = dataDefault, action) {
                     $set: action.nodeId
                 }
             })
+        case controlGraphConstants.SET_SELECTED_LINK:
+            return update(state, {
+                selectedLink: {
+                    $set: action.selectedLink
+                }
+            })
+        case controlGraphConstants.SET_SLIDER_VALUE:
+            return update(state, {
+                sliderValue: {
+                    $set: action.sliderValue
+                }
+            })
         case controlGraphConstants.SET_CURRENT_DATE:
             return update(state, {
                 currentDate: {
@@ -76,6 +94,12 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 paused: {
                     $set: action.paused
+                }
+            })
+        case controlGraphConstants.SET_STOPPED:
+            return update(state, {
+                stopped: {
+                    $set: action.stopped
                 }
             })
         case controlGraphConstants.SET_SELECTED_WEIGHT:

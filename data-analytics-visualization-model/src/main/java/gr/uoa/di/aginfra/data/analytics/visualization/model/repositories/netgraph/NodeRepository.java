@@ -32,5 +32,12 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
 
     @Query("MATCH (n:Node)-[h:HAS_PROPERTY]-(p:NodeProperty) where n.nodeId={0} and n.subGraphId={1} return n,h,p")
     Node findNodeByNodeId(String nodeId, String graphId);
+
+    @Query("MATCH (dn:DateNode)" +
+            "with dn" +
+            "order by dn.date asc " +
+            "return  collect(distinct dn.date)")
+    List<String> findAllDatesOrderByDate();
+
 }
 

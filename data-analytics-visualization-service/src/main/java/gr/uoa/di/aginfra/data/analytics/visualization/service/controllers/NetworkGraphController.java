@@ -131,7 +131,7 @@ public class NetworkGraphController {
     }
 
 
-    @RequestMapping(value = "date/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "dates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String[] nodes, @RequestParam("date") String currentDate ) {
 
         try {
@@ -142,6 +142,8 @@ public class NetworkGraphController {
 //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
 //            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+            System.out.println(d3Results.get("nodes"));
+            System.out.println(d3Results.get("links"));
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
@@ -149,5 +151,21 @@ public class NetworkGraphController {
             e.printStackTrace();
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "dates")
+    ResponseEntity<?> getTimestamps() {
+
+        List<String> results = null;
+        try {
+            results = networkGraphService.getAllTimestamps();
+            return new ResponseEntity<>(results, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
     }
 }

@@ -2,22 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import { PlayerIcon, Slider, SliderBar, SliderHandle } from 'react-player-controls';
+import { PlayerIcon } from 'react-player-controls';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import DateUtils from '../../utilities/DateUtils'
+import DateUtils from '../../utilities/DateUtils';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/lab/Slider';
+
 // import { Slider, Handles, Rail, Tracks, Ticks } from 'react-compound-slider'
 // import { SliderRail, Handle, Track, Tick } from './SliderComponents' // example render components - source below
 
 const style = () => ({
   root: {
-    height: 120,
-    width: '100%',
+    width: 300,
   },
   slider: {
-    position: 'relative',
-    width: '100%',
-  },
+    padding: '22px 0px',
+  }
 })
 
 
@@ -29,26 +31,44 @@ class GraphControls extends React.Component {
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
     this.handlePauseClick = this.handlePauseClick.bind(this);
     this.handlePlayClick = this.handlePlayClick.bind(this);
+    this.handleSliderChange = this.handleSliderChange.bind(this);
+  }
+  
+  boxClass =["player-controls"];
+
+  componentWillMount(){
+      this.maxValue = DateUtils.dates.length;
   }
 
-  handlePlayClick() {
-    this.props.setPaused(false);
-    this.playGraph(this.props.currentDate);
 
+  handlePlayClick() {
+    this.props.setStopped(false);
+    this.props.setPaused(false);
+     this.playGraph(this.props.currentDate);
+ 
     // this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
   }
 
+
   playGraph(date) {
     console.log("next date is:" + date + "and paused is:" + this.props.paused);
+    this.boxClass.push('shadow');
+
     if (this.props.paused != true && date != undefined) {
       setTimeout(() => {
-        this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
+        if (this.props.paused != true ) {
+          this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
           var nextDate = DateUtils.getNextDate(this.props.currentDate);
-
+          this.props.setSliderValue(DateUtils.dates.indexOf(nextDate));
           this.playGraph(nextDate);
-        })
+        }) 
+        }
       }, 3000);
     }
+    else if(this.props.paused != true && date == undefined) {
+      this.props.setStopped(true);
+    }
+
   }
 
 
@@ -56,6 +76,7 @@ class GraphControls extends React.Component {
     var nextDate = DateUtils.getNextDate(this.props.currentDate);
     if (nextDate !== undefined) {
       this.props.getDateGraph(nextDate, this.props.graph, this.props.selectedGraph);
+      this.props.setSliderValue(DateUtils.dates.indexOf(nextDate));
     }
   }
 
@@ -68,16 +89,29 @@ class GraphControls extends React.Component {
     var previousDate = DateUtils.getPreviousDate(this.props.currentDate);
     console.log("previous date is:" + previousDate);
     if (previousDate !== undefined) {
-      this.props.getDateGraph(previousDate, this.props.graphData, this.props.selectedGraph);
+      this.props.getDateGraph(previousDate, this.props.graph, this.props.selectedGraph);
+      this.props.setSliderValue(DateUtils.dates.indexOf(previousDate));
+
     }
   }
 
-  render() {
-    const {
-      props: { classes }
-    } = this
+  handleSliderChange(event, value) {
+    this.props.setPaused(true);
 
-    if (this.props.graphData == null) {
+    this.props.setSliderValue(value);
+    
+    this.props.getDateGraph(DateUtils.dates[value], this.props.graph, this.props.selectedGraph);
+    // this.props.setPaused(false);
+
+  }
+
+
+  render() {
+    const { classes } = this.props;
+    var playClass = (this.props.stopped || this.props.paused)  ? 'player-controls' : 'player-controls disabled';
+
+
+    if (this.props.graph.nodes.length == 0 || this.props.graph.nodes == undefined) {
       return (
         <div></div>
       )
@@ -92,7 +126,18 @@ class GraphControls extends React.Component {
           alignContent="center"
         >
           <Grid item spacing={8}>
-            <IconButton className='player-controls' id='play'
+            <TextField
+              id="current-date"
+              label="CurrentDate"
+              className={classes.textField}
+              value={this.props.currentDate}
+              margin="normal"
+              editable="false"
+            >{this.props.currentDate}
+            </TextField>
+          </Grid>
+          <Grid item spacing={8}>
+            <IconButton className={playClass} id='play'
               onClick={this.handlePlayClick}
             >
               <PlayerIcon.Play width={28} height={28} style={{ marginRight: 28 }} />
@@ -114,16 +159,18 @@ class GraphControls extends React.Component {
             </IconButton>
           </Grid>
           <Grid item>
+          <div className={classes.root}>
+
             <Slider
-               isEnabled
-               onIntent={intent => console.log(`hovered at ${intent}`)}
-               onIntentStart={intent => console.log(`entered with mouse at ${intent}`)}
-               onIntentEnd={() => console.log('left with mouse')}
-               onChange={newValue => console.log(`clicked at ${newValue}`)}
-               onChangeStart={startValue => console.log(`started dragging at ${startValue}`)}
-               onChangeEnd={endValue => console.log(`stopped dragging at ${endValue}`)}
-            >
-            </Slider>
+              classes={{ container: classes.slider }}
+              value={this.props.sliderValue}
+              min={0}
+              max={this.maxValue}
+              step={1}
+              aria-labelledby="label"
+              onChange={this.handleSliderChange}
+            />
+            </div>
           </Grid>
         </Grid >
       );

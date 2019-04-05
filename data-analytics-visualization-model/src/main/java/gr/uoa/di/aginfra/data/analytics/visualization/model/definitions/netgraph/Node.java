@@ -15,9 +15,9 @@ public class Node extends SubGraphEntity{
     @Id
     private String nodeId;
 
-    private double latitude;
+    private double x;
 
-    private double longitude;
+    private double y;
 
     private int startingDate;
 
@@ -32,12 +32,12 @@ public class Node extends SubGraphEntity{
     public Node() {
     }
 
-    public Node(String nodeId, double latitude, double longitude, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
+    public Node(String nodeId, double x, double y, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
 
         System.out.println("ID node:"+nodeId);
         this.nodeId = nodeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.x = x;
+        this.y = y;
         this.nodeProperties = new ArrayList<>();
         int i=0;
         for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
@@ -80,22 +80,21 @@ public class Node extends SubGraphEntity{
         this.nodeId = nodeId;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getX() {
+        return x;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setX(double x) {
+        this.x = x;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getY() {
+        return y;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setY(double y) {
+        this.y = y;
     }
-
 
     public Set<HasDateNode> getHasDateNodes() {
         return hasDateNodes;

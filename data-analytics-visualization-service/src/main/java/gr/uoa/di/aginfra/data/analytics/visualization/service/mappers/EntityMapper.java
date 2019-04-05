@@ -75,7 +75,7 @@ public class EntityMapper {
         String graphId = uuid.toString();
 
         Map<String, Node> nodeMap = dto.getNodes().stream().map(node ->
-                new Node(node.getId(), node.getLatitude(), node.getLongitude(), node.getAttributes(), graphId, graphName, tenantName)
+                new Node(node.getId(), node.getX(), node.getY(), node.getAttributes(), graphId, graphName, tenantName)
         ).collect(Collectors.toMap(Node::getNodeId, Function.identity()));
 
 

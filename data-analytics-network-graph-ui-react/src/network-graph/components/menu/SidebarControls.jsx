@@ -8,8 +8,7 @@ import GraphFilter from "../controls/GraphFilter";
 import GraphControls from "../controls/GraphControls";
 import SelectGraphForm from "../forms/SelectGraphForm";
 import GraphSelection from "./GraphSelection";
-import NodePropeties from "../graph/NodeProperties";
-import LinkProperties from "../graph/LinkProperties";
+
 
 const styles = theme => ({
   root: {
@@ -30,7 +29,7 @@ class SidebarControls extends React.Component {
 
 
     return (
-      <div className="sidebar">
+      <div className="sidebar-controls">
         <Grid container
           direction="row"
           justify="center"
@@ -54,26 +53,13 @@ class SidebarControls extends React.Component {
             />
           </Grid>
           <Grid>
-            <NodePropeties
-              graph={this.props.graph}
-              selectedGraph={this.props.selectedGraph}
-              selectedNode={this.props.selectedNode}
-              getNeighbors={this.props.getNeighbors}
-              graphData={this.props.graphData}
-            />
-          </Grid>
-          <Grid>
-            <LinkProperties
-              selectedWeight={this.props.selectedWeight}
-              />
-          </Grid>
-          <Grid>
             <GraphFilter
-              graphData={this.props.graphData}
+              graph={this.props.graph}
               currentDate={this.props.currentDate}
               getDateGraph={this.props.getDateGraph}
             />
           </Grid>
+        
           <Grid>
             <GraphControls
               graph={this.props.graph}
@@ -83,7 +69,12 @@ class SidebarControls extends React.Component {
               selectedGraph={this.props.selectedGraph}
               playTimeGraph={this.props.playTimeGraph}
               paused={this.props.paused}
+              stopped={this.props.stopped}
               setPaused={this.props.setPaused}
+              setPausedPromise={this.props.setPausedPromise}
+              setStopped={this.props.setStopped}
+              setSliderValue={this.props.setSliderValue}
+              sliderValue={this.props.sliderValue}
             />
           </Grid>
           {/* <GraphFilter /> */}

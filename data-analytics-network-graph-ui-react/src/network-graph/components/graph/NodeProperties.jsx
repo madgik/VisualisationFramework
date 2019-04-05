@@ -31,7 +31,7 @@ class NodeProperties extends React.Component {
   }
   
   handleNeighborsClick(){
-    this.props.getNeighbors(this.props.selectedGraph, this.props.selectedNode, this.props.graphData);
+    this.props.getNeighbors(this.props.selectedGraph, this.props.selectedNode, this.props.graph);
   }
 
 
@@ -54,8 +54,8 @@ class NodeProperties extends React.Component {
                       return (
                         Object.keys(node).map(element => {
                           return (
-                            <TableRow>
-                              <TableCell padding="checkbox">
+                            <TableRow  key={element + "-" + node[element]}>
+                              <TableCell padding="checkbox" >
                                 {element}
                               </TableCell>
                               <TableCell padding="checkbox">

@@ -15,11 +15,7 @@ public interface HasWeightRepository extends Neo4jRepository<HasWeight, Long> {
     List<HasWeight> findHasWeightOf(String subGraphId, List<String> nodes, String date);
 
     @Query("MATCH (n:Node)-[h:HAS_DATENODE]-(dn1:DateNode)-[hw:HAS_WEIGHT]-(dn2:DateNode)-[h2:HAS_DATENODE]-(n2:Node) " +
-            "MATCH (dn1)-[hw]-(dn2) " +
-            "MATCH (n)-[h]-(dn1) " +
-            "MATCH (n2)-[h2]-(dn2) " +
-            "Match (n)-[hp:HAS_PROPERTY]-(p:NodeProperty) "+
             "WHERE n.nodeId in {1} and n.subGraphId={0} " +
-            "and hw.date = {2} and hw.weight>0 Return dn1,hw,dn2,h,h2,n,n2,hp,p")
+            "and hw.date = {2} and hw.weight>0 Return dn1,hw,dn2,h,h2,n,n2")
     List<HasWeight> findNodesAndHasWeightByDate(String subGraphId, List<String> nodes, int date);
 }
