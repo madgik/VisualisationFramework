@@ -153,6 +153,7 @@ public class D3Helper {
     }
 
     public static List<String> datesToDateStrings(List<String> dates) {
+
         List<String> dateStrings = dates.stream().map(date -> {
             StringBuilder sb = new StringBuilder(date);
             sb.insert(4, '.');

@@ -87,6 +87,7 @@ class GraphSelection extends React.Component {
               <ShowTopNodes
                 getTopNodes={this.props.getTopNodes}
                 selectedGraph={this.props.selectedGraph}
+                getAllTimestamps={this.props.getAllTimestamps}
 
               />
               </div>

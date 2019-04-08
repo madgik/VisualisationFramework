@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -114,7 +115,10 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     @Override
     public List<String> getAllTimestamps(String graphId) throws Exception {
-        return nodeRepository.findAllDatesOrderByDate(graphId);
+        String times = nodeRepository.findAllDatesOrderByDate(graphId);
+        String[] t = times.split(",");
+        List<String> timestamps = Arrays.asList(t);
+        return timestamps;
     }
 
 

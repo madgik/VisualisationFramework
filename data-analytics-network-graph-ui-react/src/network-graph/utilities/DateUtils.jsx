@@ -22,6 +22,26 @@ class DateUtils {
   
     return nextItem;
   }
+
+  getNextDate(date,timestamps){
+    var index = timestamps.indexOf(date);
+    var nextItem;
+    if(index >= 0 && index <  timestamps.length - 1) {
+      nextItem =  timestamps[index + 1]
+    }
+    return nextItem;
+  }
+
+  getPreviousDate(date,timestamps){
+    var index =  timestamps.indexOf(date);
+    var nextItem;
+
+    if(index > 0 && index <  this.dates.length ) {
+      nextItem =  timestamps[index -1]
+    }
+  
+    return nextItem;
+  }
 }
 
 export default new DateUtils();

@@ -51,6 +51,7 @@ class ShowTopNodes extends React.Component {
       this.numInput=5;
     }
     this.props.getTopNodes(this.props.selectedGraph, this.numInput);
+    this.props.getAllTimestamps(this.props.selectedGraph);
   }
 
   render() {

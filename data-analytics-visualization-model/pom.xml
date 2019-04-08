@@ -6,7 +6,7 @@
 
     <groupId>gr.uoa.di.aginfra</groupId>
     <artifactId>data-analytics-visualization-model</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <version>1.0.7-SNAPSHOT</version>
 
     <properties>
