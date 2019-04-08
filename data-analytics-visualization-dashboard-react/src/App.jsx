@@ -29,7 +29,7 @@ class App extends React.Component {
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     Ajax.setWorkspaceUrl(this.props.routing.workspaceUrl);
-    this.store.dispatch(visualizationActions.requestVisualizations());
+   // this.store.dispatch(visualizationActions.requestVisualizations());
     const dateToFormat = '2018-12-31';
     const today = moment(dateToFormat);
     this.value = moment.range(today.clone().subtract(1, "years"), today.clone());
