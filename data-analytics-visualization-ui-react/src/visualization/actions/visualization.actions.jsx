@@ -17,12 +17,23 @@ export const visualizationActions = {
   updateFilterAndReload,
   reloadData,
   updateFilter,
-  showNetworkError
+  showNetworkError,
+  showEmptyConfigurations
 }
 
 const options = {
   title: 'Alert',
   message: 'An unexpected error has occurred. Please try again later.',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
+
+const emptryConfigurationsOptions = {
+  title: 'Alert',
+  message: 'No configurations for charts are specified.',
   buttons: [
     {
       label: 'Close'
@@ -39,6 +50,9 @@ function requestVisualizations() {
     return axios.get(resourceUrl)
       .then(response => {
         dispatch(loadVisualizations(response.data))
+        if(response.data.length === 0){
+          dispatch(showEmptyConfigurations());
+        }
       })
       .catch(response => {
         dispatch(showNetworkError());
@@ -143,6 +157,13 @@ function showNetworkError()
    
   }
 
+}
+
+function showEmptyConfigurations(){
+  return function (dispatch) {
+    confirmAlert(emptryConfigurationsOptions);
+   
+  }
 }
 
 function updateFilter(field, value) {
