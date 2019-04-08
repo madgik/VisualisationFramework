@@ -2,6 +2,8 @@ import axios from 'axios';
 import { visualizationConstants } from '../constants'
 import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export const visualizationActions = {
   requestVisualizations,
@@ -14,9 +16,19 @@ export const visualizationActions = {
   changeChartType,
   updateFilterAndReload,
   reloadData,
-  updateFilter
+  updateFilter,
+  showNetworkError
 }
 
+const options = {
+  title: 'Alert',
+  message: 'An unexpected error has occurred. Please try again later.',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
 /*
  * action creators
  */
@@ -29,7 +41,7 @@ function requestVisualizations() {
         dispatch(loadVisualizations(response.data))
       })
       .catch(response => {
-        alert(response);
+        dispatch(showNetworkError());
       });
   }
 }
@@ -122,6 +134,15 @@ function updateFilterAndReload(field, value) {
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
+}
+
+function showNetworkError()
+{
+  return function (dispatch) {
+    confirmAlert(options);
+   
+  }
+
 }
 
 function updateFilter(field, value) {

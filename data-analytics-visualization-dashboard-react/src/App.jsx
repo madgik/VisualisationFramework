@@ -34,9 +34,9 @@ class App extends React.Component {
     const today = moment(dateToFormat);
     this.value = moment.range(today.clone().subtract(1, "years"), today.clone());
     this.store.dispatch(visualizationActions.setDateRange(this.value));
-    this.store.dispatch(visualizationActions.setWorkspaceUsername(this.props.routing.workspaceUsername));
-    this.store.dispatch(visualizationActions.setWorkspaceToken(this.props.routing.workspaceToken));
-    this.store.dispatch(visualizationActions.requestWorkspaceListing());
+    // this.store.dispatch(visualizationActions.setWorkspaceUsername(this.props.routing.workspaceUsername));
+    // this.store.dispatch(visualizationActions.setWorkspaceToken(this.props.routing.workspaceToken));
+    // this.store.dispatch(visualizationActions.requestWorkspaceListing());
 
   }
 
