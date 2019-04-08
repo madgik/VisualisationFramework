@@ -107,7 +107,6 @@ public class NetworkGraphController {
         try {
             List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
             Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results,nodeId, false);
-            System.out.println();
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -137,13 +136,12 @@ public class NetworkGraphController {
         try {
             List<String> nodeList = Arrays.asList(nodes);
             List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
-            System.out.println("RESULTS:"+result.size());
             Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
 //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
 //            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
-            System.out.println(d3Results.get("nodes"));
-            System.out.println(d3Results.get("links"));
+//            System.out.println(d3Results.get("nodes"));
+//            System.out.println(d3Results.get("links"));
 
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 

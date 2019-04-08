@@ -115,8 +115,9 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     @Override
     public List<String> getAllTimestamps(String graphId) throws Exception {
-        String[] times = nodeRepository.findAllDatesOrderByDate(graphId);
-        List<String> timestamps = Arrays.asList(times);
+        String times = nodeRepository.findAllDatesOrderByDate(graphId);
+        String[] t = times.split(",");
+        List<String> timestamps = Arrays.asList(t);
         return timestamps;
     }
 

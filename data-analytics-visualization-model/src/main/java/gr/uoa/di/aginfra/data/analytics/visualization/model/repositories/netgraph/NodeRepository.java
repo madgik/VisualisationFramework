@@ -38,7 +38,7 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
             "with dn " +
             "order by dn.date asc " +
             "return  collect(distinct dn.date)")
-    String[] findAllDatesOrderByDate(String graphId);
+    String findAllDatesOrderByDate(String graphId);
 
 }
 
