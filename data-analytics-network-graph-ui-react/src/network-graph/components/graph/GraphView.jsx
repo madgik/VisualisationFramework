@@ -4,7 +4,6 @@ import './graph.css';
 
 import Force from '../../utilities/Force';
 
-import Node from './Node';
 import { Graph, reactD3GraphUtils } from 'react-d3-graph';
 import { Sidebar } from 'semantic-ui-react';
 import SidebarProperties from '../menu/SidebarProperties';

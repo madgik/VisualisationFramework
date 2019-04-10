@@ -11,8 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-        <script crossorigin src="https://unpkg.com/react@16.5.1/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16.5.1/umd/react-dom.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16.5.2/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16.5.2/umd/react-dom.production.min.js"></script>
         <script crossorigin src="https://cdn.jsdelivr.net/npm/jsmind@0.4.6/js/jsmind.min.js"></script>
         <script crossorigin src="https://cdn.jsdelivr.net/npm/jsmind@0.4.6/js/jsmind.screenshot.min.js"></script>
         <script crossorigin src="https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/worldwind.min.js" type="text/javascript"></script>

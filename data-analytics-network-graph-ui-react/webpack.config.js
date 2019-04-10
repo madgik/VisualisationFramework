@@ -1,11 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 var ReplacePlugin = require('replace-bundle-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 let artifactId = "network-graphs-visualization-portlet";
 
 module.exports = {
+  mode: 'production',
   entry: './src/index.js',
   output: {
     filename: 'bundle.min.js',
@@ -15,28 +15,27 @@ module.exports = {
     publicPath: '__network_graphs_visualization_portlet_public_path__'
   },
 
-
   module: {
     rules: [{
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: [
-          'babel-loader',
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(ttf|eot|svg|gif|woff2|woff|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [{
-          loader: 'file-loader'
-        }]
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader"
       }
+    },
+
+    {
+      test: /\.(ttf|eot|svg|gif|woff2|woff|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: [{
+        loader: 'file-loader'
+      }]
+    },
+    {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader'
+    }
     ],
   },
-
 
   // Enable importing JS files without specifying their's extenstion
   //
@@ -56,12 +55,11 @@ module.exports = {
         return 'window.staticFileBaseUrl';
       }
     }]),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify("production")
-      }
-    }),
-    new UglifyJSPlugin()
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     'NODE_ENV': JSON.stringify("production")
+    //   }
+    // }),
+  ]
 
-    ]
 }
