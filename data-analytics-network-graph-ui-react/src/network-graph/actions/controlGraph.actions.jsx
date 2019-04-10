@@ -13,6 +13,7 @@ export const controlGraphActions = {
   getNeighbors,
   getDateGraph,
   playTimeGraph,
+  getAllTimestamps,
   //OTHERS
   addGraphData,
   deleteGraphLinks,
@@ -31,7 +32,9 @@ export const controlGraphActions = {
   setSelectedWeight,
   setGraph,
   setSliderValue,
-  setPausedPromise
+  setPausedPromise,
+  setTimestamps
+
 }
 
 /*
@@ -76,10 +79,25 @@ function getNeighbors(graphId, nodeId, graphData) {
   }
 }
 
+
+function getAllTimestamps(graphId) {
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_TIMESTAMPS_PATH + "/" + graphId);
+    return axios.get(resourceUrl, {
+      headers: { 
+        'content-type': 'application/json'
+       }
+    }).then(response => {
+      // var times = response.data[0].split(',');
+      dispatch(setTimestamps(response.data));
+      dispatch(setCurrentDate(response.data[0]));
+    }).catch(_ => { });
+  }
+}
+
 /* OTHERS */
 function addGraphData(newData, graphData) {
   return function (dispatch) {
-    console.log("new String:" + JSON.stringify(newData.links));
     
     // console.log("Old String:" + JSON.stringify(graphData.links));
 
@@ -219,6 +237,11 @@ function setSelectedLink(selectedLink) {
 
 function setSliderValue(sliderValue) {
   return { type: controlGraphConstants.SET_SLIDER_VALUE, sliderValue };
+}
+
+
+function setTimestamps(timestamps) {
+  return { type: controlGraphConstants.SET_TIMESTAMPS, timestamps };
 }
 
 function mergeDeep(o1, o2) {

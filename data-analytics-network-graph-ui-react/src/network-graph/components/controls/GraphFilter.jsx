@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import Picker from 'react-month-picker'
 import './month-picker.css'
 import Button from '@material-ui/core/Button';
 import { get } from 'https';
@@ -71,38 +70,42 @@ class GraphFilter extends React.Component {
           justify="center"
           alignItems="center"
           alignContent="center"
+          spacing={8}
         >
           <Grid item>
             <h3>Filters</h3>
 
           </Grid>
-          <Grid item spacing={8}>
+          <Grid item >
             <TextField
               id="property-filter"
               label="Property"
               className={classes.textField}
               onChange={this.handlePropertyChange('name')}
               margin="normal"
+              disabled="true"
             >{this.props.currentDate}
             </TextField>
           </Grid>
-          <Grid item spacing={8}>
+          <Grid item >
             <TextField
               id="weight-filter"
               label="Weight"
               className={classes.textField}
               onChange={this.handleWeightChange('weight')}
               margin="normal"
+              disabled="true"
             >{this.props.currentDate}
             </TextField>
           </Grid>
-          <Grid item spacing={8}>
+          <Grid item>
 
           </Grid>
-          <Grid item spacing={8}>
+          <Grid item>
             <Button
               variant="contained" className={classes.button}
               onClick={this.handleGetCurrent}
+              disabled="true"
             >
               Apply Filters
             </Button>

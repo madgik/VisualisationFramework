@@ -21,7 +21,7 @@ const mapStateToProps = state => ({
    selectedWeight: state.controlGraph.selectedWeight,
    selectedLink: state.controlGraph.selectedLink,
    sliderValue: state.controlGraph.sliderValue,
-   timestamps: state.configGraph.timestamps
+   timestamps: state.controlGraph.timestamps
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -41,7 +41,7 @@ const mapDispatchToProps = dispatch => ({
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
-    getAllTimestamps: (selectedGraph) => dispatch(configGraphActions.getAllTimestamps(selectedGraph))
+    getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph))
 });
 
 export default connect(

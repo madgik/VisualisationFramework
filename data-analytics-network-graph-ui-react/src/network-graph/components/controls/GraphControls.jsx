@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DateUtils from '../../utilities/DateUtils';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 
 // import { Slider, Handles, Rail, Tracks, Ticks } from 'react-compound-slider'
@@ -76,6 +75,7 @@ class GraphControls extends React.Component {
 
 
   handleNextClick() {
+    console.log(this.props.timestamps);
     var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
     if (nextDate !== undefined) {
       this.props.getDateGraph(nextDate, this.props.graph, this.props.selectedGraph);

@@ -23,7 +23,7 @@ class SidebarProperties extends React.Component {
 
     const { classes } = this.props;
 
-    if (this.props.graph.nodes.length == 0 || this.props.graph.nodes == undefined) {
+    if (this.props.graph.nodes.length === 0 || this.props.graph.nodes === undefined) {
       return (
         <div className="sidebar-properties"></div>
       )

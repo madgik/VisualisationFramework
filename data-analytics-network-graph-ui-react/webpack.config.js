@@ -1,16 +1,21 @@
 const path = require('path');
 const webpack = require('webpack');
 var ReplacePlugin = require('replace-bundle-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+
+let artifactId = "network-graphs-visualization-portlet";
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'index.js',
+    filename: 'bundle.min.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'commonjs',
-    library: '',
-    publicPath: '__data_analytics_network_graphs_public_path__'
+    libraryTarget: 'var',
+    library: ['reactComponents', artifactId],
+    publicPath: '__network_graphs_visualization_portlet_public_path__'
   },
+
+
   module: {
     rules: [{
         test: /\.(js|jsx)$/,
@@ -32,6 +37,7 @@ module.exports = {
     ],
   },
 
+
   // Enable importing JS files without specifying their's extenstion
   //
   // So we can write:
@@ -45,7 +51,7 @@ module.exports = {
 
   plugins: [
     new ReplacePlugin([{
-      partten: /"__data_analytics_network_graphs_public_path__"/g,
+      partten: /"__network_graphs_visualization_portlet_public_path__"/g,
       replacement: function () {
         return 'window.staticFileBaseUrl';
       }
@@ -54,6 +60,8 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify("production")
       }
-    })
-  ]
+    }),
+    new UglifyJSPlugin()
+
+    ]
 }

@@ -34,6 +34,7 @@ const dataDefault = {
         weight: ''
     },
     sliderValue: 0,
+    timestamps: null
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -108,6 +109,13 @@ export function controlGraph(state = dataDefault, action) {
                     $set: action.weight
                 }
             })
+        case controlGraphConstants.SET_TIMESTAMPS: {
+            return update(state, {
+                timestamps: {
+                    $set: action.timestamps
+                }
+            })
+        }
         //   case visualizationConstants.CHANGE_TIME:
         //     return update(state, {
         //       type: {

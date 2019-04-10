@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 import * as d3 from 'd3';
@@ -18,14 +17,14 @@ class Force {
   }
 
   enterNode = (selection) => {
-    var circle = selection.select('circle')
-      .attr("r", 25)
-      .style("fill", function (d) {
-          if (d.id > 3) {
-              return 'darkcyan'
-          } else { return 'tomato' }})
-      .style("stroke", "bisque")
-      .style("stroke-width", "3px")
+    // var circle = selection.select('circle')
+    //   .attr("r", 25)
+    //   .style("fill", function (d) {
+    //       if (d.id > 3) {
+    //           return 'darkcyan'
+    //       } else { return 'tomato' }})
+    //   .style("stroke", "bisque")
+    //   .style("stroke-width", "3px")
 
     selection.select('text')
       .style("fill", "honeydew")
