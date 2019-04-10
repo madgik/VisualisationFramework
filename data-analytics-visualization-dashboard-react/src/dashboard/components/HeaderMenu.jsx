@@ -108,7 +108,7 @@ class HeaderMenu extends React.Component {
             />
             </div>
         </Header>
-        {/* <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Save</Button>
+        <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Save</Button>
         <Button floated='right'>Open</Button>
 
         <Modal center showOverlay={true}  onClose={this.onCloseModal} >
@@ -134,7 +134,7 @@ class HeaderMenu extends React.Component {
 
             />   
           </Modal.Body>
-        </Modal> */}
+        </Modal>
 
         
   </div>

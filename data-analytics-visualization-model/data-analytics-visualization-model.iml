@@ -71,13 +71,5 @@
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: de.grundid.opendatalab:geojson-jackson:1.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.decimal4j:decimal4j:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope:1.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-configuration-scanner:1.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope-maps:1.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.resources:common-gcore-resources:1.3.4-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.resources.discovery:discovery-client:1.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.resources.discovery:ic-client:1.0.4-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-gcore-stubs:1.2.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.common:common-authorization:2.1.5-SNAPSHOT" level="project" />
   </component>
 </module>
