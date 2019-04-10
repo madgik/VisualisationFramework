@@ -71,8 +71,5 @@
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: de.grundid.opendatalab:geojson-jackson:1.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.decimal4j:decimal4j:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope:1.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-configuration-scanner:1.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope-maps:1.1.0-SNAPSHOT" level="project" />
   </component>
 </module>

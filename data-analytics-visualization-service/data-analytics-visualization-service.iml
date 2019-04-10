@@ -70,9 +70,6 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: org.decimal4j:decimal4j:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope:1.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-configuration-scanner:1.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gcube.core:common-scope-maps:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-models:1.5.20" level="project" />
