@@ -266,7 +266,9 @@ const dataDefault = {
       workspaceToken: '',
       workspaceParentDirDetails: '',
       workspaceDashboardDirDetails: '',
-      workspaceFiles:[]
+      workspaceFiles:[],
+      showOpenFromWorkspace: false,
+      showSaveToWorkspace: false
     }
 }
 
@@ -292,6 +294,22 @@ export function data(state = dataDefault, action) {
           }
         }
       });  
+    case visualizationConstants.SET_SHOW_OPEN_FROM_WORKSPACE:
+      return update(state, {
+        workspaceDetails: {
+          showOpenFromWorkspace: {
+            $set: action.showOpenFromWorkspace
+          }
+        }
+      });    
+    case visualizationConstants.SET_SAVE_OPEN_TO_WORKSPACE:
+      return update(state, {
+        workspaceDetails: {
+          showSaveToWorkspace: {
+            $set: action.showSaveToWorkspace
+          }
+        }
+      });    
     case visualizationConstants.SET_WORKSPACE_TOKEN:
       return update(state, {
         workspaceDetails: {

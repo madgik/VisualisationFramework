@@ -15,6 +15,17 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
     updateDashBoardTitle: (title) => {
   dispatch(visualizationActions.updateDashBoardTitle(title))
+  },
+  openDashboardWorkspaceDirectory: (open) => {
+
+    console.log("open dashboard!!");
+    dispatch(visualizationActions.showOpenFromWorkspace(open))
+  },
+
+  saveDashboardWorkspaceDirectory: (open) => {
+
+    console.log("σαωε dashboard!!");
+    dispatch(visualizationActions.showSaveToWorkspace(open))
   }
 })
 
