@@ -68,7 +68,9 @@ export const visualizationActions = {
   getDashboardFolder,
   createDashboardFolder,
   getDashboardFolderListing,
-  setWorkspaceListing
+  setWorkspaceListing,
+  showSaveToWorkspace,
+  showOpenFromWorkspace
 }
 
 /*
@@ -127,9 +129,19 @@ function requestWorkspaceListing() {
 
 function parseWorkspaceListing(data){
 
+  return function (dispatch, getState) {
+  console.log(data);
+
   let files = [];
-  for(let item in data){
-    console.log(item);
+  for(let i=0; i< data.length; i++){
+    let details = data[i];
+    console.log(details);
+    let file = {key: details.name, modified: details.lastModificationTime, size: details.content.size, id: details.id  }
+    files.push(file);
+
+  }
+  console.log(files);
+  dispatch(setWorkspaceListing(files));
   }
 }
 
@@ -163,7 +175,6 @@ function getDashboardFolderListing() {
       .then(response => {
         console.log(response.data.itemlist)
        
-        //dispatch(setWorkspaceListing(response.data.itemlist));
         dispatch(parseWorkspaceListing(response.data.itemlist));
       })
       .catch(response => {
@@ -275,6 +286,15 @@ function updateSoilTableHeader(header) {
 function updateCurrentZoomLevel(zoomlevel) {
   return { type: visualizationConstants.UPDATE_CURRENT_ZOOM_LEVEL, zoomlevel };
 }
+
+function showSaveToWorkspace(showSaveToWorkspace) {
+  return { type: visualizationConstants.SET_SAVE_OPEN_TO_WORKSPACE, showSaveToWorkspace };
+}
+
+function showOpenFromWorkspace(showOpenFromWorkspace) {
+  return { type: visualizationConstants.SET_SHOW_OPEN_FROM_WORKSPACE, showOpenFromWorkspace };
+}
+
 
 function shouldDisableibableFetchData(zoom) {
   

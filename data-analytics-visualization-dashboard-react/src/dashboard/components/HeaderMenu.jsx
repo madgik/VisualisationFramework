@@ -37,62 +37,28 @@ class HeaderMenu extends React.Component {
 
   }
 
+  onSaveCloseModal(){
+    this.props.saveDashboardWorkspaceDirectory(false);
+
+  }
+
+  saveDashboardWorkspaceDirectory() {
+    this.props.saveDashboardWorkspaceDirectory(true);
+  }
+
+  onCloseModal(){
+    this.props.openDashboardWorkspaceDirectory(false);
+
+  }
+
   openDashboardWorkspaceDirectory() {
-    this.props.openDashboardWorkspaceDirectory();
+    this.props.openDashboardWorkspaceDirectory(true);
   }
 
   onSave(e) {
     this.props.updateDashBoardTitle(e);
  //   visualizationActions.updateDashBoardTitle(e);
   }
-
-
-  handleCreateFiles = (files, prefix) => {
-    this.setState(state => {
-      const newFiles = files.map((file) => {
-        let newKey = prefix
-        if (prefix !== '' && prefix.substring(prefix.length - 1, prefix.length) !== '/') {
-          newKey += '/'
-        }
-        newKey += file.name
-        return {
-          key: newKey,
-          size: file.size,
-          modified: +Moment(),
-        }
-      })
-
-      const uniqueNewFiles = []
-      newFiles.map((newFile) => {
-        let exists = false
-        state.files.map((existingFile) => {
-          if (existingFile.key === newFile.key) {
-            exists = true
-          }
-        })
-        if (!exists) {
-          uniqueNewFiles.push(newFile)
-        }
-      })
-      state.files = state.files.concat(uniqueNewFiles)
-      return state
-    })
-  }
-  
-  handleDeleteFile = (fileKey) => {
-    this.setState(state => {
-      const newFiles = []
-      state.files.map((file) => {
-        if (file.key !== fileKey) {
-          newFiles.push(file)
-        }
-      })
-      state.files = newFiles
-      return state
-    })
-  }
-
-
 
   render() {
     return (
@@ -108,10 +74,10 @@ class HeaderMenu extends React.Component {
             />
             </div>
         </Header>
-        <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Save</Button>
-        <Button floated='right'>Open</Button>
+        <Button floated='right' onClick={this.saveDashboardWorkspaceDirectory.bind(this)} >Save</Button>
+        <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Open</Button>
 
-        <Modal center showOverlay={true}  onClose={this.onCloseModal} >
+        <Modal center showOverlay={true} show={this.props.workspace.showOpenFromWorkspace} onClose={this.onCloseModal.bind(this)} >
           <Modal.Header>
             <Modal.Title>
               Dashboard Visualization Folder
@@ -124,10 +90,8 @@ class HeaderMenu extends React.Component {
                   icons={Icons.FontAwesome(4)}
                   canFilter= {false}
 
-                  onCreateFolder={this.handleCreateFolder}
                   onSelectFile={this.handleItemClick}
-                  onDeleteFolder={this.handleDeleteFolder}
-                  onDeleteFile={this.handleDeleteFile}
+                
                 detailRenderer={EmptyRenderer}
 
                 
@@ -136,7 +100,16 @@ class HeaderMenu extends React.Component {
           </Modal.Body>
         </Modal>
 
-        
+        <Modal center showOverlay={true} show={this.props.workspace.showSaveToWorkspace} onClose={this.onSaveCloseModal.bind(this)} >
+          <Modal.Header>
+            <Modal.Title>
+              Save to Dashboard Visualization Folder
+              </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           
+          </Modal.Body>
+        </Modal>
   </div>
     );
   }
