@@ -5,7 +5,7 @@ import { Message, Image } from 'semantic-ui-react'
 class UploadMessage extends React.Component {
 
   typeToMessage = {
-    Graph: 'Please upload a valid json file of the following form'
+    Graph: 'Please upload a valid json file'
   }
 
   render() {

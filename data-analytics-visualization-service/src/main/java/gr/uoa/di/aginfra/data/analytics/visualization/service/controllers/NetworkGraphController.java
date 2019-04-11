@@ -137,7 +137,8 @@ public class NetworkGraphController {
             List<String> nodeList = Arrays.asList(nodes);
             List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
             Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
-//            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
+            System.out.println("-"+d3Results);
+            //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
 //            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
 //            System.out.println(d3Results.get("nodes"));

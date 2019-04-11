@@ -42,7 +42,6 @@ class ShowTopNodes extends React.Component {
 
   handleInputChange(e) {
     this.numInput = e.target.value;
-    console.log("my Input"+this.numInput);
   }
 
   handleClick() {

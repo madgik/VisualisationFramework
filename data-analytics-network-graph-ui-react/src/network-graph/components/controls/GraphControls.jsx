@@ -44,9 +44,9 @@ class GraphControls extends React.Component {
 
 
   handlePlayClick() {
+    
     this.props.setStopped(false);
-    this.props.setPaused(false);
-    this.playGraph(this.props.currentDate);
+    this.props.setPausedPromise(false).then(this.playGraph(this.props.currentDate));
  
     // this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
   }

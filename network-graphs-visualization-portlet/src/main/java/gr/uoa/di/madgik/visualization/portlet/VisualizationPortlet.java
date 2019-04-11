@@ -9,8 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -23,6 +22,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liferay.portal.kernel.json.JSONArray;
 import org.gcube.common.portal.PortalContext;
 import org.gcube.vomanagement.usermanagement.model.GCubeUser;
 
@@ -43,261 +44,290 @@ import org.slf4j.LoggerFactory;
 import gr.uoa.di.madgik.visualization.endpoint.EndpointManager;
 import gr.uoa.di.madgik.visualization.exceptions.ServiceDiscoveryException;
 import gr.uoa.di.madgik.visualization.service.ServiceProfile;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class VisualizationPortlet extends GenericPortlet {
 
-	protected String staticEndpoint;
-	protected String viewTemplate;
-	protected String username;
-	protected String user;
-	protected String pass;
+    protected String staticEndpoint;
+    protected String viewTemplate;
+    protected String username;
+    protected String user;
+    protected String pass;
 
-	private ServiceProfile analyticsProfile;
-	private EndpointManager endpointManager;
+    private ServiceProfile analyticsProfile;
+    private EndpointManager endpointManager;
 
-	private static Logger logger = LoggerFactory.getLogger(VisualizationPortlet.class);
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-	private static final int HTTP_CONNECTION_TIMEOUT = 15000;
+    private static Logger logger = LoggerFactory.getLogger(VisualizationPortlet.class);
 
-	@Override
-	public void init() {
-		viewTemplate = getInitParameter("view-template");
-		staticEndpoint = getInitParameter("back-end-url");
+    private static final int HTTP_CONNECTION_TIMEOUT = 15000;
 
-		analyticsProfile = new ServiceProfile();
-		analyticsProfile.setServiceClass("DataAnalysis");
-		analyticsProfile.setServiceName("data-analytics-visualization");
-		analyticsProfile.setPathEndsWith("/");
+    @Override
+    public void init() {
+        viewTemplate = getInitParameter("view-template");
+        staticEndpoint = getInitParameter("back-end-url");
 
-		endpointManager = new EndpointManager();
+        analyticsProfile = new ServiceProfile();
+        analyticsProfile.setServiceClass("DataAnalysis");
+        analyticsProfile.setServiceName("data-analytics-visualization");
+        analyticsProfile.setPathEndsWith("/");
 
-		Authenticator.setDefault(new Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, pass.toCharArray());
-			}
-		});
-	}
+        endpointManager = new EndpointManager();
 
-	@Override
-	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-		logger.info("Visualization portlet is rendering the main view");
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, pass.toCharArray());
+            }
+        });
+    }
 
-		PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
-		include(viewTemplate, renderRequest, renderResponse);
-	}
+    @Override
+    public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+        logger.info("Visualization portlet is rendering the main view");
 
-	@Override
-	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
-		super.processAction(actionRequest, actionResponse);
-	}
+        PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
+        include(viewTemplate, renderRequest, renderResponse);
+    }
 
-	@Override
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
-		PortalContext pContext = PortalContext.getConfiguration();
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
-		String scope = pContext.getCurrentScope(httpServletRequest);
+    @Override
+    public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
+        super.processAction(actionRequest, actionResponse);
+    }
 
-		logger.info("Serving resource for scope: " + scope);
+    @Override
+    public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
+        PortalContext pContext = PortalContext.getConfiguration();
+        HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+        String scope = pContext.getCurrentScope(httpServletRequest);
 
-		logger.info("Is liferay request: " + liferayRequests(resourceRequest, resourceResponse));
+        logger.info("Serving resource for scope: " + scope);
 
-		if (liferayRequests(resourceRequest, resourceResponse)) {
-			try {
-				List<String> endpoints = endpointManager.getServiceEndpoints(scope, analyticsProfile);
+        logger.info("Is liferay request: " + liferayRequests(resourceRequest, resourceResponse));
 
-				for (String endpoint : endpoints) {
-					logger.info("Trying to contact endpoint: " + endpoint);
+        if (liferayRequests(resourceRequest, resourceResponse)) {
+            try {
+                List<String> endpoints = endpointManager.getServiceEndpoints(scope, analyticsProfile);
 
-					try {
-						int status = doRequest(endpoint, resourceRequest, resourceResponse);
-						if (isOKStatus(status)) {
-							break;
-						}
-					} catch (Exception e) {
-						endpointManager.removeServiceEndpoint(scope, analyticsProfile, endpoint);
-						logger.warn("Cannot reach endpoint", e);
-					}
-				}
-			} catch (ServiceDiscoveryException e) {
-				logger.error(e.getMessage(), e);
-				try {
-					doRequest(staticEndpoint, resourceRequest, resourceResponse);
-				} catch (SocketTimeoutException ex) {
-					resourceResponse.getWriter().write("Service is currently unavailable");
-					resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
-				}
-			}
-		}
-	}
+                for (String endpoint : endpoints) {
+                    logger.info("Trying to contact endpoint: " + endpoint);
 
-	public int doRequest(String endpoint, ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
-		PortalContext pContext = PortalContext.getConfiguration();
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+                    try {
+                        int status = doRequest(endpoint, resourceRequest, resourceResponse);
+                        if (isOKStatus(status)) {
+                            break;
+                        }
+                    } catch (Exception e) {
+                        endpointManager.removeServiceEndpoint(scope, analyticsProfile, endpoint);
+                        logger.warn("Cannot reach endpoint", e);
+                    }
+                }
+            } catch (ServiceDiscoveryException e) {
+                logger.error(e.getMessage(), e);
+                try {
+                    doRequest(staticEndpoint, resourceRequest, resourceResponse);
+                } catch (SocketTimeoutException ex) {
+                    resourceResponse.getWriter().write("Service is currently unavailable");
+                    resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
+                }
+            }
+        }
+    }
 
-		GCubeUser user = pContext.getCurrentUser(httpServletRequest);
-		String username = user.getUsername();
-		String email = user.getEmail();
-		String initials = getInitials(user);
-		long id = user.getUserId();
+    public int doRequest(String endpoint, ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
+        PortalContext pContext = PortalContext.getConfiguration();
+        HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
 
-		String uuid = null;
-		try {
-			uuid = UserLocalServiceUtil.getUserById(id).getUserUuid();
-		} catch (SystemException | PortalException ex) {
-			logger.error(ex.getMessage(), ex);
-		}
+        GCubeUser user = pContext.getCurrentUser(httpServletRequest);
+        String username = user.getUsername();
+        String email = user.getEmail();
+        String initials = getInitials(user);
+        long id = user.getUserId();
 
-		String scope = pContext.getCurrentScope(httpServletRequest);
-		String token = pContext.getCurrentUserToken(scope, username);
-		String resourceUrl = buildResourceUrl(endpoint, resourceRequest);
-		String method = getRequestMethod(httpServletRequest, resourceRequest);
+        String uuid = null;
+        try {
+            uuid = UserLocalServiceUtil.getUserById(id).getUserUuid();
+        } catch (SystemException | PortalException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
 
-		URL url = new URL(resourceUrl);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestProperty("gcube-scope", scope);
-		connection.setRequestProperty("gcube-token", token);
-		connection.setRequestProperty("username", username);
-		connection.setRequestProperty("email", email);
-		connection.setRequestProperty("initials", initials);
-		connection.setRequestProperty("useruuid", uuid);
-		connection.setRequestProperty("Content-Type", resourceRequest.getContentType());
-		connection.setRequestProperty("charset", resourceRequest.getCharacterEncoding());
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setInstanceFollowRedirects(false);
-		connection.setRequestMethod(method);
-		connection.setUseCaches(false);
-		connection.setConnectTimeout(HTTP_CONNECTION_TIMEOUT);
+        String scope = pContext.getCurrentScope(httpServletRequest);
+        String token = pContext.getCurrentUserToken(scope, username);
+        String resourceUrl = buildResourceUrl(endpoint, resourceRequest);
+        String method = getRequestMethod(httpServletRequest, resourceRequest);
 
-		InputStream is = resourceRequest.getPortletInputStream();
-		byte[] postData = ByteStreams.toByteArray(is);
-		is.close();
+        URL url = new URL(resourceUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("gcube-scope", scope);
+        connection.setRequestProperty("gcube-token", token);
+        connection.setRequestProperty("username", username);
+        connection.setRequestProperty("email", email);
+        connection.setRequestProperty("initials", initials);
+        connection.setRequestProperty("useruuid", uuid);
+        connection.setRequestProperty("Content-Type", resourceRequest.getContentType());
+        connection.setRequestProperty("charset", resourceRequest.getCharacterEncoding());
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setInstanceFollowRedirects(false);
+        connection.setRequestMethod(method);
+        connection.setUseCaches(false);
+        connection.setConnectTimeout(HTTP_CONNECTION_TIMEOUT);
 
-		if (postData.length > 0) {
-			connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
-			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-			wr.write(postData);
-		}
+        InputStream is = resourceRequest.getPortletInputStream();
+        byte[] postData = ByteStreams.toByteArray(is);
+        is.close();
 
-		int status = 500;
+        if (postData.length > 0) {
+            connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            wr.write(postData);
+        }
 
-		try {
-			connection.connect();
+        int status = 500;
 
-			status = connection.getResponseCode();
-			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(status));
+        try {
+            connection.connect();
 
-			int responseCode = connection.getResponseCode();
-			if (!isOKStatus(responseCode)) {
-				String response = CharStreams.toString(new InputStreamReader(connection.getErrorStream(), Charsets.UTF_8));
-				logger.debug("Service response:" + response);
+            status = connection.getResponseCode();
+            resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(status));
 
-				resourceResponse.getWriter().write(response);
-			} else {
-				logger.debug("Back end service returned with status " + responseCode + ": " + connection.getContentLength() + " bytes");
+            int responseCode = connection.getResponseCode();
+            if (!isOKStatus(responseCode)) {
+                String response = CharStreams.toString(new InputStreamReader(connection.getErrorStream(), Charsets.UTF_8));
+                logger.debug("Service response:" + response);
 
-				resourceResponse.setCharacterEncoding(connection.getContentEncoding());
-				resourceResponse.setContentLength(connection.getContentLength());
+                resourceResponse.getWriter().write(response);
+            } else {
+                logger.debug("Back end service returned with status " + responseCode + ": " + connection.getContentLength() + " bytes");
 
-				if (connection.getContentType() != null) {
-					resourceResponse.setContentType(connection.getContentType());
-				}
-				if (connection.getHeaderField("Content-Disposition") != null) {
-					resourceResponse.setProperty("Content-Disposition", connection.getHeaderField("Content-Disposition"));
-				}
-				if (connection.getHeaderField("filename") != null) {
-					resourceResponse.setProperty("filename", connection.getHeaderField("filename"));
-				}
+                resourceResponse.setCharacterEncoding(connection.getContentEncoding());
+                resourceResponse.setContentLength(connection.getContentLength());
 
-				ByteStreams.copy(connection.getInputStream(), resourceResponse.getPortletOutputStream());
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
+                if (connection.getContentType() != null) {
+                    resourceResponse.setContentType(connection.getContentType());
+                }
+                if (connection.getHeaderField("Content-Disposition") != null) {
+                    resourceResponse.setProperty("Content-Disposition", connection.getHeaderField("Content-Disposition"));
+                }
+                if (connection.getHeaderField("filename") != null) {
+                    resourceResponse.setProperty("filename", connection.getHeaderField("filename"));
+                }
 
-		return status;
-	}
+                ByteStreams.copy(connection.getInputStream(), resourceResponse.getPortletOutputStream());
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
 
-	protected String buildResourceUrl(String endpoint, ResourceRequest resourceRequest) {
-		StringBuilder resourceUrl = new StringBuilder(endpoint + resourceRequest.getResourceID());
+        return status;
+    }
 
-		logger.info("ResourceUrl no parameters: " + resourceUrl);
+    protected String buildResourceUrl(String endpoint, ResourceRequest resourceRequest) {
+        StringBuilder resourceUrl = new StringBuilder(endpoint + resourceRequest.getResourceID());
 
-		if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
-			addQueryParameters(resourceUrl, resourceRequest);
-		}
+        logger.info("ResourceUrl no parameters: " + resourceUrl);
 
-		logger.info("ResourceUrl with parameters: " + resourceUrl);
+        if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
+            addQueryParameters(resourceUrl, resourceRequest);
+        }
 
-		return resourceUrl.toString();
-	}
+        logger.info("ResourceUrl with parameters: " + resourceUrl);
 
-	protected void addQueryParameters(StringBuilder resourceUrl, ResourceRequest resourceRequest) {
-		if (!resourceUrl.toString().contains("?")) {
-			resourceUrl.append("?");
-		}
+        return resourceUrl.toString();
+    }
 
-		resourceRequest.getParameterMap().entrySet().stream().forEach(entry -> {
-			resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue()[0]);
-		});
-	}
+    protected void addQueryParameters(StringBuilder resourceUrl, ResourceRequest resourceRequest)  {
+        if (!resourceUrl.toString().contains("?")) {
+            resourceUrl.append("?");
+        } else {
+            try {
+                String[] urlParts = resourceUrl.toString().split("\\?");
+                if (urlParts.length > 1) {
+                    Map<String, Object> parameters = null;
 
-	@Override
-	protected void doDispatch(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-		super.doDispatch(request, response);
-	}
+                    parameters = mapper.readValue(urlParts[1], new TypeReference<Map<String, Object>>() {});
+                    resourceUrl.delete(resourceUrl.indexOf("?")+1,resourceUrl.length());
 
-	protected void include(String path, RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-		String url = null;
-		if (renderRequest.getParameter("jspPage") == null || renderRequest.getParameter("jspPage").equals("./")) {
-			url = path;
-		} else {
-			url = path + renderRequest.getParameter("jspPage");
-		}
+                    parameters.entrySet().stream().forEach(entry -> {
+                       if (entry.getValue() instanceof String) {
+                            resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue().toString());
+                        }
+                       else {
 
-		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(url);
+                           for (String node : (List<String>) entry.getValue()) {
+                               resourceUrl.append("&" + entry.getKey() + "[]=" + node);
+                           }
+                       }
+                    });
+                }
+            } catch (IOException e) {
+                System.out.println("I'm simple request");
+            }
 
-		if (portletRequestDispatcher == null) {
-			logger.error(url + " is not a valid include");
-		} else {
-			portletRequestDispatcher.include(renderRequest, renderResponse);
-		}
-	}
+        }
 
-	private String getInitials(GCubeUser user) {
-		return user.getFirstName().substring(0, 1)
-				+ (user.getMiddleName() != null && user.getMiddleName().length() > 0 ? user.getMiddleName().substring(0, 1) : "")
-				+ user.getLastName().substring(0, 1);
-	}
 
-	public boolean liferayRequests(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
-		boolean getLocale = ParamUtil.getBoolean(resourceRequest, "getLocale");
+        resourceRequest.getParameterMap().entrySet().stream().forEach(entry -> {
+            resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue()[0]);
+        });
+    }
 
-		if (getLocale) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-			jsonObject.put("locale", PortalUtil.getHttpServletRequest(resourceRequest).getLocale().toString());
+    @Override
+    protected void doDispatch(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        super.doDispatch(request, response);
+    }
 
-			resourceResponse.getWriter().println(jsonObject);
+    protected void include(String path, RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+        String url = null;
+        if (renderRequest.getParameter("jspPage") == null || renderRequest.getParameter("jspPage").equals("./")) {
+            url = path;
+        } else {
+            url = path + renderRequest.getParameter("jspPage");
+        }
 
-			return false;
-		}
+        PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(url);
 
-		return true;
-	}
+        if (portletRequestDispatcher == null) {
+            logger.error(url + " is not a valid include");
+        } else {
+            portletRequestDispatcher.include(renderRequest, renderResponse);
+        }
+    }
 
-	private String getRequestMethod(HttpServletRequest httpServletRequest, ResourceRequest resourceRequest) {
+    private String getInitials(GCubeUser user) {
+        return user.getFirstName().substring(0, 1)
+                + (user.getMiddleName() != null && user.getMiddleName().length() > 0 ? user.getMiddleName().substring(0, 1) : "")
+                + user.getLastName().substring(0, 1);
+    }
 
-		for (Enumeration<String> e = httpServletRequest.getHeaderNames(); e.hasMoreElements(); ) {
-			String header = e.nextElement();
-			logger.info("Header " + header + " - " + httpServletRequest.getHeader(header));
-		}
+    public boolean liferayRequests(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
+        boolean getLocale = ParamUtil.getBoolean(resourceRequest, "getLocale");
 
-		String method = httpServletRequest.getHeader("gcube-request-method");
-		return method == null || method.isEmpty() ? resourceRequest.getMethod() : method;
-	}
+        if (getLocale) {
+            JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+            jsonObject.put("locale", PortalUtil.getHttpServletRequest(resourceRequest).getLocale().toString());
 
-	private boolean isOKStatus(int status) {
-		return status == 200 || status == 201;
-	}
+            resourceResponse.getWriter().println(jsonObject);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private String getRequestMethod(HttpServletRequest httpServletRequest, ResourceRequest resourceRequest) {
+
+        for (Enumeration<String> e = httpServletRequest.getHeaderNames(); e.hasMoreElements(); ) {
+            String header = e.nextElement();
+            logger.info("Header " + header + " - " + httpServletRequest.getHeader(header));
+        }
+
+        String method = httpServletRequest.getHeader("gcube-request-method");
+        return method == null || method.isEmpty() ? resourceRequest.getMethod() : method;
+    }
+
+    private boolean isOKStatus(int status) {
+        return status == 200 || status == 201;
+    }
 }

@@ -44,15 +44,16 @@ export const controlGraphActions = {
 function getTopNodes(graphId, num) {
   return function (dispatch) {
     dispatch(showLoading());
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_GRAPHS_PATH + "/" + graphId);
-
-    return axios.get(resourceUrl, {
-      params: {
-        number: num
-      }
-    })
+    // var params = {
+    //   number: num
+    // }
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_GRAPHS_PATH + "/" + graphId, "number="+num);
+    if(num === undefined || num === null) {
+      num = 5;
+    }
+    return axios.get(resourceUrl)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(loadGraph(response.data));
         dispatch(hideLoading());
         return response
@@ -112,18 +113,23 @@ function addGraphData(newData, graphData) {
 
 function getDateGraph(date, graphData, graphId) {
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
+    // var nodeIds = [];
     var nodeIds = [];
     graphData.nodes.forEach(element => {
-      nodeIds.push(element.id)
+       nodeIds.push(element.id)
+      // nodeIds +="nodes[]="+element.id +"&";
     });
-    console.log("get string:" + JSON.stringify(nodeIds))
-    return axios.get(resourceUrl, {
-      params: {
-        nodes: nodeIds,
-        date: date
-      }
-    })
+
+    var params =   
+     {
+      nodes: nodeIds,
+      date: date
+    }
+    // params = Ajax.buildUrlParameters(params);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId, JSON.stringify(params));
+   
+    // console.log("get string:" + JSON.stringify(nodeIds))
+    return axios.get(resourceUrl)
       .then(response => {
 
         dispatch(addGraphData(response.data, graphData))
@@ -157,7 +163,7 @@ function playTimeGraph(date, graphData, graphId, paused) {
 
 function setPausedPromise(paused) {
   return function (dispatch) {
-     return new Promise(() => dispatch(setPaused(paused)));
+     return new Promise((paused) => dispatch(setPaused(paused)));
   }
 }
 
@@ -173,7 +179,7 @@ function loadGraph(graphData) {
     dispatch(setGraphNodes(newNodes));
     let newLinks = graphData.links.slice(0);
     dispatch(setGraphLinks(newLinks));
-    console.log("GRAPH:" + JSON.stringify(graphData));
+    // console.log("GRAPH:" + JSON.stringify(graphData));
   }
 }
 
