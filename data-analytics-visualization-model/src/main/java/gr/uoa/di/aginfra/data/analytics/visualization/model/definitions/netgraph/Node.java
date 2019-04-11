@@ -34,7 +34,7 @@ public class Node extends SubGraphEntity{
 
     public Node(String nodeId, double x, double y, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
 
-        System.out.println("ID node:"+nodeId);
+//        System.out.println("ID node:"+nodeId);
         this.nodeId = nodeId;
         this.x = x;
         this.y = y;
@@ -46,7 +46,7 @@ public class Node extends SubGraphEntity{
 
                 NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
                 nodeProperties.add(nodeProperty);
-                System.out.println(entry.getKey() + " = " + entry.getValue());
+//                System.out.println(entry.getKey() + " = " + entry.getValue());
                 it.remove();
             }
             else {
@@ -67,7 +67,7 @@ public class Node extends SubGraphEntity{
                 .collect(Collectors.toSet());
 
 
-        System.out.println("I counted dateNodes:"+ hasDateNodes.size());
+//        System.out.println("I counted dateNodes:"+ hasDateNodes.size());
 
     }
 
