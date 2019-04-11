@@ -124,6 +124,18 @@ function requestWorkspaceListing() {
   }
 }
 
+
+function parseWorkspaceListing(data){
+
+  let files = [];
+  for(let item in data){
+    console.log(item);
+  }
+}
+
+
+
+
 function getDashboardFolder() {
   return function (dispatch, getState) {
     let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
@@ -150,11 +162,9 @@ function getDashboardFolderListing() {
     return axios.get(resourceUrl)
       .then(response => {
         console.log(response.data.itemlist)
-        let files = [];
-        for(let item in response.data.itemlist){
-          console.log(item);
-        }
-        dispatch(setWorkspaceListing(response.data.itemlist));
+       
+        //dispatch(setWorkspaceListing(response.data.itemlist));
+        dispatch(parseWorkspaceListing(response.data.itemlist));
       })
       .catch(response => {
         alert(response);
