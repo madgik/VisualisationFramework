@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import serviceWorker from './serviceWorker';
 
+// const React=require('react').default;
+// const ReactDOM = require('react-dom').default;
+// require('./index.css').default;
+// const App = require('./App').default;
+// const serviceWorker = require('./serviceWorker').default;
+
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     ReactDOM.render(<App />, document.getElementById('root'));
     serviceWorker();
@@ -12,9 +18,3 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
         reactComponent: App
     };
 }
-
-// const reactComponent = () => (
-//     <App/>
-// );
-
-// export default reactComponent;

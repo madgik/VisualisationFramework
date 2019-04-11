@@ -4,7 +4,8 @@ import UploadMessage from '../ui_utils/UploadMessage';
 import { findDOMNode } from 'react-dom'
 
 import { Grid, Header, Divider, List, Icon } from 'semantic-ui-react';
-import { Button, Input } from '@material-ui/core/';
+import { Button } from '@material-ui/core/';
+import {Input} from 'semantic-ui-react'
 
 
 
@@ -15,6 +16,7 @@ class DataImportForm extends React.Component {
         this.onFileChange = this.onFileChange.bind(this);
         this.submit = this.submit.bind(this);
         this.file = React.createRef();
+        this.myFile = React.createRef();
     }
 
 
@@ -39,7 +41,7 @@ class DataImportForm extends React.Component {
 
         return true;
     }
-    myFile;
+
     onFileChange(e) {
         if (e.target.files[0] && this.validate(e.target.files[0])) {
             this.props.setFileValidation(true);
@@ -60,7 +62,7 @@ class DataImportForm extends React.Component {
                 <Grid>
                     
                     <Grid.Column mobile={16} tablet={8} computer={6}>
-                        <Header as='h3' >Graph Data Import</Header>
+                        <Header as='h3' >Data Import</Header>
                     </Grid.Column>
                 </Grid>
                 <Divider />
@@ -74,7 +76,7 @@ class DataImportForm extends React.Component {
                             <Input
                                 type='file'
                                 accept=".json"
-                                ref='myFile'
+                                ref={ this.myFile }
                                 onChange={this.onFileChange}
                             />
                         </div>
