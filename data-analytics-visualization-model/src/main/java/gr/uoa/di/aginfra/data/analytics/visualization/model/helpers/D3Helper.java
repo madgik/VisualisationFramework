@@ -141,11 +141,13 @@ public class D3Helper {
         targetIds.stream().forEach(t->{
             if( existedNodes.get(t) == null) {
                 Node node= networkGraphService.findNodeById(t,graphId);
-                Map<String,Object> nodeMap = map("id", node.getNodeId()); // "x",  node.getX(), "y"
-                for(NodeProperty property: node.getNodeProperties()){
-                    nodeMap.put(property.getName(), property.getValue());
+                if(node != null) {
+                    Map<String, Object> nodeMap = map("id", node.getNodeId()); // "x",  node.getX(), "y"
+                    for (NodeProperty property : node.getNodeProperties()) {
+                        nodeMap.put(property.getName(), property.getValue());
+                    }
+                    nodes.add(nodeMap);
                 }
-                nodes.add(nodeMap);
             }
         });
 

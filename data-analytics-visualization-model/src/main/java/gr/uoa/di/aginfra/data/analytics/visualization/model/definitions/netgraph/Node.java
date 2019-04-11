@@ -1,10 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.dtos.NodeDto;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,7 +9,9 @@ import java.util.stream.Collectors;
 @NodeEntity
 public class Node extends SubGraphEntity{
 
-    @Id
+    @Id @GeneratedValue
+    private Long id;
+
     private String nodeId;
 
     private double x;
@@ -118,5 +117,13 @@ public class Node extends SubGraphEntity{
 
     public void setStartingDate(int startingDate) {
         this.startingDate = startingDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
