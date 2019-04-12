@@ -71,9 +71,9 @@ class SidebarControls extends React.Component {
               getDateGraph={this.props.getDateGraph}
               selectedGraph={this.props.selectedGraph}
               playTimeGraph={this.props.playTimeGraph}
+              setPaused={this.props.setPaused}
               paused={this.props.paused}
               stopped={this.props.stopped}
-              setPaused={this.props.setPaused}
               setPausedPromise={this.props.setPausedPromise}
               setStopped={this.props.setStopped}
               setSliderValue={this.props.setSliderValue}

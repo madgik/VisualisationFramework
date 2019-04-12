@@ -125,10 +125,11 @@ function getDateGraph(date, graphData, graphId) {
       nodes: nodeIds,
       date: date
     }
-    // params = Ajax.buildUrlParameters(params);
+    // params = Ajax.buildUrlParameters(params); , JSON.stringify(params)
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId, JSON.stringify(params));
    
     // console.log("get string:" + JSON.stringify(nodeIds))
+    // ,{params:{nodes: nodeIds,date: date}
     return axios.get(resourceUrl)
       .then(response => {
 
@@ -163,7 +164,7 @@ function playTimeGraph(date, graphData, graphId, paused) {
 
 function setPausedPromise(paused) {
   return function (dispatch) {
-     return new Promise((paused) => dispatch(setPaused(paused)));
+     return new Promise(() => dispatch(setPaused(paused)));
   }
 }
 

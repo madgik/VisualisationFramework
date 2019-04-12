@@ -32,42 +32,53 @@ class GraphControls extends React.Component {
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleSliderChange = this.handleSliderChange.bind(this);
   }
-  
-  boxClass =["player-controls"];
 
-  componentWillMount(){
-      this.maxValue = DateUtils.dates.length;
-      if( this.props.timestamps != null) {
-        this.maxValue = this.props.timestamps.length
-      }
+  // boxClass =["player-controls"];
+
+  componentWillMount() {
+    this.maxValue = DateUtils.dates.length;
+    if (this.props.timestamps != null) {
+      this.maxValue = this.props.timestamps.length
+    }
   }
 
 
   handlePlayClick() {
-    
+
     this.props.setStopped(false);
-    this.props.setPausedPromise(false).then(this.playGraph(this.props.currentDate));
- 
-    // this.props.playTimeGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph);
+    // this.props.setPausedPromise(false).then(this.playGraph(this.props.currentDate));
+    this.props.setPaused(false);
+
+    this.playGraph(this.props.currentDate, false);
   }
 
 
-  playGraph(date) {
+  playGraph(date, isPaused) {
     console.log("next date is:" + date + "and paused is:" + this.props.paused);
-    this.boxClass.push('shadow');
+    // this.boxClass.push('shadow');
 
-    if (this.props.paused != true && date != undefined) {
-      setTimeout(() => {
-        if (this.props.paused != true ) {
-          this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
+    if ((this.props.paused != true || isPaused != true) && date != undefined) {
+      if (this.props.currentDate === this.props.timestamps[0]) {
+        this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
           var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
           this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
-          this.playGraph(nextDate);
-        }) 
-        }
-      }, 3000);
+          this.playGraph(nextDate, false);
+        })
+        setTimeout(() => {}, 1000);
+      }
+      else {
+        setTimeout(() => {
+          if (this.props.paused != true) {
+            this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
+              var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
+              this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
+              this.playGraph(nextDate, false);
+            })
+          }
+        }, 3000);
+      }
     }
-    else if(this.props.paused != true && date == undefined) {
+    else if (this.props.paused != true && date == undefined) {
       this.props.setStopped(true);
     }
 
@@ -102,7 +113,7 @@ class GraphControls extends React.Component {
     this.props.setPaused(true);
 
     this.props.setSliderValue(value);
-    
+
     this.props.getDateGraph(this.props.timestamps[value], this.props.graph, this.props.selectedGraph);
     // this.props.setPaused(false);
 
@@ -111,7 +122,7 @@ class GraphControls extends React.Component {
 
   render() {
     const { classes } = this.props;
-    var playClass = (this.props.stopped || this.props.paused)  ? 'player-controls' : 'player-controls disabled';
+    var playClass = (this.props.stopped || this.props.paused) ? 'player-controls' : 'player-controls disabled';
 
 
     if (this.props.graph.nodes.length == 0 || this.props.graph.nodes == undefined) {
@@ -162,17 +173,17 @@ class GraphControls extends React.Component {
             </IconButton>
           </Grid>
           <Grid item>
-          <div className={classes.root}>
+            <div className={classes.root}>
 
-            <Slider
-              classes={{ container: classes.slider }}
-              value={this.props.sliderValue}
-              min={0}
-              max={this.maxValue}
-              step={1}
-              aria-labelledby="label"
-              onChange={this.handleSliderChange}
-            />
+              <Slider
+                classes={{ container: classes.slider }}
+                value={this.props.sliderValue}
+                min={0}
+                max={this.maxValue}
+                step={1}
+                aria-labelledby="label"
+                onChange={this.handleSliderChange}
+              />
             </div>
           </Grid>
         </Grid >

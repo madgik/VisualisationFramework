@@ -5,6 +5,7 @@ import { configGraphActions } from '../actions/configGraph.actions'
 import SidebarControls from '../components/menu/SidebarControls';
 import { controlGraphActions } from '../actions/controlGraph.actions';
 // import SidebarControls from '../components/menu/SidebarControls';
+import Grid from '@material-ui/core/Grid';
 
 
 const mapStateToProps = state => ({
@@ -37,7 +38,9 @@ const mapDispatchToProps = dispatch => ({
     setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
     getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
     playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
-    setPaused: (paused) => dispatch(controlGraphActions.setPaused(paused)),
+    setPaused(paused) {
+        dispatch(controlGraphActions.setPaused(paused));
+    },
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),

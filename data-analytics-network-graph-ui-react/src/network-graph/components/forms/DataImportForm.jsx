@@ -3,9 +3,9 @@ import React from 'react'
 import UploadMessage from '../ui_utils/UploadMessage';
 import { findDOMNode } from 'react-dom'
 
-import { Grid, Header, Divider, List, Icon } from 'semantic-ui-react';
+import { Grid, Header, Divider, Icon } from 'semantic-ui-react';
 import { Button } from '@material-ui/core/';
-import {Input} from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 
 
 
@@ -47,7 +47,7 @@ class DataImportForm extends React.Component {
             this.props.setFileValidation(true);
             this.myFile = e.target.files[0];
         }
-        else{
+        else {
             this.props.setFileValidation(false);
         }
     }
@@ -60,7 +60,7 @@ class DataImportForm extends React.Component {
         return (
             <div className="data-import-form">
                 <Grid>
-                    
+
                     <Grid.Column mobile={16} tablet={8} computer={6}>
                         <Header as='h3' >Data Import</Header>
                     </Grid.Column>
@@ -71,25 +71,31 @@ class DataImportForm extends React.Component {
                         type='Graph'
                     />
                     <form className='add-graph-file' onSubmit={this.submit}>
-                        <div className='form-group'>
-                    
-                            <Input
-                                type='file'
-                                accept=".json"
-                                ref={ this.myFile }
-                                onChange={this.onFileChange}
-                            />
-                        </div>
-                        <Button
-                            type='submit'
-                            variant="contained" color="primary"
-                            disabled={!this.props.fileDetails.valid}>
-                            Upload
-                        </Button>
+                        <Grid className="data-import-fix">
+                            <Grid className="data-import-fix" item>
+                                <Input 
+                                    className="input-file data-import-fix"
+                                    type='file'
+                                    accept=".json"
+                                    ref={this.myFile}
+                                    onChange={this.onFileChange}
+                                />
+                            </Grid>
+
+                            <Grid className="upload-button-fix" item>
+                                <Button
+                                    type='submit'
+                                    variant="contained" color="primary"
+                                    disabled={!this.props.fileDetails.valid}>
+                                    Upload
+                                </Button>
+                            </Grid>
+                        </Grid>
+
                     </form>
                 </div>
                 <div>
-                  
+
                 </div>
             </div>);
     }

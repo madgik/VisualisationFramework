@@ -4,11 +4,18 @@ import ConfigDataContainer from './containers/ConfigDataContainer';
 import GraphVisualizationContainer from './containers/GraphVisualizationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import PropertiesContainer from './containers/PropertiesContainer';
+import Columns from 'react-columns';
+import Grid from '@material-ui/core/Grid';
 
 
 class BaseView extends React.Component {
 
   render() {
+
+    var queries = [{
+      columns: 3,
+      query: 'min-width: 1350px'
+    }];
     var sizeStyle = {
       width: this.props.size.width + 'px'
     };
@@ -20,15 +27,28 @@ class BaseView extends React.Component {
           <LoadingBar updateTime={2200} maxProgress={90} progressIncrease={5} showFastActions />
         </div>
         <div className="content" style={sizeStyle}>
-          <ConfigDataContainer
-            onFileDropped={this.props.onFileDropped}
-            onFileUpload={this.props.onFileUpload}
-            mmRender={mmRenderRef} />
-          <GraphVisualizationContainer
-            mmRender={mmRenderRef} />
-            <PropertiesContainer
-            mmRender={mmRenderRef} 
-            />
+            <Grid container
+              direction="row"
+              justify="center"
+            >
+            <Grid item xs={3}>
+
+              <ConfigDataContainer
+                onFileDropped={this.props.onFileDropped}
+                onFileUpload={this.props.onFileUpload}
+                mmRender={mmRenderRef} />
+                </Grid>
+              <Grid item xs={6}>
+              <GraphVisualizationContainer
+                mmRender={mmRenderRef} />
+         </Grid>
+              <Grid item xs={3}>
+              <PropertiesContainer
+                mmRender={mmRenderRef}
+              />
+              </Grid>
+          </Grid>
+
         </div>
       </div>
     );

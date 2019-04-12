@@ -17,3 +17,46 @@
     padding-right: 20px !important;
 }
 
+.top-n{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.top-n-button {
+    margin-right: 1em;
+
+}
+
+.top-n-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.ui.grid .upload-button-fix {
+    margin-left: 0;
+    margin-top: 20px;
+}
+
+.ui.grid .data-import-fix{
+    width:100%;
+    padding-right:0;
+}
+
+.input-file {
+    min-height: 50px;
+    width: 100%;
+}
+
+input[type=file] {
+    min-height: 50px;
+    width: 100%;
+}
+
+input#standard-bare{
+    border-left-color: #e8e8e8;
+}
+
+.aui ul, .aui ol .content .sidebar-controls{
+    margin:0;
+}
