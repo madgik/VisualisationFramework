@@ -268,7 +268,8 @@ const dataDefault = {
       workspaceDashboardDirDetails: '',
       workspaceFiles:[],
       showOpenFromWorkspace: false,
-      showSaveToWorkspace: false
+      showSaveToWorkspace: false,
+      filename: ''
     }
 }
 
@@ -310,6 +311,14 @@ export function data(state = dataDefault, action) {
           }
         }
       });    
+    case visualizationConstants.SET_FILENAME_FOR_WORKSPACE:
+      return update(state, {
+        workspaceDetails: {
+          filename: {
+            $set: action.filename
+          }
+        }
+      });      
     case visualizationConstants.SET_WORKSPACE_TOKEN:
       return update(state, {
         workspaceDetails: {

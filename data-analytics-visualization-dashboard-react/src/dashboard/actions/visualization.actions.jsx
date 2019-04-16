@@ -70,7 +70,9 @@ export const visualizationActions = {
   getDashboardFolderListing,
   setWorkspaceListing,
   showSaveToWorkspace,
-  showOpenFromWorkspace
+  showOpenFromWorkspace,
+  setFilenameForWorkspace,
+  saveNewFileToWorkspace
 }
 
 /*
@@ -295,6 +297,41 @@ function showOpenFromWorkspace(showOpenFromWorkspace) {
   return { type: visualizationConstants.SET_SHOW_OPEN_FROM_WORKSPACE, showOpenFromWorkspace };
 }
 
+function setFilenameForWorkspace(filename) {
+  return { type: visualizationConstants.SET_FILENAME_FOR_WORKSPACE, filename };
+}
+
+function saveNewFileToWorkspace() {
+  
+  return function (dispatch, getState) {
+
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/create/FILE", parameters);
+    let state = getState();
+    const formData = new FormData();
+    formData.append('name',getState().data.workspaceDetails.filename + ".json");
+    formData.append('description',"");
+    formData.append('file',JSON.stringify(state));
+
+    // const config = {
+    //     headers: {
+    //         'content-type': 'multipart/form-data'
+    //     }
+    // }
+  
+    const headers = {
+      'Content-Type': 'multipart/form-data'
+    };
+
+    return axios.post(resourceUrl,formData,headers)
+      .then(response => { 
+        console.log(response)
+      })
+      .catch(response => {
+        alert(response);
+    });
+  }
+}
 
 function shouldDisableibableFetchData(zoom) {
   
