@@ -22,6 +22,7 @@ import SidebarProperties from '../menu/SidebarProperties';
 //   // window.alert(`Right clicked node ${nodeId}`);
 // };
 
+
 // const onMouseOverNode = function (nodeId) {
 //   // window.alert(`Mouse over node ${nodeId}`);
 // };

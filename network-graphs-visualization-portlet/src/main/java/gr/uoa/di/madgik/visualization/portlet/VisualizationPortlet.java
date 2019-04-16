@@ -227,48 +227,52 @@ public class VisualizationPortlet extends GenericPortlet {
         StringBuilder resourceUrl = new StringBuilder(endpoint + resourceRequest.getResourceID());
 
         logger.info("ResourceUrl no parameters: " + resourceUrl);
-
+        String resource =resourceUrl.toString();
         if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
-            addQueryParameters(resourceUrl, resourceRequest);
+//            addQueryParameters(resourceUrl, resourceRequest);
+//        System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
+            resource =resourceUrl.toString().replace(",","&");
         }
+        logger.info("ResourceUrl with parameters: " + resource);
 
-        logger.info("ResourceUrl with parameters: " + resourceUrl);
-
-        return resourceUrl.toString();
+        return resource;
     }
 
+
     protected void addQueryParameters(StringBuilder resourceUrl, ResourceRequest resourceRequest)  {
+        System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
         if (!resourceUrl.toString().contains("?")) {
             resourceUrl.append("?");
-        } else {
-            try {
-                String[] urlParts = resourceUrl.toString().split("\\?");
-                if (urlParts.length > 1) {
-                    Map<String, Object> parameters = null;
+        }
 
-                    parameters = mapper.readValue(urlParts[1], new TypeReference<Map<String, Object>>() {});
-                    resourceUrl.delete(resourceUrl.indexOf("?")+1,resourceUrl.length());
+        try {
+            String[] urlParts = resourceUrl.toString().split("\\?");
+            if (urlParts.length > 1) {
+                Map<String, Object> parameters = null;
 
-                    parameters.entrySet().stream().forEach(entry -> {
-                       if (entry.getValue() instanceof String) {
-                            resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue().toString());
-                        }
-                       else {
+                parameters = mapper.readValue(urlParts[1], new TypeReference<Map<String, Object>>() {});
+                resourceUrl.delete(resourceUrl.indexOf("?")+1,resourceUrl.length());
 
-                           for (String node : (List<String>) entry.getValue()) {
-                               resourceUrl.append("&" + entry.getKey() + "[]=" + node);
-                           }
+                parameters.entrySet().stream().forEach(entry -> {
+                   if (entry.getValue() instanceof String) {
+                        resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue().toString());
+                    }
+                   else {
+
+                       for (String node : (List<String>) entry.getValue()) {
+                           resourceUrl.append("&" + entry.getKey() + "[]=" + node);
                        }
-                    });
-                }
-            } catch (IOException e) {
-                System.out.println("I'm simple request");
+                   }
+                });
             }
-
+        } catch (IOException e) {
+            System.out.println("I'm simple request");
         }
 
 
         resourceRequest.getParameterMap().entrySet().stream().forEach(entry -> {
+            logger.info("param: " + "&" + entry.getKey() + "=" + entry.getValue()[0]);
+
             resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue()[0]);
         });
     }

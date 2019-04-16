@@ -1,14 +1,14 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import serviceWorker from './serviceWorker';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import serviceWorker from './serviceWorker';
 
-const React=require('react').default;
-const ReactDOM = require('react-dom').default;
-require('./index.css').default;
-const App = require('./App').default;
-const serviceWorker = require('./serviceWorker').default;
+// const React=require('react').default;
+// const ReactDOM = require('react-dom').default;
+// require('./index.css');
+// const App = require('./App').default;
+// const serviceWorker = require('./serviceWorker').default;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     ReactDOM.render(<App />, document.getElementById('root'));

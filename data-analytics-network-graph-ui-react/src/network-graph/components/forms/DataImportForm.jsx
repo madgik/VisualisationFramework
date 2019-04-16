@@ -14,9 +14,12 @@ class DataImportForm extends React.Component {
         super(props);
         // This binding is necessary to make `this` work in the callback
         this.onFileChange = this.onFileChange.bind(this);
+        // this.onNameFileChange = this.onNameFileChange.bind(this);
+
         this.submit = this.submit.bind(this);
         this.file = React.createRef();
         this.myFile = React.createRef();
+        this.fileName = React.createRef();
     }
 
 
@@ -51,6 +54,11 @@ class DataImportForm extends React.Component {
             this.props.setFileValidation(false);
         }
     }
+
+    // onFileNameChange(e) {
+    //     this.fileName = e.target.value;
+    // }
+
     submit(e) {
         e.preventDefault();
         this.props.uploadFile(this.myFile);
@@ -72,6 +80,15 @@ class DataImportForm extends React.Component {
                     />
                     <form className='add-graph-file' onSubmit={this.submit}>
                         <Grid className="data-import-fix">
+
+                            {/* <Grid className="data-import-fix" item>
+                                <Input 
+                                    className="input-file data-import-fix"
+                                    type='text'
+                                    ref={this.fileName}
+                                    onChange={this.onFileChange}
+                                />
+                            </Grid> */}
                             <Grid className="data-import-fix" item>
                                 <Input 
                                     className="input-file data-import-fix"

@@ -113,24 +113,27 @@ function addGraphData(newData, graphData) {
 
 function getDateGraph(date, graphData, graphId) {
   return function (dispatch) {
+    var nodeIds = '';
     // var nodeIds = [];
-    var nodeIds = [];
     graphData.nodes.forEach(element => {
-       nodeIds.push(element.id)
-      // nodeIds +="nodes[]="+element.id +"&";
+      // nodeIds.push(element.id)
+       nodeIds +="nodes[]="+element.id +",";
     });
 
-    var params =   
-     {
-      nodes: nodeIds,
-      date: date
-    }
-    // params = Ajax.buildUrlParameters(params); , JSON.stringify(params)
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId, JSON.stringify(params));
-   
+    // var params =   
+    //  {
+    //   nodeIds,
+    //   date: date
+    // }
+    var params =nodeIds + "date="+date;
+    //  params = Ajax.buildUrlParameters(params);
+    //FOR PRODUCTION PORTLET PARAMETERS
+    // , JSON.stringify(params)  // , params
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId );
+  //  console.log(resourceUrl);
     // console.log("get string:" + JSON.stringify(nodeIds))
-    // ,{params:{nodes: nodeIds,date: date}
-    return axios.get(resourceUrl)
+    // ,{params:{nodes: nodeIds,date: date}}
+    return axios.get(resourceUrl,{params:{nodes: nodeIds,date: date}})
       .then(response => {
 
         dispatch(addGraphData(response.data, graphData))

@@ -4,7 +4,6 @@ import ConfigDataContainer from './containers/ConfigDataContainer';
 import GraphVisualizationContainer from './containers/GraphVisualizationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import PropertiesContainer from './containers/PropertiesContainer';
-import Columns from 'react-columns';
 import Grid from '@material-ui/core/Grid';
 
 
