@@ -16,7 +16,7 @@ class RequestPayload{
 
     buildCropHistoryRequestPayload(state)
     {
-        let center = polygonCenter(state.visualization.currentGeometry);
+        let center = polygonCenter(state.visualization.selectedLayer);
         return JSON.stringify({
             page_size: "200",
             page_offset: "0",

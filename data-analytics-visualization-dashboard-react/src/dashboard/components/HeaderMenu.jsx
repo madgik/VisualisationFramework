@@ -21,13 +21,15 @@ class HeaderMenu extends React.Component {
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
     this.onSave = this.onSave.bind(this);
-
+    this.handleFieldChange = this.handleFieldChange.bind(this);
   }
   handleItemClick = (event) => {
     console.log(event);  
 }
 
-
+  handleFieldChange = (value) => {
+    this.props.onFieldChange(value);
+  }
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
@@ -58,6 +60,10 @@ class HeaderMenu extends React.Component {
   onSave(e) {
     this.props.updateDashBoardTitle(e);
  //   visualizationActions.updateDashBoardTitle(e);
+  }
+
+  onFileSaveToWorkspace(){
+    this.props.onFileSaveToWorkspace();
   }
 
   render() {
@@ -107,7 +113,8 @@ class HeaderMenu extends React.Component {
               </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-           
+            <Input placeholder='filename' value={ this.props.workspace.filename} onChange={(e) => this.handleFieldChange(e.target.value)} /> .json
+            <Button floated='right' onClick={this.onFileSaveToWorkspace.bind(this)} >Save</Button>
           </Modal.Body>
         </Modal>
   </div>
