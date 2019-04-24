@@ -6,6 +6,8 @@
 	<portlet>
 		<portlet-name>network-graphs-visualization</portlet-name>
 		<instanceable>true</instanceable>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+
 	</portlet>
 
 	<role-mapper>

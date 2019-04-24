@@ -93,6 +93,7 @@ public class ConfigurationController extends BaseController {
 
 		configurationService.storeConfiguration(entity);
 
+
 		return ResponseEntity.ok("");
 	}
 
