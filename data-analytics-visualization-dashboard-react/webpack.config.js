@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 var ReplacePlugin = require('replace-bundle-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 let artifactId = "data-analytics-visualization-dashboard";
 
@@ -59,6 +60,7 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify("production")
       }
-    })
+    }),
+    new UglifyJSPlugin()
   ]
 }

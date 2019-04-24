@@ -113,11 +113,11 @@ function addGraphData(newData, graphData) {
 
 function getDateGraph(date, graphData, graphId) {
   return function (dispatch) {
-    var nodeIds = '';
-    // var nodeIds = [];
+    // var nodeIds = '';
+    var nodeIds = [];
     graphData.nodes.forEach(element => {
-      // nodeIds.push(element.id)
-       nodeIds +="nodes[]="+element.id +",";
+       nodeIds.push(element.id)
+      //  nodeIds +="nodes[]="+element.id +",";
     });
 
     // var params =   
@@ -129,7 +129,7 @@ function getDateGraph(date, graphData, graphId) {
     //  params = Ajax.buildUrlParameters(params);
     //FOR PRODUCTION PORTLET PARAMETERS
     // , JSON.stringify(params)  // , params
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId );
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
   //  console.log(resourceUrl);
     // console.log("get string:" + JSON.stringify(nodeIds))
     // ,{params:{nodes: nodeIds,date: date}}

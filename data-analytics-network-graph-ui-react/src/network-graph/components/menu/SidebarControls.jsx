@@ -36,23 +36,7 @@ class SidebarControls extends React.Component {
           alignItems="center"
         >
           <Grid>
-            <GraphSelection
-              //API CALLS
-              uploadFile={this.props.uploadFile}
-              getAllGraphsMetadata={this.props.getAllGraphsMetadata}
-              getTopNodes={this.props.getTopNodes}
-              getAllTimestamps={this.props.getAllTimestamps}
-              //SETTERS STATE
-              setFileValidation={this.props.setFileValidation}
-              setGraphSource={this.props.setGraphSource}
-              setSelectedGraph={this.props.setSelectedGraph}
-              //STATE PROPS
-              fileDetails={this.props.fileDetails}
-              graphSource={this.props.graphSource}
-              selectedGraph={this.props.selectedGraph}
-              allGraphsMetadata={this.props.allGraphsMetadata}
-
-            />
+          
           </Grid>
           <Grid>
             <GraphFilter

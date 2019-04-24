@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { configGraphActions } from '../actions/configGraph.actions'
 import { controlGraphActions } from '../actions/controlGraph.actions';
-import SidebarProperties from '../components/menu/SidebarProperties';
+import SidebarControls from '../components/menu/SidebarControls';
 
 
 const mapStateToProps = state => ({
@@ -17,7 +17,8 @@ const mapStateToProps = state => ({
    paused: state.controlGraph.paused,
    selectedWeight: state.controlGraph.selectedWeight,
    selectedLink: state.controlGraph.selectedLink,
-   sliderValue: state.controlGraph.sliderValue
+   sliderValue: state.controlGraph.sliderValue,
+   
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,12 +33,18 @@ const mapDispatchToProps = dispatch => ({
     getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData)),
     setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
     getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
-    playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
+
+    //GraphControls
+    getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
+    getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph)),
+    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
     setPaused: (paused) => dispatch(controlGraphActions.setPaused(paused)),
-    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue))
+    playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
+
+
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SidebarProperties)
+)(SidebarControls)

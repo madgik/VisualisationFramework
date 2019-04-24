@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import DataImportForm  from '../components/forms/DataImportForm';
 import { configGraphActions } from '../actions/configGraph.actions'
-import SidebarControls from '../components/menu/SidebarControls';
+import TopMenu from '../components/menu/TopMenu';
 import { controlGraphActions } from '../actions/controlGraph.actions';
 // import SidebarControls from '../components/menu/SidebarControls';
 import Grid from '@material-ui/core/Grid';
@@ -29,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
     //API CALLS
     uploadFile: (file) => dispatch(configGraphActions.uploadFile(file)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
+    getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph)),
+    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
     //SETTERS
     setFileValidation: (isValid) => dispatch(configGraphActions.setFileValidation(isValid)),
     setGraphSource: (graphSource) => dispatch(configGraphActions.setGraphSource(graphSource)),
@@ -43,11 +45,11 @@ const mapDispatchToProps = dispatch => ({
     },
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
-    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
-    getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph))
+   
+    
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SidebarControls)
+)(TopMenu)
