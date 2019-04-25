@@ -36,14 +36,28 @@ class Ajax {
   buildLocal(path, parameters) {
     var url = this.baseUrl + '/' + path;
     if (parameters) {
+      console.log(parameters)
       url += ('?' + parameters);
     }
     return url;
   }
 
   buildPortlet(path, parameters) {
+    console.log("Path: " + path);
+    console.log(parameters);
+    console.log(this.baseUrl);
+
     var resourceURL = this.baseUrl.replace('%7Burl%7D', path);
-    return resourceURL.replace('%7Bparameters%7D', parameters ? parameters : '');
+    console.log(resourceURL);
+    var url = resourceURL.replace('%7Bparameters%7D',  '');
+    console.log(url);
+    // return url;
+
+    if (parameters) {
+      console.log(parameters)
+      url += ('&' + parameters);
+    }
+    return url;
   }
 
   isLocalDeployment() {

@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -131,10 +132,10 @@ public class NetworkGraphController {
 
 
     @RequestMapping(value = "dates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String[] nodes, @RequestParam("date") String currentDate ) {
+    ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes") ArrayList<String> nodes, @RequestParam("date") String currentDate ) {
 
         try {
-            List<String> nodeList = Arrays.asList(nodes);
+            ArrayList<String> nodeList = nodes;
             List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
             Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
             System.out.println("-"+d3Results);

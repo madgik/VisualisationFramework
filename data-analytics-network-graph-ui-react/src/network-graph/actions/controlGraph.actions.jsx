@@ -4,6 +4,8 @@ import Ajax from '../utilities/Ajax';
 import DateUtils from '../utilities/DateUtils';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { func, node } from 'prop-types';
+import { configGraphActions } from './'
+
 
 
 export const controlGraphActions = {
@@ -56,6 +58,7 @@ function getTopNodes(graphId, num) {
         // console.log(response.data);
         dispatch(loadGraph(response.data));
         dispatch(hideLoading());
+        dispatch(configGraphActions.setOpenSidebar(true))
         return response
       }).then(response => {
         setTimeout(function () {
@@ -113,27 +116,24 @@ function addGraphData(newData, graphData) {
 
 function getDateGraph(date, graphData, graphId) {
   return function (dispatch) {
-    // var nodeIds = '';
-    var nodeIds = [];
-    graphData.nodes.forEach(element => {
-       nodeIds.push(element.id)
-      //  nodeIds +="nodes[]="+element.id +",";
-    });
+    var nodeIds = new URLSearchParams();
 
-    // var params =   
-    //  {
-    //   nodeIds,
-    //   date: date
-    // }
-    var params =nodeIds + "date="+date;
-    //  params = Ajax.buildUrlParameters(params);
-    //FOR PRODUCTION PORTLET PARAMETERS
-    // , JSON.stringify(params)  // , params
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
-  //  console.log(resourceUrl);
+    var nodes = [];
+    graphData.nodes.forEach(element => {
+     // nodes.push(element.id);
+      // nodeIds +=+element.id +",";
+      nodeIds.append("nodes", element.id);
+
+    });
+    
+    nodeIds.append("date", date);
+
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId,nodeIds);
+    console.log(resourceUrl);
     // console.log("get string:" + JSON.stringify(nodeIds))
     // ,{params:{nodes: nodeIds,date: date}}
-    return axios.get(resourceUrl,{params:{nodes: nodeIds,date: date}})
+    console.log(nodeIds);
+    return axios.get(resourceUrl)
       .then(response => {
 
         dispatch(addGraphData(response.data, graphData))

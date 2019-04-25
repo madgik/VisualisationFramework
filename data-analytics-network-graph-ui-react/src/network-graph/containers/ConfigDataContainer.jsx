@@ -22,7 +22,9 @@ const mapStateToProps = state => ({
    selectedWeight: state.controlGraph.selectedWeight,
    selectedLink: state.controlGraph.selectedLink,
    sliderValue: state.controlGraph.sliderValue,
-   timestamps: state.controlGraph.timestamps
+   timestamps: state.controlGraph.timestamps,
+   openImportModal: state.configGraph.openImportModal,
+   openSidebar: state.configGraph.openSidebar
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -40,13 +42,12 @@ const mapDispatchToProps = dispatch => ({
     setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
     getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
     playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
-    setPaused(paused) {
-        dispatch(controlGraphActions.setPaused(paused));
-    },
+    setPaused: (paused) => dispatch(controlGraphActions.setPaused(paused)),
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
-   
-    
+    setOpenImportModal: (openImportModal) => dispatch(configGraphActions.setOpenImportModal(openImportModal)),
+    setOpenSidebar: (openSidebar) => dispatch(configGraphActions.setOpenSidebar(openSidebar)),
+
 });
 
 export default connect(
