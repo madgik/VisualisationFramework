@@ -10,4 +10,6 @@ export const configGraphConstants = {
   SET_GRAPH_SOURCE: 'set_graph_source',
   SET_SELECTED_GRAPH: 'set_selected_graph',
   SET_ALL_GRAPHS_METADATA: 'set_all_graphs_metadata',
+  SET_OPEN_IMPORT_MODAL: 'set_open_import_modal',
+  SET_OPEN_SIDEBAR: 'set_open_sidebar'
 }

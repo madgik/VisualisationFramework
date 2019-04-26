@@ -18,7 +18,12 @@ const style = () => ({
   },
   slider: {
     padding: '22px 0px',
-  }
+    color: 'white',
+  },
+  dateText: {
+    width: '100px',
+    fontSize: '16px',
+  },
 })
 
 
@@ -64,7 +69,7 @@ class GraphControls extends React.Component {
           this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
           this.playGraph(nextDate, false);
         })
-        setTimeout(() => {}, 1000);
+        setTimeout(() => { }, 1000);
       }
       else {
         setTimeout(() => {
@@ -132,61 +137,79 @@ class GraphControls extends React.Component {
     }
     else {
       return (
+
         <Grid
           container
-          direction="column"
+          direction="row"
           justify="center"
           alignItems="center"
           alignContent="center"
         >
-          <Grid item spacing={8}>
+          <Grid item spacing={8} >
             <TextField
               id="current-date"
               label="CurrentDate"
+              InputProps={{ classes: { input: classes.dateText } }}
               className={classes.textField}
               value={this.props.currentDate}
               margin="normal"
               editable="false"
+              variant="outlined"
             >{this.props.currentDate}
             </TextField>
           </Grid>
-          <Grid item spacing={8}>
-            <IconButton className={playClass} id='play'
-              onClick={this.handlePlayClick}
-            >
-              <PlayerIcon.Play width={28} height={28} style={{ marginRight: 28 }} />
-            </IconButton>
-            <IconButton className='player-controls' id='pause'
-              onClick={this.handlePauseClick}
-            >
-              <PlayerIcon.Pause width={28} height={28} style={{ marginRight: 28 }} />
-            </IconButton>
-            <IconButton className='player-controls' aria-label="Play"
-              onClick={this.handlePreviousClick}
-            >
-              <PlayerIcon.Previous width={28} height={28} style={{ marginRight: 28 }} />
-            </IconButton>
-            <IconButton className='player-controls' aria-label="Play" color="primary"
-              onClick={this.handleNextClick}
-            >
-              <PlayerIcon.Next width={28} height={28} style={{ marginRight: 28 }} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <div className={classes.root}>
 
-              <Slider
-                classes={{ container: classes.slider }}
-                value={this.props.sliderValue}
-                min={0}
-                max={this.maxValue}
-                step={1}
-                aria-labelledby="label"
-                onChange={this.handleSliderChange}
-              />
-            </div>
+          <Grid item spacing={8} xs={1}>
           </Grid>
-        </Grid >
+
+          <Grid item spacing={8} xs={8}>
+            <Grid
+              container
+              direction="collumn"
+              justify="center"
+              alignItems="center"
+              alignContent="center"
+            >
+              <Grid item>
+
+              <IconButton className={playClass} id='play'
+                onClick={this.handlePlayClick}
+              >
+                <PlayerIcon.Play width={18} height={18} style={{ marginRight: 18 }} />
+              </IconButton>
+              <IconButton className='player-controls' id='pause'
+                onClick={this.handlePauseClick}
+              >
+                <PlayerIcon.Pause width={18} height={18} style={{ marginRight: 18 }} />
+              </IconButton>
+              <IconButton className='player-controls' aria-label="Play"
+                onClick={this.handlePreviousClick}
+              >
+                <PlayerIcon.Previous width={18} height={18} style={{ marginRight: 18 }} />
+              </IconButton>
+              <IconButton className='player-controls' aria-label="Play" color="primary"
+                onClick={this.handleNextClick}
+              >
+                <PlayerIcon.Next width={18} height={18} style={{ marginRight: 18 }} />
+              </IconButton>
+            </Grid>
+            <Grid item  xs={12}>
+
+                <Slider
+                  classes={{ container: classes.slider }}
+                  value={this.props.sliderValue}
+                  min={0}
+                  max={this.maxValue}
+                  step={1}
+                  aria-labelledby="label"
+                  onChange={this.handleSliderChange}
+                />
+            </Grid>
+          </Grid>
+
+        </Grid>
+         
+        </Grid>
       );
     }
   }

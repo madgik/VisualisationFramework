@@ -14,6 +14,8 @@ const dataDefault = {
   graphSource: 'new',
   selectedGraph: '-',
   allGraphsMetadata: '',
+  openImportModal: false,
+  openSidebar: false
 }
 
 
@@ -94,6 +96,20 @@ export function configGraph(state = dataDefault, action) {
       return update( state, {
         allGraphsMetadata: {
           $set: action.allGraphsMetadata
+        }
+      })
+    }
+    case configGraphConstants.SET_OPEN_IMPORT_MODAL: {
+      return update(state, {
+        openImportModal: {
+          $set: action.openImportModal
+        }
+      })
+    }
+    case configGraphConstants.SET_OPEN_SIDEBAR: {
+      return update(state, {
+        openSidebar: {
+          $set: action.openSidebar
         }
       })
     }

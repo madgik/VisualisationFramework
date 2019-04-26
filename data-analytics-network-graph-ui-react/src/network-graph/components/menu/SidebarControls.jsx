@@ -16,6 +16,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NodePropeties from "../graph/NodeProperties";
 import LinkProperties from "../graph/LinkProperties";
+import { callbackify } from "util";
 
 
 const drawerWidth = 340;
@@ -56,6 +57,8 @@ const styles = theme => ({
     flexShrink: 0,
   },
   drawerPaper: {
+    top:'65px',
+    height: `calc(100% - 150px)`,
     width: drawerWidth,
   },
   drawerHeader: {
@@ -102,7 +105,9 @@ class SidebarControls extends React.Component {
 
 
     return (
+        <div className="sidebar-controls">
       <Drawer
+        id="left-sidebar"
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -157,13 +162,14 @@ class SidebarControls extends React.Component {
         </Grid>
 
       </Drawer>
-      // <div className="sidebar-controls">
-
-      // </div>
+      </div>
+     
     );
   }
 }
+ // <div className="sidebar-controls">
 
+      // </div>
 SidebarControls.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,

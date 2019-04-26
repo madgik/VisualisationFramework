@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import org.gcube.common.portal.PortalContext;
 import org.gcube.vomanagement.usermanagement.model.GCubeUser;
 
@@ -99,7 +100,27 @@ public class VisualizationPortlet extends GenericPortlet {
     @Override
     public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
         PortalContext pContext = PortalContext.getConfiguration();
-        HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+       // HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+        HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(resourceRequest));
+
+        logger.info(httpServletRequest.toString());
+
+        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+
+        while (parameterNames.hasMoreElements()) {
+
+            String paramName = parameterNames.nextElement();
+            logger.info(paramName);
+            logger.info("n");
+
+            String[] paramValues = httpServletRequest.getParameterValues(paramName);
+            for (int i = 0; i < paramValues.length; i++) {
+                String paramValue = paramValues[i];
+                logger.info("t" + paramValue);
+                logger.info("n");
+            }
+
+        }
         String scope = pContext.getCurrentScope(httpServletRequest);
 
         logger.info("Serving resource for scope: " + scope);
@@ -139,11 +160,20 @@ public class VisualizationPortlet extends GenericPortlet {
         PortalContext pContext = PortalContext.getConfiguration();
         HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
 
+     //   HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(resourceRequest));
+
+
+        logger.info("Portal context: " + pContext);
+
+
         GCubeUser user = pContext.getCurrentUser(httpServletRequest);
         String username = user.getUsername();
         String email = user.getEmail();
         String initials = getInitials(user);
         long id = user.getUserId();
+        logger.info("User: " + user);
+
+        logger.info("User: " + user.toString());
 
         String uuid = null;
         try {
@@ -152,12 +182,21 @@ public class VisualizationPortlet extends GenericPortlet {
             logger.error(ex.getMessage(), ex);
         }
 
+
         String scope = pContext.getCurrentScope(httpServletRequest);
         String token = pContext.getCurrentUserToken(scope, username);
         String resourceUrl = buildResourceUrl(endpoint, resourceRequest);
         String method = getRequestMethod(httpServletRequest, resourceRequest);
+        logger.info("scope: " + scope);
+        logger.info("token: " + token);
+        logger.info("resourceUrl: " + resourceUrl);
+        logger.info("method: " + method);
 
         URL url = new URL(resourceUrl);
+
+
+        logger.info("Url: " + url);
+
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("gcube-scope", scope);
         connection.setRequestProperty("gcube-token", token);
@@ -178,18 +217,27 @@ public class VisualizationPortlet extends GenericPortlet {
         byte[] postData = ByteStreams.toByteArray(is);
         is.close();
 
+        logger.info("Post data: " + postData.toString());
+
         if (postData.length > 0) {
             connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.write(postData);
+            logger.info("Inside post data if: " + postData.toString());
+
         }
 
         int status = 500;
 
         try {
+            logger.info("Connection: " + connection.toString());
+
             connection.connect();
+            logger.info("After connect: " );
 
             status = connection.getResponseCode();
+            logger.info("status: " + status);
+
             resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(status));
 
             int responseCode = connection.getResponseCode();
@@ -217,22 +265,60 @@ public class VisualizationPortlet extends GenericPortlet {
                 ByteStreams.copy(connection.getInputStream(), resourceResponse.getPortletOutputStream());
             }
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage(), e);
         }
+        logger.info("status: " + status);
 
         return status;
     }
 
     protected String buildResourceUrl(String endpoint, ResourceRequest resourceRequest) {
-        StringBuilder resourceUrl = new StringBuilder(endpoint + resourceRequest.getResourceID());
+        logger.info("ResourceUrl no parameters: " + endpoint);
+        logger.info("ResourceUrl no parameters: " + resourceRequest.toString());
+
+        StringBuilder resourceUrl = new StringBuilder(endpoint);
 
         logger.info("ResourceUrl no parameters: " + resourceUrl);
-        String resource =resourceUrl.toString();
+        logger.info("Is get: " + resourceRequest.getMethod().toUpperCase().equals("GET"));
         if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
-//            addQueryParameters(resourceUrl, resourceRequest);
-//        System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
-            resource =resourceUrl.toString().replace(",","&");
+
+
+            logger.info(resourceRequest.getResourceID());
+            resourceUrl.append(resourceRequest.getResourceID());
+            logger.info(resourceUrl.toString());
+
+//            String params  = resourceRequest.getResourceID().replace("\'", "");
+//            logger.info(params);
+            HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+
+            Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+            logger.info(parameterNames.toString());
+
+            while (parameterNames.hasMoreElements()) {
+                String param = parameterNames.nextElement();
+                logger.info("Parameter name -> " + param);
+                logger.info("Parameter value -> " + httpServletRequest.getParameterValues(param));
+                String[] ids = httpServletRequest.getParameterValues(param);
+
+                for(int j=0; j < ids.length; j++){
+                    resourceUrl.append(param + "=" + ids[j]);
+                    if((j+1) < ids.length)
+                        resourceUrl.append("&");
+                }
+
+                if(parameterNames.hasMoreElements())
+                    resourceUrl.append("&");
+                logger.info("building url:: " + resourceUrl);
+            }
+            logger.info("ResourceUrl inside if: " + resourceUrl);
+
+            //addQueryParameters(resourceUrl, resourceRequest);
+            System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
+   //         resource =resourceUrl.toString().replace(",","&");
         }
+        String resource =resourceUrl.toString();
+
         logger.info("ResourceUrl with parameters: " + resource);
 
         return resource;
@@ -247,13 +333,23 @@ public class VisualizationPortlet extends GenericPortlet {
 
         try {
             String[] urlParts = resourceUrl.toString().split("\\?");
+            logger.info(resourceUrl.toString());
+
             if (urlParts.length > 1) {
                 Map<String, Object> parameters = null;
 
+
                 parameters = mapper.readValue(urlParts[1], new TypeReference<Map<String, Object>>() {});
+
+                logger.info(parameters.toString());
+
+                logger.info(urlParts.toString());
+
                 resourceUrl.delete(resourceUrl.indexOf("?")+1,resourceUrl.length());
 
+                logger.info(parameters.toString());
                 parameters.entrySet().stream().forEach(entry -> {
+                    logger.info(entry.getKey()  +" , " + entry.getValue() );
                    if (entry.getValue() instanceof String) {
                         resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue().toString());
                     }
@@ -266,6 +362,7 @@ public class VisualizationPortlet extends GenericPortlet {
                 });
             }
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("I'm simple request");
         }
 

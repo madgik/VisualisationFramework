@@ -17,6 +17,12 @@
     padding-right: 20px !important;
 }
 
+.sidebar-controls .jss315{
+    left: 31px;
+    top: 323px;
+    height: calc(100% - 410px);
+}
+
 .top-n{
     display: flex;
     justify-content: center;
@@ -26,6 +32,11 @@
 .top-n-button {
     margin-right: 1em;
 
+}
+
+.playerbar-controls .jss352{
+    left: 31px;
+    width: calc(100% - 61px);
 }
 
 .top-n-column {
@@ -54,9 +65,28 @@ input[type=file] {
 }
 
 input#standard-bare{
+    min-height: 40px;
+    max-width: 80px;
     border-left-color: #e8e8e8;
+
 }
 
 .aui ul, .aui ol .content .sidebar-controls{
     margin:0;
+}
+
+ .form-inline label, .aui .form-search .btn-group, .aui .form-inline .btn-group .main-content {
+    color: white;
+    font-size:20px;
+}
+
+.main-content .form-inline .aui form  {
+    margin:0;
+}
+
+.aui .content {
+}
+
+.main-content {
+
 }
