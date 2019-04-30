@@ -18,9 +18,12 @@
 }
 
 .sidebar-controls .jss315{
-    left: 31px;
-    top: 323px;
-    height: calc(100% - 410px);
+       position: absolute;
+       left: 0px;
+       z-index: 10000;
+       top: -9px;
+       height: calc(100% - 80px);
+       padding:5px;
 }
 
 .top-n{
@@ -35,8 +38,15 @@
 }
 
 .playerbar-controls .jss352{
+    position: absolute;
     left: 31px;
+    bottom:42px;
     width: calc(100% - 61px);
+}
+
+.player-controls input {
+    max-width: 53px;
+    margin: 10px;
 }
 
 .top-n-column {
@@ -71,7 +81,15 @@ input#standard-bare{
 
 }
 
-.aui ul, .aui ol .content .sidebar-controls{
+.aui ul, .aui ol .content .topMenu h6{
+    margin:0;
+}
+
+.aui .topMenu form {
+    margin:0;
+}
+
+.aui .topMenu h6 {
     margin:0;
 }
 
@@ -80,7 +98,7 @@ input#standard-bare{
     font-size:20px;
 }
 
-.main-content .form-inline .aui form  {
+  .main-content .App-style .topMenu .form-inline .aui form  {
     margin:0;
 }
 
@@ -88,5 +106,19 @@ input#standard-bare{
 }
 
 .main-content {
+    display:flex;
+}
 
+
+.aui .sidebar-controls button {
+    margin:2em;
+}
+
+.playerbar-controls input {
+   margin:1em;
+   max-width:63px;
+}
+
+.player {
+    margin:auto;
 }

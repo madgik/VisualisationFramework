@@ -28,36 +28,40 @@ class BaseView extends React.Component {
           <LoadingBar updateTime={2200} maxProgress={90} progressIncrease={5} showFastActions />
         </div>
         <div className="main-content" style={sizeStyle}>
-        <Grid container
-          direction="row"
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <div className="topMenu">
-              <ConfigDataContainer
-                onFileDropped={this.props.onFileDropped}
-                onFileUpload={this.props.onFileUpload}
-                mmRender={mmRenderRef} />
+          <Grid container
+            direction="row"
+            justify="center"
+          >
+            <Grid item xs={12}>
+              <div className="topMenu">
+                <ConfigDataContainer
+                  onFileDropped={this.props.onFileDropped}
+                  onFileUpload={this.props.onFileUpload}
+                  mmRender={mmRenderRef} />
 
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-              <PropertiesContainer
-                mmRender={mmRenderRef}
-              />
-              </Grid>
-             <Grid item xs={12}>
-            <div className="content" >
-              <GraphVisualizationContainer
-                mmRender={mmRenderRef} />
-            </div>
-          </Grid>
-          <Grid item xs={12}>
+              </div>
+            </Grid>
+
+            <Grid item xs={12}>
+              <div className="content" >
+
+                <PropertiesContainer
+                  mmRender={mmRenderRef}
+                />
+
+
+                <GraphVisualizationContainer
+                  mmRender={mmRenderRef} />
+              </div>
+
+            </Grid>
+
+            <Grid item xs={12}>
               <PlayerContainer
                 mmRender={mmRenderRef}
               />
+            </Grid>
           </Grid>
-        </Grid>
         </div>
       </div>
     );

@@ -144,8 +144,11 @@ class GraphControls extends React.Component {
           justify="center"
           alignItems="center"
           alignContent="center"
+          spacing={8}
         >
-          <Grid item spacing={8} >
+          <Grid item xs={1}>
+          </Grid>
+          <Grid item  xs={2} >
             <TextField
               id="current-date"
               label="CurrentDate"
@@ -159,41 +162,40 @@ class GraphControls extends React.Component {
             </TextField>
           </Grid>
 
-          <Grid item spacing={8} xs={1}>
+          <Grid item  xs={1}>
           </Grid>
 
-          <Grid item spacing={8} xs={8}>
+          <Grid item  xs={7}>
             <Grid
               container
-              direction="collumn"
+              direction="column"
               justify="center"
-              alignItems="center"
-              alignContent="center"
+              
             >
-              <Grid item>
+              <Grid className="player" item xs={12}>
 
-              <IconButton className={playClass} id='play'
-                onClick={this.handlePlayClick}
-              >
-                <PlayerIcon.Play width={18} height={18} style={{ marginRight: 18 }} />
-              </IconButton>
-              <IconButton className='player-controls' id='pause'
-                onClick={this.handlePauseClick}
-              >
-                <PlayerIcon.Pause width={18} height={18} style={{ marginRight: 18 }} />
-              </IconButton>
-              <IconButton className='player-controls' aria-label="Play"
-                onClick={this.handlePreviousClick}
-              >
-                <PlayerIcon.Previous width={18} height={18} style={{ marginRight: 18 }} />
-              </IconButton>
-              <IconButton className='player-controls' aria-label="Play" color="primary"
-                onClick={this.handleNextClick}
-              >
-                <PlayerIcon.Next width={18} height={18} style={{ marginRight: 18 }} />
-              </IconButton>
-            </Grid>
-            <Grid item  xs={12}>
+                <IconButton className={playClass} id='play'
+                  onClick={this.handlePlayClick}
+                >
+                  <PlayerIcon.Play width={18} height={18} style={{ marginRight: 18 }} />
+                </IconButton>
+                <IconButton className='player-controls' id='pause'
+                  onClick={this.handlePauseClick}
+                >
+                  <PlayerIcon.Pause width={18} height={18} style={{ marginRight: 18 }} />
+                </IconButton>
+                <IconButton className='player-controls' aria-label="Play"
+                  onClick={this.handlePreviousClick}
+                >
+                  <PlayerIcon.Previous width={18} height={18} style={{ marginRight: 18 }} />
+                </IconButton>
+                <IconButton className='player-controls' aria-label="Play" color="primary"
+                  onClick={this.handleNextClick}
+                >
+                  <PlayerIcon.Next width={18} height={18} style={{ marginRight: 18 }} />
+                </IconButton>
+              </Grid>
+              <Grid item xs={12}>
 
                 <Slider
                   classes={{ container: classes.slider }}
@@ -204,11 +206,12 @@ class GraphControls extends React.Component {
                   aria-labelledby="label"
                   onChange={this.handleSliderChange}
                 />
+              </Grid>
             </Grid>
-          </Grid>
 
-        </Grid>
-         
+          </Grid>
+          <Grid item xs={1}>
+          </Grid>
         </Grid>
       );
     }

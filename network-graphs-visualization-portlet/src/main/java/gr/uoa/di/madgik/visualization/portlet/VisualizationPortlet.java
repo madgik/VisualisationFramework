@@ -274,31 +274,31 @@ public class VisualizationPortlet extends GenericPortlet {
     }
 
     protected String buildResourceUrl(String endpoint, ResourceRequest resourceRequest) {
-        logger.info("ResourceUrl no parameters: " + endpoint);
-        logger.info("ResourceUrl no parameters: " + resourceRequest.toString());
+//        logger.info("ResourceUrl no parameters: " + endpoint);
+//        logger.info("ResourceUrl no parameters: " + resourceRequest.toString());
 
         StringBuilder resourceUrl = new StringBuilder(endpoint);
 
-        logger.info("ResourceUrl no parameters: " + resourceUrl);
-        logger.info("Is get: " + resourceRequest.getMethod().toUpperCase().equals("GET"));
+//        logger.info("ResourceUrl no parameters: " + resourceUrl);
+//        logger.info("Is get: " + resourceRequest.getMethod().toUpperCase().equals("GET"));
         if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
 
 
-            logger.info(resourceRequest.getResourceID());
+//            logger.info(resourceRequest.getResourceID());
             resourceUrl.append(resourceRequest.getResourceID());
-            logger.info(resourceUrl.toString());
+//            logger.info(resourceUrl.toString());
 
 //            String params  = resourceRequest.getResourceID().replace("\'", "");
 //            logger.info(params);
             HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
 
             Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
-            logger.info(parameterNames.toString());
+//            logger.info(parameterNames.toString());
 
             while (parameterNames.hasMoreElements()) {
                 String param = parameterNames.nextElement();
-                logger.info("Parameter name -> " + param);
-                logger.info("Parameter value -> " + httpServletRequest.getParameterValues(param));
+//                logger.info("Parameter name -> " + param);
+//                logger.info("Parameter value -> " + httpServletRequest.getParameterValues(param));
                 String[] ids = httpServletRequest.getParameterValues(param);
 
                 for(int j=0; j < ids.length; j++){
@@ -309,9 +309,8 @@ public class VisualizationPortlet extends GenericPortlet {
 
                 if(parameterNames.hasMoreElements())
                     resourceUrl.append("&");
-                logger.info("building url:: " + resourceUrl);
             }
-            logger.info("ResourceUrl inside if: " + resourceUrl);
+//            logger.info("ResourceUrl inside if: " + resourceUrl);
 
             //addQueryParameters(resourceUrl, resourceRequest);
             System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
@@ -319,7 +318,7 @@ public class VisualizationPortlet extends GenericPortlet {
         }
         String resource =resourceUrl.toString();
 
-        logger.info("ResourceUrl with parameters: " + resource);
+//        logger.info("ResourceUrl with parameters: " + resource);
 
         return resource;
     }
@@ -333,7 +332,7 @@ public class VisualizationPortlet extends GenericPortlet {
 
         try {
             String[] urlParts = resourceUrl.toString().split("\\?");
-            logger.info(resourceUrl.toString());
+//            logger.info(resourceUrl.toString());
 
             if (urlParts.length > 1) {
                 Map<String, Object> parameters = null;
@@ -341,13 +340,13 @@ public class VisualizationPortlet extends GenericPortlet {
 
                 parameters = mapper.readValue(urlParts[1], new TypeReference<Map<String, Object>>() {});
 
-                logger.info(parameters.toString());
-
-                logger.info(urlParts.toString());
+//                logger.info(parameters.toString());
+//
+//                logger.info(urlParts.toString());
 
                 resourceUrl.delete(resourceUrl.indexOf("?")+1,resourceUrl.length());
 
-                logger.info(parameters.toString());
+//                logger.info(parameters.toString());
                 parameters.entrySet().stream().forEach(entry -> {
                     logger.info(entry.getKey()  +" , " + entry.getValue() );
                    if (entry.getValue() instanceof String) {
@@ -368,7 +367,7 @@ public class VisualizationPortlet extends GenericPortlet {
 
 
         resourceRequest.getParameterMap().entrySet().stream().forEach(entry -> {
-            logger.info("param: " + "&" + entry.getKey() + "=" + entry.getValue()[0]);
+//            logger.info("param: " + "&" + entry.getKey() + "=" + entry.getValue()[0]);
 
             resourceUrl.append("&" + entry.getKey() + "=" + entry.getValue()[0]);
         });
@@ -421,7 +420,7 @@ public class VisualizationPortlet extends GenericPortlet {
 
         for (Enumeration<String> e = httpServletRequest.getHeaderNames(); e.hasMoreElements(); ) {
             String header = e.nextElement();
-            logger.info("Header " + header + " - " + httpServletRequest.getHeader(header));
+//            logger.info("Header " + header + " - " + httpServletRequest.getHeader(header));
         }
 
         String method = httpServletRequest.getHeader("gcube-request-method");
