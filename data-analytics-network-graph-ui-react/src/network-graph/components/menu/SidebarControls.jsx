@@ -121,15 +121,11 @@ class SidebarControls extends React.Component {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
-        <Divider />
         <Grid container
           direction="row"
           justify="center"
           alignItems="center"
         >
-          <Grid>
-
-          </Grid>
           <Grid>
             <GraphFilter
               graph={this.props.graph}
@@ -138,12 +134,8 @@ class SidebarControls extends React.Component {
               timestamps={this.props.timestamps}
             />
           </Grid>
-
-          <Grid>
-       
-          </Grid>
-          <Divider/>
           <Grid item spacing={8}>
+          <Divider/>
               <NodePropeties
                 graph={this.props.graph}
                 selectedGraph={this.props.selectedGraph}
@@ -153,6 +145,7 @@ class SidebarControls extends React.Component {
               />
             </Grid>
             <Grid item spacing={8}>
+            <Divider/>
               <LinkProperties
                 selectedWeight={this.props.selectedWeight}
                 selectedLink={this.props.selectedLink}

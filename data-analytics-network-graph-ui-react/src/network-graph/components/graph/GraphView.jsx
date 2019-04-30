@@ -61,7 +61,7 @@ class GraphView extends React.Component {
   // }
 
   myConfig = {
-    height: window.innerHeight,
+    height: window.innerHeight*0.73,
     width: window.innerWidth,
     nodeHighlightBehavior: true,
     node: {
