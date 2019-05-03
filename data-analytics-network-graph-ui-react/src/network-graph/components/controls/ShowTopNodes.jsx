@@ -46,7 +46,7 @@ class ShowTopNodes extends React.Component {
     console.log("target:"+e.target.value);
     this.numInput = e.target.value;
     this.props.setNodesNumber(e.target.value);
-    console.log("after:"+ this.numInput)
+    console.log("after:"+ this.props.nodesNumber)
   }
 
   handleClick() {
