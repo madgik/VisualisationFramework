@@ -39,3 +39,4 @@ data-analytics-visualization/src/.DS_Store
 data-analytics-visualization/src/main/.DS_Store
 data-analytics-visualization/src/main/webapp/.DS_Store
 data-analytics-network-graph-ui-react/.babelrc
+network-graphs-visualization-portlet/target/
