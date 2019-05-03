@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import "../forms/forms.css"
 // import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core/';
 import { Input } from 'semantic-ui-react'
@@ -55,16 +56,15 @@ class ShowTopNodes extends React.Component {
   }
 
   render() {
+    // <div className="top-n">
+    //       <div className="top-n-column"></div>
     const { classes } = this.props;
     return (
-      <form  autoComplete="off">
-        <label>Select Top N nodes for initialize</label>
-        <div className="top-n">
-          <div className="top-n-column">
+      <form className="form-inline">
+            <label for="standard-bare">Select Top Nodes</label>
             <Input
               id="standard-bare"
               className="top-n-column top-n-button"
-              label=" Top N nodes for initialize"
               placeholder="Number of Nodes"
               defaultValue="5"
               margin="normal"
@@ -72,8 +72,7 @@ class ShowTopNodes extends React.Component {
               value={this.numInput}
               onChange={this.handleInputChange}
             />
-          </div>
-          <div>
+       
             <Button
               className="top-n-button"
               onClick={this.handleClick}
@@ -82,8 +81,7 @@ class ShowTopNodes extends React.Component {
             >
               Show Graph
           </Button>
-          </div>
-        </div>
+      
       </form>
     );
   }

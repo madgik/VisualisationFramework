@@ -17,7 +17,7 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
     List<Node> findNeighboursOfNodeById(String subGraphId, String nodeId);
 
     @Query("Match(n:Node) where n.subGraphId={0}  " +
-            "WITH n, SIZE((n)-[]-()-[:HAS_WEIGHT]-()-[]-()) as links ORDER BY links DESC LIMIT {1} " +
+            "WITH n, SIZE((n)-[:HAS_DATENODE]->(:DateNode)-[:HAS_WEIGHT]->(:DateNode)-[:HAS_DATENODE]-(:Node)) as links ORDER BY links DESC LIMIT {1} " +
             "Match (n)-[h:HAS_PROPERTY]-(p:NodeProperty) " +
             "RETURN n,h,p")
     List<Node> findTopNodes(String subGraphId, int number);

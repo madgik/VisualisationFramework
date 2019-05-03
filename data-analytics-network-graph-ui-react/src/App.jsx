@@ -10,6 +10,7 @@ import rootReducer from './network-graph/reducers'
 
 import BaseView from './network-graph/BaseView'
 import Ajax from './network-graph/utilities/Ajax';
+import autobind from 'autobind-decorator';
 
 class App extends React.Component {
 
@@ -42,8 +43,8 @@ App.defaultProps = {
     baseUrl: 'http://localhost:8081/data-analytics-visualization-service'
   },
   size: {
-    width: 1700,
-    height: 800
+    width: '100%',
+    height: 800,
   },
 }
 

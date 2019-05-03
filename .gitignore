@@ -39,8 +39,3 @@ data-analytics-visualization/src/.DS_Store
 data-analytics-visualization/src/main/.DS_Store
 data-analytics-visualization/src/main/webapp/.DS_Store
 data-analytics-network-graph-ui-react/.babelrc
-network-graphs-visualization-portlet/.idea/
-network-graphs-visualization-portlet/.idea/artifacts/network_graphs_visualization_portlet_war.xml
-network-graphs-visualization-portlet/dtd/
-network-graphs-visualization-portlet/html/css/taglib/diff.css
-network-graphs-visualization-portlet/target

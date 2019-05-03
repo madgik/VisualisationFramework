@@ -17,6 +17,8 @@ export const configGraphActions = {
   setGraphSource,
   setSelectedGraph,
   setAllGraphsMetadata,
+  setOpenImportModal,
+  setOpenSidebar
 }
 
 function uploadFile(file) {
@@ -34,7 +36,7 @@ function uploadFile(file) {
        }
     }).then(response => {
       dispatch(hideLoading());
-
+      dispatch(setOpenImportModal(false));
       console.log("file uploaded"+response)
     }).catch(_ => { });
 
@@ -115,5 +117,13 @@ function setSelectedGraph(selectedGraph) {
 
 function setAllGraphsMetadata(allGraphsMetadata) {
   return { type: configGraphConstants.SET_ALL_GRAPHS_METADATA, allGraphsMetadata };
+}
+
+function setOpenImportModal(openImportModal) {
+  return { type: configGraphConstants.SET_OPEN_IMPORT_MODAL, openImportModal };
+}
+
+function setOpenSidebar(openSidebar) {
+  return { type: configGraphConstants.SET_OPEN_SIDEBAR, openSidebar };
 }
 

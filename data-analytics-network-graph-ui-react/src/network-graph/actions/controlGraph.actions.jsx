@@ -4,6 +4,8 @@ import Ajax from '../utilities/Ajax';
 import DateUtils from '../utilities/DateUtils';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { func, node } from 'prop-types';
+import { configGraphActions } from './'
+
 
 
 export const controlGraphActions = {
@@ -56,6 +58,7 @@ function getTopNodes(graphId, num) {
         // console.log(response.data);
         dispatch(loadGraph(response.data));
         dispatch(hideLoading());
+        dispatch(configGraphActions.setOpenSidebar(true))
         return response
       }).then(response => {
         setTimeout(function () {
@@ -113,30 +116,16 @@ function addGraphData(newData, graphData) {
 
 function getDateGraph(date, graphData, graphId) {
   return function (dispatch) {
-   // var nodeIds =  new Array();
     var nodeIds = new URLSearchParams();
 
     var nodes = [];
-   // var nodeIds = [];
     graphData.nodes.forEach(element => {
      // nodes.push(element.id);
       // nodeIds +=+element.id +",";
       nodeIds.append("nodes", element.id);
 
     });
-
-    console.log(nodeIds);
-    // var params =   
-    //  {
-    //   nodeIds,
-    //   date: date
-    // }
-
-   // var params =nodeIds + "date="+date;
-    //params = Ajax.buildUrlParameters(params);
-  //  console.log(params);
-    //FOR PRODUCTION PORTLET PARAMETERS
-    // , JSON.stringify(params)  // , params
+    
     nodeIds.append("date", date);
 
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId,nodeIds);

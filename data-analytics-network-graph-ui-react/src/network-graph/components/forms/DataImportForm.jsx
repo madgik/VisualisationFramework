@@ -67,12 +67,7 @@ class DataImportForm extends React.Component {
     render() {
         return (
             <div className="data-import-form">
-                <Grid>
-
-                    <Grid.Column mobile={16} tablet={8} computer={6}>
-                        <Header as='h3' >Data Import</Header>
-                    </Grid.Column>
-                </Grid>
+               
                 <Divider />
                 <div>
                     <UploadMessage
@@ -98,7 +93,6 @@ class DataImportForm extends React.Component {
                                     onChange={this.onFileChange}
                                 />
                             </Grid>
-
                             <Grid className="upload-button-fix" item>
                                 <Button
                                     type='submit'

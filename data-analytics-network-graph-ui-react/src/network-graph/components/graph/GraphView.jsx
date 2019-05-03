@@ -61,11 +61,11 @@ class GraphView extends React.Component {
   // }
 
   myConfig = {
-    height: 800,
-    width: 840,
+    height: window.innerHeight*0.73,
+    width: window.innerWidth,
     nodeHighlightBehavior: true,
     node: {
-      color: 'lightgreen',
+      color: 'green',
       highlightStrokeColor: 'blue'
     },
     link: {
@@ -116,7 +116,6 @@ class GraphView extends React.Component {
 
   render() {
     return (
-      <div className="main-content">
         <div className='graph-container'>
 
           {/* <svg className="graph"
@@ -147,9 +146,7 @@ class GraphView extends React.Component {
             // onMouseOutLink={onMouseOutLink}
             />}
           
-        </div>
-      </div>
-   
+        </div>   
     );
   }
 }
