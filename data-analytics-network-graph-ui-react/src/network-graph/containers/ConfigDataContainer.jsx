@@ -24,7 +24,8 @@ const mapStateToProps = state => ({
    sliderValue: state.controlGraph.sliderValue,
    timestamps: state.controlGraph.timestamps,
    openImportModal: state.configGraph.openImportModal,
-   openSidebar: state.configGraph.openSidebar
+   openSidebar: state.configGraph.openSidebar,
+   nodesNumber: state.configGraph.nodesNumber
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -47,6 +48,7 @@ const mapDispatchToProps = dispatch => ({
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
     setOpenImportModal: (openImportModal) => dispatch(configGraphActions.setOpenImportModal(openImportModal)),
     setOpenSidebar: (openSidebar) => dispatch(configGraphActions.setOpenSidebar(openSidebar)),
+    setNodesNumber: (nodesNumber) => dispatch(configGraphActions.setNodesNumber(nodesNumber))
 
 });
 

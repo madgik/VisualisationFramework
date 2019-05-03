@@ -18,7 +18,8 @@ export const configGraphActions = {
   setSelectedGraph,
   setAllGraphsMetadata,
   setOpenImportModal,
-  setOpenSidebar
+  setOpenSidebar,
+  setNodesNumber
 }
 
 function uploadFile(file) {
@@ -125,5 +126,9 @@ function setOpenImportModal(openImportModal) {
 
 function setOpenSidebar(openSidebar) {
   return { type: configGraphConstants.SET_OPEN_SIDEBAR, openSidebar };
+}
+
+function setNodesNumber(nodesNumber) {
+  return { type: configGraphConstants.SET_NODES_NUMBER, nodesNumber };
 }
 

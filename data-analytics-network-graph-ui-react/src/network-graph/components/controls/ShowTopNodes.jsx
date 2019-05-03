@@ -43,7 +43,10 @@ class ShowTopNodes extends React.Component {
   numInput;
 
   handleInputChange(e) {
+    console.log("target:"+e.target.value);
     this.numInput = e.target.value;
+    this.props.setNodesNumber(e.target.value);
+    console.log("after:"+ this.numInput)
   }
 
   handleClick() {
@@ -69,7 +72,7 @@ class ShowTopNodes extends React.Component {
               defaultValue="5"
               margin="normal"
               type="number"
-              value={this.numInput}
+              value={this.props.nodesNumber}
               onChange={this.handleInputChange}
             />
        
