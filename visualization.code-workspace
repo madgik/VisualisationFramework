@@ -18,5 +18,8 @@
 		{
 			"path": "data-analytics-network-graph-ui-react"
 		}
-	]
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
 }

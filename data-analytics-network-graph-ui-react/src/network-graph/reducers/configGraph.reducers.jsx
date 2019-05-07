@@ -15,7 +15,8 @@ const dataDefault = {
   selectedGraph: '-',
   allGraphsMetadata: '',
   openImportModal: false,
-  openSidebar: false
+  openSidebar: false,
+  nodesNumber: 5
 }
 
 
@@ -110,6 +111,13 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         openSidebar: {
           $set: action.openSidebar
+        }
+      })
+    }
+    case configGraphConstants.SET_NODES_NUMBER: {
+      return update(state, {
+        nodesNumber: {
+          $set: action.nodesNumber
         }
       })
     }

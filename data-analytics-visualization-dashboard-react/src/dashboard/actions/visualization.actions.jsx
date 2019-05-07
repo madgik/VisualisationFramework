@@ -132,17 +132,17 @@ function requestWorkspaceListing() {
 function parseWorkspaceListing(data){
 
   return function (dispatch, getState) {
- // console.log(data);
+  console.log(data);
 
   let files = [];
   for(let i=0; i< data.length; i++){
     let details = data[i];
-  //  console.log(details);
+    console.log(details);
     let file = {key: details.name, modified: details.lastModificationTime, size: details.content.size, id: details.id  }
     files.push(file);
 
   }
-//  console.log(files);
+  console.log(files);
   dispatch(setWorkspaceListing(files));
   }
 }
@@ -175,7 +175,7 @@ function getDashboardFolderListing() {
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/children", parameters);
     return axios.get(resourceUrl)
       .then(response => {
-      //  console.log(response.data.itemlist)
+        console.log(response.data.itemlist)
        
         dispatch(parseWorkspaceListing(response.data.itemlist));
       })
@@ -325,7 +325,7 @@ function saveNewFileToWorkspace() {
 
     return axios.post(resourceUrl,formData,headers)
       .then(response => { 
-       // console.log(response)
+        console.log(response)
       })
       .catch(response => {
         alert(response);
@@ -622,7 +622,7 @@ function loadRelatedData(feature){
   return function (dispatch, getState) 
   {
     let fieldDetails =  Object.assign({}, getState().visualization.fieldDetails);
-   // console.log(fieldDetails);
+    console.log(fieldDetails);
     if(fieldDetails.selected === ""){
       dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       dispatch(visualizationActions.getSelectedFieldDetails(feature));

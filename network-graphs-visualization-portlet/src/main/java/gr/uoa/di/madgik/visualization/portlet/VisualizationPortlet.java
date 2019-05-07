@@ -123,9 +123,9 @@ public class VisualizationPortlet extends GenericPortlet {
         }
         String scope = pContext.getCurrentScope(httpServletRequest);
 
-        logger.info("Serving resource for scope: " + scope);
-
-        logger.info("Is liferay request: " + liferayRequests(resourceRequest, resourceResponse));
+//        logger.info("Serving resource for scope: " + scope);
+//
+//        logger.info("Is liferay request: " + liferayRequests(resourceRequest, resourceResponse));
 
         if (liferayRequests(resourceRequest, resourceResponse)) {
             try {
@@ -163,17 +163,12 @@ public class VisualizationPortlet extends GenericPortlet {
      //   HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(resourceRequest));
 
 
-        logger.info("Portal context: " + pContext);
-
-
         GCubeUser user = pContext.getCurrentUser(httpServletRequest);
         String username = user.getUsername();
         String email = user.getEmail();
         String initials = getInitials(user);
         long id = user.getUserId();
-        logger.info("User: " + user);
 
-        logger.info("User: " + user.toString());
 
         String uuid = null;
         try {
@@ -187,15 +182,15 @@ public class VisualizationPortlet extends GenericPortlet {
         String token = pContext.getCurrentUserToken(scope, username);
         String resourceUrl = buildResourceUrl(endpoint, resourceRequest);
         String method = getRequestMethod(httpServletRequest, resourceRequest);
-        logger.info("scope: " + scope);
-        logger.info("token: " + token);
-        logger.info("resourceUrl: " + resourceUrl);
-        logger.info("method: " + method);
+//        logger.info("scope: " + scope);
+//        logger.info("token: " + token);
+//        logger.info("resourceUrl: " + resourceUrl);
+//        logger.info("method: " + method);
 
         URL url = new URL(resourceUrl);
 
 
-        logger.info("Url: " + url);
+//        logger.info("Url: " + url);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("gcube-scope", scope);
@@ -217,26 +212,26 @@ public class VisualizationPortlet extends GenericPortlet {
         byte[] postData = ByteStreams.toByteArray(is);
         is.close();
 
-        logger.info("Post data: " + postData.toString());
+//        logger.info("Post data: " + postData.toString());
 
         if (postData.length > 0) {
             connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.write(postData);
-            logger.info("Inside post data if: " + postData.toString());
+//            logger.info("Inside post data if: " + postData.toString());
 
         }
 
         int status = 500;
 
         try {
-            logger.info("Connection: " + connection.toString());
+//            logger.info("Connection: " + connection.toString());
 
             connection.connect();
-            logger.info("After connect: " );
+//            logger.info("After connect: " );
 
             status = connection.getResponseCode();
-            logger.info("status: " + status);
+//            logger.info("status: " + status);
 
             resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(status));
 
@@ -247,7 +242,7 @@ public class VisualizationPortlet extends GenericPortlet {
 
                 resourceResponse.getWriter().write(response);
             } else {
-                logger.debug("Back end service returned with status " + responseCode + ": " + connection.getContentLength() + " bytes");
+//                logger.debug("Back end service returned with status " + responseCode + ": " + connection.getContentLength() + " bytes");
 
                 resourceResponse.setCharacterEncoding(connection.getContentEncoding());
                 resourceResponse.setContentLength(connection.getContentLength());
@@ -258,8 +253,8 @@ public class VisualizationPortlet extends GenericPortlet {
                 if (connection.getHeaderField("Content-Disposition") != null) {
                     resourceResponse.setProperty("Content-Disposition", connection.getHeaderField("Content-Disposition"));
                 }
-                if (connection.getHeaderField("filename") != null) {
-                    resourceResponse.setProperty("filename", connection.getHeaderField("filename"));
+                if (connection.getHeaderField("name") != null) {
+                    resourceResponse.setProperty("name", connection.getHeaderField("name"));
                 }
 
                 ByteStreams.copy(connection.getInputStream(), resourceResponse.getPortletOutputStream());
@@ -281,11 +276,13 @@ public class VisualizationPortlet extends GenericPortlet {
 
 //        logger.info("ResourceUrl no parameters: " + resourceUrl);
 //        logger.info("Is get: " + resourceRequest.getMethod().toUpperCase().equals("GET"));
+        resourceUrl.append(resourceRequest.getResourceID());
+
         if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
 
 
 //            logger.info(resourceRequest.getResourceID());
-            resourceUrl.append(resourceRequest.getResourceID());
+//            resourceUrl.append(resourceRequest.getResourceID());
 //            logger.info(resourceUrl.toString());
 
 //            String params  = resourceRequest.getResourceID().replace("\'", "");
@@ -318,7 +315,7 @@ public class VisualizationPortlet extends GenericPortlet {
         }
         String resource =resourceUrl.toString();
 
-//        logger.info("ResourceUrl with parameters: " + resource);
+        logger.info("ResourceUrl with parameters: " + resource);
 
         return resource;
     }
