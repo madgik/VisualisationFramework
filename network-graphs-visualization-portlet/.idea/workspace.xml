@@ -2,7 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d944270-d02c-4bf5-91cb-e2c961debde1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/dist/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/dist/bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/actions/configGraph.actions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/actions/configGraph.actions.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/components/controls/ShowTopNodes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/components/controls/ShowTopNodes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/components/menu/TopMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/components/menu/TopMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/constants/configGraph.constants.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/constants/configGraph.constants.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/containers/ConfigDataContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/containers/ConfigDataContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/reducers/configGraph.reducers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-network-graph-ui-react/src/network-graph/reducers/configGraph.reducers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/dist/bundle.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/actions/visualization.actions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/actions/visualization.actions.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/components/HeaderMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/components/HeaderMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/HeaderMenuContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/HeaderMenuContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/overrides.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/overrides.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/static/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/static/bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../visualization.code-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/../visualization.code-workspace" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -9373,8 +9391,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="251" column="68" selection-start-line="251" selection-start-column="68" selection-end-line="251" selection-end-column="68" />
+            <state relative-caret-position="118">
+              <caret line="232" column="2" selection-start-line="232" selection-start-column="2" selection-end-line="232" selection-end-column="2" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -9496,6 +9514,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -9525,7 +9544,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -9574,17 +9592,17 @@
       <workItem from="1556094520097" duration="9394000" />
       <workItem from="1556111037841" duration="1903000" />
       <workItem from="1556893309668" duration="661000" />
+      <workItem from="1557216390623" duration="381000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47052000" />
+    <option name="totallyTimeSpent" value="47433000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23720682" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23987207" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -9610,7 +9628,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.16151386" />
+      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.16577825" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Database" order="6" />
@@ -9660,8 +9678,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="251" column="68" selection-start-line="251" selection-start-column="68" selection-end-line="251" selection-end-column="68" />
+        <state relative-caret-position="118">
+          <caret line="232" column="2" selection-start-line="232" selection-start-column="2" selection-end-line="232" selection-end-column="2" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
