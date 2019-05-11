@@ -3,14 +3,18 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DropdownProperties;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
+import mil.nga.sf.geojson.FeatureConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -18,10 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @CrossOrigin(exposedHeaders = "Location")
@@ -47,6 +48,7 @@ public class DashBoardController {
 
     private VREResolver vreResolver;
 
+    private HttpClient httpClient = HttpClient.getInstance();
 
     @Autowired
     public DashBoardController(DashBoardService dashBoardService,
@@ -231,6 +233,44 @@ public class DashBoardController {
         }
 
         return ResponseEntity.ok(dropdownPropertiesList);
+    }
+
+    @RequestMapping(value = "getWorkspaceFile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getWorkspaceFile(@RequestParam  String url) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+        String file = httpClient.workspaceGetRequest(url, null, null);
+        JSONObject jsnobject = new JSONObject(file);
+        JSONObject data = jsnobject.getJSONObject("data");
+        JSONObject visualization = jsnobject.getJSONObject("visualization");
+        JSONObject selectedLayer = visualization.getJSONObject("selectedLayer");
+        JSONObject properties = selectedLayer.getJSONObject("properties");
+
+
+        int fieldid = properties.getInt("fieldid");
+
+        JSONObject map = data.getJSONObject("map");
+        String json = map.getString("json");
+
+
+
+        //JSONObject featureCollection = new JSONObject(json);
+
+        mil.nga.sf.geojson.FeatureCollection featureCollection = FeatureConverter.toFeatureCollection(json);
+        for(mil.nga.sf.geojson.Feature feature : featureCollection){
+            int fieldid1 = (int) feature.getProperties().get("fieldid");
+            if(fieldid1 == fieldid){
+                feature.getProperties().put("color", "#ffaa33");
+                System.out.println(feature.getProperties().toString());
+
+            }
+        }
+        jsnobject.getJSONObject("data").getJSONObject("map").remove("json");
+        String newJson = FeatureConverter.toStringValue(featureCollection);
+        jsnobject.getJSONObject("data").getJSONObject("map").put("json", newJson);
+        // FeatureCollection f = (FeatureCollection) json;
+        System.out.println(jsnobject.toString());
+        return ResponseEntity.ok(jsnobject.toString());
     }
 
 }

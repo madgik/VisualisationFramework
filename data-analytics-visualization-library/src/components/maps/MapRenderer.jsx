@@ -22,6 +22,10 @@ class MapRenderer extends React.Component {
    
    } 
 
+  example(){
+     console.log("Child print!!!!!!");
+   }
+
   onMapClick(e) {
     if (!this.hasClickedOnLayer) {
       this.unHighlightFeature(this.previousFeature, this.previousLayer);
@@ -35,6 +39,35 @@ class MapRenderer extends React.Component {
   }
 
   onEachFeature(feature, layer) {
+
+
+  //  if (layer instanceof L.Polyline) {
+
+      //  console.log("before if");
+
+      //  console.log(feature.properties.color);
+      //  console.log(feature);
+
+      if(feature.properties.color !== undefined){
+        // console.log(feature);
+        // console.log("inside if");
+
+        // console.log(feature.properties.color);
+        // layer.setStyle({
+        //   color:  feature.properties.color
+        // });
+
+        layer.setStyle({
+          fillColor: '#ffaa33',
+          fillOpacity: 1
+        });
+      //  this.map.center = [this.state.lat, this.state.lng];
+        this.previousFeature = feature;
+        this.previousLayer = layer;
+      }
+ //   }
+
+
     const func = (e) => {
       this.unHighlightFeature(this.previousFeature, this.previousLayer);
       this.highlightFeature(feature, layer);

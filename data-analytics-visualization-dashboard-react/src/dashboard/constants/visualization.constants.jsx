@@ -49,6 +49,10 @@ export const visualizationConstants = {
   SET_SHOW_OPEN_FROM_WORKSPACE: 'set-open-from-workspace',
   SET_SAVE_OPEN_TO_WORKSPACE: 'set-save-open-to-workspace',
   SET_FILENAME_FOR_WORKSPACE: 'set-filename-for-workspace',
+  SET_DATA_TO_STATE: 'set-data-to-state',
+  SET_VISUALIZATION_TO_STATE: 'set-visualization-to-state',
+  SET_FILTERS_TO_STATE: 'set-filters-to-state',
+
 
   DASHBOARD_DIR: 'Dashboard Visualization Folder'
 

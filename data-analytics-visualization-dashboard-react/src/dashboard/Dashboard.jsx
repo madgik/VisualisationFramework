@@ -13,10 +13,21 @@ import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
 
 class Dashboard extends React.Component {
 
+  visualizationRendererContainerRef = React.createRef();
   componentWillMount() {
 
 
   }
+  componentDidMount() {
+  }
+
+  callMapExample(){
+    console.log(this.visualizationRendererContainerRef);
+
+//    console.log(this.refs.map.getWrappedInstance());
+    this.visualizationRendererContainerRef.getWrappedInstance().example();
+  }
+
   render() {
     var queries = [{
       columns: 2,
@@ -39,7 +50,7 @@ class Dashboard extends React.Component {
 
           <Columns columns={2} gap='8px' queries={queries} rootStyles={{overflowX:'visible'}} >
             <div className='ui clearing segment '  >
-              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef}  />
+              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} ref={this.visualizationRendererContainerRef} />
               <MapConfigurationContainer />
             </div>
             <div >

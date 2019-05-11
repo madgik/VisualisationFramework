@@ -9,6 +9,9 @@ import {optionValues} from '../components/ChartHeader';
 import {dataValues} from '../components/TimeSeriesChartHeader';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import originalMoment from "moment";
+import { extendMoment } from "moment-range";
+const moment = extendMoment(originalMoment);
 
 export const visualizationActions = {
   requestVisualizations,
@@ -72,7 +75,12 @@ export const visualizationActions = {
   showSaveToWorkspace,
   showOpenFromWorkspace,
   setFilenameForWorkspace,
-  saveNewFileToWorkspace
+  saveNewFileToWorkspace,
+  openDashboardFile,
+  loadDashboardFile,
+  setDataToState,
+  setVisualizationToState,
+  setFiltersToState
 }
 
 /*
@@ -311,6 +319,8 @@ function saveNewFileToWorkspace() {
     const formData = new FormData();
     formData.append('name',getState().data.workspaceDetails.filename + ".json");
     formData.append('description',"");
+    console.log(JSON.stringify(state));
+    console.log(state);
     formData.append('file',JSON.stringify(state));
 
     // const config = {
@@ -332,6 +342,82 @@ function saveNewFileToWorkspace() {
     });
   }
 }
+
+
+function openDashboardFile(id) {
+  return function (dispatch, getState) {
+
+    let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
+
+    var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + id + "/publiclink", parameters);
+
+  
+
+    return axios.get(resourceUrl)
+      .then(response => { 
+        console.log(response);
+        dispatch(loadDashboardFile(response.data));
+      })
+      .catch(response => {
+        alert(response);
+  });
+  
+  }
+}
+
+function loadDashboardFile(fileUrl){
+  return function (dispatch, getState) {
+    console.log(fileUrl);
+    var params = new URLSearchParams();
+   
+    params.append("url", fileUrl);
+   
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getWorkspaceFile', params);
+    
+  axios.get(resourceUrl)
+      .then(response => { 
+        dispatch(loadStateFromFile(response.data));
+      })
+      .catch(response => {
+        alert(response);
+  });
+
+
+  
+  }
+}
+
+function loadStateFromFile(file) {
+  return function (dispatch, getState) {
+
+    console.log(file);
+  
+    const dateToFormat = '2018-12-31';
+    const start = moment(file.data.weatherChartDetails.dateRange.start);
+    const end = moment(file.data.weatherChartDetails.dateRange.end);
+
+    let value = moment.range(start.clone(), end.clone());
+    file.data.weatherChartDetails.dateRange = value;
+    console.log(file.data);
+    dispatch(setDataToState(file.data));
+
+    //this.store.dispatch(visualizationActions.setDateRange(this.value));
+    dispatch(setVisualizationToState(file.visualization));
+
+  }
+}
+
+function setDataToState(data) {
+  return { type: visualizationConstants.SET_DATA_TO_STATE, data };
+}
+
+function setVisualizationToState(visualization) {
+  return { type: visualizationConstants.SET_VISUALIZATION_TO_STATE, visualization };
+}
+
+function setFiltersToState(filters) {
+  return { type: visualizationConstants.SET_FILTERS_TO_STATE, filters }
+};
 
 function shouldDisableibableFetchData(zoom) {
   

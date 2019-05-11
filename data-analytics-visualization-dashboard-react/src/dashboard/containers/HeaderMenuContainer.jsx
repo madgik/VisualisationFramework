@@ -30,7 +30,15 @@ const mapDispatchToProps = dispatch => ({
   onFileSaveToWorkspace(){
     console.log("save to dashboard file!!")
     dispatch(visualizationActions.saveNewFileToWorkspace());
+  },
+
+  openFileFromWorkspace: (event) => {
+
+    console.log(event);
+    dispatch(visualizationActions.openDashboardFile(event.id));
+
   }
+
 })
 
 export default connect(

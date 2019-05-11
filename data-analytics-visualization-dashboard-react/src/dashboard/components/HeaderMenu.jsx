@@ -6,7 +6,7 @@ import Modal from '@trendmicro/react-modal';
 // Be sure to include styles at some point, probably during your bootstraping
 // import '@trendmicro/react-modal/dist/react-modal.css';
 import FileBrowser, {  Icons } from 'react-keyed-file-browser'
-import Moment from 'moment'
+
 import '../../../node_modules/react-keyed-file-browser/dist/react-keyed-file-browser.css';
 
 function EmptyRenderer() { 
@@ -20,11 +20,14 @@ class HeaderMenu extends React.Component {
     
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
     this.onSave = this.onSave.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
+
+
   handleItemClick = (event) => {
-    console.log(event);  
+    this.props.openFileFromWorkspace(event);  
 }
 
   handleFieldChange = (value) => {
