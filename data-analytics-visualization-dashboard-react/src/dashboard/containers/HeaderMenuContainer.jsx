@@ -17,6 +17,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch(visualizationActions.updateDashBoardTitle(title))
   },
   openDashboardWorkspaceDirectory: (open) => {
+    dispatch(visualizationActions.requestWorkspaceListing());
     dispatch(visualizationActions.showOpenFromWorkspace(open))
   },
 

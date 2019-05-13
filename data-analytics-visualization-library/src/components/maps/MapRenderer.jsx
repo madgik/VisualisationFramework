@@ -64,6 +64,11 @@ class MapRenderer extends React.Component {
       //  this.map.center = [this.state.lat, this.state.lng];
         this.previousFeature = feature;
         this.previousLayer = layer;
+        this.state = {
+          lat: 48,
+          lng: 8,
+          zoom: 14
+        }
       }
  //   }
 

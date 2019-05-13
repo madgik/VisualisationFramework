@@ -336,6 +336,7 @@ function saveNewFileToWorkspace() {
     return axios.post(resourceUrl,formData,headers)
       .then(response => { 
         console.log(response)
+        dispatch(showSaveToWorkspace(false));
       })
       .catch(response => {
         alert(response);
@@ -399,10 +400,13 @@ function loadStateFromFile(file) {
     let value = moment.range(start.clone(), end.clone());
     file.data.weatherChartDetails.dateRange = value;
     console.log(file.data);
+    file.data.workspaceDetails.showSaveToWorkspace = false;
     dispatch(setDataToState(file.data));
 
     //this.store.dispatch(visualizationActions.setDateRange(this.value));
     dispatch(setVisualizationToState(file.visualization));
+    dispatch(visualizationActions.showOpenFromWorkspace(false))
+
 
   }
 }

@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d944270-d02c-4bf5-91cb-e2c961debde1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/actions/visualization.actions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/actions/visualization.actions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/components/HeaderMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/components/HeaderMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/constants/visualization.constants.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/constants/visualization.constants.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/HeaderMenuContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/HeaderMenuContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/VisualizationRendererContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/containers/VisualizationRendererContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/reducers/visualization.reducers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard-react/src/dashboard/reducers/visualization.reducers.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-library/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-library/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-library/src/components/VisualizationRendererInner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-library/src/components/VisualizationRendererInner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-library/src/components/maps/MapRenderer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-library/src/components/maps/MapRenderer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/java/gr/uoa/di/aginfra/data/analytics/visualization/model/http/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/java/gr/uoa/di/aginfra/data/analytics/visualization/model/http/HttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-service/data-analytics-visualization-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-service/data-analytics-visualization-service.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data-analytics-visualization-service/src/main/java/gr/uoa/di/aginfra/data/analytics/visualization/service/controllers/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data-analytics-visualization-service/src/main/java/gr/uoa/di/aginfra/data/analytics/visualization/service/controllers/DashBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="8d944270-d02c-4bf5-91cb-e2c961debde1" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="dtd/datatypes.dtd" />
@@ -9391,8 +9371,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="254" column="17" selection-start-line="254" selection-start-column="17" selection-end-line="254" selection-end-column="17" />
+            <state relative-caret-position="832">
+              <caret line="274" column="64" lean-forward="true" selection-start-line="274" selection-start-column="64" selection-end-line="274" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -9492,7 +9472,28 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
+              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
+              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
+              <item name="gr.uoa.di.madgik.visualization" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
+              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
+              <item name="gr.uoa.di.madgik.visualization" type="1f31426a:PackageElementNode" />
+              <item name="service" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -9522,28 +9523,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
-              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
-              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
-              <item name="gr.uoa.di.madgik.visualization" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="network-graphs-visualization-portlet" type="58d84e3e:PackageViewProjectNode" />
-              <item name="network-graphs-visualization-portlet" type="616d4139:PackageViewModuleNode" />
-              <item name="gr.uoa.di.madgik.visualization" type="1f31426a:PackageElementNode" />
-              <item name="service" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -9597,16 +9577,18 @@
       <workItem from="1557305834243" duration="596000" />
       <workItem from="1557498012722" duration="1874000" />
       <workItem from="1557567772594" duration="260000" />
+      <workItem from="1557568581908" duration="179000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51596000" />
+    <option name="totallyTimeSpent" value="51775000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17910448" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18070363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -9682,8 +9664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gr/uoa/di/madgik/visualization/portlet/VisualizationPortlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="254" column="17" selection-start-line="254" selection-start-column="17" selection-end-line="254" selection-end-column="17" />
+        <state relative-caret-position="832">
+          <caret line="274" column="64" lean-forward="true" selection-start-line="274" selection-start-column="64" selection-end-line="274" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
