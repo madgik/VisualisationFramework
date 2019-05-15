@@ -138,7 +138,7 @@ public class NetworkGraphController {
             ArrayList<String> nodeList = nodes;
             List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, currentDate);
             Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
-            System.out.println("-"+d3Results);
+//            System.out.println("-"+d3Results);
             //            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
 //            System.out.println("RESULTS:"+result.size());
 //            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
@@ -153,7 +153,7 @@ public class NetworkGraphController {
         }
     }
 
-    @RequestMapping(value = "timestamps/{graphId}")
+    @RequestMapping(value = "timestamps/{graphId}", method = RequestMethod.GET)
     ResponseEntity<?> getTimestamps(@PathVariable("graphId") String graphId) {
 
         List<String> results = null;
@@ -168,5 +168,24 @@ public class NetworkGraphController {
 
         }
 
+    }
+
+    @RequestMapping(value = "filtered/{graphId}", method = RequestMethod.GET)
+    ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String,String> allRequestParams) {
+        allRequestParams.entrySet().stream().forEach(m -> {
+            System.out.println(m.getKey() + "-" + m.getValue());
+        });
+
+        try {
+            List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+            System.out.println(d3Results.get("nodes"));
+            System.out.println(d3Results.get("links"));
+            return new ResponseEntity<>(d3Results, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

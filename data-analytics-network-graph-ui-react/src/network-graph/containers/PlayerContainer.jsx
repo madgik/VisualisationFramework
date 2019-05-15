@@ -20,15 +20,17 @@ const mapStateToProps = state => ({
   selectedLink: state.controlGraph.selectedLink,
   sliderValue: state.controlGraph.sliderValue,
   timestamps: state.controlGraph.timestamps,
-  openSidebar: state.configGraph.openSidebar
-
+  playerTimestamps: state.controlGraph.playerTimestamps,
+  openSidebar: state.configGraph.openSidebar,
+  showOldNodes:state.controlGraph.showOldNodes,
+  topNodes: state.controlGraph.topNodes
 });
 
 const mapDispatchToProps = dispatch => ({
   
     //SETTERS
     setCurrentDate: (date) => dispatch(controlGraphActions.setCurrentDate(date)),
-    getDateGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId)),
+    getDateGraph: (date, nodes, graphId, showOldNodes, topNodes)=> dispatch(controlGraphActions.getDateGraph(date, nodes, graphId, showOldNodes, topNodes)),
     setOpenSidebar: (openSidebar) => dispatch(configGraphActions.setOpenSidebar(openSidebar)),
 
     //GraphControls
@@ -39,10 +41,8 @@ const mapDispatchToProps = dispatch => ({
     playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
 
     //SETTERS
-   
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
-   
 
 });
 

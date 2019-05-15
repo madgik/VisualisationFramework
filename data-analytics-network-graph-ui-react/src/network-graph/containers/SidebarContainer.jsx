@@ -20,14 +20,20 @@ const mapStateToProps = state => ({
   selectedLink: state.controlGraph.selectedLink,
   sliderValue: state.controlGraph.sliderValue,
   timestamps: state.controlGraph.timestamps,
-  openSidebar: state.configGraph.openSidebar
-
+  openSidebar: state.configGraph.openSidebar,
+  showOldNodes: state.controlGraph.showOldNodes,
+  topNodes: state.controlGraph.topNodes,
+  timestampFrom: state.controlGraph.timestampFrom,
+  timestampTo: state.controlGraph.timestampTo
+  
 });
 
 const mapDispatchToProps = dispatch => ({
     //API CALLS
     uploadFile: (file) => dispatch(configGraphActions.uploadFile(file)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
+    getFilteredGraph: (query, graphId) => dispatch(controlGraphActions.getFilteredGraph(query, graphId)),
+
     //SETTERS
     setFileValidation: (isValid) => dispatch(configGraphActions.setFileValidation(isValid)),
     setGraphSource: (graphSource) => dispatch(configGraphActions.setGraphSource(graphSource)),
@@ -45,13 +51,13 @@ const mapDispatchToProps = dispatch => ({
     setPaused: (paused) => dispatch(controlGraphActions.setPaused(paused)),
     playTimeGraph: (date, nodes, graphId)=> dispatch(controlGraphActions.playTimeGraph(date, nodes, graphId)),
 
-
     //SETTERS
-   
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
-   
-
+    setShowOldNodes: (showOldNodes) => dispatch(controlGraphActions.setShowOldNodes(showOldNodes)),
+    setTimestampFrom: (timestampFrom) => dispatch(controlGraphActions.setTimestampFrom(timestampFrom)),
+    setTimestampTo: (timestampTo) => dispatch(controlGraphActions.setTimestampTo(timestampTo)),
+    setFilteredTimestamps:(timestamps, timestampFrom, timestampTo) => dispatch(controlGraphActions.setFilteredTimestamps(timestamps, timestampFrom, timestampTo))
 });
 
 export default connect(

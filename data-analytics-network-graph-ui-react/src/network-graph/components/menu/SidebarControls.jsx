@@ -130,14 +130,24 @@ class SidebarControls extends React.Component {
             <GraphFilter
               graph={this.props.graph}
               currentDate={this.props.currentDate}
+              selectedGraph={this.props.selectedGraph}
               getDateGraph={this.props.getDateGraph}
               timestamps={this.props.timestamps}
+              timestampFrom={this.props.timestampFrom}
+              timestampTo={this.props.timestampTo}
+              showOldNodes={this.props.showOldNodes}
+              setShowOldNodes={this.props.setShowOldNodes}
+              getFilteredGraph={this.props.getFilteredGraph}
+              setTimestampFrom={this.props.setTimestampFrom}
+              setTimestampTo={this.props.setTimestampTo}
+              setFilteredTimestamps={this.props.setFilteredTimestamps}
             />
           </Grid>
           <Grid item spacing={8}>
           <Divider/>
               <NodePropeties
                 graph={this.props.graph}
+                topNodes={this.props.topNodes}
                 selectedGraph={this.props.selectedGraph}
                 selectedNode={this.props.selectedNode}
                 getNeighbors={this.props.getNeighbors}

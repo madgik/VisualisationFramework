@@ -69,6 +69,9 @@ class PlayerBar extends React.Component {
             setSliderValue={this.props.setSliderValue}
             sliderValue={this.props.sliderValue}
             timestamps={this.props.timestamps}
+            playerTimestamps={this.props.playerTimestamps}
+            showOldNodes={this.props.showOldNodes}
+            topNodes={this.props.topNodes}
           />
         </AppBar>
       </div>

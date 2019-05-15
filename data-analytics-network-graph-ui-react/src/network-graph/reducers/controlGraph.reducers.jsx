@@ -17,6 +17,7 @@ const dataDefault = {
         links: [],
         nodes: []
     },
+    topNodes: [],
     linkColor: 'blue',
     prevGraphState: {
         links: '',
@@ -34,7 +35,11 @@ const dataDefault = {
         weight: ''
     },
     sliderValue: 0,
-    timestamps: null
+    timestamps: null,
+    playerTimestamps:null,
+    showOldNodes: true,
+    timestampFrom: '2012.01',
+    timestampTo:'2015.12'
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -59,6 +64,12 @@ export function controlGraph(state = dataDefault, action) {
                     nodes: {
                         $set: action.nodes
                     }
+                }
+            })
+        case controlGraphConstants.SET_TOP_NODES:
+            return update(state, {
+                topNodes: {
+                    $set: action.topNodes
                 }
             })
         case controlGraphConstants.SET_LINK_COLOR:
@@ -113,6 +124,34 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 timestamps: {
                     $set: action.timestamps
+                }
+            })
+        }
+        case controlGraphConstants.SET_PLAYER_TIMESTAMPS: {
+            return update(state, {
+                playerTimestamps: {
+                    $set: action.playerTimestamps
+                }
+            })
+        }
+        case controlGraphConstants.SET_SHOW_OLD_NODES: {
+            return update(state, {
+                showOldNodes: {
+                    $set: action.showOldNodes
+                }
+            })
+        }
+        case controlGraphConstants.SET_TIMESTAMP_FROM: {
+            return update(state, {
+                timestampFrom: {
+                    $set: action.timestampFrom
+                }
+            })
+        }
+        case controlGraphConstants.SET_TIMESTAMP_TO: {
+            return update(state, {
+                timestampTo: {
+                    $set: action.timestampTo
                 }
             })
         }

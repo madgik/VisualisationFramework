@@ -27,7 +27,8 @@
     "redux": "~4.0.0",
     "redux-logger": "~3.0.6",
     "redux-thunk": "~2.3.0",
-    "semantic-ui-react": "^0.85.0"
+    "semantic-ui-react": "^0.85.0",
+    "validate-react": "^1.2.2"
   },
   "scripts": {
     "start": "set PORT=3322 && react-scripts start",
