@@ -9,18 +9,19 @@ class MapRenderer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lat: 48,
-      lng: 8,
-      zoom: 4
+      zoom: 4,
+      position: [48, 8]
     }
+    //this.position = [this.state.lat, this.state.lng];
+
     this.previousFeature = null;
     this.previousLayer = null;
     this.hasClickedOnLayer = false;
   }
 
-  componentDidUpdate(prevProps,prevState) {
+  // componentDidUpdate(prevProps,prevState) {
    
-   } 
+  //  } 
 
   example(){
      console.log("Child print!!!!!!");
@@ -41,7 +42,7 @@ class MapRenderer extends React.Component {
   onEachFeature(feature, layer) {
 
 
-  //  if (layer instanceof L.Polyline) {
+   // if (layer instanceof L.Polyline) {
 
       //  console.log("before if");
 
@@ -64,13 +65,18 @@ class MapRenderer extends React.Component {
       //  this.map.center = [this.state.lat, this.state.lng];
         this.previousFeature = feature;
         this.previousLayer = layer;
-        this.state = {
-          lat: 48,
-          lng: 8,
-          zoom: 14
-        }
+        console.log(feature);
+        console.log(layer);
+       console.log("zooooom: " + this.props.details.zoomLevel);
+        // if (this.state.zoom !== this.props.details.zoomLevel) {
+        //   this.setState({ zoom: this.props.details.zoomLevel });
+        //   this.setState({ position: [ 52.0939222,4.7299765] });
+        // }
+        console.log("zoom");
+        return;
+
       }
- //   }
+   // }
 
 
     const func = (e) => {
@@ -87,11 +93,17 @@ class MapRenderer extends React.Component {
   }
 
   onZoomEvent= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
+    console.log(map);
+    console.log(this.map);
+    if(this.map !== null)
+      this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   handleMoveend= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
+    console.log(map);
+    console.log(this.map);
+    if(this.map !== null)
+      this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   highlightFeature(feature, layer) {
@@ -135,9 +147,8 @@ class MapRenderer extends React.Component {
 
     }
 
-    const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
+      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={this.state.position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
