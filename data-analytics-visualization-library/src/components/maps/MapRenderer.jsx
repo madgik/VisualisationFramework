@@ -12,20 +12,14 @@ class MapRenderer extends React.Component {
       zoom: 4,
       position: [48, 8]
     }
-    //this.position = [this.state.lat, this.state.lng];
-
     this.previousFeature = null;
     this.previousLayer = null;
     this.hasClickedOnLayer = false;
   }
 
-  // componentDidUpdate(prevProps,prevState) {
+  componentDidUpdate(prevProps,prevState) {
    
-  //  } 
-
-  example(){
-     console.log("Child print!!!!!!");
-   }
+   } 
 
   onMapClick(e) {
     if (!this.hasClickedOnLayer) {
@@ -42,41 +36,21 @@ class MapRenderer extends React.Component {
   onEachFeature(feature, layer) {
 
 
-   // if (layer instanceof L.Polyline) {
-
-      //  console.log("before if");
-
-      //  console.log(feature.properties.color);
-      //  console.log(feature);
-
-      if(feature.properties.color !== undefined){
-        // console.log(feature);
-        // console.log("inside if");
-
-        // console.log(feature.properties.color);
-        // layer.setStyle({
-        //   color:  feature.properties.color
-        // });
-
-        layer.setStyle({
-          fillColor: '#ffaa33',
-          fillOpacity: 1
-        });
-      //  this.map.center = [this.state.lat, this.state.lng];
-        this.previousFeature = feature;
-        this.previousLayer = layer;
-        console.log(feature);
-        console.log(layer);
-       console.log("zooooom: " + this.props.details.zoomLevel);
-        // if (this.state.zoom !== this.props.details.zoomLevel) {
-        //   this.setState({ zoom: this.props.details.zoomLevel });
-        //   this.setState({ position: [ 52.0939222,4.7299765] });
-        // }
-        console.log("zoom");
-        return;
-
-      }
-   // }
+    if(feature.properties.color !== undefined){
+      layer.setStyle({
+        fillColor: '#ffaa33',
+        fillOpacity: 1
+      });
+      this.previousFeature = feature;
+      this.previousLayer = layer;
+     
+       if (this.state.zoom !== 15) {
+         this.setState({ zoom: 15 });
+         let coordinates = feature.geometry.coordinates[0];
+         let point = coordinates[0];
+         this.setState({ position: [ point[1], point[0]] });
+       }
+    }
 
 
     const func = (e) => {
@@ -93,15 +67,11 @@ class MapRenderer extends React.Component {
   }
 
   onZoomEvent= (map) => {
-    console.log(map);
-    console.log(this.map);
     if(this.map !== null)
       this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   handleMoveend= (map) => {
-    console.log(map);
-    console.log(this.map);
     if(this.map !== null)
       this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
@@ -147,6 +117,7 @@ class MapRenderer extends React.Component {
 
     }
 
+    const position = [this.state.lat, this.state.lng];
     return (
       <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={this.state.position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer

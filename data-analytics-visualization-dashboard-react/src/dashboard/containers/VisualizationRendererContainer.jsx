@@ -7,7 +7,6 @@ function mapStateToProps(state) {
   return {
     visualization: state.data.map,
     document: state.document,
-    details: state.visualization
 
   };
 }
@@ -59,5 +58,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps, null, { withRef: true }
+  mapDispatchToProps
 )(VisualizationRendererInnerContainer)
