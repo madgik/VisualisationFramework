@@ -6,7 +6,8 @@ import { VisualizationRendererInnerContainer } from 'data-analytics-visualizatio
 function mapStateToProps(state) {
   return {
     visualization: state.data.map,
-    document: state.document
+    document: state.document,
+
   };
 }
 
@@ -57,5 +58,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps, null, { withRef: true }
+  mapDispatchToProps
 )(VisualizationRendererInnerContainer)

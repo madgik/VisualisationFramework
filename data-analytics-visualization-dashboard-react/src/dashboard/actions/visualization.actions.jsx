@@ -319,9 +319,18 @@ function saveNewFileToWorkspace() {
     const formData = new FormData();
     formData.append('name',getState().data.workspaceDetails.filename + ".json");
     formData.append('description',"");
-    console.log(JSON.stringify(state));
-    console.log(state);
     formData.append('file',JSON.stringify(state));
+    let json = JSON.parse(state.data.map.json);
+    let features = json["features"];
+    Object.keys(features).forEach(function(key) {
+      let feature = features[key].properties;
+      if(feature.color !== undefined){
+        delete feature.color;
+        console.log(feature);
+
+      }
+
+    });
 
     // const config = {
     //     headers: {
@@ -337,13 +346,13 @@ function saveNewFileToWorkspace() {
       .then(response => { 
         console.log(response)
         dispatch(showSaveToWorkspace(false));
+
       })
       .catch(response => {
         alert(response);
     });
   }
 }
-
 
 function openDashboardFile(id) {
   return function (dispatch, getState) {
@@ -352,7 +361,7 @@ function openDashboardFile(id) {
 
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + id + "/publiclink", parameters);
 
-  
+
 
     return axios.get(resourceUrl)
       .then(response => { 
@@ -362,7 +371,7 @@ function openDashboardFile(id) {
       .catch(response => {
         alert(response);
   });
-  
+
   }
 }
 
@@ -370,11 +379,11 @@ function loadDashboardFile(fileUrl){
   return function (dispatch, getState) {
     console.log(fileUrl);
     var params = new URLSearchParams();
-   
+
     params.append("url", fileUrl);
-   
+
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getWorkspaceFile', params);
-    
+
   axios.get(resourceUrl)
       .then(response => { 
         dispatch(loadStateFromFile(response.data));
@@ -384,7 +393,7 @@ function loadDashboardFile(fileUrl){
   });
 
 
-  
+
   }
 }
 
@@ -392,21 +401,19 @@ function loadStateFromFile(file) {
   return function (dispatch, getState) {
 
     console.log(file);
-  
-    const dateToFormat = '2018-12-31';
+
+   // const dateToFormat = '2018-12-31';
     const start = moment(file.data.weatherChartDetails.dateRange.start);
     const end = moment(file.data.weatherChartDetails.dateRange.end);
 
     let value = moment.range(start.clone(), end.clone());
     file.data.weatherChartDetails.dateRange = value;
     console.log(file.data);
-    file.data.workspaceDetails.showSaveToWorkspace = false;
     dispatch(setDataToState(file.data));
 
     //this.store.dispatch(visualizationActions.setDateRange(this.value));
     dispatch(setVisualizationToState(file.visualization));
-    dispatch(visualizationActions.showOpenFromWorkspace(false))
-
+    dispatch(showSaveToWorkspace(false));
 
   }
 }

@@ -52,8 +52,8 @@ public class DashBoardController {
 
     @Autowired
     public DashBoardController(DashBoardService dashBoardService,
-                                   EntityMapper modelMapper,
-                                   VREResolver vreResolver) {
+                               EntityMapper modelMapper,
+                               VREResolver vreResolver) {
         this.dashBoardService = dashBoardService;
         this.modelMapper = modelMapper;
         this.vreResolver = vreResolver;
@@ -113,9 +113,9 @@ public class DashBoardController {
 
         FeatureCollection soilDetails = null;
         for(int i=0; i < fieldDetails.size() ; i++) {
-             soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
-             DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
-             fieldDetails.get(i).setSoil(soil);
+            soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
+            DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
+            fieldDetails.get(i).setSoil(soil);
 
         }
         soilDetails.hashCode();
@@ -179,7 +179,7 @@ public class DashBoardController {
         params.remove("meteostation");
 
         for(int meteoId = meteostationIds.size() -1; meteoId >= 0 ; meteoId--) {
-          //  Map<String, String> params2 = new HashMap<>();
+            //  Map<String, String> params2 = new HashMap<>();
             params.remove("meteostation");
             params.put("meteostation", meteostationIds.get(meteoId));
 
@@ -238,12 +238,26 @@ public class DashBoardController {
     @RequestMapping(value = "getWorkspaceFile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getWorkspaceFile(@RequestParam  String url) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
-
+        JSONObject selectedLayer = null;
         String file = httpClient.workspaceGetRequest(url, null, null);
         JSONObject jsnobject = new JSONObject(file);
+        if(!jsnobject.has("data") || !jsnobject.has("visualization") || !jsnobject.has("visualization")
+                || !jsnobject.has("data")){
+            return ResponseEntity.ok("");
+        }
         JSONObject data = jsnobject.getJSONObject("data");
         JSONObject visualization = jsnobject.getJSONObject("visualization");
-        JSONObject selectedLayer = visualization.getJSONObject("selectedLayer");
+        if(visualization.has("selectedLayer")) {
+            Object selectedLayerObject = visualization.get("selectedLayer");
+            if(selectedLayerObject instanceof  String)
+                return ResponseEntity.ok(jsnobject.toString());
+            else
+                selectedLayer = visualization.getJSONObject("selectedLayer");
+
+        }
+        else
+            return ResponseEntity.ok(jsnobject.toString());
+
         JSONObject properties = selectedLayer.getJSONObject("properties");
 
 
