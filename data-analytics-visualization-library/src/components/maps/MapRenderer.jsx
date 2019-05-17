@@ -9,9 +9,8 @@ class MapRenderer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lat: 48,
-      lng: 8,
-      zoom: 4
+      zoom: 4,
+      position: [48, 8]
     }
     this.previousFeature = null;
     this.previousLayer = null;
@@ -35,6 +34,25 @@ class MapRenderer extends React.Component {
   }
 
   onEachFeature(feature, layer) {
+
+
+    if(feature.properties.color !== undefined){
+      layer.setStyle({
+        fillColor: '#ffaa33',
+        fillOpacity: 1
+      });
+      this.previousFeature = feature;
+      this.previousLayer = layer;
+     
+       if (this.state.zoom !== 15) {
+         this.setState({ zoom: 15 });
+         let coordinates = feature.geometry.coordinates[0];
+         let point = coordinates[0];
+         this.setState({ position: [ point[1], point[0]] });
+       }
+    }
+
+
     const func = (e) => {
       this.unHighlightFeature(this.previousFeature, this.previousLayer);
       this.highlightFeature(feature, layer);
@@ -49,11 +67,13 @@ class MapRenderer extends React.Component {
   }
 
   onZoomEvent= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
+    if(this.map !== null)
+      this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   handleMoveend= (map) => {
-    this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
+    if(this.map !== null)
+      this.props.updateCurrentGeometry(this.createPolygonFromBounds(this.map.leafletElement.getBounds()), this.map.leafletElement.getZoom());
   };
 
   highlightFeature(feature, layer) {
@@ -99,7 +119,7 @@ class MapRenderer extends React.Component {
 
     const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
+      <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={this.state.position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />

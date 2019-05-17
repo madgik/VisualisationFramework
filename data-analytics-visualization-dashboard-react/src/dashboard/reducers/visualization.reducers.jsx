@@ -75,6 +75,8 @@ const visualizationDefault = {
 
 export function visualization(state = visualizationDefault, action) {
   switch (action.type) {
+    case visualizationConstants.SET_VISUALIZATION_TO_STATE:
+      return action.visualization;
     case visualizationConstants.LOAD_VISUALIZATIONS:
       return update(state, {
         options: {
@@ -275,7 +277,7 @@ const dataDefault = {
 
 export function data(state = dataDefault, action) {
   switch (action.type) {
-    case visualizationConstants.LOAD_VISUALIZATION:
+    case visualizationConstants.SET_DATA_TO_STATE:
       return action.data;
     case visualizationConstants.RESET_VISUALIZATION:
       return dataDefault;

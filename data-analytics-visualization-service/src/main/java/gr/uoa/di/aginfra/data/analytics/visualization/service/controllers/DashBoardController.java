@@ -3,14 +3,18 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DropdownProperties;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
+import mil.nga.sf.geojson.FeatureConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -18,10 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @CrossOrigin(exposedHeaders = "Location")
@@ -47,11 +48,12 @@ public class DashBoardController {
 
     private VREResolver vreResolver;
 
+    private HttpClient httpClient = HttpClient.getInstance();
 
     @Autowired
     public DashBoardController(DashBoardService dashBoardService,
-                                   EntityMapper modelMapper,
-                                   VREResolver vreResolver) {
+                               EntityMapper modelMapper,
+                               VREResolver vreResolver) {
         this.dashBoardService = dashBoardService;
         this.modelMapper = modelMapper;
         this.vreResolver = vreResolver;
@@ -111,9 +113,9 @@ public class DashBoardController {
 
         FeatureCollection soilDetails = null;
         for(int i=0; i < fieldDetails.size() ; i++) {
-             soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
-             DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
-             fieldDetails.get(i).setSoil(soil);
+            soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
+            DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
+            fieldDetails.get(i).setSoil(soil);
 
         }
         soilDetails.hashCode();
@@ -177,7 +179,7 @@ public class DashBoardController {
         params.remove("meteostation");
 
         for(int meteoId = meteostationIds.size() -1; meteoId >= 0 ; meteoId--) {
-          //  Map<String, String> params2 = new HashMap<>();
+            //  Map<String, String> params2 = new HashMap<>();
             params.remove("meteostation");
             params.put("meteostation", meteostationIds.get(meteoId));
 
@@ -231,6 +233,58 @@ public class DashBoardController {
         }
 
         return ResponseEntity.ok(dropdownPropertiesList);
+    }
+
+    @RequestMapping(value = "getWorkspaceFile", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getWorkspaceFile(@RequestParam  String url) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+        JSONObject selectedLayer = null;
+        String file = httpClient.workspaceGetRequest(url, null, null);
+        JSONObject jsnobject = new JSONObject(file);
+        if(!jsnobject.has("data") || !jsnobject.has("visualization") || !jsnobject.has("visualization")
+                || !jsnobject.has("data")){
+            return ResponseEntity.ok("");
+        }
+        JSONObject data = jsnobject.getJSONObject("data");
+        JSONObject visualization = jsnobject.getJSONObject("visualization");
+        if(visualization.has("selectedLayer")) {
+            Object selectedLayerObject = visualization.get("selectedLayer");
+            if(selectedLayerObject instanceof  String)
+                return ResponseEntity.ok(jsnobject.toString());
+            else
+                selectedLayer = visualization.getJSONObject("selectedLayer");
+
+        }
+        else
+            return ResponseEntity.ok(jsnobject.toString());
+
+        JSONObject properties = selectedLayer.getJSONObject("properties");
+
+
+        int fieldid = properties.getInt("fieldid");
+
+        JSONObject map = data.getJSONObject("map");
+        String json = map.getString("json");
+
+
+
+        //JSONObject featureCollection = new JSONObject(json);
+
+        mil.nga.sf.geojson.FeatureCollection featureCollection = FeatureConverter.toFeatureCollection(json);
+        for(mil.nga.sf.geojson.Feature feature : featureCollection){
+            int fieldid1 = (int) feature.getProperties().get("fieldid");
+            if(fieldid1 == fieldid){
+                feature.getProperties().put("color", "#ffaa33");
+                System.out.println(feature.getProperties().toString());
+
+            }
+        }
+        jsnobject.getJSONObject("data").getJSONObject("map").remove("json");
+        String newJson = FeatureConverter.toStringValue(featureCollection);
+        jsnobject.getJSONObject("data").getJSONObject("map").put("json", newJson);
+        // FeatureCollection f = (FeatureCollection) json;
+        System.out.println(jsnobject.toString());
+        return ResponseEntity.ok(jsnobject.toString());
     }
 
 }
