@@ -316,22 +316,27 @@ function saveNewFileToWorkspace() {
     let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/create/FILE", parameters);
     let state = getState();
-    const formData = new FormData();
-    formData.append('name',getState().data.workspaceDetails.filename + ".json");
-    formData.append('description',"");
-    formData.append('file',JSON.stringify(state));
+   
     let json = JSON.parse(state.data.map.json);
     let features = json["features"];
+    let arr = [];
+
     Object.keys(features).forEach(function(key) {
       let feature = features[key].properties;
-      if(feature.color !== undefined){
-        delete feature.color;
-        console.log(feature);
+      if(features[key].properties.color !== undefined){
+        delete features[key].properties.color;
+        console.log(features[key].properties);
 
       }
+      arr.push(features[key]);
+
 
     });
 
+    console.log(arr);
+    json["features"] = arr;
+    state.data.map.json = JSON.stringify(json);
+    console.log(state.data.map.json);
     // const config = {
     //     headers: {
     //         'content-type': 'multipart/form-data'
@@ -342,6 +347,11 @@ function saveNewFileToWorkspace() {
       'Content-Type': 'multipart/form-data'
     };
 
+    const formData = new FormData();
+    formData.append('name',getState().data.workspaceDetails.filename + ".json");
+    formData.append('description',"");
+    formData.append('file',JSON.stringify(state));
+    
     return axios.post(resourceUrl,formData,headers)
       .then(response => { 
         console.log(response)
