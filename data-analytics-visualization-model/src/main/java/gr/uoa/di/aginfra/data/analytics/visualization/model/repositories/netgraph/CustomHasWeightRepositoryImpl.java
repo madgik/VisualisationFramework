@@ -47,35 +47,52 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
 
         String cypher = "";
         Map<String, String> params = new HashMap<>();
-        int i=0;
+        int i = 0;
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
             cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})\n";
+            cypher += " ";
             params.put("id", graphId);
 
             String[] rangeParams = entry.getKey().split("-");
 
-            if (rangeParams.length > 1) {
-                if (rangeParams[1].equals("1")) {
-                    cypher += "WHERE p" + i + ".name=$name"+ i+ " and p" + i + ".value>=$value" + i + "\n";
-                } else {
-                    cypher += " WHERE p" + i + ".name=$name"+ i+ " and p" + i + ".value<=$value" + i + "\n";
+            if (rangeParams.length > 2) {
+                if (rangeParams[1].equals("property") && rangeParams[2].equals("1")) {
+                    cypher += "WHERE n.property>=$propertyFrom \n";
+                    params.put("propertyFrom", entry.getValue());
+                } else if (rangeParams[1].equals("property") && rangeParams[2].equals("2")) {
+                    cypher += "WHERE n.property<=$propertyTo \n";
+                    params.put("propertyTo", entry.getValue());
+                } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("1")) {
+//                    cypher += "WHERE n.weight>=$property \n";
+//                    params.put("weight", rangeParams[0]);
+                } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("2")) {
+//                    cypher += "WHERE n.weight<=$property \n";
+//                    params.put("weight", rangeParams[0]);
                 }
-                params.put("name"+i, rangeParams[0]);
-                params.put("value"+i, entry.getValue());
+            }
+            else if (rangeParams.length > 1) {
+                if (rangeParams[1].equals("1")) {
+                    cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value>=$valueFrom" + i + "\n";
+                    params.put("value" + i, entry.getValue());
+                } else {
+                    cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value<=$valueTo" + i + "\n";
+                    params.put("value" + i, entry.getValue());
+                }
+                params.put("name" + i, rangeParams[0]);
             } else {
                 cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value=$value" + i + "\n";
-                params.put("name"+i, entry.getKey());
-                params.put("value"+i, entry.getValue());
+                params.put("name" + i, entry.getKey());
+                params.put("value" + i, entry.getValue());
             }
 //            cypher += "Return p" + i + ",hp" + i +",";
 
             i++;
         }
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
-        cypher += "Return p,hp,n";
+        cypher += "Return p,hp,n LIMIT 50";
+        System.out.println(cypher);
 //        for(int j =0)
 //        Map<String, Object> params = new HashMap<>();
-
 
 
         Iterable<Node> nodes = session.query(Node.class, cypher, params);

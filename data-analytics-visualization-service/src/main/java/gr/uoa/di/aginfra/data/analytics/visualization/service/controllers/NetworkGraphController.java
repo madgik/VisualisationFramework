@@ -172,9 +172,6 @@ public class NetworkGraphController {
 
     @RequestMapping(value = "filtered/{graphId}", method = RequestMethod.GET)
     ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String,String> allRequestParams) {
-        allRequestParams.entrySet().stream().forEach(m -> {
-            System.out.println(m.getKey() + "-" + m.getValue());
-        });
 
         try {
             List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);

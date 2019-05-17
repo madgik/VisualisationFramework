@@ -65,6 +65,33 @@ public class HttpClient extends RestTemplate {
 
     }
 
+    public String  workspaceGetRequest(String url, Map<String, String> headers, Map<String, Object> parameters){
+        RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+        restTemplate.setInterceptors(Collections.singletonList(new RequestLoggingInterceptor()));
+        HttpEntity<String> entity = null;
+        if(headers != null){
+            HttpHeaders httpHeaders = setHttpHeaders(headers);
+            entity = new HttpEntity<String>(httpHeaders);
+
+        }
+
+        if(parameters != null){
+            url = setParameters(parameters, url);
+        }
+        //Execute the method writing your HttpEntity to the request
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            return response.getBody();
+
+        }
+        catch(HttpServerErrorException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getResponseBodyAsString());
+            return null;
+        }
+
+    }
+
     private String postRequest(String url){
 
         return null;

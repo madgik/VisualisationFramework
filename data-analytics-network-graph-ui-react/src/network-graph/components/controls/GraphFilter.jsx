@@ -58,7 +58,7 @@ class GraphFilter extends React.Component {
   filtersBtn = true;
   query = {}
   dateFrom = null;
-  
+
   handlePropertyChange(name) {
 
   }
@@ -111,16 +111,17 @@ class GraphFilter extends React.Component {
   }
 
   handleApplyFilters() {
-
-    this.props.getFilteredGraph(this.query, this.props.selectedGraph);
-    this.props.setFilteredTimestamps(this.props.timestamps,this.props.timestampFrom, this.props.timestampTo)
-    console.log(JSON.stringify(this.query));
+    console.log(this.query)
+    if (Object.keys(this.query).length !== 0) {
+      this.props.getFilteredGraph(this.query, this.props.selectedGraph);
+    }
+    this.props.setFilteredTimestamps(this.props.timestamps, this.props.timestampFrom, this.props.timestampTo)
   }
 
   render() {
     const { classes } = this.props;
     var showOldNodes = this.props.showOldNodes;
-    
+
     if (this.props.graph.nodes.length != 0 && this.props.graph.nodes != undefined) {
       return (
         <Grid
@@ -149,23 +150,77 @@ class GraphFilter extends React.Component {
             />
           </Grid>
           <Grid item >
-            <TextField
-              id="property-filter"
-              label="Main Property"
-              className={classes.textField}
-              onChange={this.handlePropertyChange('name')}
-              margin="normal"
-            />
+            <Grid
+              direction='column'
+              container>
+              <Grid item>
+                <h4>Main Property Range</h4>
+              </Grid>
+
+              <Grid
+                direction='row'
+                container>
+                <Grid item xs={6}>
+                  <TextField
+                    id="main-property-1"
+                    label="from"
+                    className={classes.textFieldRange}
+                    onChange={this.handleNodePropertyChange}
+                    margin="normal"
+                    type="number"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="main-property-2"
+                    label="to"
+                    className={classes.textFieldRange}
+                    onChange={this.handleNodePropertyChange}
+                    margin="normal"
+                    type="number"
+
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
 
           </Grid>
           <Grid item >
-            <TextField
-              id="weight-filter"
-              label="Weight"
-              className={classes.textField}
-              onChange={this.handleWeightChange('weight')}
-              margin="normal"
-            />
+
+          <Grid
+              direction='column'
+              container>
+              <Grid item>
+                <h4>Weight Range</h4>
+              </Grid>
+
+              <Grid
+                direction='row'
+                container>
+                <Grid item xs={6}>
+                  <TextField
+                    id="main-weight-1"
+                    label="from"
+                    className={classes.textFieldRange}
+                    onChange={this.handleNodePropertyChange}
+                    margin="normal"
+                    type="number"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="main-weight-2"
+                    label="to"
+                    className={classes.textFieldRange}
+                    onChange={this.handleNodePropertyChange}
+                    margin="normal"
+                    type="number"
+
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+         
 
           </Grid>
           <Grid item>
@@ -198,7 +253,7 @@ class GraphFilter extends React.Component {
                     <Grid
                       direction='row'
                       container>
-                      <Grid item xs="6">
+                      <Grid item xs={6}>
                         <TextField
                           id={element + "-1"}
                           label="from"
@@ -208,7 +263,7 @@ class GraphFilter extends React.Component {
                           type="number"
                         />
                       </Grid>
-                      <Grid item xs="6">
+                      <Grid item xs={6}>
                         <TextField
                           id={element + "-2"}
                           label="to"
@@ -236,7 +291,7 @@ class GraphFilter extends React.Component {
           <Grid
             direction='row'
             container>
-            <Grid item xs="6">
+            <Grid item xs={6}>
 
               <FormControl className={classes.formControl}>
 
@@ -263,7 +318,7 @@ class GraphFilter extends React.Component {
               </FormControl>
 
             </Grid>
-            <Grid item xs="6">
+            <Grid item xs={6}>
               <FormControl className={classes.formControl}>
 
                 <Select

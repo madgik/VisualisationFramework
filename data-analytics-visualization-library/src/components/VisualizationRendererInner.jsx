@@ -11,6 +11,11 @@ import TableRenderer from './tables/TableRenderer';
 import HeatMapRenderer from './heatmap/HeatMapRenderer'
 
 class VisualizationRendererInner extends React.Component {
+
+
+example(){
+  console.log("in lib!!!!!!!");
+}
   render() {
 
     if (this.props.visualization.type === 'Graph') {
@@ -35,6 +40,8 @@ class VisualizationRendererInner extends React.Component {
   
     }
   }
+  
 }
+
 
 export default VisualizationRendererInner;

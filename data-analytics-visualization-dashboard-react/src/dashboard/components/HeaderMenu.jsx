@@ -6,7 +6,7 @@ import Modal from '@trendmicro/react-modal';
 // Be sure to include styles at some point, probably during your bootstraping
 // import '@trendmicro/react-modal/dist/react-modal.css';
 import FileBrowser, {  Icons } from 'react-keyed-file-browser'
-import Moment from 'moment'
+
 import '../../../node_modules/react-keyed-file-browser/dist/react-keyed-file-browser.css';
 
 function EmptyRenderer() { 
@@ -20,11 +20,14 @@ class HeaderMenu extends React.Component {
     
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
     this.onSave = this.onSave.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
+
+
   handleItemClick = (event) => {
-    this.props.onLoadFromWorkspace(event);  
+    this.props.openFileFromWorkspace(event);  
 }
 
   handleFieldChange = (value) => {
@@ -80,7 +83,7 @@ class HeaderMenu extends React.Component {
             />
             </div>
         </Header>
-        {/* <Button floated='right' onClick={this.saveDashboardWorkspaceDirectory.bind(this)} >Save</Button>
+        <Button floated='right' onClick={this.saveDashboardWorkspaceDirectory.bind(this)} >Save</Button>
         <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Open</Button>
 
         <Modal center showOverlay={true} show={this.props.workspace.showOpenFromWorkspace} onClose={this.onCloseModal.bind(this)} >
@@ -116,7 +119,7 @@ class HeaderMenu extends React.Component {
             <Input placeholder='filename' value={ this.props.workspace.filename} onChange={(e) => this.handleFieldChange(e.target.value)} /> .json
             <Button floated='right' onClick={this.onFileSaveToWorkspace.bind(this)} >Save</Button>
           </Modal.Body>
-        </Modal> */}
+        </Modal>
   </div>
     );
   }

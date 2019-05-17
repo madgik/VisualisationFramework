@@ -17,6 +17,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch(visualizationActions.updateDashBoardTitle(title))
   },
   openDashboardWorkspaceDirectory: (open) => {
+    dispatch(visualizationActions.requestWorkspaceListing());
     dispatch(visualizationActions.showOpenFromWorkspace(open))
   },
 
@@ -31,11 +32,14 @@ const mapDispatchToProps = dispatch => ({
     console.log("save to dashboard file!!")
     dispatch(visualizationActions.saveNewFileToWorkspace());
   },
-  onLoadFromWorkspace(event){
-    console.log("On load from workspace");
+
+  openFileFromWorkspace: (event) => {
+
     console.log(event);
-  //  dispatch(visualizationActions.saveNewFileToWorkspace());
+    dispatch(visualizationActions.openDashboardFile(event.id));
+
   }
+
 })
 
 export default connect(
