@@ -8,6 +8,7 @@ export const controlGraphConstants = {
   SET_GRAPH_DATA: 'set_graph_data',
   SET_GRAPH_LINKS: 'set_graph_links',
   SET_GRAPH_NODES: 'set_graph_nodes',
+  SET_TOP_NODES: 'set_top_nodes',
   SET_GRAPH:'set_graph',
   SET_LINK_COLOR: 'set_link_color',
   SET_SELECTED_NODE: 'set_selected_node',
@@ -18,6 +19,10 @@ export const controlGraphConstants = {
   SET_PAUSED: 'set_paused',
   SET_STOPPED: 'set_stopped',
   SET_TIMESTAMPS: 'set_timestamps',
+  SET_PLAYER_TIMESTAMPS: 'set_player_timestamps',
+  SET_SHOW_OLD_NODES: 'set_show_old_nodes',
+  SET_TIMESTAMP_FROM: 'set_timestamp_from',
+  SET_TIMESTAMP_TO: 'set_timestamp_to',
 
   SET_PREV_GRAPH_STATE_DATA: 'set_prev_graph_state_data',
   SET_PREV_GRAPH_STATE_LINKS: 'set_prev_graph_state_links',

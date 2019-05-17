@@ -8,8 +8,10 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgrap
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.HasWeightRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.NodeRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.SubGraphRepository;
+import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,13 +32,16 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     private SubGraphRepository subGraphRepository;
 
+    private Session session;
+
     @Autowired
     public NetworkGraphServiceImpl(HasWeightRepository hasWeightRepository, DateNodeRepository dateNodeRepository,
-                                   NodeRepository nodeRepository, SubGraphRepository subGraphRepository) {
+                                   NodeRepository nodeRepository, SubGraphRepository subGraphRepository, Session session) {
         this.hasWeightRepository = hasWeightRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
         this.subGraphRepository = subGraphRepository;
+        this.session = session;
     }
 
     @Override
@@ -77,6 +82,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
+    @Transactional
     public int storeNetworkGraph(NetworkGraph graph) throws Exception {
 
         List<Long> insertedNodes = new ArrayList<>();
@@ -119,6 +125,11 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         String[] t = times.split(",");
         List<String> timestamps = Arrays.asList(t);
         return timestamps;
+    }
+
+    @Override
+    public List<Node> getFilteredGraph(String subGraphId, Map<String, String> query) throws Exception {
+        return hasWeightRepository.findNodesByProperties( session, subGraphId, query);
     }
 
 

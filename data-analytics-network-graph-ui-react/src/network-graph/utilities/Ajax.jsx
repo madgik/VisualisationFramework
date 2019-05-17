@@ -14,6 +14,7 @@ class Ajax {
 
   NETWORK_GRAPH_TIMESTAMPS_PATH = 'timestamps'
 
+  NETWORK_GRAPH_FILTERED_PATH = 'filtered' 
 
   baseUrl = null
 

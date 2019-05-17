@@ -42,8 +42,8 @@ class GraphControls extends React.Component {
 
   componentWillMount() {
     this.maxValue = DateUtils.dates.length;
-    if (this.props.timestamps != null) {
-      this.maxValue = this.props.timestamps.length
+    if (this.props.playerTimestamps != null) {
+      this.maxValue = this.props.playerTimestamps.length
     }
   }
 
@@ -63,10 +63,12 @@ class GraphControls extends React.Component {
     // this.boxClass.push('shadow');
 
     if ((this.props.paused != true || isPaused != true) && date != undefined) {
-      if (this.props.currentDate === this.props.timestamps[0]) {
-        this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
-          var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
-          this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
+      if (this.props.currentDate === this.props.playerTimestamps[0]) {
+        console.log("nodes"+this.props.topNodes+"-"+this.props.showOldNodes);
+
+        this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes).then(() => {
+          var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps);
+          this.props.setSliderValue(this.props.playerTimestamps.indexOf(nextDate));
           this.playGraph(nextDate, false);
         })
         setTimeout(() => { }, 1000);
@@ -74,9 +76,9 @@ class GraphControls extends React.Component {
       else {
         setTimeout(() => {
           if (this.props.paused != true) {
-            this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph).then(() => {
-              var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
-              this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
+            this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph,this.props.showOldNodes, this.props.topNodes).then(() => {
+              var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps, this.props.showOldNodes, this.props.topNodes);
+              this.props.setSliderValue(this.props.playerTimestamps.indexOf(nextDate));
               this.playGraph(nextDate, false);
             })
           }
@@ -91,11 +93,11 @@ class GraphControls extends React.Component {
 
 
   handleNextClick() {
-    console.log(this.props.timestamps);
-    var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.timestamps);
+    console.log(this.props.playerTimestamps);
+    var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps);
     if (nextDate !== undefined) {
-      this.props.getDateGraph(nextDate, this.props.graph, this.props.selectedGraph);
-      this.props.setSliderValue(this.props.timestamps.indexOf(nextDate));
+      this.props.getDateGraph(nextDate, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes);
+      this.props.setSliderValue(this.props.playerTimestamps.indexOf(nextDate));
     }
   }
 
@@ -105,11 +107,11 @@ class GraphControls extends React.Component {
 
 
   handlePreviousClick() {
-    var previousDate = DateUtils.getPreviousDate(this.props.currentDate, this.props.timestamps);
+    var previousDate = DateUtils.getPreviousDate(this.props.currentDate, this.props.playerTimestamps);
     console.log("previous date is:" + previousDate);
     if (previousDate !== undefined) {
-      this.props.getDateGraph(previousDate, this.props.graph, this.props.selectedGraph);
-      this.props.setSliderValue(this.props.timestamps.indexOf(previousDate));
+      this.props.getDateGraph(previousDate, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes);
+      this.props.setSliderValue(this.props.playerTimestamps.indexOf(previousDate));
 
     }
   }
@@ -119,7 +121,7 @@ class GraphControls extends React.Component {
 
     this.props.setSliderValue(value);
 
-    this.props.getDateGraph(this.props.timestamps[value], this.props.graph, this.props.selectedGraph);
+    this.props.getDateGraph(this.props.playerTimestamps[value], this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes);
     // this.props.setPaused(false);
 
   }

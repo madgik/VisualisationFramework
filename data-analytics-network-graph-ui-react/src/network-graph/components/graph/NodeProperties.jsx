@@ -30,7 +30,7 @@ class NodeProperties extends React.Component {
   }
   
   handleNeighborsClick(){
-    this.props.getNeighbors(this.props.selectedGraph, this.props.selectedNode, this.props.graph);
+    this.props.getNeighbors(this.props.selectedGraph, this.props.selectedNode, this.props.graph, this.props.topNodes);
   }
 
 

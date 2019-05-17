@@ -32,4 +32,7 @@ public interface NetworkGraphService {
     List<Map<String, String>> getAllGraphsByTenant(String tenant) throws IOException;
 
     List<String> getAllTimestamps(String graphId) throws Exception;
+
+    List<Node> getFilteredGraph(String subGraphId, Map<String, String> query) throws Exception;
+
 }
