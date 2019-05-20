@@ -12,17 +12,12 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.GenericPortlet;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.portlet.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import org.gcube.common.portal.PortalContext;
 import org.gcube.vomanagement.usermanagement.model.GCubeUser;
 
@@ -52,7 +47,7 @@ public class VisualizationPortlet extends GenericPortlet {
 	protected String user;
 	protected String pass;
 
-	private ServiceProfile analyticsProfile;
+	private ServiceProfile analyticsProfile, workspaceProfile;
 	private EndpointManager endpointManager;
 
 	private static Logger logger = LoggerFactory.getLogger(VisualizationPortlet.class);
@@ -69,6 +64,11 @@ public class VisualizationPortlet extends GenericPortlet {
 		analyticsProfile.setServiceName("data-analytics-visualization");
 		analyticsProfile.setPathEndsWith("/");
 
+		workspaceProfile = new ServiceProfile();
+		workspaceProfile.setServiceClass("DataAccess");
+		workspaceProfile.setServiceName("StorageHub");
+		workspaceProfile.setPathContains("storagehub/workspace");
+
 		endpointManager = new EndpointManager();
 
 		Authenticator.setDefault(new Authenticator() {
@@ -77,11 +77,40 @@ public class VisualizationPortlet extends GenericPortlet {
 				return new PasswordAuthentication(user, pass.toCharArray());
 			}
 		});
+
+//		PortletPreferences prefs = PortletPreferencesFactoryUtil.getPortletSetup(actionRequest, portletResource);
+//
+//		prefs.setValue("facet_fields", facetFields);
+//		prefs.setValue("facet_names", facetNames);
 	}
 
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		logger.info("Visualization portlet is rendering the main view");
+		PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
+		PortalContext pContext = PortalContext.getConfiguration();
+		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		ThemeDisplay themeDisplay= (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		long portletGroupId= themeDisplay.getScopeGroupId();
+		String scope = pContext.getCurrentScope(String.valueOf(portletGroupId));
+
+		GCubeUser user = pContext.getCurrentUser(httpServletRequest);
+		String username = user.getUsername();
+		String token = pContext.getCurrentUserToken(scope, username);
+		List<String> endpoints = null;
+		try {
+			endpoints = endpointManager.getServiceEndpoints(scope, workspaceProfile);
+		} catch (ServiceDiscoveryException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("DoView: " + username +" " +token);
+		System.out.println("Endpoints: " + endpoints.toString());
+
+		renderRequest.setAttribute("workspaceEndpoint", endpoints.get(0));
+		renderRequest.setAttribute("username", username);
+		renderRequest.setAttribute("token", token);
+
 
 		PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
 		include(viewTemplate, renderRequest, renderResponse);
@@ -105,6 +134,10 @@ public class VisualizationPortlet extends GenericPortlet {
 		if (liferayRequests(resourceRequest, resourceResponse)) {
 			try {
 				List<String> endpoints = endpointManager.getServiceEndpoints(scope, analyticsProfile);
+
+
+				System.out.println(endpoints.toString());
+
 
 				for (String endpoint : endpoints) {
 					logger.info("Trying to contact endpoint: " + endpoint);
@@ -135,6 +168,7 @@ public class VisualizationPortlet extends GenericPortlet {
 		PortalContext pContext = PortalContext.getConfiguration();
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
 
+		System.out.println(resourceRequest.toString());
 		GCubeUser user = pContext.getCurrentUser(httpServletRequest);
 		String username = user.getUsername();
 		String email = user.getEmail();
@@ -220,17 +254,55 @@ public class VisualizationPortlet extends GenericPortlet {
 	}
 
 	protected String buildResourceUrl(String endpoint, ResourceRequest resourceRequest) {
-		StringBuilder resourceUrl = new StringBuilder(endpoint + resourceRequest.getResourceID());
+		//        logger.info("ResourceUrl no parameters: " + endpoint);
+//        logger.info("ResourceUrl no parameters: " + resourceRequest.toString());
 
-		logger.info("ResourceUrl no parameters: " + resourceUrl);
+		StringBuilder resourceUrl = new StringBuilder(endpoint);
+
+        logger.info("ResourceUrl no parameters: " + resourceUrl);
+        logger.info("Is get: " + resourceRequest.getMethod().toUpperCase().equals("GET"));
+		resourceUrl.append(resourceRequest.getResourceID());
 
 		if (resourceRequest.getMethod().toUpperCase().equals("GET")) {
-			addQueryParameters(resourceUrl, resourceRequest);
+
+
+//            logger.info(resourceRequest.getResourceID());
+//            resourceUrl.append(resourceRequest.getResourceID());
+//            logger.info(resourceUrl.toString());
+
+//            String params  = resourceRequest.getResourceID().replace("\'", "");
+//            logger.info(params);
+			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(resourceRequest);
+
+			Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+//            logger.info(parameterNames.toString());
+
+			while (parameterNames.hasMoreElements()) {
+				String param = parameterNames.nextElement();
+                logger.info("Parameter name -> " + param);
+                logger.info("Parameter value -> " + httpServletRequest.getParameterValues(param));
+				String[] ids = httpServletRequest.getParameterValues(param);
+
+				for(int j=0; j < ids.length; j++){
+					resourceUrl.append(param + "=" + ids[j]);
+					if((j+1) < ids.length)
+						resourceUrl.append("&");
+				}
+
+				if(parameterNames.hasMoreElements())
+					resourceUrl.append("&");
+			}
+//            logger.info("ResourceUrl inside if: " + resourceUrl);
+
+			//addQueryParameters(resourceUrl, resourceRequest);
+			System.out.println("SIZE:"+resourceRequest.getParameterMap().size());
+			//         resource =resourceUrl.toString().replace(",","&");
 		}
+		String resource =resourceUrl.toString();
 
-		logger.info("ResourceUrl with parameters: " + resourceUrl);
+		logger.info("ResourceUrl with parameters: " + resource);
 
-		return resourceUrl.toString();
+		return resource;
 	}
 
 	protected void addQueryParameters(StringBuilder resourceUrl, ResourceRequest resourceRequest) {
