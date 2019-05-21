@@ -6,6 +6,9 @@
 	<portlet>
 		<portlet-name>data-analytics-visualization-dashboard</portlet-name>
 		<instanceable>true</instanceable>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+		<ajaxable>true</ajaxable>
+
 	</portlet>
 
 	<role-mapper>

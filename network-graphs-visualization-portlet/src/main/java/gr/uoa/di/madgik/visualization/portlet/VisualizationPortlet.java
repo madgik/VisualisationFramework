@@ -74,6 +74,8 @@ public class VisualizationPortlet extends GenericPortlet {
         analyticsProfile.setServiceName("data-analytics-visualization");
         analyticsProfile.setPathEndsWith("/");
 
+
+
         endpointManager = new EndpointManager();
 
         Authenticator.setDefault(new Authenticator() {

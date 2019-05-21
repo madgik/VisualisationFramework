@@ -44,3 +44,11 @@ network-graphs-visualization-portlet/.idea/artifacts/network_graphs_visualizatio
 network-graphs-visualization-portlet/dtd/
 network-graphs-visualization-portlet/html/css/taglib/diff.css
 network-graphs-visualization-portlet/target
+data-analytics-visualization-dashboard/dtd
+data-analytics-visualization-dashboard/html
+data-analytics-visualization-dashboard/WEB-INF
+data-analytics-visualization-dashboard/wap
+data-analytics-visualization-dashboard/layouttpl
+data-analytics-visualization-dashboard/errors
+data-analytics-visualization-dashboard/favicon.ico
+data-analytics-visualization-dashboard/index.jsp

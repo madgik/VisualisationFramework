@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.liferay.portal.util.PortalUtil"%>
+<%@ page import="javax.portlet.PortletPreferences" %>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-
 <portlet:defineObjects />
 <html>
     <head>
@@ -24,6 +25,12 @@
             crossorigin="" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/overrides.css?1.0.1" />" />
     </head>
+    <%
+        PortletPreferences preferences = renderRequest.getPreferences();
+
+        String portletResource = ParamUtil.getString(request, "portletResource");
+        String facetFields = preferences.getValue("facet_fields", "assetType,thesaurus");
+        String  searchFields = preferences.getValue("search_fields", "assetTitle,assetDescription"); %>
     <body>
     	<p id="portletInfo" data-namespace="<portlet:namespace/>" data-loginurl="<portlet:resourceURL />" hidden></p>
 
@@ -38,15 +45,23 @@
 <script type="text/javascript">
 	(function() {
 		$(document).ready(function () {
-			var renderURL = '<portlet:renderURL><portlet:param name="jspPage" value="{url}.jsp" /><portlet:param name="getParams" value="{params}" /></portlet:renderURL>';
-			var resourceURL = '<portlet:resourceURL id="{url}?{parameters}" />';
-			var resourceURLNoParams = '<portlet:resourceURL id="{url}" />';
-			var contextPath = '<%=request.getContextPath()%>/';
-			var nameSpace = $('#portletInfo').data('namespace');
+            var renderURL = '<portlet:renderURL><portlet:param name="jspPage" value="{url}.jsp" /><portlet:param name="getParams" value="{params}" /></portlet:renderURL>';
+            var resourceURL = '<portlet:resourceURL id="{url}?{parameters}" />';
+            var resourceURLNoParams = '<portlet:resourceURL id="{url}" />';
+            var contextPath = '<%=request.getContextPath()%>/';
+            var nameSpace = $('#portletInfo').data('namespace');
+            var workspaceEndpoint = '<%= renderRequest.getAttribute("workspaceEndpoint") %>';
+            var username = '<%= renderRequest.getAttribute("username") %>';
+            var token = '<%= renderRequest.getAttribute("token") %>';
 
+			//var username = <%=facetFields%>
+            console.log("Resource URL:: " + resourceURL);
             ReactDOM.render(React.createElement(window.reactComponents['data-analytics-visualization-dashboard'].reactComponent, {
 			    routing: {
-			        baseUrl: resourceURL
+			        baseUrl: resourceURL,
+                    workspaceUrl: workspaceEndpoint,
+                    workspaceUsername: username,
+                    workspaceToken: token
 			    }
 			}), document.getElementById('<portlet:namespace/>root'));
 		});
