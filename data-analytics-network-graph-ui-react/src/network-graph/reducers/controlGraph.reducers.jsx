@@ -39,7 +39,8 @@ const dataDefault = {
     playerTimestamps:null,
     showOldNodes: true,
     timestampFrom: '2012.01',
-    timestampTo:'2015.12'
+    timestampTo:'2015.12',
+    propModalIsOpen: false
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -152,6 +153,13 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 timestampTo: {
                     $set: action.timestampTo
+                }
+            })
+        }
+        case controlGraphConstants.SET_PROP_MODAL_IS_OPEN: {
+            return update(state, {
+                propModalIsOpen: {
+                    $set: action.propModalIsOpen
                 }
             })
         }

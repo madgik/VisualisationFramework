@@ -154,6 +154,22 @@ class GraphFilter extends React.Component {
               direction='column'
               container>
               <Grid item>
+                <h4>Main Property</h4>
+              </Grid>
+              <Grid item>
+              <TextField
+                id="main-property-1"
+                label="Property"
+                className={classes.textFieldRange}
+                onChange={this.handleNodePropertyChange}
+                margin="normal"
+              />
+            </Grid>
+          </Grid>
+          {/* <Grid
+              direction='column'
+              container>
+              <Grid item>
                 <h4>Main Property Range</h4>
               </Grid>
 
@@ -182,178 +198,179 @@ class GraphFilter extends React.Component {
                   />
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
 
-          </Grid>
-          <Grid item >
+        </Grid>
+        <Grid item >
 
           <Grid
-              direction='column'
+            direction='column'
+            container>
+            <Grid item>
+              <h4>Weight Range</h4>
+            </Grid>
+
+            <Grid
+              direction='row'
               container>
-              <Grid item>
-                <h4>Weight Range</h4>
+              <Grid item xs={6}>
+                <TextField
+                  id="main-weight-1"
+                  label="from"
+                  className={classes.textFieldRange}
+                  onChange={this.handleNodePropertyChange}
+                  margin="normal"
+                  type="number"
+                />
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="main-weight-2"
+                  label="to"
+                  className={classes.textFieldRange}
+                  onChange={this.handleNodePropertyChange}
+                  margin="normal"
+                  type="number"
 
-              <Grid
-                direction='row'
-                container>
-                <Grid item xs={6}>
-                  <TextField
-                    id="main-weight-1"
-                    label="from"
-                    className={classes.textFieldRange}
-                    onChange={this.handleNodePropertyChange}
-                    margin="normal"
-                    type="number"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="main-weight-2"
-                    label="to"
-                    className={classes.textFieldRange}
-                    onChange={this.handleNodePropertyChange}
-                    margin="normal"
-                    type="number"
-
-                  />
-                </Grid>
+                />
               </Grid>
             </Grid>
-         
-
-          </Grid>
-          <Grid item>
-            <h4>Node Property filters</h4>
           </Grid>
 
-          {this.props.graph.nodes.length > 0 ?
-            <Grid item>
-              {Object.keys(this.props.graph.nodes[0]).map(element => {
-                if (typeof this.props.graph.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
-                  return <Grid item>
+
+        </Grid>
+        <Grid item>
+          <h4>Node Property filters</h4>
+        </Grid>
+
+          {
+        this.props.graph.nodes.length > 0 ?
+        <Grid item>
+          {Object.keys(this.props.graph.nodes[0]).map(element => {
+            if (typeof this.props.graph.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
+              return <Grid item>
+                <TextField
+                  id={element}
+                  label={element}
+                  className={classes.textField}
+                  onChange={this.handleNodePropertyChange}
+                  margin="normal"
+                  ref={element}
+                />
+              </Grid>
+            }
+            else if (element != 'latitude' && element != 'longitude') {
+              return <Grid
+                direction='column'
+                container>
+                <Grid item>
+                  <label>{element}</label>
+                </Grid>
+
+                <Grid
+                  direction='row'
+                  container>
+                  <Grid item xs={6}>
                     <TextField
-                      id={element}
-                      label={element}
-                      className={classes.textField}
+                      id={element + "-1"}
+                      label="from"
+                      className={classes.textFieldRange}
                       onChange={this.handleNodePropertyChange}
                       margin="normal"
-                      ref={element}
+                      type="number"
                     />
                   </Grid>
-                }
-                else if (element != 'latitude' && element != 'longitude') {
-                  return <Grid
-                    direction='column'
-                    container>
-                    <Grid item>
-                      <label>{element}</label>
-                    </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id={element + "-2"}
+                      label="to"
+                      className={classes.textFieldRange}
+                      onChange={this.handleNodePropertyChange}
+                      margin="normal"
+                      type="number"
 
-                    <Grid
-                      direction='row'
-                      container>
-                      <Grid item xs={6}>
-                        <TextField
-                          id={element + "-1"}
-                          label="from"
-                          className={classes.textFieldRange}
-                          onChange={this.handleNodePropertyChange}
-                          margin="normal"
-                          type="number"
-                        />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <TextField
-                          id={element + "-2"}
-                          label="to"
-                          className={classes.textFieldRange}
-                          onChange={this.handleNodePropertyChange}
-                          margin="normal"
-                          type="number"
-
-                        />
-                      </Grid>
-                    </Grid>
+                    />
                   </Grid>
+                </Grid>
+              </Grid>
 
-                }
+            }
 
-              })
-              }
-            </Grid>
-            :
-            ''
+          })
           }
-          <Grid item>
-            <h4>Date Range</h4>
+        </Grid>
+        :
+        ''
+      }
+      <Grid item>
+        <h4>Date Range</h4>
+      </Grid>
+        <Grid
+          direction='row'
+          container>
+          <Grid item xs={6}>
+
+            <FormControl className={classes.formControl}>
+
+              <Select
+                value={this.props.timestampFrom}
+                onChange={this.handleTimestampFromChange}
+                inputProps={{
+                  name: 'timestamp-from-selector',
+                  id: 'timestamp-from-selector',
+                  classes: {
+                    icon: classes.icon,
+                    root: classes.whiteColor,
+                  },
+                }}
+              >
+                {(this.props.timestamps != '') ?
+                  this.props.timestamps.map((timestamp, i) =>
+                    <MenuItem key={i} value={timestamp}>
+                      {timestamp}
+                    </MenuItem>) :
+                  ''
+                }
+              </Select>
+            </FormControl>
+
           </Grid>
-          <Grid
-            direction='row'
-            container>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
+            <FormControl className={classes.formControl}>
 
-              <FormControl className={classes.formControl}>
-
-                <Select
-                  value={this.props.timestampFrom}
-                  onChange={this.handleTimestampFromChange}
-                  inputProps={{
-                    name: 'timestamp-from-selector',
-                    id: 'timestamp-from-selector',
-                    classes: {
-                      icon: classes.icon,
-                      root: classes.whiteColor,
-                    },
-                  }}
-                >
-                  {(this.props.timestamps != '') ?
-                    this.props.timestamps.map((timestamp, i) =>
-                      <MenuItem key={i} value={timestamp}>
-                        {timestamp}
-                      </MenuItem>) :
-                    ''
-                  }
-                </Select>
-              </FormControl>
-
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl className={classes.formControl}>
-
-                <Select
-                  value={this.props.timestampTo}
-                  onChange={this.handleTimestampFromTo}
-                  inputProps={{
-                    name: 'timestamp-to-selector',
-                    id: 'timestamp-to-selector',
-                    classes: {
-                      icon: classes.icon,
-                      root: classes.whiteColor,
-                    },
-                  }}
-                >
-                  {(this.props.timestamps != '') ?
-                    this.props.timestamps.map((timestamp, i) =>
-                      <MenuItem key={i} value={timestamp}>
-                        {timestamp}
-                      </MenuItem>) :
-                    ''
-                  }
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained" className={classes.button}
-              onClick={this.handleApplyFilters}
-            // disabled={this.filtersBtn}
-            >
-              Apply Filters
-            </Button>
+              <Select
+                value={this.props.timestampTo}
+                onChange={this.handleTimestampFromTo}
+                inputProps={{
+                  name: 'timestamp-to-selector',
+                  id: 'timestamp-to-selector',
+                  classes: {
+                    icon: classes.icon,
+                    root: classes.whiteColor,
+                  },
+                }}
+              >
+                {(this.props.timestamps != '') ?
+                  this.props.timestamps.map((timestamp, i) =>
+                    <MenuItem key={i} value={timestamp}>
+                      {timestamp}
+                    </MenuItem>) :
+                  ''
+                }
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
+        <Grid item>
+          <Button
+            variant="contained" className={classes.button}
+            onClick={this.handleApplyFilters}
+          // disabled={this.filtersBtn}
+          >
+            Apply Filters
+            </Button>
+        </Grid>
+        </Grid >
       );
     }
     else {

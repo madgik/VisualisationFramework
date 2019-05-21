@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -48,11 +49,17 @@ public class NetworkGraphController {
 
     @RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
-                                            @RequestParam("name") String graphName
+                                            @RequestParam("name") String graphName,
+                                            @RequestParam("privacy") String privacy
                                            ) throws Exception {
+
+        DeferredResult<ResponseEntity<?>> output = new DeferredResult<>();
 
         NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
         String tenantName= "testTenant";
+
+
+
 
         NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, tenantName);
 

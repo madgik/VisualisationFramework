@@ -143,7 +143,7 @@ class SidebarControls extends React.Component {
               setFilteredTimestamps={this.props.setFilteredTimestamps}
             />
           </Grid>
-          <Grid item spacing={8}>
+          {/* <Grid item spacing={8}>
           <Divider/>
               <NodePropeties
                 graph={this.props.graph}
@@ -160,7 +160,7 @@ class SidebarControls extends React.Component {
                 selectedWeight={this.props.selectedWeight}
                 selectedLink={this.props.selectedLink}
               />
-            </Grid>
+            </Grid> */}
 
         </Grid>
 

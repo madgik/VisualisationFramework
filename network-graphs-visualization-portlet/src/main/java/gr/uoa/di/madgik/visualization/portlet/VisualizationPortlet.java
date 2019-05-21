@@ -84,7 +84,7 @@ public class VisualizationPortlet extends GenericPortlet {
         });
     }
 
-    @Override
+        @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
         logger.info("Visualization portlet is rendering the main view");
 

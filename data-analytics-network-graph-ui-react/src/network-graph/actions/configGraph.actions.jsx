@@ -22,14 +22,15 @@ export const configGraphActions = {
   setNodesNumber
 }
 
-function uploadFile(file) {
+function uploadFile(file, fileName, privacy) {
   return function (dispatch) {
     dispatch(showLoading());
 
     // Initial FormData
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("name", file.name);
+    formData.append("name", fileName);
+    formData.append("privacy", privacy);
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
     return axios.post(resourceUrl, formData, {
       headers: { 

@@ -48,35 +48,36 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
         String cypher = "";
         Map<String, String> params = new HashMap<>();
         int i = 0;
+        boolean hasWeight = false;
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-            cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})\n";
-            cypher += " ";
+            cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})"
+                    +  "-[hd:HAS_DATENODE]-(d:DateNode)-[w:HAS_WEIGHT]-(d2:DateNode)\n";
             params.put("id", graphId);
 
             String[] rangeParams = entry.getKey().split("-");
 
             if (rangeParams.length > 2) {
-                if (rangeParams[1].equals("property") && rangeParams[2].equals("1")) {
-                    cypher += "WHERE n.property>=$propertyFrom \n";
-                    params.put("propertyFrom", entry.getValue());
-                } else if (rangeParams[1].equals("property") && rangeParams[2].equals("2")) {
-                    cypher += "WHERE n.property<=$propertyTo \n";
-                    params.put("propertyTo", entry.getValue());
+                if (rangeParams[1].equals("property") ) {
+                    cypher += "WHERE d.property>=$property \n";
+                    params.put("property", entry.getValue());
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("1")) {
-//                    cypher += "WHERE n.weight>=$property \n";
-//                    params.put("weight", rangeParams[0]);
+                    cypher += "WHERE w.weight>=$weightFrom \n";
+                    params.put("weightFrom", entry.getValue());
+                    hasWeight = true;
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("2")) {
-//                    cypher += "WHERE n.weight<=$property \n";
-//                    params.put("weight", rangeParams[0]);
+                    cypher += "WHERE w.weight<=$weightTo \n";
+                    params.put("weightTo", entry.getValue());
+                    hasWeight = true;
                 }
+
             }
             else if (rangeParams.length > 1) {
                 if (rangeParams[1].equals("1")) {
                     cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value>=$valueFrom" + i + "\n";
-                    params.put("value" + i, entry.getValue());
+                    params.put("valueFrom" + i, entry.getValue());
                 } else {
                     cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value<=$valueTo" + i + "\n";
-                    params.put("value" + i, entry.getValue());
+                    params.put("valueTo" + i, entry.getValue());
                 }
                 params.put("name" + i, rangeParams[0]);
             } else {
@@ -84,12 +85,16 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
                 params.put("name" + i, entry.getKey());
                 params.put("value" + i, entry.getValue());
             }
-//            cypher += "Return p" + i + ",hp" + i +",";
-
             i++;
         }
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
-        cypher += "Return p,hp,n LIMIT 50";
+        cypher += "Return p,hp,n";
+//        if (hasWeight == true) {
+//            cypher += ",hd, d, w, d2";
+//        }
+
+        cypher += " LIMIT 50";
+
         System.out.println(cypher);
 //        for(int j =0)
 //        Map<String, Object> params = new HashMap<>();

@@ -10,7 +10,11 @@ const mapStateToProps = state => ({
     linkColor: state.controlGraph.linkColor,
     selectedNode: state.controlGraph.selectedNode,
     selectedLink: state.controlGraph.selectedLink,
-    sliderValue: state.controlGraph.sliderValue
+    selectedWeight:state.controlGraph.selectedWeight,
+    sliderValue: state.controlGraph.sliderValue,
+    propModalIsOpen: state.controlGraph.propModalIsOpen,
+    selectedGraph: state.configGraph.selectedGraph,
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,7 +22,8 @@ const mapDispatchToProps = dispatch => ({
     getNeighbors: (graphId, nodeId, graphData) => dispatch(controlGraphActions.getNeighbors(graphId, nodeId, graphData)),
     setSelectedWeight: (weight) => dispatch(controlGraphActions.setSelectedWeight(weight)),
     setSelectedLink: (link) => dispatch(controlGraphActions.setSelectedLink(link)),
-    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue))
+    setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
+    setPropModalIsOpen : (propModalIsOpen) => dispatch(controlGraphActions.setPropModalIsOpen(propModalIsOpen)),
 });
 
 export default connect(

@@ -67,25 +67,41 @@ class DataImportForm extends React.Component {
     render() {
         return (
             <div className="data-import-form">
-               
+
                 <Divider />
                 <div>
                     <UploadMessage
                         type='Graph'
                     />
                     <form className='add-graph-file' onSubmit={this.submit}>
-                        <Grid className="data-import-fix">
+                        <Grid className="data-import-fix" container direction='column'>
+                            <Grid container direction='row'>
+                                <Grid item xs={3}>
+                                    <label>File Name</label>
+                                </Grid>
 
-                            {/* <Grid className="data-import-fix" item>
-                                <Input 
-                                    className="input-file data-import-fix"
-                                    type='text'
-                                    ref={this.fileName}
-                                    onChange={this.onFileChange}
-                                />
-                            </Grid> */}
+                                <Grid item xs={4}>
+                                    <Input
+                                        className="input-file data-import-fix"
+                                        type='text'
+                                        ref={this.fileName}
+                                        onChange={this.onFileNameChange}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container direction='row'>
+                                <Grid item xs={6}>
+                                    <label>Privacy</label>
+                                </Grid>
+                                <Grid className="data-import-fix" item xs={6}>
+                                    <select ref={this.privacy}>
+                                        <option value="private">private</option>
+                                        <option value="public">public</option>
+                                    </select>
+                                </Grid>
+                            </Grid>
                             <Grid className="data-import-fix" item>
-                                <Input 
+                                <Input
                                     className="input-file data-import-fix"
                                     type='file'
                                     accept=".json"

@@ -39,7 +39,8 @@ export const controlGraphActions = {
   setShowOldNodes,
   setTimestampFrom,
   setTimestampTo,
-  setFilteredTimestamps
+  setFilteredTimestamps,
+  setPropModalIsOpen
 }
 
 /*
@@ -331,6 +332,10 @@ function setTimestampFrom(timestampFrom) {
 
 function setTimestampTo(timestampTo) {
   return { type: controlGraphConstants.SET_TIMESTAMP_TO, timestampTo };
+}
+
+function setPropModalIsOpen(propModalIsOpen) {
+  return { type: controlGraphConstants.SET_PROP_MODAL_IS_OPEN, propModalIsOpen };
 }
 
 function mergeDeep(o1, o2) {
