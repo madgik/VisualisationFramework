@@ -77,25 +77,21 @@ class Ajax {
   }
 
   buildWWorkspacePortlet(path, parameters) {
-    var resourceURL = this.workspaceUrl.replace('%7Burl%7D', path);
-    return resourceURL.replace('%7Bparameters%7D', parameters ? parameters : '');
-  }
-
-  buildWWorkspacePortlet(path, parameters) {
     console.log("Path: " + path);
     console.log(parameters);
     console.log(this.workspaceUrl);
 
-    var resourceURL = this.workspaceUrl.replace('%7Burl%7D', path);
-    console.log(resourceURL);
-    var url = resourceURL.replace('%7Bparameters%7D',  '');
+    var url = this.workspaceUrl + '/' + path;
+
     console.log(url);
     // return url;
 
     if (parameters) {
       console.log(parameters)
-      url += ('&' + parameters);
+      url += ('?' + parameters);
     }
+    console.log("final : " + url);
+
     return url;
   }
 
