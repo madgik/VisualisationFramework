@@ -31,7 +31,7 @@ public class Node extends SubGraphEntity{
     public Node() {
     }
 
-    public Node(String nodeId, double x, double y, Map<String,String> attributes, String graphId, String graphName, String tenantName) {
+    public Node(String nodeId, double x, double y, Map<String,String> attributes, String graphId, String graphName, String tenantName, String privacy) {
 
 //        System.out.println("ID node:"+nodeId);
         this.nodeId = nodeId;
@@ -59,6 +59,7 @@ public class Node extends SubGraphEntity{
         this.setSubGraphId(graphId);
         this.setSubGraphName(graphName);
         this.setTenantName(tenantName);
+        this.setPrivacy(privacy);
         this.hasDateNodes = attributes.entrySet()
                 .stream()
 //                .filter(e->Double.parseDouble(e.getValue().replace(",","."))>0)

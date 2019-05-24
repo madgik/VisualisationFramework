@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 
 @Controller
 @CrossOrigin(exposedHeaders = "Location")
@@ -40,7 +41,7 @@ public class NetworkGraphController {
 
 
     @Autowired
-    public NetworkGraphController(NetworkGraphService networkGraphService,  EntityMapper modelMapper){
+    public NetworkGraphController(NetworkGraphService networkGraphService, EntityMapper modelMapper) {
         this.networkGraphService = networkGraphService;
         this.modelMapper = modelMapper;
 
@@ -50,30 +51,39 @@ public class NetworkGraphController {
     @RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
                                             @RequestParam("name") String graphName,
-                                            @RequestParam("privacy") String privacy
-                                           ) throws Exception {
+                                            @RequestParam("privacy") String privacy,
+                                            @RequestParam("username") String username
+    ) throws Exception {
 
         DeferredResult<ResponseEntity<?>> output = new DeferredResult<>();
+        ForkJoinPool.commonPool().submit(() -> {
+            try {
 
-        NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
-        String tenantName= "testTenant";
+                NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
 
+                System.out.println("Im here but before"+username);
+                NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, username,privacy);
 
+                int results = 0;
 
+                results = networkGraphService.storeNetworkGraph(networkGraph);
 
-        NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, tenantName);
+                if (results > 0) {
 
-        int results= networkGraphService.storeNetworkGraph(networkGraph);
+                }
+                System.out.println("Im here but after");
 
-        if (results > 0) {
+                UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                        .path(NETWORK_GRAPH_BASE_PATH + "/{id}")
+                        .buildAndExpand(networkGraph.getGraphId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        }
+        });
+        System.out.println("servlet thread freed");
 
-        UriComponents uriComponents = UriComponentsBuilder.newInstance()
-                .path(NETWORK_GRAPH_BASE_PATH + "/{id}")
-                .buildAndExpand(networkGraph.getGraphId());
-
-        return ResponseEntity.created(uriComponents.toUri()).body(results);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "graphs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -85,7 +95,7 @@ public class NetworkGraphController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -102,7 +112,7 @@ public class NetworkGraphController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
@@ -110,21 +120,21 @@ public class NetworkGraphController {
 
 
     @RequestMapping(value = "neighbors/{subGraphId}/{nodeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getNeighbors(@PathVariable String subGraphId, @PathVariable String nodeId ) {
+    ResponseEntity<?> getNeighbors(@PathVariable String subGraphId, @PathVariable String nodeId) {
 
         try {
             List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-            Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results,nodeId, false);
+            Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results, nodeId, false);
             return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "next/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getNextTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String [] nodes, @RequestParam("date") String currentDate ) {
+    ResponseEntity<?> getNextTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes[]") String[] nodes, @RequestParam("date") String currentDate) {
 
         List<String> nodeList = Arrays.asList(nodes);
         try {
@@ -133,13 +143,13 @@ public class NetworkGraphController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @RequestMapping(value = "dates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes") ArrayList<String> nodes, @RequestParam("date") String currentDate ) {
+    ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestParam("nodes") ArrayList<String> nodes, @RequestParam("date") String currentDate) {
 
         try {
             ArrayList<String> nodeList = nodes;
@@ -156,7 +166,7 @@ public class NetworkGraphController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -171,14 +181,14 @@ public class NetworkGraphController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
     }
 
     @RequestMapping(value = "filtered/{graphId}", method = RequestMethod.GET)
-    ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String,String> allRequestParams) {
+    ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String, String> allRequestParams) {
 
         try {
             List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);
@@ -189,7 +199,7 @@ public class NetworkGraphController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

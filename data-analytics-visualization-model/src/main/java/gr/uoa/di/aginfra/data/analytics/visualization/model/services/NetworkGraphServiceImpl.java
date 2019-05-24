@@ -10,6 +10,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgrap
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.SubGraphRepository;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +83,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
+    @Async
     @Transactional
     public int storeNetworkGraph(NetworkGraph graph) throws Exception {
 

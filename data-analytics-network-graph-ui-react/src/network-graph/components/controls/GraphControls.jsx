@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DateUtils from '../../utilities/DateUtils';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/lab/Slider';
+import RecordControls from './RecordControls';
 
 // import { Slider, Handles, Rail, Tracks, Ticks } from 'react-compound-slider'
 // import { SliderRail, Handle, Track, Tick } from './SliderComponents' // example render components - source below
@@ -28,6 +29,7 @@ const style = () => ({
 
 
 class GraphControls extends React.Component {
+
   constructor(props) {
     super(props);
     this.playGraph = this.playGraph.bind(this);
@@ -64,7 +66,7 @@ class GraphControls extends React.Component {
 
     if ((this.props.paused != true || isPaused != true) && date != undefined) {
       if (this.props.currentDate === this.props.playerTimestamps[0]) {
-        console.log("nodes"+this.props.topNodes+"-"+this.props.showOldNodes);
+        console.log("nodes" + this.props.topNodes + "-" + this.props.showOldNodes);
 
         this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes).then(() => {
           var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps);
@@ -76,7 +78,7 @@ class GraphControls extends React.Component {
       else {
         setTimeout(() => {
           if (this.props.paused != true) {
-            this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph,this.props.showOldNodes, this.props.topNodes).then(() => {
+            this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes).then(() => {
               var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps, this.props.showOldNodes, this.props.topNodes);
               this.props.setSliderValue(this.props.playerTimestamps.indexOf(nextDate));
               this.playGraph(nextDate, false);
@@ -122,9 +124,9 @@ class GraphControls extends React.Component {
     this.props.setSliderValue(value);
 
     this.props.getDateGraph(this.props.playerTimestamps[value], this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes);
-    // this.props.setPaused(false);
-
   }
+
+
 
 
   render() {
@@ -150,7 +152,7 @@ class GraphControls extends React.Component {
         >
           <Grid item xs={1}>
           </Grid>
-          <Grid item  xs={2} >
+          <Grid item xs={2} >
             <TextField
               id="current-date"
               label="CurrentDate"
@@ -164,15 +166,15 @@ class GraphControls extends React.Component {
             </TextField>
           </Grid>
 
-          <Grid item  xs={1}>
+          <Grid item xs={1}>
           </Grid>
 
-          <Grid item  xs={7}>
+          <Grid item xs={6}>
             <Grid
               container
               direction="column"
               justify="center"
-              
+
             >
               <Grid className="player" item xs={12}>
 
@@ -212,7 +214,11 @@ class GraphControls extends React.Component {
             </Grid>
 
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
+            <RecordControls
+              record={this.props.record}
+              setRecord={this.props.setRecord}
+            />
           </Grid>
         </Grid>
       );

@@ -16,7 +16,10 @@ const dataDefault = {
   allGraphsMetadata: '',
   openImportModal: false,
   openSidebar: false,
-  nodesNumber: 5
+  nodesNumber: 5, 
+  modalIsOpen: false,
+  modalMessage: 'uploadStarted',
+  username:''
 }
 
 
@@ -118,6 +121,27 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         nodesNumber: {
           $set: action.nodesNumber
+        }
+      })
+    }
+    case configGraphConstants.SET_MODAL_IS_OPEN: {
+      return update(state, {
+        modalIsOpen: {
+          $set: action.modalIsOpen
+        }
+      })
+    }
+     case configGraphConstants.SET_MODAL_MESSAGE: {
+      return update(state, {
+        modalMessage: {
+          $set: action.modalMessage
+        }
+      })
+    }
+    case configGraphConstants.SET_USERNAME: {
+      return update(state, {
+        username: {
+          $set: action.username
         }
       })
     }

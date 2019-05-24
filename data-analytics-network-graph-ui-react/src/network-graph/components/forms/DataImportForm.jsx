@@ -3,23 +3,39 @@ import React from 'react'
 import UploadMessage from '../ui_utils/UploadMessage';
 import { findDOMNode } from 'react-dom'
 
-import { Grid, Header, Divider, Icon } from 'semantic-ui-react';
-import { Button } from '@material-ui/core/';
-import { Input } from 'semantic-ui-react'
+import { Header, Divider, Icon } from 'semantic-ui-react';
+import {Grid} from '@material-ui/core/';
+import { Button, withStyles } from '@material-ui/core/';
+import { Input } from 'semantic-ui-react';
+import TextField from '@material-ui/core/TextField';
 
 
+
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+    },
+    control: {
+      padding: theme.spacing.unit * 2,
+    },
+    message: {
+        padding: '20px'
+    }
+    
+  });
 
 class DataImportForm extends React.Component {
     constructor(props) {
         super(props);
         // This binding is necessary to make `this` work in the callback
         this.onFileChange = this.onFileChange.bind(this);
-        // this.onNameFileChange = this.onNameFileChange.bind(this);
+        this.onFileNameChange = this.onFileNameChange.bind(this);
 
         this.submit = this.submit.bind(this);
         this.file = React.createRef();
         this.myFile = React.createRef();
         this.fileName = React.createRef();
+        this.privacy = React.createRef();
     }
 
 
@@ -55,32 +71,48 @@ class DataImportForm extends React.Component {
         }
     }
 
+    onFileNameChange(e) {
+        this.fileName = e.target.value;
+    }
+
     // onFileNameChange(e) {
     //     this.fileName = e.target.value;
     // }
 
     submit(e) {
         e.preventDefault();
-        this.props.uploadFile(this.myFile);
+        this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
             <div className="data-import-form">
 
                 <Divider />
                 <div>
                     <UploadMessage
+                        className={styles.message}
                         type='Graph'
                     />
                     <form className='add-graph-file' onSubmit={this.submit}>
-                        <Grid className="data-import-fix" container direction='column'>
-                            <Grid container direction='row'>
-                                <Grid item xs={3}>
+                        <Grid className="data-import-fix"  
+                            spacing={32}
+                            className={classes.root}  
+                            container 
+                            direction='column' 
+                            justify="center"
+                            alignItems="center"
+                            alignContent="center"
+                            >
+                            <Grid container 
+                            
+                                direction='row'>
+                                <Grid item xs ={5}>
                                     <label>File Name</label>
                                 </Grid>
-
-                                <Grid item xs={4}>
+                                <Grid item xs={5}>
                                     <Input
                                         className="input-file data-import-fix"
                                         type='text'
@@ -89,15 +121,33 @@ class DataImportForm extends React.Component {
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid container direction='row'>
-                                <Grid item xs={6}>
+                            <Grid container 
+                                direction='row'>
+                                <Grid item xs={5}>
                                     <label>Privacy</label>
                                 </Grid>
-                                <Grid className="data-import-fix" item xs={6}>
+                                <Grid className="data-import-fix" item xs={5}>
                                     <select ref={this.privacy}>
                                         <option value="private">private</option>
                                         <option value="public">public</option>
                                     </select>
+                                </Grid>
+                            </Grid>
+                            <Grid container 
+                                direction='row'>
+                                <Grid item   item xs={5}>
+                                    <label>Description</label>
+                                </Grid>
+                                <Grid item item xs={5}>
+                                    <TextField
+                                        className="input-file data-import-fix"
+                                        type='text'
+                                        placeholder="Description"
+                                        multiline={true}
+                                        rows={1}
+                                        ref={this.description}
+                                        onChange={this.onDescriptionChange}
+                                    />
                                 </Grid>
                             </Grid>
                             <Grid className="data-import-fix" item>
@@ -109,6 +159,7 @@ class DataImportForm extends React.Component {
                                     onChange={this.onFileChange}
                                 />
                             </Grid>
+
                             <Grid className="upload-button-fix" item>
                                 <Button
                                     type='submit'
@@ -128,4 +179,4 @@ class DataImportForm extends React.Component {
     }
 }
 
-export default DataImportForm;
+export default withStyles(styles) (DataImportForm);
