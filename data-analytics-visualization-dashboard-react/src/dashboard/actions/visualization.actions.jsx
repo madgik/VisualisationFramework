@@ -127,6 +127,7 @@ function requestWorkspaceListing() {
     var resourceUrl = Ajax.buildWorkspaceUrl("",gcube_token);
     return axios.get(resourceUrl)
       .then(response => {
+        console.log("requestWorkspaceListing: " + response);
         dispatch(setWorkspaceParentDirDetails(response.data))
         dispatch(getDashboardFolder());
       })
@@ -162,16 +163,26 @@ function getDashboardFolder() {
   return function (dispatch, getState) {
     let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceParentDirDetails.item.id + "/items/" + visualizationConstants.DASHBOARD_DIR, parameters);
+    console.log("getDashboardFolder: resource url --> " + resourceUrl);
     return axios.get(resourceUrl)
       .then(response => {
-        if(response.data.itemlist.length === 0)
+        console.log("getDashboardFolder: " + response.data.itemlist);
+
+        if(response.data.itemlist.length === 0){
+          console.log("getDashboardFolder:  in create " + response.data.itemlist);
+
           dispatch(createDashboardFolder());
+        }
         else{
+          console.log("getDashboardFolder:  already created " + response.data.itemlist);
+
           dispatch(setWorkspaceDashboardDirDetails(response.data.itemlist[0]))
           dispatch(getDashboardFolderListing());  
         }
       })
       .catch(response => {
+        console.log("getDashboardFolder:  in exception!!! " + response);
+
         alert(response);
       });
   }
@@ -181,6 +192,7 @@ function getDashboardFolderListing() {
   return function (dispatch, getState) {
     let parameters = "gcube-token=" + getState().data.workspaceDetails.workspaceToken;
     var resourceUrl = Ajax.buildWorkspaceUrl(Ajax.WORKSPACE_ITEMS + "/" + getState().data.workspaceDetails.workspaceDashboardDirDetails.id + "/children", parameters);
+    console.log("print in avtions: " + resourceUrl);
     return axios.get(resourceUrl)
       .then(response => {
         console.log(response.data.itemlist)
@@ -208,6 +220,7 @@ function createDashboardFolder() {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
+    console.log("createDashboardFolder: " + resourceUrl);
 
     return axios.post(resourceUrl,data,headers)
       .then(response => { 
