@@ -72,6 +72,9 @@ class PlayerBar extends React.Component {
             playerTimestamps={this.props.playerTimestamps}
             showOldNodes={this.props.showOldNodes}
             topNodes={this.props.topNodes}
+            record={this.props.record}
+            setRecord={this.props.setRecord}
+            graphRef={this.props.graphRef}
           />
         </AppBar>
       </div>

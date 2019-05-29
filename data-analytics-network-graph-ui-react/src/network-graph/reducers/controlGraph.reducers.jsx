@@ -40,7 +40,9 @@ const dataDefault = {
     showOldNodes: true,
     timestampFrom: '2012.01',
     timestampTo:'2015.12',
-    propModalIsOpen: false
+    propModalIsOpen: false,
+    record: false,
+    availRec: false
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -160,6 +162,20 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 propModalIsOpen: {
                     $set: action.propModalIsOpen
+                }
+            })
+        }
+        case controlGraphConstants.SET_RECORD: {
+            return update(state, {
+                record: {
+                    $set: action.record
+                }
+            })
+        }
+        case controlGraphConstants.SET_AVAIL_REC: {
+            return update(state, {
+                availRec: {
+                    $set: action.availRec
                 }
             })
         }

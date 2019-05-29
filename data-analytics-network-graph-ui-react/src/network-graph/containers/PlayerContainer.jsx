@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
   playerTimestamps: state.controlGraph.playerTimestamps,
   openSidebar: state.configGraph.openSidebar,
   showOldNodes:state.controlGraph.showOldNodes,
-  topNodes: state.controlGraph.topNodes
+  topNodes: state.controlGraph.topNodes,
+  record: state.controlGraph.record
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
     //SETTERS
     setPausedPromise: (paused) => dispatch(controlGraphActions.setPausedPromise(paused)),
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
-
+    setRecord: (record) => dispatch(controlGraphActions.setRecord(record))
 });
 
 export default connect(

@@ -55,3 +55,17 @@
   .overlay {
     opacity: 1;
   }
+
+  .recorder {
+      width: 230px;
+      padding: 10px;
+      border: 1px solid gray;
+      margin: 0; 
+      position:absolute;
+      top: 5px;
+      right: 10px;
+  }
+
+  .canvas {
+    position:absolute; top:-99999999px; left:-9999999999px;
+  }

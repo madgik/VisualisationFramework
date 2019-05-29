@@ -10,18 +10,19 @@ import SidebarProperties from '../menu/SidebarProperties';
 import NodePropeties from "./NodeProperties";
 import LinkProperties from "./LinkProperties";
 import Modal from 'react-modal';
+import RecordControls from '../controls/RecordControls';
 
 // import reactD3GraphUtils from "../src/utils";
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : 'auto',
-    right                 : '5%',
-    bottom                : 'auto',
-    marginRight           : '-5%',
-    transform             : 'translate(-50%, -50%)',
-    opacity               : '1'
+  content: {
+    top: '50%',
+    left: 'auto',
+    right: '5%',
+    bottom: 'auto',
+    marginRight: '-5%',
+    transform: 'translate(-50%, -50%)',
+    opacity: '1'
   }
 };
 
@@ -56,6 +57,7 @@ Modal.setAppElement('#root')
 //   // window.alert(`Mouse out link between ${source} and ${target}`);
 // };
 
+
 class GraphView extends React.Component {
   constructor(props) {
     super(props);
@@ -66,9 +68,20 @@ class GraphView extends React.Component {
     this.onClickGraph = this.onClickGraph.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.graphRef = React.createRef();
+    this.canvasRef = React.createRef();
   }
 
-  
+  getGraph = () => {
+    return this.graphRef;
+  }
+
+  getCanvas = () => {
+    return this.canvasRef;
+  }
+
+
   afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
@@ -141,7 +154,7 @@ class GraphView extends React.Component {
     }
   };
 
-  onClickGraph () {
+  onClickGraph() {
     this.closeModal();
   };
 
@@ -149,6 +162,7 @@ class GraphView extends React.Component {
   render() {
     return (
       <div className='graph-container'>
+
 
         {/* <svg className="graph"
               width={Force.width}
@@ -161,22 +175,32 @@ class GraphView extends React.Component {
             <h2>Select Graph and top Nodes</h2>
           </div>
           :
-          <Graph
-            id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
-            data={(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ? null : this.props.graph}
-            config={this.myConfig}
-            onClickNode={this.onClickNode}
-            checkForGraphElementsChanges={this.checkForGraphElementsChanges}
-            refreshGraph={this.refreshGraph}
-            // onRightClickNode={onRightClickNode}
-            onClickGraph={this.onClickGraph}
-            onClickLink={this.onClickLink}
-          // onRightClickLink={onRightClickLink}
-          // onMouseOverNode={onMouseOverNode}
-          // onMouseOutNode={onMouseOutNode}
-          // onMouseOverLink={onMouseOverLink}
-          // onMouseOutLink={onMouseOutLink}
-          />}
+          <div>
+            <div ref={this.graphRef} >
+              <Graph
+
+                id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+                data={(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ? null : this.props.graph}
+                config={this.myConfig}
+                onClickNode={this.onClickNode}
+                checkForGraphElementsChanges={this.checkForGraphElementsChanges}
+                refreshGraph={this.refreshGraph}
+                // onRightClickNode={onRightClickNode}
+                onClickGraph={this.onClickGraph}
+                onClickLink={this.onClickLink}
+              // onRightClickLink={onRightClickLink}
+              // onMouseOverNode={onMouseOverNode}
+              // onMouseOutNode={onMouseOutNode}
+              // onMouseOverLink={onMouseOverLink}
+              // onMouseOutLink={onMouseOutLink}
+              />
+            </div>
+            <canvas id="background-canvas" ref={this.canvasRef} className="canvas">
+
+            </canvas>
+
+          </div>
+        }
         <Modal
           isOpen={this.props.propModalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -199,12 +223,25 @@ class GraphView extends React.Component {
             selectedWeight={this.props.selectedWeight}
             selectedLink={this.props.selectedLink}
           />
-
         </Modal>
 
+        <RecordControls
+          record={this.props.record}
+          setRecord={this.props.setRecord}
+          graphRef={this.getGraph}
+          canvasRef={this.getCanvas}
+          graph={this.props.graph}
+          availRecord={this.props.availRecord}
+        />
+
       </div>
+
     );
   }
 }
 
 export default GraphView;
+
+// export default React.forwardRef((props, ref) =>
+//   <GraphView {...props} graphRef={ref} />
+// );

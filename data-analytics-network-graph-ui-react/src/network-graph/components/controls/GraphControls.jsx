@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DateUtils from '../../utilities/DateUtils';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/lab/Slider';
-import RecordControls from './RecordControls';
+
 
 // import { Slider, Handles, Rail, Tracks, Ticks } from 'react-compound-slider'
 // import { SliderRail, Handle, Track, Tick } from './SliderComponents' // example render components - source below
@@ -49,6 +49,7 @@ class GraphControls extends React.Component {
     }
   }
 
+  
 
   handlePlayClick() {
 
@@ -214,11 +215,8 @@ class GraphControls extends React.Component {
             </Grid>
 
           </Grid>
-          <Grid item xs={2}>
-            <RecordControls
-              record={this.props.record}
-              setRecord={this.props.setRecord}
-            />
+          <Grid item xs={1}>
+           
           </Grid>
         </Grid>
       );

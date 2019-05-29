@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import React from 'react';
+
 import GraphView from '../components/graph/GraphView';
 import { configGraphActions } from '../actions/configGraph.actions'
 import { controlGraphActions } from '../actions/controlGraph.actions';
@@ -14,7 +16,8 @@ const mapStateToProps = state => ({
     sliderValue: state.controlGraph.sliderValue,
     propModalIsOpen: state.controlGraph.propModalIsOpen,
     selectedGraph: state.configGraph.selectedGraph,
-
+    record: state.controlGraph.record,
+    availRecord: state.controlGraph.availRecord
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -24,9 +27,20 @@ const mapDispatchToProps = dispatch => ({
     setSelectedLink: (link) => dispatch(controlGraphActions.setSelectedLink(link)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
     setPropModalIsOpen : (propModalIsOpen) => dispatch(controlGraphActions.setPropModalIsOpen(propModalIsOpen)),
+    setRecord: (record) => dispatch(controlGraphActions.setRecord(record)),
+    setAvailRecord: (availRecord) => dispatch(controlGraphActions.setAvailRecord(availRecord))
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(GraphView)
+)(GraphView);
+
+// const GraphComponent = connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(GraphView);
+
+// export default React.forwardRef((props, ref) =>
+//   <GraphComponent {...props} graphRef={ref} />
+// );
