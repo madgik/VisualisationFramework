@@ -52,6 +52,11 @@ class RecordControls extends React.Component {
     script.async = true;
     document.body.appendChild(script);
 
+    const script2 = document.createElement("script");
+    script2.src = "http://webrtc.github.io/adapter/adapter-latest.js";
+    script2.async = true;
+    document.body.appendChild(script);
+
   }
 
   componentWillMount() {
@@ -68,7 +73,6 @@ class RecordControls extends React.Component {
       this.canvas2d.height = this.elementToRecord.clientHeight;
       if(this.loopInit == null) {
         this.loop();
-
       }
     }
   }
@@ -131,9 +135,11 @@ class RecordControls extends React.Component {
   }
 
   handleSaveFile() {
-
+    var mp4 = new File([this.blob], 'test.mp4', {
+      type: 'video/mp4'
+    });
     console.log("size" + this.blob.size);
-    fileSaver.saveAs(this.blob, 'test.webm');
+    fileSaver.saveAs(mp4, 'test.mp4');
   }
 
   render() {

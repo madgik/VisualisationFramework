@@ -232,6 +232,7 @@ class GraphView extends React.Component {
           canvasRef={this.getCanvas}
           graph={this.props.graph}
           availRecord={this.props.availRecord}
+          setAvailRecord={this.props.setAvailRecord}
         />
 
       </div>

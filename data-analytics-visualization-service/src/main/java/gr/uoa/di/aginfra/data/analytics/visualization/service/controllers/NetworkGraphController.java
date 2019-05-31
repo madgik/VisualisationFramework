@@ -61,7 +61,6 @@ public class NetworkGraphController {
 
                 NetworkGraphDto networkGraphDto = mapper.readValue(file.getBytes(), NetworkGraphDto.class);
 
-                System.out.println("Im here but before"+username);
                 NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, username,privacy);
 
                 int results = 0;
@@ -192,7 +191,7 @@ public class NetworkGraphController {
 
         try {
             List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);
-            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
+            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, true);
             System.out.println(d3Results.get("nodes"));
             System.out.println(d3Results.get("links"));
             return new ResponseEntity<>(d3Results, HttpStatus.OK);

@@ -52,12 +52,13 @@ class GraphFilter extends React.Component {
     this.handleApplyFilters = this.handleApplyFilters.bind(this);
     this.handleTimestampFromChange = this.handleTimestampFromChange.bind(this);
     this.handleTimestampToChange = this.handleTimestampToChange.bind(this);
-
+  
   }
 
   filtersBtn = true;
   query = {}
   dateFrom = null;
+  componentWillMount
 
   handlePropertyChange(name) {
 
@@ -111,6 +112,13 @@ class GraphFilter extends React.Component {
   }
 
   handleApplyFilters() {
+    Object.keys(this.props.graph.nodes[0]).map(e => {
+        if(e.value != null && e.value != "") {
+          this.query[e.id] = e.value
+          return;
+        }
+      });
+      //    this.filtersBtn = true
     console.log(this.query)
     if (Object.keys(this.query).length !== 0) {
       this.props.getFilteredGraph(this.query, this.props.selectedGraph);
@@ -122,7 +130,7 @@ class GraphFilter extends React.Component {
     const { classes } = this.props;
     var showOldNodes = this.props.showOldNodes;
 
-    if (this.props.graph.nodes.length != 0 && this.props.graph.nodes != undefined) {
+    if (this.props.topNodes.nodes != undefined && this.props.topNodes.nodes != undefined) {
       return (
         <Grid
           container
@@ -244,10 +252,10 @@ class GraphFilter extends React.Component {
         </Grid>
 
           {
-        this.props.graph.nodes.length > 0 ?
+        this.props.topNodes.nodes != undefined ?
         <Grid item>
-          {Object.keys(this.props.graph.nodes[0]).map(element => {
-            if (typeof this.props.graph.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
+          {Object.keys(this.props.topNodes.nodes[0]).map(element => {
+            if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
               return <Grid item>
                 <TextField
                   id={element}

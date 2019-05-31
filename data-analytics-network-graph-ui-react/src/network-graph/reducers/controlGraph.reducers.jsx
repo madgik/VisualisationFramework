@@ -9,6 +9,7 @@ const dataDefault = {
     type: '',
     tree: null,
     selectedNode: '',
+    node: null,
     startingDate: '2012.01',
     lastDate: '2015.12',
     currentDate: '2012.01',
@@ -51,6 +52,12 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 graph: {
                     $set: action.graph
+                }
+            }) 
+        case controlGraphConstants.SET_NODE:
+            return update(state, {
+                node: {
+                    $set: action.node
                 }
             })
         case controlGraphConstants.SET_GRAPH_LINKS:
@@ -172,10 +179,10 @@ export function controlGraph(state = dataDefault, action) {
                 }
             })
         }
-        case controlGraphConstants.SET_AVAIL_REC: {
+        case controlGraphConstants.SET_AVAIL_RECORD: {
             return update(state, {
-                availRec: {
-                    $set: action.availRec
+                availRecord: {
+                    $set: action.availRecord
                 }
             })
         }

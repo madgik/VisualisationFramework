@@ -46,41 +46,67 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
     public List<Node> findNodesByProperties(Session session, String graphId, Map<String, String> queryParams) {
 
         String cypher = "";
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         int i = 0;
+        boolean hasExtra = false;
         boolean hasWeight = false;
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-            cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})"
-                    +  "-[hd:HAS_DATENODE]-(d:DateNode)-[w:HAS_WEIGHT]-(d2:DateNode)\n";
+
+//                    +  "-[hd" + i + ":HAS_DATENODE]-(d" + i + ":DateNode)-[w" + i + ":HAS_WEIGHT]-(d" + i + "_2:DateNode)\n";
             params.put("id", graphId);
 
             String[] rangeParams = entry.getKey().split("-");
 
             if (rangeParams.length > 2) {
-                if (rangeParams[1].equals("property") ) {
-                    cypher += "WHERE d.property>=$property \n";
+                if (!hasExtra) {
+                    cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
+                    cypher += "-[hd:HAS_DATENODE]-(d:DateNode)-[w:HAS_WEIGHT]-(d2:DateNode)\n";
+                }
+                hasExtra = true;
+
+                if (rangeParams[1].equals("property")) {
+
+                    cypher += "WHERE d.property=$property \n";
+
                     params.put("property", entry.getValue());
+
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("1")) {
-                    cypher += "WHERE w.weight>=$weightFrom \n";
-                    params.put("weightFrom", entry.getValue());
-                    hasWeight = true;
+                    if (!hasWeight) {
+                        cypher += "WHERE w.weight>=$weightFrom \n";
+                        hasWeight = true;
+                    } else {
+                        cypher += "AND w.weight>=$weightFrom \n";
+                    }
+
+                    params.put("weightFrom", Double.valueOf(entry.getValue()));
+
+                    System.out.println("weightFrom" + entry.getValue());
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("2")) {
-                    cypher += "WHERE w.weight<=$weightTo \n";
-                    params.put("weightTo", entry.getValue());
-                    hasWeight = true;
+                    if (!hasWeight) {
+                        cypher += "WHERE w.weight<=$weightTo \n";
+                        hasWeight = true;
+                    } else {
+                        cypher += "AND w.weight<=$weightTo \n";
+                    }
+                    System.out.println("weightTo" + entry.getValue());
+
+                    params.put("weightTo", Double.valueOf(entry.getValue()));
                 }
 
-            }
-            else if (rangeParams.length > 1) {
+            } else if (rangeParams.length > 1) {
+                cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
+
                 if (rangeParams[1].equals("1")) {
                     cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value>=$valueFrom" + i + "\n";
-                    params.put("valueFrom" + i, entry.getValue());
+                    params.put("valueFrom" + i, Double.valueOf(entry.getValue()));
                 } else {
                     cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value<=$valueTo" + i + "\n";
-                    params.put("valueTo" + i, entry.getValue());
+                    params.put("valueTo" + i, Double.valueOf(entry.getValue()));
                 }
                 params.put("name" + i, rangeParams[0]);
+                System.out.println("name" + i + ":" + rangeParams[0]);
             } else {
+                cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
                 cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value=$value" + i + "\n";
                 params.put("name" + i, entry.getKey());
                 params.put("value" + i, entry.getValue());
@@ -88,12 +114,13 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
             i++;
         }
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
+
         cypher += "Return p,hp,n";
 //        if (hasWeight == true) {
 //            cypher += ",hd, d, w, d2";
 //        }
 
-        cypher += " LIMIT 50";
+        cypher += " LIMIT 25";
 
         System.out.println(cypher);
 //        for(int j =0)
@@ -101,6 +128,7 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
 
 
         Iterable<Node> nodes = session.query(Node.class, cypher, params);
+        System.out.println("size:" + Lists.newArrayList(nodes).size());
 
         return Lists.newArrayList(nodes);
     }

@@ -41,7 +41,9 @@ export const controlGraphActions = {
   setTimestampTo,
   setFilteredTimestamps,
   setPropModalIsOpen,
-  setRecord
+  setRecord,
+  setAvailRecord, 
+  setNode
 }
 
 /*
@@ -135,7 +137,8 @@ function getFilteredGraph(query, graphId) {
         'content-type': 'application/json'
       }
     }).then(response => {
-      // console.log(response.data);
+       console.log("response"+JSON.stringify(response.data));
+      
       dispatch(loadGraph(response.data));
 
       dispatch(hideLoading());
@@ -342,6 +345,15 @@ function setPropModalIsOpen(propModalIsOpen) {
 function setRecord(record) {
   return { type: controlGraphConstants.SET_RECORD, record };
 }
+
+function setAvailRecord(availRecord) {
+  return { type: controlGraphConstants.SET_AVAIL_RECORD, availRecord };
+}
+
+function setNode(node) {
+  return { type: controlGraphConstants.SET_NODE, node };
+}
+
 
 function mergeDeep(o1, o2) {
   var tempNewObj = o1;
