@@ -1,18 +1,26 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DropdownProperties;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
+import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.data.CSVImporter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.XMLMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
 import mil.nga.sf.geojson.FeatureConverter;
+import net.opengis.wps10.OutputDataType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
+import org.geotools.data.wps.WebProcessingService;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +29,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.io.StringReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
@@ -50,12 +71,15 @@ public class DashBoardController {
 
     private HttpClient httpClient = HttpClient.getInstance();
 
+    private  DataDocumentRepository dataDocumentDAO;
     @Autowired
     public DashBoardController(DashBoardService dashBoardService,
                                EntityMapper modelMapper,
+                               DataDocumentRepository dataDocumentDAO,
                                VREResolver vreResolver) {
         this.dashBoardService = dashBoardService;
         this.modelMapper = modelMapper;
+        this.dataDocumentDAO = dataDocumentDAO;
         this.vreResolver = vreResolver;
     }
 
@@ -68,6 +92,8 @@ public class DashBoardController {
 
         return ResponseEntity.ok(stats);
     }
+
+
 
     @RequestMapping(value = "getCropHistory", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCropHistory(@RequestBody  Map<String, Object> params) throws Exception {
@@ -225,7 +251,7 @@ public class DashBoardController {
         List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
         List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
         for(int i=0,j=0 ; i< properties.size(); i++) {
-            if (!properties.get(i).equals("fieldid") && !properties.get(i).equals("datum") && !properties.get(i).equals("id")
+            if (!properties.get(i).equals("DATE") && !properties.get(i).equals("datum") && !properties.get(i).equals("id")
                     && !properties.get(i).equals("daynr")) {
                 dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
                 j++;
@@ -285,6 +311,72 @@ public class DashBoardController {
         // FeatureCollection f = (FeatureCollection) json;
         System.out.println(jsnobject.toString());
         return ResponseEntity.ok(jsnobject.toString());
+    }
+
+    @RequestMapping(value = "getDataMinerData", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDataMinerData(@RequestParam  String url, @RequestBody  Map<String, Object> params) throws Exception {
+        logger.debug("Retrieving visualization usage statistics");
+
+
+
+        JSONObject selectedLayer = null;
+        String file = httpClient.workspaceGetRequest(url, null, params);
+        DOMParser parser = new DOMParser();
+        InputSource is = new InputSource(new StringReader(file));
+
+        parser.parse(is);
+        Document doc = parser.getDocument();
+
+        NodeList root = doc.getChildNodes();
+        Node executeResponse = XMLMapper.getNode("wps:ExecuteResponse", root);
+        Node processOutputs = XMLMapper.getNode("wps:ProcessOutputs", executeResponse.getChildNodes() );
+        Node output = XMLMapper.getNode("wps:Output", processOutputs.getChildNodes() );
+        Node data = XMLMapper.getNode("wps:Data", output.getChildNodes() );
+        Node complexData = XMLMapper.getNode( "wps:ComplexData", data.getChildNodes() );
+        Node featureCollection = XMLMapper.getNode("ogr:FeatureCollection", complexData.getChildNodes() );
+        Node featureMember = XMLMapper.getNode("gml:featureMember", featureCollection.getChildNodes() );
+        Node result = XMLMapper.getNode("ogr:Result", featureMember.getChildNodes() );
+        List<Node> nodes1 = XMLMapper.getNodes("ogr:Result", featureMember.getChildNodes() );
+
+        String execType = XMLMapper.getNodeAttr("type", result);
+        System.out.println(execType);
+        NodeList nodes = nodes1.get(1).getChildNodes();
+        String link = XMLMapper.getNodeValue("d4science:Data", nodes);
+        String desc = XMLMapper.getNodeValue("d4science:Description", nodes);
+
+        DataDocument dataDocument = new DataDocument();
+        String dataFromLink = httpClient.workspaceGetRequest(link, null, null);
+
+        String[] lines = dataFromLink.split("\n");
+        for(int i=0;i<lines.length;i++){
+            if(lines[i].startsWith("#")){
+                lines[i]="";
+            }
+        }
+
+        String[] finalCSV = Arrays.stream(lines)
+                .filter(value ->
+                        value != null && value.length() > 0
+                )
+                .toArray(size -> new String[size]);
+
+        String[][] allData = CSVReader.readCSV(finalCSV, ";");
+        String[] header = finalCSV[0].split(";");
+        List<String> properties = Arrays.asList(header);
+        List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
+        for(int i=0,j=0 ; i< properties.size(); i++) {
+            if (!properties.get(i).equals("DATE")) {
+                dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
+                j++;
+            }
+        }
+
+        DataMinerResults dataMinerResults = new DataMinerResults(dropdownPropertiesList, allData);
+
+        System.out.println(link);
+
+
+        return ResponseEntity.ok(dataMinerResults);
     }
 
 }

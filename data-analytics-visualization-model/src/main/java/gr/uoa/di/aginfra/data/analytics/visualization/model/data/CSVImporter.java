@@ -32,6 +32,11 @@ public class CSVImporter implements RawDataImporter {
         this.dataDocumentDAO = dataDocumentDAO;
     }
 
+    public CSVImporter(DataDocumentRepository dataDocumentDAO) {
+        this.config = null;
+        this.dataDocumentDAO = dataDocumentDAO;
+    }
+
     @Override
     public void importData(byte[] content, DataDocument dataDocument) throws Exception {
         if (FileHelpers.isZipFile(dataDocument.getName())) {

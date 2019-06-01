@@ -32,6 +32,10 @@ class App extends React.Component {
     this.store.dispatch(visualizationActions.requestVisualizations());
     const dateToFormat = '2018-12-31';
     const today = moment(dateToFormat);
+    const dataMiner =  'http://dataminer-prototypes.d4science.org/wps/WebProcessingService'
+
+    this.store.dispatch(visualizationActions.setDataMinerUrl(dataMiner));
+
     this.value = moment.range(today.clone().subtract(1, "years"), today.clone());
     this.store.dispatch(visualizationActions.setDateRange(this.value));
     this.store.dispatch(visualizationActions.setWorkspaceUsername(this.props.routing.workspaceUsername));
@@ -56,8 +60,7 @@ App.defaultProps = {
     baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
     workspaceUrl: 'http://workspace-repository.d4science.org/storagehub/workspace',
     workspaceUsername: 'cmitatakis',
-    workspaceToken: '2a85cb45-5dc1-4d29-a630-919f549e9858-843339462'
-  },
+    workspaceToken: '2a85cb45-5dc1-4d29-a630-919f549e9858-843339462'  },
   size: {
     width: 1000,
     height: 660

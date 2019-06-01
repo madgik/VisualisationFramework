@@ -13,6 +13,8 @@ export const visualizationConstants = {
   GET_NEAREST_METEOSTATION: 'get-nearest-meteostation',
   SET_DATE_RANGE: 'set-date-range',
   SET_RELEATED_DATA: 'set-releated-data',
+  SET_RELEATED_DATA_DATAMINER: 'set-releated-data-data-miner',
+
   SET_FIELD_DATA_X_AXIS_LABEL: 'set-field-data-x-axis-label',
   SET_FIELD_DATA_Y_AXIS_LABEL: 'set-field-data-y-axis-label',
 
@@ -53,6 +55,11 @@ export const visualizationConstants = {
   SET_VISUALIZATION_TO_STATE: 'set-visualization-to-state',
   SET_FILTERS_TO_STATE: 'set-filters-to-state',
 
+  SET_DATAMINER_URL: 'set-dataminer-url',
+  SET_DATAMINER_DATA_HEADER: 'set-data-miner-data-header',
+  SET_DATAMINER_DATA: 'set-data-miner-data',
+  SET_CROP_HISTORY_PROPERTIES_DROPDOWN: 'set-crop-history-properties-dropdown',
+  SET_CROP_HISTORY_PROPERTIES_DROPDOWN_TEXT: 'set-crop-history-properties-dropdown-text',
 
   DASHBOARD_DIR: 'Dashboard Visualization Folder'
 

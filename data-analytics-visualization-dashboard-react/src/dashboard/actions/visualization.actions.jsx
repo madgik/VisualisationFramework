@@ -11,6 +11,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import originalMoment from "moment";
 import { extendMoment } from "moment-range";
+import TimeSeries from '../utilities/TimeSeries';
 const moment = extendMoment(originalMoment);
 
 export const visualizationActions = {
@@ -80,7 +81,15 @@ export const visualizationActions = {
   loadDashboardFile,
   setDataToState,
   setVisualizationToState,
-  setFiltersToState
+  setFiltersToState,
+  setDataMinerUrl,
+  getDataMinerData,
+  setDataMinerHeader,
+  setDataMinerData,
+  reloadDataMinerChart,
+  setCropHistoryPropertiesDropdownValue,
+  setCropHistoryPropertiesDropdownText,
+  setDataMinerChartDetails
 }
 
 /*
@@ -526,6 +535,14 @@ function setNdviPropertiesDropdownText(selected) {
   return { type: visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT, selected };
 }
 
+function setCropHistoryPropertiesDropdownValue(selected) {
+  return { type: visualizationConstants.SET_CROP_HISTORY_PROPERTIES_DROPDOWN, selected };
+}
+
+function setCropHistoryPropertiesDropdownText(selected) {
+  return { type: visualizationConstants.SET_CROP_HISTORY_PROPERTIES_DROPDOWN_TEXT, selected };
+}
+
 function setDateRangeOpen(isOpen) {
   return { type: visualizationConstants.SET_DATE_RANGE_OPEN, isOpen };
 }
@@ -703,6 +720,10 @@ function setWorkspaceUsername(username) {
   return { type: visualizationConstants.SET_WORKSPACE_USERNAME, username };
 }
 
+function setDataMinerUrl(dataMiner) {
+  return { type: visualizationConstants.SET_DATAMINER_URL, dataMiner };
+}
+
 function setWorkspaceToken(token) {
   return { type: visualizationConstants.SET_WORKSPACE_TOKEN, token };
 }
@@ -727,6 +748,10 @@ function reloadRelatedFieldData(chart1) {
   return { type: visualizationConstants.SET_RELEATED_DATA, chart1 };
 }
 
+function reloadDataMinerChart(chart2) {
+  return { type: visualizationConstants.SET_RELEATED_DATA_DATAMINER, chart2 };
+}
+
 function cleanRelatedFieldData(){
   return function (dispatch, getState) 
   {
@@ -735,6 +760,11 @@ function cleanRelatedFieldData(){
     chart1.xAxisLabel = "";
     chart1.yAxisLabel = "";
     dispatch(reloadRelatedFieldData(chart1));
+    let chart2 =  Object.assign({}, getState().data.chart2);
+    chart2.timeSeries = null;
+    chart2.xAxisLabel = "";
+    chart2.yAxisLabel = "";
+    dispatch(reloadDataMinerChart(chart2));
   }
 }
 
@@ -969,6 +999,89 @@ function getNDVIFieldDataProperties(){
       alert(response);
     });
   }
+}
+
+function getDataMinerData(url){
+
+  return function (dispatch, getState) 
+  {
+    let parameters = "url=" + url;
+
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData',parameters);
+    let data = RequestPayload.buildDataMinerRequestPayload(getState());
+
+    return axios.post(resourceUrl, data, {
+      headers: {
+          'Content-Type': 'application/json',
+      }}).then(response => {
+
+        console.log(response);
+        // let chart1 =  Object.assign({}, getState().data.chart1);
+        // chart1.timeSeries = response.data;
+        // chart1.xAxisLabel = "Date";
+        // chart1.yAxisLabel = getState().data.chart1Properties.selectedNDVIFieldInYAxis;
+         dispatch(setDataMinerHeader(response.data.header));
+         dispatch(setDataMinerData(response.data.data));
+         dispatch(setDataMinerChartDetails());
+
+      })
+    .catch(response => {
+      alert(response);
+    });
+  }
+}
+
+function setDataMinerChartDetails(){
+
+  return function (dispatch, getState) 
+  {
+
+    var columnID;
+
+    var xAxisData = [];
+    var yAxisData = [];
+
+    let dataMinerData = getState().data.chart2Properties.dataMinerData;
+    let headerProperties = getState().data.chart2Properties.headerProperties;
+
+    for(let i=0; i < headerProperties.length; i++){
+      if(headerProperties[i].text ===  getState().data.chart2Properties.selectedFieldInYAxis){
+        columnID = i + 1;
+      }
+    }
+
+    console.log(columnID);
+    for(const row of dataMinerData){
+
+      if(row[0] !== null && row[columnID] !== null){
+        xAxisData.push(row[0]);
+        yAxisData.push(Number(row[columnID]));
+        console.log(row[0] + " , value: "+ row[columnID]);
+      }
+    }
+    
+    var timeSeries = new TimeSeries("All",null,"Date",xAxisData, yAxisData,[]);
+
+    var timeSeriesArray =  [timeSeries];
+    console.log(timeSeriesArray);
+
+    let chart2 =  Object.assign({}, getState().data.chart2);
+    chart2.timeSeries = timeSeriesArray;
+    chart2.xAxisLabel = "Date";
+    chart2.yAxisLabel = getState().data.chart2Properties.selectedFieldInYAxis;
+    dispatch(reloadDataMinerChart(chart2));
+  
+  }
+}
+
+
+
+function setDataMinerHeader(header) {
+  return { type: visualizationConstants.SET_DATAMINER_DATA_HEADER,header};
+}
+
+function setDataMinerData(data) {
+  return { type: visualizationConstants.SET_DATAMINER_DATA,data};
 }
 
 function updateFilter(field, value) {

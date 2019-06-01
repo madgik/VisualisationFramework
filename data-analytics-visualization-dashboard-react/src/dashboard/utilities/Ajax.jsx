@@ -9,6 +9,15 @@ class Ajax {
 
   baseUrl = null
   workspaceUrl = null
+  dataMinerUrl = null
+
+  getDataMinerUrl() {
+    return this.dataMinerUrl;
+  }
+
+  setDataMinerUrl(dataMinerUrl) {
+    this.dataMinerUrl = dataMinerUrl;
+  }
 
   getWorkspaceUrl() {
     return this.workspaceUrl;
@@ -77,6 +86,41 @@ class Ajax {
   }
 
   buildWWorkspacePortlet(path, parameters) {
+    console.log("Path: " + path);
+    console.log(parameters);
+    console.log(this.workspaceUrl);
+
+    var url = this.workspaceUrl + '/' + path;
+
+    console.log(url);
+    // return url;
+
+    if (parameters) {
+      console.log(parameters)
+      url += ('?' + parameters);
+    }
+    console.log("final : " + url);
+
+    return url;
+  }
+
+  buildDataMinerUrl(path, parameters) {
+    var url = this.isLocalDeployment() ?
+      this.buildDataMinerLocal(path, parameters) :
+      this.buildDataMinerPortlet(path, parameters);
+      
+    return url;
+  }
+
+  buildDataMinerLocal(path, parameters) {
+    var url = this.workspaceUrl + '/' + path;
+    if (parameters) {
+      url += ('?' + parameters);
+    }
+    return url;
+  }
+
+  buildDataMinerPortlet(path, parameters) {
     console.log("Path: " + path);
     console.log(parameters);
     console.log(this.workspaceUrl);

@@ -6,7 +6,9 @@ import { VisualizationRendererInnerContainer } from 'data-analytics-visualizatio
 
 const mapStateToProps = state => ({
   visualization: state.data.chart1,
-  document: state.document
+  document: state.document,
+  fieldDetails: state.visualization.fieldDetails,
+
 })
 
 

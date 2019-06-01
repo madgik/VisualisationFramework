@@ -7,12 +7,16 @@ import ChartHeader from '../components/ChartHeader';
 function mapStateToProps(state) {
   return{
     fieldDetails: state.visualization.fieldDetails,
+    chartProperties: state.data.chart2Properties
+
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-    onFieldCharacteristicsChange : (selected) => {
-  dispatch(visualizationActions.updateFieldDetailsDropdownValue(selected))
+    onFieldChange : (value, text) => {
+      dispatch(visualizationActions.setCropHistoryPropertiesDropdownValue(value));
+      dispatch(visualizationActions.setCropHistoryPropertiesDropdownText(text));
+      dispatch(visualizationActions.setDataMinerChartDetails());
   }
 })
 

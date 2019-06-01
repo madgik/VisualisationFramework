@@ -47,6 +47,20 @@ class RequestPayload{
           })
     }
 
+    buildDataMinerRequestPayload(state)
+    {
+        return JSON.stringify({
+            "request":"Execute",
+            "service":"WPS",
+            "Version":"1.0.0",
+            "gcube-token": state.data.workspaceDetails.workspaceToken,
+            "lang":"en-US",
+            "Identifier":"org.gcube.dataanalysis.wps.statisticalmanager.synchserver.mappedclasses.transducerers.AGRODATACUBE_FIELD_CROP_SIMULATION",
+            "DataInputs":"Title=AgroDataCube+Field+Crop+Simulation;AgroDataCubeFieldId=7859785;SimulationYear=2018;CalculationsTimeout=30"
+           
+          })
+    }
+
 }
 
 export default new RequestPayload();

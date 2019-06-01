@@ -250,13 +250,29 @@ const dataDefault = {
     tree: null,
     graph: null,
     barChartData: null,
-    timeSeries: [{
-      "name":"All","color":null,"documents":["5be2fe27a3ce4d0180067f99","5be2fe27a3ce4d0180067f99","5be2fe2fa3ce4d018006865a","5be2fe27a3ce4d0180067f99","5be2fe2fa3ce4d018006865a","5be2fe2fa3ce4d01800685df","5be2fe24a3ce4d0180067ee0","5be2fe26a3ce4d0180067f43","5be2fe2da3ce4d01800684ce","5be2fe26a3ce4d0180067f6a","5be2fe26a3ce4d0180067f2a","5be2fe30a3ce4d0180068763","5be2fe2ba3ce4d01800682f0","5be2fe2fa3ce4d0180068640","5be2fe27a3ce4d0180067f8d","5be2fe2ea3ce4d018006851e","5be2fe2ca3ce4d0180068374","5be2fe2ba3ce4d0180068286","5be2fe2da3ce4d0180068440","5be2fe28a3ce4d018006808d","5be2fe2da3ce4d01800684b7","5be2fe2ea3ce4d0180068507","5be2fe28a3ce4d0180068014","5be2fe28a3ce4d0180068014","5be2fe29a3ce4d0180068188","5be2fe31a3ce4d0180068795","5be2fe2fa3ce4d01800685df","5be2fe29a3ce4d018006814d","5be2fe28a3ce4d0180068099","5be2fe30a3ce4d018006871c","5be2fe28a3ce4d01800680ca","5be2fe2da3ce4d0180068489","5be2fe28a3ce4d01800680ca","5be2fe27a3ce4d0180067fd8","5be2fe28a3ce4d0180068099","5be2fe2fa3ce4d01800685ec","5be2fe30a3ce4d018006871c","5be2fe2fa3ce4d01800685ec","5be2fe2ea3ce4d018006852a","5be2fe27a3ce4d0180067f8d","5be2fe28a3ce4d0180068099","5be2fe2aa3ce4d01800681c3","5be2fe2aa3ce4d01800681c3","5be2fe28a3ce4d018006802d","5be2fe30a3ce4d0180068734","5be2fe2aa3ce4d0180068235","5be2fe2ba3ce4d018006832d","5be2fe2aa3ce4d0180068235","5be2fe25a3ce4d0180067f12","5be2fe30a3ce4d0180068763","5be2fe2ea3ce4d0180068507","5be2fe29a3ce4d018006815a","5be2fe2fa3ce4d0180068673","5be2fe2aa3ce4d018006821d","5be2fe27a3ce4d0180067fd8","5be2fe2aa3ce4d01800681b7","5be2fe2aa3ce4d01800681b7","5be2fe2ea3ce4d018006851e","5be2fe27a3ce4d0180067fbf","5be2fe31a3ce4d0180068795","5be2fe30a3ce4d018006877c","5be2fe2ba3ce4d0180068339","5be2fe2aa3ce4d01800681b7","5be2fe28a3ce4d01800680b1","5be2fe2fa3ce4d01800686bd","5be2fe2ea3ce4d0180068573","5be2fe2aa3ce4d01800681b7","5be2fe28a3ce4d01800680a5","5be2fe24a3ce4d0180067ed5","5be2fe28a3ce4d0180068099","5be2fe2aa3ce4d0180068263","5be2fe30a3ce4d018006871c","5be2fe30a3ce4d01800686ed","5be2fe2ea3ce4d018006852a","5be2fe2da3ce4d0180068467","5be2fe2da3ce4d01800684e5","5be2fe2aa3ce4d01800681cf","5be2fe2da3ce4d01800684e5","5be2fe2da3ce4d01800684e5","5be2fe2aa3ce4d01800681cf","5be2fe2ba3ce4d0180068339","5be2fe30a3ce4d018006873f","5be2fe25a3ce4d0180067f06","5be2fe27a3ce4d0180067fa6","5be2fe2da3ce4d0180068472","5be2fe26a3ce4d0180067f2a","5be2fe29a3ce4d01800680f0","5be2fe28a3ce4d018006808d","5be2fe2ba3ce4d0180068320","5be2fe28a3ce4d01800680a5","5be2fe2fa3ce4d01800685ec","5be2fe2fa3ce4d0180068627","5be2fe2fa3ce4d01800686bd","5be2fe2da3ce4d01800684ab","5be2fe27a3ce4d0180067f82","5be2fe2aa3ce4d018006821d","5be2fe25a3ce4d0180067f06","5be2fe28a3ce4d018006808d","5be2fe2fa3ce4d01800685ec","5be2fe2aa3ce4d01800681c3","5be2fe2aa3ce4d0180068235","5be2fe2aa3ce4d018006821d","5be2fe2aa3ce4d01800681c3","5be2fe2da3ce4d0180068472","5be2fe24a3ce4d0180067ed5","5be2fe2ea3ce4d0180068542","5be2fe2ea3ce4d0180068597","5be2fe24a3ce4d0180067ed5","5be2fe29a3ce4d0180068137","5be2fe28a3ce4d0180068075","5be2fe28a3ce4d0180068046","5be2fe30a3ce4d018006873f","5be2fe2aa3ce4d0180068258","5be2fe2aa3ce4d01800681c3","5be2fe2aa3ce4d0180068235","5be2fe2fa3ce4d01800685ec","5be2fe24a3ce4d0180067ee0","5be2fe2aa3ce4d01800681cf","5be2fe2ba3ce4d018006826f","5be2fe28a3ce4d0180068075","5be2fe2aa3ce4d018006821d","5be2fe28a3ce4d0180068075","5be2fe2da3ce4d01800684ab","5be2fe2ba3ce4d01800682b5","5be2fe29a3ce4d0180068113","5be2fe2fa3ce4d0180068611","5be2fe28a3ce4d0180068075","5be2fe2ea3ce4d0180068597","5be2fe2da3ce4d01800684c3","5be2fe28a3ce4d0180068075","5be2fe2fa3ce4d0180068611","5be2fe2da3ce4d01800684c3","5be2fe28a3ce4d0180068075","5be2fe2fa3ce4d0180068611","5be2fe2ba3ce4d01800682b5","5be2fe2ba3ce4d018006827a","5be2fe2aa3ce4d01800681ab","5be2fe29a3ce4d0180068171","5be2fe2ea3ce4d01800685d4","5be2fe2ea3ce4d0180068507","5be2fe30a3ce4d01800686f9","5be2fe2ba3ce4d018006829d","5be2fe30a3ce4d01800686ed","5be2fe28a3ce4d0180067ffd","5be2fe29a3ce4d0180068171","5be2fe2fa3ce4d0180068611","5be2fe29a3ce4d0180068171","5be2fe27a3ce4d0180067ff1","5be2fe2aa3ce4d01800681ab","5be2fe27a3ce4d0180067ff1","5be2fe30a3ce4d01800686e1","5be2fe2ca3ce4d01800683a3","5be2fe2ca3ce4d01800683eb","5be2fe2aa3ce4d01800681c3","5be2fe2aa3ce4d01800681b7","5be2fe24a3ce4d0180067ee0","5be2fe2ea3ce4d018006858b","5be2fe2aa3ce4d01800681cf","5be2fe27a3ce4d0180067ff1","5be2fe28a3ce4d018006806a","5be2fe29a3ce4d0180068171","5be2fe28a3ce4d0180068008","5be2fe2ca3ce4d01800683eb","5be2fe2ba3ce4d0180068309","5be2fe2ba3ce4d0180068314","5be2fe2ba3ce4d0180068314","5be2fe28a3ce4d018006805e","5be2fe2ba3ce4d0180068314","5be2fe2fa3ce4d01800686a6","5be2fe2da3ce4d018006847e","5be2fe29a3ce4d018006817c","5be2fe29a3ce4d018006817c","5be2fe2ba3ce4d01800682c0","5be2fe2ba3ce4d01800682c0","5be2fe2ba3ce4d01800682c0","5be2fe2ba3ce4d0180068292","5be2fe2ea3ce4d0180068513","5be2fe2aa3ce4d01800681f1","5be2fe2ba3ce4d01800682d9","5be2fe2ba3ce4d0180068339","5be2fe28a3ce4d01800680a5","5be2fe2ba3ce4d0180068339","5be2fe2da3ce4d01800684ab","5be2fe26a3ce4d0180067f1e","5be2fe30a3ce4d01800686c8","5be2fe26a3ce4d0180067f1e","5be2fe2ca3ce4d0180068369","5be2fe2ca3ce4d0180068369","5be2fe30a3ce4d018006873f","5be2fe2aa3ce4d01800681cf","5be2fe28a3ce4d0180068075","5be2fe28a3ce4d0180068075","5be2fe28a3ce4d0180068075","5be2fe2ea3ce4d0180068542","5be2fe28a3ce4d0180068075","5be2fe2ba3ce4d01800682b5","5be2fe2ba3ce4d01800682b5","5be2fe28a3ce4d0180068075","5be2fe28a3ce4d0180068075","5be2fe2ea3ce4d01800685d4","5be2fe2fa3ce4d01800686a6","5be2fe2fa3ce4d01800686a6","5be2fe2fa3ce4d0180068611","5be2fe28a3ce4d018006806a","5be2fe28a3ce4d018006806a","5be2fe28a3ce4d0180068008","5be2fe28a3ce4d0180068008","5be2fe28a3ce4d0180068008","5be2fe28a3ce4d0180068008","5be2fe2ca3ce4d01800683eb","5be2fe2ca3ce4d01800683eb","5be2fe2da3ce4d01800684c3","5be2fe2ba3ce4d018006826f","5be2fe2da3ce4d01800684ab","5be2fe28a3ce4d0180068075","5be2fe27a3ce4d0180067f82","5be2fe30a3ce4d018006873f","5be2fe27a3ce4d0180067f82","5be2fe29a3ce4d0180068137","5be2fe28a3ce4d0180068075","5be2fe2fa3ce4d0180068611"],"yaxisData":[1000,1144,1266,1234,1136,1279,1048,876,1022,885,1044,876,969,883,987,984,897,980,740,870,791,708,841,676,689,718,863,697,561,579,779,541,411,504,384,498,501,379,492,409,464,361,475,296,201,180,212,225,177,191,124,157,119,40,47,44,36,32,19,34,19,9,14],"xaxisData":[143,143,143,143,143,143,139,139,139,139,139,139,138,138,138,138,136,136,136,136,131,131,131,131,129,129,129,129,124,124,124,124,118,118,118,118,117,117,117,117,115,115,115,115,111,110,110,110,110,108,108,108,108,104,104,104,104,103,103,103,103,102,102],"xAxisDataType":"Decimal"}],
-      filters: [],
-      xAxisLabel: "Day",
-      yAxisLabel: "Plant Height",
-      type:"Line",
-      json:null
+    timeSeries: null,
+    filters: [],
+    xAxisLabel: "",
+    yAxisLabel: "",
+    type:"Line",
+    json:null,
+    freeMind: null,
+    hasColors: false,
+    hasDocuments: false,
+    heatMapData: null,
+    id: "test2",
+    inner: null,
+    parameters: null,
+    tabularData: null,
+    threeDData: null,
+    tuples: null,
+    zAxisLabel: null
+    },
+    chart2Properties:{
+      selectedFieldInYAxis:'ELAPSED',
+      selectedFieldInYAxisId:0,
+      headerProperties:[],
+      dataMinerData:[]
     },
     weatherChartDetails:{
       dateRange: null,
@@ -271,7 +287,9 @@ const dataDefault = {
       workspaceFiles:[],
       showOpenFromWorkspace: false,
       showSaveToWorkspace: false,
-      filename: ''
+      filename: '',
+      dataMinerUrl: ''
+
     }
 }
 
@@ -297,6 +315,14 @@ export function data(state = dataDefault, action) {
           }
         }
       });  
+    case visualizationConstants.SET_DATAMINER_URL:
+        return update(state, {
+          workspaceDetails: {
+            dataMinerUrl: {
+              $set: action.dataMinerUrl
+            }
+          }
+        });      
     case visualizationConstants.SET_SHOW_OPEN_FROM_WORKSPACE:
       return update(state, {
         workspaceDetails: {
@@ -366,6 +392,13 @@ export function data(state = dataDefault, action) {
           
         }
       });
+    case visualizationConstants.SET_RELEATED_DATA_DATAMINER:
+        return update(state, {
+          chart2: {
+              $set: action.chart2
+            
+          }
+        });  
     case visualizationConstants.SET_FIELD_DATA_X_AXIS_LABEL:
       return update(state, {
         chart1: {
@@ -391,13 +424,31 @@ export function data(state = dataDefault, action) {
         }
       }); 
     case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN:
-    return update(state, {
-      chart1Properties: 
-      {
-        selectedFieldInYAxisId: {
-          $set: action.selected
+      return update(state, {
+        chart1Properties: 
+        {
+          selectedFieldInYAxisId: {
+            $set: action.selected
+        }
       }
-    }
+    })
+    case visualizationConstants.SET_DATAMINER_DATA_HEADER:
+      return update(state, {
+        chart2Properties: 
+        {
+          headerProperties: {
+            $set: action.header
+        }
+      }
+    })
+    case visualizationConstants.SET_DATAMINER_DATA:
+      return update(state, {
+        chart2Properties: 
+        {
+          dataMinerData: {
+            $set: action.data
+        }
+      }
     })
     case visualizationConstants.SET_WEATHER_PROPERTIES_DROPDOWN_TEXT:
       return update(state, {
@@ -408,7 +459,7 @@ export function data(state = dataDefault, action) {
         }
       }
       })
-      case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN:
+    case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN:
       return update(state, {
         chart1Properties: 
         {
@@ -417,11 +468,29 @@ export function data(state = dataDefault, action) {
         }
       }
       })
-      case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT:
+    case visualizationConstants.SET_NDVI_PROPERTIES_DROPDOWN_TEXT:
         return update(state, {
           chart1Properties: 
           {
             selectedNDVIFieldInYAxis: {
+              $set: action.selected
+          }
+        }
+        })
+    case visualizationConstants.SET_CROP_HISTORY_PROPERTIES_DROPDOWN:
+      return update(state, {
+        chart2Properties: 
+        {
+          selectedFieldInYAxisId: {
+            $set: action.selected
+        }
+      }
+      })
+    case visualizationConstants.SET_CROP_HISTORY_PROPERTIES_DROPDOWN_TEXT:
+        return update(state, {
+          chart2Properties: 
+          {
+            selectedFieldInYAxis: {
               $set: action.selected
           }
         }

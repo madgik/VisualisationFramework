@@ -1,13 +1,13 @@
 import React from 'react';
 import VisualizationRendererContainer from './containers/VisualizationRendererContainer'
-//import ChartRenderContainer from './containers/ChartRenderContainer'
+import ChartRenderContainer from './containers/ChartRenderContainer'
 import Chart2RenderContainer from './containers/Chart2RenderContainer'
 import HeaderMenuContainer from './containers/HeaderMenuContainer'
 import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import FieldInfoContainer from './containers/FieldInfoContainer';
-//import ChartHeaderContainer from './containers/ChartHeaderContainer';
+import ChartHeaderContainer from './containers/ChartHeaderContainer';
 import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
 
 
@@ -58,10 +58,13 @@ class Dashboard extends React.Component {
                 <br></br>
                 <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
               </div>
-              {/* <div className='ui clearing segment'>
+              <div className='ui clearing segment'>
                 <ChartHeaderContainer></ChartHeaderContainer>
+                <br></br>
+                <br></br>
+                <br></br>
                 <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-              </div> */}
+              </div>
             </div>
           </Columns>
         </div>

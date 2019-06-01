@@ -20,6 +20,9 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
       
       dispatch(visualizationActions.enableFieldDetailsDropdown())
+      const dataMiner =  'http://dataminer-prototypes.d4science.org/wps/WebProcessingService'
+
+      dispatch(visualizationActions.getDataMinerData(dataMiner))
 
       // dispatch(visualizationActions.getSelectedFieldDetails(feature));
      

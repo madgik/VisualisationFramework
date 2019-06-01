@@ -117,7 +117,7 @@ public class HttpClient extends RestTemplate {
         for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
             builder.queryParam(parameter.getKey(), parameter.getValue());
         }
-
+        System.out.println(builder.build().toString());
         return builder.build().toString();
     }
 
