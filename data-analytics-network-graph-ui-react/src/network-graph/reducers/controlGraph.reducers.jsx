@@ -9,6 +9,7 @@ const dataDefault = {
     type: '',
     tree: null,
     selectedNode: '',
+    node: null,
     startingDate: '2012.01',
     lastDate: '2015.12',
     currentDate: '2012.01',
@@ -39,7 +40,10 @@ const dataDefault = {
     playerTimestamps:null,
     showOldNodes: true,
     timestampFrom: '2012.01',
-    timestampTo:'2015.12'
+    timestampTo:'2015.12',
+    propModalIsOpen: false,
+    record: false,
+    availRec: false
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -48,6 +52,12 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 graph: {
                     $set: action.graph
+                }
+            }) 
+        case controlGraphConstants.SET_NODE:
+            return update(state, {
+                node: {
+                    $set: action.node
                 }
             })
         case controlGraphConstants.SET_GRAPH_LINKS:
@@ -152,6 +162,27 @@ export function controlGraph(state = dataDefault, action) {
             return update(state, {
                 timestampTo: {
                     $set: action.timestampTo
+                }
+            })
+        }
+        case controlGraphConstants.SET_PROP_MODAL_IS_OPEN: {
+            return update(state, {
+                propModalIsOpen: {
+                    $set: action.propModalIsOpen
+                }
+            })
+        }
+        case controlGraphConstants.SET_RECORD: {
+            return update(state, {
+                record: {
+                    $set: action.record
+                }
+            })
+        }
+        case controlGraphConstants.SET_AVAIL_RECORD: {
+            return update(state, {
+                availRecord: {
+                    $set: action.availRecord
                 }
             })
         }

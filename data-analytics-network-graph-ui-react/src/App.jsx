@@ -11,6 +11,7 @@ import rootReducer from './network-graph/reducers'
 import BaseView from './network-graph/BaseView'
 import Ajax from './network-graph/utilities/Ajax';
 import autobind from 'autobind-decorator';
+import { configGraphActions } from './network-graph/actions';
 
 class App extends React.Component {
 
@@ -25,6 +26,8 @@ class App extends React.Component {
 
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
+    this.store.dispatch(configGraphActions.setUsername());
+    
   }
 
   render() {
@@ -40,7 +43,8 @@ class App extends React.Component {
 
 App.defaultProps = {
   routing: {
-    baseUrl: 'http://localhost:8081/data-analytics-visualization-service'
+    baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
+    username: 'testTenant'
   },
   size: {
     width: '100%',

@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import org.gcube.common.portal.PortalContext;
 import org.gcube.vomanagement.usermanagement.model.GCubeUser;
 
@@ -89,7 +91,12 @@ public class VisualizationPortlet extends GenericPortlet {
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
         logger.info("Visualization portlet is rendering the main view");
-
+        PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
+        PortalContext pContext = PortalContext.getConfiguration();
+        HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+        GCubeUser user = pContext.getCurrentUser(httpServletRequest);
+        String username = user.getUsername();
+        renderRequest.setAttribute("username", username);
         PortalContext.setUserInSession(renderRequest); //needed only if you have custom servlet that needs to know the current user in your war
         include(viewTemplate, renderRequest, renderResponse);
     }

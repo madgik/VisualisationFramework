@@ -25,12 +25,15 @@ const mapStateToProps = state => ({
    timestamps: state.controlGraph.timestamps,
    openImportModal: state.configGraph.openImportModal,
    openSidebar: state.configGraph.openSidebar,
-   nodesNumber: state.configGraph.nodesNumber
+   nodesNumber: state.configGraph.nodesNumber,
+   modalIsOpen: state.configGraph.modalIsOpen,
+   modalMessage: state.configGraph.modalMessage,
+   username: state.configGraph.username
 });
 
 const mapDispatchToProps = dispatch => ({
     //API CALLS
-    uploadFile: (file) => dispatch(configGraphActions.uploadFile(file)),
+    uploadFile: (file,fileName, privacy, username) => dispatch(configGraphActions.uploadFile(file, fileName, privacy, username)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
     getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
@@ -48,7 +51,8 @@ const mapDispatchToProps = dispatch => ({
     setStopped: (stopped) => dispatch(controlGraphActions.setStopped(stopped)),
     setOpenImportModal: (openImportModal) => dispatch(configGraphActions.setOpenImportModal(openImportModal)),
     setOpenSidebar: (openSidebar) => dispatch(configGraphActions.setOpenSidebar(openSidebar)),
-    setNodesNumber: (nodesNumber) => dispatch(configGraphActions.setNodesNumber(nodesNumber))
+    setNodesNumber: (nodesNumber) => dispatch(configGraphActions.setNodesNumber(nodesNumber)),
+    setModalIsOpen: (modalIsOpen) => dispatch(configGraphActions.setModalIsOpen(modalIsOpen))
 
 });
 

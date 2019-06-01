@@ -39,7 +39,11 @@ export const controlGraphActions = {
   setShowOldNodes,
   setTimestampFrom,
   setTimestampTo,
-  setFilteredTimestamps
+  setFilteredTimestamps,
+  setPropModalIsOpen,
+  setRecord,
+  setAvailRecord, 
+  setNode
 }
 
 /*
@@ -133,7 +137,8 @@ function getFilteredGraph(query, graphId) {
         'content-type': 'application/json'
       }
     }).then(response => {
-      // console.log(response.data);
+       console.log("response"+JSON.stringify(response.data));
+      
       dispatch(loadGraph(response.data));
 
       dispatch(hideLoading());
@@ -332,6 +337,23 @@ function setTimestampFrom(timestampFrom) {
 function setTimestampTo(timestampTo) {
   return { type: controlGraphConstants.SET_TIMESTAMP_TO, timestampTo };
 }
+
+function setPropModalIsOpen(propModalIsOpen) {
+  return { type: controlGraphConstants.SET_PROP_MODAL_IS_OPEN, propModalIsOpen };
+}
+
+function setRecord(record) {
+  return { type: controlGraphConstants.SET_RECORD, record };
+}
+
+function setAvailRecord(availRecord) {
+  return { type: controlGraphConstants.SET_AVAIL_RECORD, availRecord };
+}
+
+function setNode(node) {
+  return { type: controlGraphConstants.SET_NODE, node };
+}
+
 
 function mergeDeep(o1, o2) {
   var tempNewObj = o1;

@@ -19,17 +19,22 @@ export const configGraphActions = {
   setAllGraphsMetadata,
   setOpenImportModal,
   setOpenSidebar,
-  setNodesNumber
+  setNodesNumber,
+  setModalIsOpen,
+  setModalMessage,
+  setUsername
 }
 
-function uploadFile(file) {
+function uploadFile(file, fileName, privacy, username) {
   return function (dispatch) {
     dispatch(showLoading());
 
     // Initial FormData
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("name", file.name);
+    formData.append("name", fileName);
+    formData.append("privacy", privacy);
+    formData.append("username", username)
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
     return axios.post(resourceUrl, formData, {
       headers: { 
@@ -38,6 +43,8 @@ function uploadFile(file) {
     }).then(response => {
       dispatch(hideLoading());
       dispatch(setOpenImportModal(false));
+      dispatch(setModalIsOpen(true));
+      dispatch(setModalMessage('uploadStarted'))
       console.log("file uploaded"+response)
     }).catch(_ => { });
 
@@ -130,5 +137,17 @@ function setOpenSidebar(openSidebar) {
 
 function setNodesNumber(nodesNumber) {
   return { type: configGraphConstants.SET_NODES_NUMBER, nodesNumber };
+}
+
+function setModalIsOpen(modalIsOpen) {
+  return { type: configGraphConstants.SET_MODAL_IS_OPEN, modalIsOpen };
+}
+
+function setModalMessage(modalMessage) {
+  return { type: configGraphConstants.SET_MODAL_MESSAGE, modalMessage };
+}
+
+function setUsername(username) {
+  return { type: configGraphConstants.SET_USERNAME, username };
 }
 

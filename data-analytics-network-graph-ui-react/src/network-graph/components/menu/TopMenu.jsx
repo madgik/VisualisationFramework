@@ -15,7 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ImportModal from '../forms/ImportModal'
+import ImportModal from '../forms/ImportModal';
+import ModalContainer from '../ui_utils/ModalComponent';
 
 const styles = {
   root: {
@@ -86,6 +87,7 @@ class TopMenu extends React.Component {
               uploadFile={this.props.uploadFile}
               setFileValidation={this.props.setFileValidation}
               fileDetails={this.props.fileDetails}
+              username={this.props.username}
             />
             <Button
               color="inherit"
@@ -94,6 +96,11 @@ class TopMenu extends React.Component {
           </Toolbar>
 
         </AppBar>
+        <ModalContainer 
+          modalIsOpen={this.props.modalIsOpen}
+          modalMessage={this.props.modalMessage}
+          setModalIsOpen={this.props.setModalIsOpen}
+        />
       </div>
     );
   }

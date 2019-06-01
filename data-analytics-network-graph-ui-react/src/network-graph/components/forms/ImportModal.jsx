@@ -14,8 +14,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const DialogTitle = withStyles(theme => ({
   root: {
+    width:'500px',
     borderBottom: `1px solid ${theme.palette.divider}`,
-    margin: 0,
+    margin: 10,
     padding: theme.spacing.unit * 2,
   },
   closeButton: {
@@ -40,7 +41,7 @@ const DialogTitle = withStyles(theme => ({
 
 const DialogContent = withStyles(theme => ({
   root: {
-    margin: 0,
+    margin: 20,
     padding: theme.spacing.unit * 2,
   },
 }))(MuiDialogContent);
@@ -48,31 +49,21 @@ const DialogContent = withStyles(theme => ({
 const DialogActions = withStyles(theme => ({
   root: {
     borderTop: `1px solid ${theme.palette.divider}`,
-    margin: 0,
+    margin: 20,
     padding: theme.spacing.unit,
   },
 }))(MuiDialogActions);
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
 
 const styles = theme => ({
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: 'none',
-  },
+  // paper: {
+  //   position: 'absolute',
+  //   width: theme.spacing.unit * 180,
+  //   backgroundColor: theme.palette.background.paper,
+  //   boxShadow: theme.shadows[5],
+  //   padding: theme.spacing.unit * 4,
+  //   outline: 'none',
+  // },
 });
 class ImportModal extends React.Component {
 
@@ -99,15 +90,16 @@ class ImportModal extends React.Component {
         onClose={this.handleClose}
       >
         <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            Data Import
+            Data Import 
           </DialogTitle>
           <DialogContent>        
-          <Typography variant="subtitle1" id="simple-modal-description">
+          {/* <Typography variant="subtitle1" id="simple-modal-description"> */}
             <DataImportForm
+              username={this.props.username}
               uploadFile={this.props.uploadFile}
               setFileValidation={this.props.setFileValidation}
               fileDetails={this.props.fileDetails} />
-          </Typography>
+          {/* </Typography> */}
           
         </DialogContent>
 
@@ -116,11 +108,11 @@ class ImportModal extends React.Component {
   }
 }
 
-// ImportModal.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
+ImportModal.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 // // We need an intermediary variable for handling the recursive nesting.
 // const ImportModalWrapped = withStyles(styles)(ImportModal);
 
-export default ImportModal;
+export default  withStyles(styles)(ImportModal);

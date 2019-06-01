@@ -43,7 +43,7 @@ class BaseView extends React.Component {
             </Grid>
 
             <Grid item xs={12}>
-              <div className="content" >
+              <div id="graph-content" className="content" >
 
                 <PropertiesContainer
                   mmRender={mmRenderRef}

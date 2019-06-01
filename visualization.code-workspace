@@ -1,22 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "data-analytics-visualization-config-modal"
-		},
-		{
-			"path": "data-analytics-visualization-config-ui-react"
+			"path": "data-analytics-network-graph-ui-react"
 		},
 		{
 			"path": "data-analytics-visualization-dashboard-react"
-		},
-		{
-			"path": "data-analytics-visualization-library"
-		},
-		{
-			"path": "data-analytics-visualization-ui-react"
-		},
-		{
-			"path": "data-analytics-network-graph-ui-react"
 		}
 	],
 	"settings": {

@@ -69,13 +69,13 @@ public class EntityMapper {
         return this.modelMapper.map(dto, Visualization.class);
     }
 
-    public NetworkGraph map(NetworkGraphDto dto, String graphName, String tenantName) {
+    public NetworkGraph map(NetworkGraphDto dto, String graphName, String tenantName, String privacy) {
 
         UUID uuid = UUID.randomUUID();
         String graphId = uuid.toString();
 
         Map<String, Node> nodeMap = dto.getNodes().stream().map(node ->
-                new Node(node.getId(), node.getX(), node.getY(), node.getAttributes(), graphId, graphName, tenantName)
+                new Node(node.getId(), node.getX(), node.getY(), node.getAttributes(), graphId, graphName, tenantName, privacy)
         ).collect(Collectors.toMap(Node::getNodeId, Function.identity()));
 
 

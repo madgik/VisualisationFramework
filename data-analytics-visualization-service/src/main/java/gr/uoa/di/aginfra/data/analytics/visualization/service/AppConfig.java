@@ -2,11 +2,13 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service;
 
 
 import org.springframework.context.annotation.*;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Configuration
 @EnableWebMvc
+@EnableAsync
 @Import(gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig.class)
 @ComponentScan("gr.uoa.di.aginfra.data.analytics.visualization.service")
 public class AppConfig {

@@ -13,6 +13,7 @@ class UploadMessage extends React.Component {
       <Message.Header>{this.typeToMessage[this.props.type]}</Message.Header>
       <p>
       </p>
+      <br></br>
     </Message>;
   }
 }

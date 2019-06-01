@@ -23,6 +23,10 @@ export const controlGraphConstants = {
   SET_SHOW_OLD_NODES: 'set_show_old_nodes',
   SET_TIMESTAMP_FROM: 'set_timestamp_from',
   SET_TIMESTAMP_TO: 'set_timestamp_to',
+  SET_PROP_MODAL_IS_OPEN: 'set_prop_modal_is_open',
+  SET_RECORD: 'set_record',
+  SET_NODE: 'set_node',
+  SET_AVAIL_RECORD: 'set__avail_record',
 
   SET_PREV_GRAPH_STATE_DATA: 'set_prev_graph_state_data',
   SET_PREV_GRAPH_STATE_LINKS: 'set_prev_graph_state_links',

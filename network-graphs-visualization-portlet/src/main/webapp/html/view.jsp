@@ -43,10 +43,13 @@
 			var resourceURLNoParams = '<portlet:resourceURL id="{url}" />';
 			var contextPath = '<%=request.getContextPath()%>/';
 			var nameSpace = $('#portletInfo').data('namespace');
+			var resourceUsername = '<%= renderRequest.getAttribute("username") %>';
+
 
             ReactDOM.render(React.createElement(window.reactComponents['network-graphs-visualization-portlet'].reactComponent, {
 			    routing: {
 			        baseUrl: resourceURL
+			        username: resourceUsername
 			    }
 			}), document.getElementById('<portlet:namespace/>root'));
 		});
