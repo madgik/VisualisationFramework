@@ -9,24 +9,14 @@ import { Sidebar } from 'semantic-ui-react';
 import SidebarProperties from '../menu/SidebarProperties';
 import NodePropeties from "./NodeProperties";
 import LinkProperties from "./LinkProperties";
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
 import RecordControls from '../controls/RecordControls';
+import PropertiesModal from './PropertiesModal';
+
 
 // import reactD3GraphUtils from "../src/utils";
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: 'auto',
-    right: '5%',
-    bottom: 'auto',
-    marginRight: '-5%',
-    transform: 'translate(-50%, -50%)',
-    opacity: '1'
-  }
-};
 
-Modal.setAppElement('#root')
 
 // const onRightClickNode = function (event, nodeId) {
 //   // window.alert(`Right clicked node ${nodeId}`);
@@ -72,6 +62,11 @@ class GraphView extends React.Component {
     this.graphRef = React.createRef();
     this.canvasRef = React.createRef();
   }
+
+  componentDidMount() {
+    ReactModal.setAppElement('body');
+  }
+
 
   getGraph = () => {
     return this.graphRef;
@@ -158,8 +153,8 @@ class GraphView extends React.Component {
     this.closeModal();
   };
 
-
   render() {
+
     return (
       <div className='graph-container'>
 
@@ -201,29 +196,17 @@ class GraphView extends React.Component {
 
           </div>
         }
-        <Modal
-          isOpen={this.props.propModalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-          overlayClassName="overlay"
-
-        >
-          <NodePropeties
-            graph={this.props.graph}
-            topNodes={this.props.topNodes}
-            selectedGraph={this.props.selectedGraph}
-            selectedNode={this.props.selectedNode}
-            getNeighbors={this.props.getNeighbors}
-            graphData={this.props.graphData}
-          />
-
-          <LinkProperties
-            selectedWeight={this.props.selectedWeight}
-            selectedLink={this.props.selectedLink}
-          />
-        </Modal>
+       <PropertiesModal
+          graph={this.props.graph}
+          topNodes={this.props.topNodes}
+          selectedGraph={this.props.selectedGraph}
+          selectedNode={this.props.selectedNode}
+          getNeighbors={this.props.getNeighbors}
+          graphData={this.props.graphData}
+          selectedWeight={this.props.selectedWeight}
+          selectedLink={this.props.selectedLink}
+          propModalIsOpen={this.props.propModalIsOpen}
+        />
 
         <RecordControls
           record={this.props.record}
@@ -241,7 +224,9 @@ class GraphView extends React.Component {
   }
 }
 
-export default GraphView;
+
+
+export default  GraphView;
 
 // export default React.forwardRef((props, ref) =>
 //   <GraphView {...props} graphRef={ref} />

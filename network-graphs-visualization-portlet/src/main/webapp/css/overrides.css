@@ -122,3 +122,32 @@ input#standard-bare{
 .player {
     margin:auto;
 }
+
+.filters .aui label {
+    display: flex;
+    margin-bottom: 0px;
+}
+
+.sidebar-controls .filters .aui input[type="text"]{
+    background-color: transparent;
+    border: 0px;
+}
+
+.sidebar-controls  .filters .aui input[type="text"] {
+    background-color: transparent;
+    border: 0px;
+}
+
+input {
+ background-color: transparent;
+    border: 0px;
+}
+
+.sidebar-controls .jss201 {
+    margin-top: 0px;
+}
+
+.sidebar-controls .filters .aui input[type="number"]{
+    background-color: transparent;
+    border: 0px;
+}

@@ -141,6 +141,7 @@ class SidebarControls extends React.Component {
               setTimestampFrom={this.props.setTimestampFrom}
               setTimestampTo={this.props.setTimestampTo}
               setFilteredTimestamps={this.props.setFilteredTimestamps}
+              topNodes={this.props.topNodes}
             />
           </Grid>
           {/* <Grid item spacing={8}>
