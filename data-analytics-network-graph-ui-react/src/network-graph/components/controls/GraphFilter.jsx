@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Select } from "@material-ui/core";
 
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -112,12 +113,12 @@ class GraphFilter extends React.Component {
   }
 
   handleApplyFilters() {
-    Object.keys(this.props.graph.nodes[0]).map(e => {
-        if(e.value != null && e.value != "") {
-          this.query[e.id] = e.value
-          return;
-        }
-      });
+    // Object.keys(this.props.graph.nodes[0]).map(e => {
+    //     if(e.value != null && e.value != "") {
+    //       this.query[e.id] = e.value
+    //       return;
+    //     }
+    //   });
       //    this.filtersBtn = true
     console.log(this.query)
     if (Object.keys(this.query).length !== 0) {
@@ -133,6 +134,7 @@ class GraphFilter extends React.Component {
     if (this.props.topNodes.nodes != undefined && this.props.topNodes.nodes != undefined) {
       return (
         <Grid
+          className="filters"
           container
           direction="column"
           justify="center"
@@ -222,6 +224,7 @@ class GraphFilter extends React.Component {
               direction='row'
               container>
               <Grid item xs={6}>
+                {/* <label>from</label> */}
                 <TextField
                   id="main-weight-1"
                   label="from"
@@ -232,6 +235,7 @@ class GraphFilter extends React.Component {
                 />
               </Grid>
               <Grid item xs={6}>
+                {/* <label>to</label> */}
                 <TextField
                   id="main-weight-2"
                   label="to"
@@ -257,13 +261,13 @@ class GraphFilter extends React.Component {
           {Object.keys(this.props.topNodes.nodes[0]).map(element => {
             if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
               return <Grid item>
+                {/* <label>{element}</label> */}
                 <TextField
                   id={element}
                   label={element}
-                  className={classes.textField}
+                  className={[classes.textField, 'filters'].join(" ")}
                   onChange={this.handleNodePropertyChange}
                   margin="normal"
-                  ref={element}
                 />
               </Grid>
             }
@@ -332,7 +336,7 @@ class GraphFilter extends React.Component {
                   },
                 }}
               >
-                {(this.props.timestamps != '') ?
+                {(this.props.timestamps != null && this.props.timestamps != '') ?
                   this.props.timestamps.map((timestamp, i) =>
                     <MenuItem key={i} value={timestamp}>
                       {timestamp}
@@ -358,7 +362,7 @@ class GraphFilter extends React.Component {
                   },
                 }}
               >
-                {(this.props.timestamps != '') ?
+                {(this.props.timestamps != null && this.props.timestamps != '') ?
                   this.props.timestamps.map((timestamp, i) =>
                     <MenuItem key={i} value={timestamp}>
                       {timestamp}

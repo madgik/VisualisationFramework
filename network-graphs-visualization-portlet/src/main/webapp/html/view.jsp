@@ -48,7 +48,7 @@
 
             ReactDOM.render(React.createElement(window.reactComponents['network-graphs-visualization-portlet'].reactComponent, {
 			    routing: {
-			        baseUrl: resourceURL
+			        baseUrl: resourceURL,
 			        username: resourceUsername
 			    }
 			}), document.getElementById('<portlet:namespace/>root'));
