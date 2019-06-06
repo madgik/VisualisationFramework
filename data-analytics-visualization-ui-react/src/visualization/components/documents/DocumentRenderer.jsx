@@ -3,14 +3,21 @@ import React from 'react';
 import { Image, Loader, Grid } from 'semantic-ui-react'
 import NoImageIcon from './NoImageIcon';
 import idGenerator from 'react-id-generator';
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon , Label} from 'semantic-ui-react'
 
 class DocumentRenderer extends React.Component {
 
-  renderImage(imageUrl, imageStyle) {
+  renderImage(imageUrl,color,  imageStyle) {
     return (
       <Grid.Column  textAlign={"center"} key={idGenerator()}>
-        <Image size='small' src={imageUrl} style={imageStyle}  />
+        <div>
+          <Image size='small' src={imageUrl} style={imageStyle}  />
+          <br></br>
+          <Label color={color} key={color}>
+        
+        </Label>
+      </div>
+
       </Grid.Column>
     );
   }
@@ -37,7 +44,7 @@ class DocumentRenderer extends React.Component {
         <Grid  columns='equal' > 
           <Grid.Row>
               {this.props.open ?
-                this.props.src.map(imageUrl => this.renderImage(imageUrl.url, imageStyle)) :
+                this.props.src.map(imageUrl => this.renderImage(imageUrl.url, imageUrl.color, imageStyle)) :
                 <Grid.Column textAlign={"center"}>
                   <NoImageIcon size='small' style={imageStyle} />       
                 </Grid.Column>

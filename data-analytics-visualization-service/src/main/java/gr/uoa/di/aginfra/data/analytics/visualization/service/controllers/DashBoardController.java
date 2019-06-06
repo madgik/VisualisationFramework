@@ -46,7 +46,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
-@CrossOrigin(exposedHeaders = "Location")
+@CrossOrigin
 @RequestMapping("/" + DashBoardController.DASHBOARD_BASE_PATH)
 public class DashBoardController {
 
@@ -56,8 +56,14 @@ public class DashBoardController {
     @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.soiltypes}")
     private String gCubeUrlSoil;
 
+    @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.soiltypesV1}")
+    private String gCubeUrlSoilV1;
+
     @Value("${gr.uoa.di.aginfra.agrodatacubeapi.baseUrl.meteodata}")
     private String gCubeUrlMeteoData;
+
+    @Value("${gr.uoa.di.aginfra.dataminer_url}")
+    private String url;
 
     private static final Logger logger = LogManager.getLogger(DashBoardController.class);
 
@@ -135,16 +141,16 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection fieldDetailsFeatureCollection = dashBoardService.getFieldDetails(gCubeUrl + "/" + fieldId +"/" + altitude, params);
-        List<DashBoardMapConverter.SoilDetails> fieldDetails = DashBoardMapConverter.soilDetailsConvert(fieldDetailsFeatureCollection.getFeatures());
+        List<DashBoardMapConverter.SoilDetails> fieldDetails = DashBoardMapConverter.soilDetailsConvert(fieldId, fieldDetailsFeatureCollection.getFeatures());
 
         FeatureCollection soilDetails = null;
         for(int i=0; i < fieldDetails.size() ; i++) {
-            soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoil + fieldDetails.get(i).getSoilid(), params);
+            soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoilV1 + fieldDetails.get(i).getSoilid(), params);
             DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
             fieldDetails.get(i).setSoil(soil);
 
         }
-        soilDetails.hashCode();
+      //  soilDetails.hashCode();
 
         return ResponseEntity.ok(fieldDetails);
     }
@@ -314,13 +320,15 @@ public class DashBoardController {
     }
 
     @RequestMapping(value = "getDataMinerData", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getDataMinerData(@RequestParam  String url, @RequestBody  Map<String, Object> params) throws Exception {
+    public ResponseEntity<?> getDataMinerData(@RequestBody  Map<String, Object> params) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
-
 
 
         JSONObject selectedLayer = null;
         String file = httpClient.workspaceGetRequest(url, null, params);
+        if( file == null)
+            return ResponseEntity.ok(null);
+
         DOMParser parser = new DOMParser();
         InputSource is = new InputSource(new StringReader(file));
 

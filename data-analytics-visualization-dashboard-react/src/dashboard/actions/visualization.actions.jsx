@@ -344,7 +344,7 @@ function saveNewFileToWorkspace() {
     let arr = [];
 
     Object.keys(features).forEach(function(key) {
-      let feature = features[key].properties;
+     // let feature = features[key].properties;
       if(features[key].properties.color !== undefined){
         delete features[key].properties.color;
         console.log(features[key].properties);
@@ -1001,13 +1001,13 @@ function getNDVIFieldDataProperties(){
   }
 }
 
-function getDataMinerData(url){
+function getDataMinerData(){
 
   return function (dispatch, getState) 
   {
-    let parameters = "url=" + url;
+   // let parameters = "url=" + url;
 
-    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData',parameters);
+    var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData');
     let data = RequestPayload.buildDataMinerRequestPayload(getState());
 
     return axios.post(resourceUrl, data, {
@@ -1020,13 +1020,32 @@ function getDataMinerData(url){
         // chart1.timeSeries = response.data;
         // chart1.xAxisLabel = "Date";
         // chart1.yAxisLabel = getState().data.chart1Properties.selectedNDVIFieldInYAxis;
-         dispatch(setDataMinerHeader(response.data.header));
-         dispatch(setDataMinerData(response.data.data));
-         dispatch(setDataMinerChartDetails());
+        if(response.data !== "")
+        {
+          dispatch(setDataMinerHeader(response.data.header));
+          dispatch(setDataMinerData(response.data.data));
+          dispatch(setDataMinerChartDetails());
+        }
+        else{
+          dispatch(setDataMinerHeader(""));
+          dispatch(setDataMinerData(""));
+          let chart2 =  Object.assign({}, getState().data.chart2);
+          chart2.timeSeries = null;
+          chart2.xAxisLabel = "No available data. ";
+          chart2.yAxisLabel = ""
+          dispatch(reloadDataMinerChart(chart2));
+        }
 
       })
     .catch(response => {
-      alert(response);
+          dispatch(setDataMinerHeader(""));
+          dispatch(setDataMinerData(""));
+          let chart2 =  Object.assign({}, getState().data.chart2);
+          chart2.timeSeries = null;
+          chart2.xAxisLabel = "No available data. ";
+          chart2.yAxisLabel = ""
+          dispatch(reloadDataMinerChart(chart2));
+     // alert(response);
     });
   }
 }
