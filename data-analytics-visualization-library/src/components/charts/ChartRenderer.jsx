@@ -7,6 +7,20 @@ import { Chart } from 'react-chartjs-2';
 import $ from 'jquery';
 import { Point } from '../../utils/Point';
 
+let currentColorIndex = 0;
+
+let  colors = [
+  {'rgb': 'rgba(243, 0, 17, 0.8)',
+   'name': 'red',
+   'id': 0},
+  {'rgb': 'rgba(0, 255, 0, 0.8)',
+   'name': 'green',
+   'id': 1},
+  {'rgb': 'rgba(0, 0, 255, 0.8)',
+   'name': 'blue',
+   'id': 2}
+];
+
 class ChartRenderer extends React.Component {
 
  
@@ -36,6 +50,9 @@ class ChartRenderer extends React.Component {
     'Doughnut': 'doughnut',
     'Polar': 'polarArea'
   }
+
+  
+
 
   chartType(modelType) {
     return this.typeMap[modelType];
@@ -316,23 +333,57 @@ class ChartRenderer extends React.Component {
           console.log(this.selectedPoints);
           
           if (this.cachedData.datasets[_datasetIndex].data[_index].doc && position === -1) {
+            if(currentColorIndex > 2)
+              currentColorIndex = 0;
+              console.log("currentColorIndex:: " +currentColorIndex);  
+  
+            console.log("Color:: " + colors[currentColorIndex].rgb);  
+            console.log("selected points in else: " + this.selectedPoints);
+
             let point = new Point();
             point.chart_index = _datasetIndex;
             point.data_index = _index;
             this.shouldPointTableUpdate(point);
-            this.cachedData.datasets[_datasetIndex].pointBackgroundColor[_index] = 'rgba(243, 0, 17, 0.8)';
+            this.cachedData.datasets[_datasetIndex].pointBackgroundColor[_index] = colors[currentColorIndex].rgb; //'rgba(243, 0, 17, 0.8)';
             this.cachedData.datasets[_datasetIndex].pointRadius[_index] = 6;
             _chart.update();
-            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments, _datasetIndex, _index);
+            console.log(colors[currentColorIndex]);
+            this.props.onChartElementClick(this.cachedData.datasets[_datasetIndex].data[_index].doc, this.props.document.modalSrc, this.props.visualization.activeDocuments, _datasetIndex, _index, colors[currentColorIndex]);
+            currentColorIndex++;
           }
           else {
             var image = this.props.document.modalSrc[position];
             var clone = this.props.document.modalSrc.slice(0);
             clone.splice(position, 1);
             clone.push(image);
-            var firstPointElement = this.selectedPoints[0];
-            this.selectedPoints.splice(0,1);
+            console.log("image: " + image)
+            console.log("position: " + image.colorId)
+
+            var color, colorIndex; // = colors[image.colorId];
+
+            for(let count = 0; count< colors.length; count++){
+              if(colors[count].id === image.colorId){
+                  color = colors[count];
+                  colorIndex = count;
+              }
+            }
+            var cloneOfColours = colors.slice(0);
+            cloneOfColours.splice(colorIndex, 1);
+            cloneOfColours.push(color);
+
+            console.log(color)
+
+            colors = cloneOfColours;
+
+            console.log(colors)
+            currentColorIndex = 0;
+
+            var firstPointElement = this.selectedPoints[position];
+            console.log(firstPointElement);
+            this.selectedPoints.splice(position,1);
             this.selectedPoints.push(firstPointElement);
+
+            console.log("selected points in if: " + this.selectedPoints);
 
             this.props.onUpdateDocuments(clone);
           }
@@ -370,10 +421,13 @@ class ChartRenderer extends React.Component {
       this.selectedPoints.splice(0,1);
     }
     this.selectedPoints.push(point);
+    console.log("selected points in shouldPointTableUpdate: " + this.selectedPoints);
+
   }
 
   render() {
-    
+    currentColorIndex = 0;
+
     var definition = this.isBarChart(this.props.visualization.type) ? this.getBarChartData() :
       this.isTupleChart(this.props.visualization.type) ? this.getTupleChartData() :
         this.getLineChartData();

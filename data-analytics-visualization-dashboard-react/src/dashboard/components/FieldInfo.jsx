@@ -64,7 +64,7 @@ class FieldInfo extends React.Component {
                   </List.Item>
                   <List.Item>
                     <List.Content>
-                      Entity id : {row.original.soil.soiltype}
+                      Soil type : {row.original.soil.soiltype}
                     </List.Content>
                   </List.Item>
                   <List.Item>

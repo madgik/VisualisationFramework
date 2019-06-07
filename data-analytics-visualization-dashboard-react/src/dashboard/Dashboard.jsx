@@ -7,7 +7,7 @@ import Columns from 'react-columns';
 import MapConfigurationContainer from './containers/MapConfigurationContainer';
 import LoadingBar from 'react-redux-loading-bar'
 import FieldInfoContainer from './containers/FieldInfoContainer';
-import ChartHeaderContainer from './containers/ChartHeaderContainer';
+import DataMinerChartHeaderContainer from './containers/DataMinerChartHeaderContainer';
 import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
 
 
@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
                 <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
               </div>
               <div className='ui clearing segment'>
-                <ChartHeaderContainer></ChartHeaderContainer>
+                <DataMinerChartHeaderContainer></DataMinerChartHeaderContainer>
                 <br></br>
                 <br></br>
                 <br></br>

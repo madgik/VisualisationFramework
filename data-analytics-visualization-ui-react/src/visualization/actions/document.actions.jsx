@@ -17,7 +17,7 @@ export const documentActions = {
  * action creators
  */
 
-function showDocument(document, modalSrc, activeDocuments, lineChartId, pointId) {
+function showDocument(document, modalSrc, activeDocuments, lineChartId, pointId, color) {
 
   return function (dispatch) {
 
@@ -28,7 +28,7 @@ function showDocument(document, modalSrc, activeDocuments, lineChartId, pointId)
     return axios({
       url: resourceUrl,
       method: 'get',
-      withCredentials: true,
+      withCredentials: false,
       responseType: 'blob',
       headers: {
         'Accept': 'application/octet-stream',
@@ -38,10 +38,10 @@ function showDocument(document, modalSrc, activeDocuments, lineChartId, pointId)
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(response.data);
         if(modalSrc.length < activeDocuments){
-          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId});}
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId, "color": color.name, "colorId": color.id});}
         else{
           modalSrc.splice(0, 1);
-          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId});
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId, "color": color.name, "colorId": color.id});
         }
         dispatch(showDocumentData(modalSrc))
 

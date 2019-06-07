@@ -287,15 +287,26 @@ public class DashBoardMapConverter {
         return fieldDetails;
     }
 
-    public static List<SoilDetails> soilDetailsConvert(List<Feature> features)
+    public static List<SoilDetails> soilDetailsConvert(String fieldId, List<Feature> features)
     {
         List<SoilDetails> soilDetailsList = new ArrayList<>();
         for(Feature feature : features){
             Map<String, ?> properties = feature.getProperties();
-            SoilDetails soilDetails = new SoilDetails(String.valueOf((properties.get("fieldid"))), String.valueOf((properties.get("soilid"))), String.valueOf((properties.get("soilcode")))
+            List<LinkedHashMap<String, String>> props = (List<LinkedHashMap<String, String>>) properties.get(("soilunits"));
+            if(props.size() > 0){
+                LinkedHashMap<String, String> stringStringLinkedHashMap = props.get(0);
+                SoilDetails soilDetails = new SoilDetails(fieldId, String.valueOf((stringStringLinkedHashMap.get("id"))), String.valueOf((stringStringLinkedHashMap.get("soil_code")))
                     , String.valueOf(properties.get("area")), String.valueOf((properties.get("perimeter"))));
-
+//
             soilDetailsList.add(soilDetails);
+            }
+            String οbject = String.valueOf(properties.get("soilunits"));
+
+
+//            SoilDetails soilDetails = new SoilDetails(String.valueOf((properties.get("fieldid"))), String.valueOf((properties.get("soilid"))), String.valueOf((properties.get("soilcode")))
+//                    , String.valueOf(properties.get("area")), String.valueOf((properties.get("perimeter"))));
+//
+//            soilDetailsList.add(soilDetails);
         }
 
         return soilDetailsList;
