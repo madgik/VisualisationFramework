@@ -166,9 +166,17 @@ class GraphView extends React.Component {
               <g> {this.props.graph.nodes} </g> 
               </svg>*/}
         {(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ?
-          <div className='unavailable'>
+         (this.props.topNodes.nodes != null && this.props.topNodes.nodes != undefined) ?
+          
+            <div className='unavailable'>
+            <h2>No Nodes found</h2>
+            </div>
+            :
+            <div className='unavailable'>
             <h2>Select Graph and top Nodes</h2>
-          </div>
+            </div>
+         
+          
           :
           <div>
             <div ref={this.graphRef} >

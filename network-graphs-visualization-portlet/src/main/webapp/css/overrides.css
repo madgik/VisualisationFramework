@@ -37,7 +37,7 @@
 
 }
 
-.playerbar-controls .jss352{
+.playerbar-controls header {
     position: absolute;
     left: 31px;
     bottom:53px;
@@ -123,23 +123,14 @@ input#standard-bare{
     margin:auto;
 }
 
-.filters .aui label {
+ .aui .filters label {
     display: flex;
     margin-bottom: 0px;
 }
 
-.sidebar-controls .filters .aui input[type="text"]{
-    background-color: transparent;
-    border: 0px;
-}
 
-.sidebar-controls  .filters .aui input[type="text"] {
+.aui .filters input[type="text"], .aui .filters input[type="number"] {
     background-color: transparent;
-    border: 0px;
-}
-
-input {
- background-color: transparent;
     border: 0px;
 }
 
@@ -147,7 +138,10 @@ input {
     margin-top: 0px;
 }
 
-.sidebar-controls .filters .aui input[type="number"]{
-    background-color: transparent;
-    border: 0px;
+.data-import-form .ui .divider .import-divider {
+    margin-bottom: 2em;
+}
+
+.graph-container {
+    min-height: 500px;
 }

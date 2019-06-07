@@ -131,7 +131,7 @@ class GraphFilter extends React.Component {
     const { classes } = this.props;
     var showOldNodes = this.props.showOldNodes;
 
-    if (this.props.topNodes.nodes != undefined && this.props.topNodes.nodes != undefined) {
+    if (this.props.topNodes.nodes != null && this.props.topNodes.nodes != undefined) {
       return (
         <Grid
           className="filters"

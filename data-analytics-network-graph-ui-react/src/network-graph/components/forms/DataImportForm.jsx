@@ -90,12 +90,13 @@ class DataImportForm extends React.Component {
         return (
             <div className="data-import-form">
 
-                <Divider />
                 <div>
                     <UploadMessage
                         className={styles.message}
                         type='Graph'
                     />
+                                    <Divider className="import-divider" />
+                    <br></br>
                     <form className='add-graph-file' onSubmit={this.submit}>
                         <Grid className="data-import-fix"  
                             spacing={32}

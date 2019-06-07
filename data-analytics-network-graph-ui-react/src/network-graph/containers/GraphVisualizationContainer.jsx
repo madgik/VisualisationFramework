@@ -17,7 +17,8 @@ const mapStateToProps = state => ({
     propModalIsOpen: state.controlGraph.propModalIsOpen,
     selectedGraph: state.configGraph.selectedGraph,
     record: state.controlGraph.record,
-    availRecord: state.controlGraph.availRecord
+    availRecord: state.controlGraph.availRecord,
+    topNodes: state.controlGraph.topNodes
 });
 
 const mapDispatchToProps = dispatch => ({
