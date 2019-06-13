@@ -43,8 +43,9 @@ class SelectGraphForm extends React.Component {
   }
 
   handleChange = event => {
-    console.log(event.target.value)
+    console.log(event.currentTarget);
     this.props.setSelectedGraph(event.target.value);
+    this.props.setFilename(event.currentTarget.innerText);
   };
 
   render() {
@@ -62,6 +63,7 @@ class SelectGraphForm extends React.Component {
           <Select
             value={this.props.selectedGraph}
             onChange={this.handleChange}
+            // name={this.props.filename}
             inputProps={{
               name: 'graph-selector',
               id: 'graph-select',
@@ -73,7 +75,7 @@ class SelectGraphForm extends React.Component {
           >
             { (this.props.allGraphsMetadata!= '') ? 
               this.props.allGraphsMetadata.map((graph,i) =>
-              <MenuItem key={i} value={graph.id}>
+              <MenuItem key={i} value={graph.id} name={graph.name}>
                 {graph.name}
             </MenuItem>)  :
             ''

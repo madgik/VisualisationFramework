@@ -135,11 +135,13 @@ class RecordControls extends React.Component {
   }
 
   handleSaveFile() {
-    var mp4 = new File([this.blob], 'test.mp4', {
+    var filename = this.props.filename.split('.').slice(0, -1).join('.') + '.mp4'
+
+    var mp4 = new File([this.blob], filename, {
       type: 'video/mp4'
     });
-    console.log("size" + this.blob.size);
-    fileSaver.saveAs(mp4, 'test.mp4');
+    console.log("size" + this.blob.size +filename);
+    fileSaver.saveAs(mp4, filename);
   }
 
   render() {

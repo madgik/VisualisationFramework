@@ -19,7 +19,8 @@ const dataDefault = {
   nodesNumber: 5, 
   modalIsOpen: false,
   modalMessage: 'uploadStarted',
-  username:''
+  username:'',
+  filename: ''
 }
 
 
@@ -142,6 +143,13 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         username: {
           $set: action.username
+        }
+      })
+    }
+    case configGraphConstants.SET_FILENAME: {
+      return update(state, {
+        filename: {
+          $set: action.filename
         }
       })
     }

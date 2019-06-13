@@ -12,6 +12,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Select } from "@material-ui/core";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const styles = theme => ({
@@ -42,6 +44,7 @@ const styles = theme => ({
 
 class GraphFilter extends React.Component {
 
+
   constructor(props) {
     super(props);
     this.handlePropertyChange = this.handlePropertyChange.bind(this);
@@ -53,7 +56,6 @@ class GraphFilter extends React.Component {
     this.handleApplyFilters = this.handleApplyFilters.bind(this);
     this.handleTimestampFromChange = this.handleTimestampFromChange.bind(this);
     this.handleTimestampToChange = this.handleTimestampToChange.bind(this);
-  
   }
 
   filtersBtn = true;
@@ -120,11 +122,16 @@ class GraphFilter extends React.Component {
     //     }
     //   });
       //    this.filtersBtn = true
-    console.log(this.query)
+    console.log("----"+this.query)
     if (Object.keys(this.query).length !== 0) {
       this.props.getFilteredGraph(this.query, this.props.selectedGraph);
     }
-    this.props.setFilteredTimestamps(this.props.timestamps, this.props.timestampFrom, this.props.timestampTo)
+    this.props.setFilteredTimestamps(this.props.timestamps, this.props.timestampFrom, this.props.timestampTo);
+    toast.success("Filters Applied", {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast',
+      hideProgressBar:true
+    });
   }
 
   render() {
@@ -381,6 +388,7 @@ class GraphFilter extends React.Component {
           >
             Apply Filters
             </Button>
+
         </Grid>
         </Grid >
       );

@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
     "axios": "^0.18.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -26,6 +27,7 @@
     "react-scripts": "2.1.8",
     "react-sidebar": "^3.0.2",
     "react-swipeable-views": "^0.13.1",
+    "react-toastify": "^5.2.1",
     "recordrtc": "^5.5.4",
     "redux": "~4.0.0",
     "redux-logger": "~3.0.6",

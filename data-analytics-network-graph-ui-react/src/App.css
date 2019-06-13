@@ -102,3 +102,6 @@ body{
   cursor: not-allowed;
 }
 
+.toast {
+  top:100px;
+}

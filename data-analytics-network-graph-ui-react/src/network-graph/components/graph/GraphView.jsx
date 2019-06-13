@@ -12,7 +12,7 @@ import LinkProperties from "./LinkProperties";
 import ReactModal from 'react-modal';
 import RecordControls from '../controls/RecordControls';
 import PropertiesModal from './PropertiesModal';
-
+import {ToastContainer}  from 'react-toastify'; 
 
 // import reactD3GraphUtils from "../src/utils";
 
@@ -157,6 +157,7 @@ class GraphView extends React.Component {
 
     return (
       <div className='graph-container'>
+            <ToastContainer autoClose={2000} />
 
 
         {/* <svg className="graph"
@@ -180,6 +181,7 @@ class GraphView extends React.Component {
           :
           <div>
             <div ref={this.graphRef} >
+              
               <Graph
 
                 id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
@@ -224,6 +226,7 @@ class GraphView extends React.Component {
           graph={this.props.graph}
           availRecord={this.props.availRecord}
           setAvailRecord={this.props.setAvailRecord}
+          filename={this.props.filename}
         />
 
       </div>
