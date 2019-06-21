@@ -1,5 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;
@@ -23,6 +24,7 @@ public class CSVImporter implements RawDataImporter {
 
     private PropertiesConfig.ApiConfigTemplate config;
     private static final Logger logger = LogManager.getLogger(CSVImporter.class);
+
 
     private DataDocumentRepository dataDocumentDAO;
 

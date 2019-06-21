@@ -64,7 +64,8 @@ public class DataDocumentRepositoryImpl implements DataDocumentRepository {
 				dataDocument.setTree(mapper.readValue(data, TreeNode.class));
 				break;
 			}
-			case Records: {
+			case Records:
+			case JSON:{
 				String data = new String(outputStream.toByteArray(), Charsets.UTF_8);
 				dataDocument.setRecords(mapper.readValue(data, new TypeReference<List<Map<String, String>>>() {
 
@@ -76,11 +77,11 @@ public class DataDocumentRepositoryImpl implements DataDocumentRepository {
 				dataDocument.setFreeMind(mapper.readValue(data, MMNode.class));
 				break;
 			}
-			case JSON: {
-				String data = new String(outputStream.toByteArray(), Charsets.UTF_8);
-				dataDocument.setJSON(data);
-				break;
-			}
+//			case JSON: {
+//				String data = new String(outputStream.toByteArray(), Charsets.UTF_8);
+//				dataDocument.setJSON(data);
+//				break;
+//			}
 			case Image: {
 				dataDocument.setRawBytes(outputStream.toByteArray());
 				break;
@@ -109,11 +110,13 @@ public class DataDocumentRepositoryImpl implements DataDocumentRepository {
 				data = mapper.writeValueAsBytes(item.getFreeMind());
 				break;
 			case Records:
+			case JSON:
 				data = mapper.writeValueAsBytes(item.getRecords());
 				break;
-			case JSON:
-				data = item.getJSON().getBytes(StandardCharsets.UTF_8.name());
-				break;
+//			case JSON:
+//
+//				data = item.getJSON().getBytes(StandardCharsets.UTF_8.name());
+//				break;
 			case Image:
 			default:
 				data = item.getRawBytes();

@@ -21,7 +21,7 @@ public class RawDataImporterFactoryImpl implements RawDataImporterFactory {
 			put(DataType.Tree, new TreeImporter());
 			put(DataType.Graph, new GraphImporter());
 			put(DataType.FreeMind, new FreeMindImporter());
-			put(DataType.JSON, new JsonImporter());
+			put(DataType.JSON, new JsonImporter(appConfig.getProperties(), dataDocumentDAO));
 			put(DataType.Records, new CSVImporter(appConfig.getProperties(), dataDocumentDAO));
 			put(DataType.Image, new RawByteImporter());
 		}};
