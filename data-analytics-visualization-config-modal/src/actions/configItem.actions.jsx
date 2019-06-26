@@ -96,13 +96,13 @@ function updateCheckLayer(value) {
 
 function uploadFile(files, type) {
   return function (dispatch) {
-    var dataType = visualizationToDataType(type);
+    // var dataType = visualizationToDataType(type);
     files.forEach(file => {
       // Initial FormData
       const formData = new FormData();
       formData.append("file", file);
       formData.append("name", file.name);
-      formData.append("type", dataType);
+      formData.append("type", type);
 
       return documentService.postDocument(formData).then(response => {
         dispatch(updateUploadedFile(response.data));

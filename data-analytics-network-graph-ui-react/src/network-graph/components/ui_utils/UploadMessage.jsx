@@ -11,9 +11,7 @@ class UploadMessage extends React.Component {
   render() {
     return <Message warning visible>
       <Message.Header>{this.typeToMessage[this.props.type]}</Message.Header>
-      <p>
-      </p>
-      <br></br>
+   
     </Message>;
   }
 }

@@ -22,7 +22,8 @@ export const configGraphActions = {
   setNodesNumber,
   setModalIsOpen,
   setModalMessage,
-  setUsername
+  setUsername,
+  setFilename
 }
 
 function uploadFile(file, fileName, privacy, username) {
@@ -35,6 +36,7 @@ function uploadFile(file, fileName, privacy, username) {
     formData.append("name", fileName);
     formData.append("privacy", privacy);
     formData.append("username", username)
+
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
     return axios.post(resourceUrl, formData, {
       headers: { 
@@ -44,7 +46,7 @@ function uploadFile(file, fileName, privacy, username) {
       dispatch(hideLoading());
       dispatch(setOpenImportModal(false));
       dispatch(setModalIsOpen(true));
-      dispatch(setModalMessage('uploadStarted'))
+      dispatch(setModalMessage('uploadStarted'));
       console.log("file uploaded"+response)
     }).catch(_ => { });
 
@@ -149,5 +151,9 @@ function setModalMessage(modalMessage) {
 
 function setUsername(username) {
   return { type: configGraphConstants.SET_USERNAME, username };
+}
+
+function setFilename(filename) {
+  return { type: configGraphConstants.SET_FILENAME, filename };
 }
 

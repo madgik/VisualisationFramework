@@ -12,22 +12,22 @@ import geoJsonImage from '../imgs/geojson.png'
 class UploadDataMessage extends React.Component {
 
   typeToMessage = {
-    Spline: 'Please upload a valid csv file',
-    Scatter: 'Please upload a valid csv file',
-    Bar: 'Please upload a valid csv file',
-    Line: 'Please upload a valid csv file',
-    Step: 'Please upload a valid csv file',
-    Pie: 'Please upload a valid csv file',
-    Doughnut: 'Please upload a valid csv file',
-    Polar: 'Please upload a valid csv file',
-    ThreeD: 'Please upload a valid csv file',
+    Spline: 'Please upload a valid csv or json file',
+    Scatter: 'Please upload a valid csv or json file',
+    Bar: 'Please upload a valid csv or json file',
+    Line: 'Please upload a valid csv or json file',
+    Step: 'Please upload a valid csv or json file',
+    Pie: 'Please upload a valid csv or json file',
+    Doughnut: 'Please upload a valid csv or json file',
+    Polar: 'Please upload a valid csv or json file',
+    ThreeD: 'Please upload a valid csv or json file',
     Graph: 'Please upload a valid json file of the following form',
     MindMap: 'Please upload a valid free mind file',
     Tree: 'Please upload a valid json file of the following form',
     Map: 'Please upload a valid geogson file with coordinates in WGS 84',
     WorldWindMap: 'Please upload a valid geogson file with coordinates in WGS 84',
-    Table: 'Please upload a valid csv file',
-    HeatMap: 'Please upload a valid csv file'
+    Table: 'Please upload a valid csv or json file',
+    HeatMap: 'Please upload a valid csv or json file'
 
   }
 

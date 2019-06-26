@@ -15,5 +15,6 @@ export const configGraphConstants = {
   SET_NODES_NUMBER: 'set_nodes_number',
   SET_MODAL_IS_OPEN: 'set_modal_is_open',
   SET_MODAL_MESSAGE: 'set_modal_message',
-  SET_USERNAME: 'set_username'
+  SET_USERNAME: 'set_username',
+  SET_FILENAME: 'set_filename'
 }

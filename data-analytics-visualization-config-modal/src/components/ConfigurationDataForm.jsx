@@ -12,7 +12,16 @@ import ConfigurationDataGeoanalyticsSelector from './ConfigurationDataGeoanalyti
 class ConfigurationDataForm extends React.Component {
 
   handleFileDropped(files) {
-    this.props.onFileDropped(files, this.props.data.type);
+    var type = files[0].name.substring(files[0].name.lastIndexOf('.')+1, files[0].name.length) || files[0].name;
+
+    if (type==="json") {
+      type = "JSON";
+    }
+    else {
+      type = "Records";
+    }
+
+    this.props.onFileDropped(files, type);
   }
 
   handleRemoveFileClick(index) {

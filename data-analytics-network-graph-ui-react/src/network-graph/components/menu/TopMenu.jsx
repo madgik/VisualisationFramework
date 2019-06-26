@@ -65,6 +65,7 @@ class TopMenu extends React.Component {
                 color="inherit"
                 getAllGraphsMetadata={this.props.getAllGraphsMetadata}
                 setSelectedGraph={this.props.setSelectedGraph}
+                setFilename={this.props.setFilename}
                 selectedGraph={this.props.selectedGraph}
                 allGraphsMetadata={this.props.allGraphsMetadata}
               />

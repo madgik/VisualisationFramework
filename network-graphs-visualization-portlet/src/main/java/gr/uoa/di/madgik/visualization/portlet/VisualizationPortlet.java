@@ -323,7 +323,7 @@ public class VisualizationPortlet extends GenericPortlet {
    //         resource =resourceUrl.toString().replace(",","&");
         }
         String resource =resourceUrl.toString();
-
+        resource = resource.replace(" ","+");
         logger.info("ResourceUrl with parameters: " + resource);
 
         return resource;

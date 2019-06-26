@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import DataImportForm  from '../components/forms/DataImportForm';
 import { configGraphActions } from '../actions/configGraph.actions'
-import TopMenu from '../components/menu/TopMenu';
+import TopMenu  from '../components/menu/TopMenu';
 import { controlGraphActions } from '../actions/controlGraph.actions';
 // import SidebarControls from '../components/menu/SidebarControls';
 import Grid from '@material-ui/core/Grid';
@@ -52,8 +52,8 @@ const mapDispatchToProps = dispatch => ({
     setOpenImportModal: (openImportModal) => dispatch(configGraphActions.setOpenImportModal(openImportModal)),
     setOpenSidebar: (openSidebar) => dispatch(configGraphActions.setOpenSidebar(openSidebar)),
     setNodesNumber: (nodesNumber) => dispatch(configGraphActions.setNodesNumber(nodesNumber)),
-    setModalIsOpen: (modalIsOpen) => dispatch(configGraphActions.setModalIsOpen(modalIsOpen))
-
+    setModalIsOpen: (modalIsOpen) => dispatch(configGraphActions.setModalIsOpen(modalIsOpen)),
+    setFilename: (filename) => dispatch(configGraphActions.setFilename(filename))
 });
 
 export default connect(

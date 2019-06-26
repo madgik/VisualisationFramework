@@ -12,7 +12,7 @@ import LinkProperties from "./LinkProperties";
 import ReactModal from 'react-modal';
 import RecordControls from '../controls/RecordControls';
 import PropertiesModal from './PropertiesModal';
-
+import {ToastContainer}  from 'react-toastify'; 
 
 // import reactD3GraphUtils from "../src/utils";
 
@@ -157,6 +157,7 @@ class GraphView extends React.Component {
 
     return (
       <div className='graph-container'>
+            <ToastContainer autoClose={2000} />
 
 
         {/* <svg className="graph"
@@ -166,12 +167,21 @@ class GraphView extends React.Component {
               <g> {this.props.graph.nodes} </g> 
               </svg>*/}
         {(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ?
-          <div className='unavailable'>
+         (this.props.topNodes.nodes != null && this.props.topNodes.nodes != undefined) ?
+          
+            <div className='unavailable'>
+            <h2>No Nodes found</h2>
+            </div>
+            :
+            <div className='unavailable'>
             <h2>Select Graph and top Nodes</h2>
-          </div>
+            </div>
+         
+          
           :
           <div>
             <div ref={this.graphRef} >
+              
               <Graph
 
                 id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
@@ -216,6 +226,7 @@ class GraphView extends React.Component {
           graph={this.props.graph}
           availRecord={this.props.availRecord}
           setAvailRecord={this.props.setAvailRecord}
+          filename={this.props.filename}
         />
 
       </div>
