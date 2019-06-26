@@ -55,12 +55,11 @@ class RequestPayload{
             "Version":"1.0.0",
             "gcube-token": state.data.workspaceDetails.workspaceToken,
             "lang":"en-US",
-            "Identifier":"org.gcube.dataanalysis.wps.statisticalmanager.synchserver.mappedclasses.transducerers.AGRODATACUBE_FIELD_CROP_SIMULATION",
+            "Identifier":"org.gcube.dataanalysis.wps.statisticalmanager.synchserver.mappedclasses.transducerers.CROP_SIMULATION_FOR_FIELD_V1",
             "DataInputs":"Title=AgroDataCube+Field+Crop+Simulation;AgroDataCubeFieldId=" + state.visualization.selectedLayer.properties.fieldid + ";SimulationYear=" + state.visualization.selectedYear + ";CalculationsTimeout=30"
            
           })
     }
-
 }
 
 export default new RequestPayload();

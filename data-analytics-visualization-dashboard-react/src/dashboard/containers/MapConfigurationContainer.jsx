@@ -17,6 +17,14 @@ const mapDispatchToProps = dispatch => ({
   },
 
  getMapData: () => {
+    dispatch(visualizationActions.reloadSelectedLayer([]));
+    dispatch(visualizationActions.disableFieldDetailsDropdown());
+  //  dispatch(visualizationActions.setFieldDetailsDropdownValue(''));
+    dispatch(visualizationActions.getNearestMeteoStation(''));
+  // dispatch(visualizationActions.updateFieldDataDropdownValue(''));
+    dispatch(visualizationActions.cleanRelatedFieldData());
+    dispatch(visualizationActions.reloadSelectedLayerSoilData([]));
+    
     dispatch(visualizationActions.getMapDataset())
     }
 

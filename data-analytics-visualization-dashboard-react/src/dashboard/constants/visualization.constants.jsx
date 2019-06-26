@@ -22,6 +22,7 @@ export const visualizationConstants = {
   SET_NDVI_DATA_PROPERTIES: 'set-ndvi-data-properties',
 
   SET_DATE_RANGE_OPEN: 'set-date-range-open',
+  SET_DATA_MINER_LOADING: 'set-data-miner-loading',
 
 
   UPDATE_FILTER: 'update-filter',
@@ -35,6 +36,8 @@ export const visualizationConstants = {
 
   ENABLE_FIELD_DETAILS_DROPDOWN:'enable-field-details-dropdown',
   DISABLE_FIELD_DETAILS_DROPDOWN:'disable-field-details-dropdown',
+  ENABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN:'enable-data-miner-field-details-dropdown',
+  DISABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN:'disable-data-miner-field-details-dropdown',
   SET_FIELD_DETAILS_DROPDOWN: 'field-details-dropdown',
   SET_FIELD_DATA_SUBCOMPONENT: 'field-data-subcomponent',
   SET_WEATHER_PROPERTIES_DROPDOWN: 'set-weather-properties-dropdown',

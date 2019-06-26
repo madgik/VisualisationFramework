@@ -89,7 +89,10 @@ export const visualizationActions = {
   reloadDataMinerChart,
   setCropHistoryPropertiesDropdownValue,
   setCropHistoryPropertiesDropdownText,
-  setDataMinerChartDetails
+  setDataMinerChartDetails,
+  setDataMinerLoading,
+  enableDataMinerFieldDetailsDropdown,
+  disableDataMinerFieldDetailsDropdown
 }
 
 /*
@@ -507,6 +510,14 @@ function disableFieldDetailsDropdown() {
   return { type: visualizationConstants.DISABLE_FIELD_DETAILS_DROPDOWN };
 }
 
+function enableDataMinerFieldDetailsDropdown() {
+  return { type: visualizationConstants.ENABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN };
+}
+
+function disableDataMinerFieldDetailsDropdown() {
+  return { type: visualizationConstants.DISABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN };
+}
+
 function setFieldDetailsDropdownValue(selected) {
   return { type: visualizationConstants.SET_FIELD_DETAILS_DROPDOWN, selected };
 }
@@ -545,6 +556,10 @@ function setCropHistoryPropertiesDropdownText(selected) {
 
 function setDateRangeOpen(isOpen) {
   return { type: visualizationConstants.SET_DATE_RANGE_OPEN, isOpen };
+}
+
+function setDataMinerLoading(loading) {
+  return { type: visualizationConstants.SET_DATA_MINER_LOADING, loading };
 }
 
 function updateFieldDetailsDropdownValue(selected) {
@@ -1007,6 +1022,9 @@ function getDataMinerData(){
   {
    // let parameters = "url=" + url;
 
+    dispatch(setDataMinerLoading(true));
+    dispatch(disableDataMinerFieldDetailsDropdown());
+
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData');
     let data = RequestPayload.buildDataMinerRequestPayload(getState());
 
@@ -1025,6 +1043,9 @@ function getDataMinerData(){
           dispatch(setDataMinerHeader(response.data.header));
           dispatch(setDataMinerData(response.data.data));
           dispatch(setDataMinerChartDetails());
+          dispatch(setDataMinerLoading(false));
+          dispatch(enableDataMinerFieldDetailsDropdown());
+
         }
         else{
           dispatch(setDataMinerHeader(""));
@@ -1034,6 +1055,9 @@ function getDataMinerData(){
           chart2.xAxisLabel = "No available data. ";
           chart2.yAxisLabel = ""
           dispatch(reloadDataMinerChart(chart2));
+          dispatch(setDataMinerLoading(false));
+          dispatch(enableDataMinerFieldDetailsDropdown());
+
         }
 
       })
@@ -1045,6 +1069,10 @@ function getDataMinerData(){
           chart2.xAxisLabel = "No available data. ";
           chart2.yAxisLabel = ""
           dispatch(reloadDataMinerChart(chart2));
+          dispatch(setDataMinerLoading(false));
+          dispatch(enableDataMinerFieldDetailsDropdown());
+
+
      // alert(response);
     });
   }
