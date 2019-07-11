@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Dropdown, Header } from 'semantic-ui-react'
+import { Dropdown, Header, Loader } from 'semantic-ui-react'
 
 export const optionValues = Object.freeze({"field":1, "altitude":2, "soil":3, "crop":4})
 
@@ -35,7 +35,7 @@ class DataMinerChartHeader extends React.Component {
             selection
             options={this.props.chartProperties.headerProperties}
             style={styles}
-            disabled={this.props.fieldDetails.disabled}
+            disabled={this.props.fieldDetails.dataMinerDropdownDisabled}
             value={this.props.chartProperties.selectedFieldInYAxisId}
              onChange={(e, { value }) => this.onFieldChange(value)}
         />

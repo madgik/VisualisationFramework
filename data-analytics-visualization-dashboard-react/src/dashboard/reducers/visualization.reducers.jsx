@@ -9,7 +9,9 @@ const visualizationDefault = {
     disabled: true,
     selected: "",
     selectedFieldData:"",
-    subComponent: undefined
+    subComponent: undefined,
+    dataMinerDropdownDisabled:true
+
   },
   options: [],
   selectedLayer:'',
@@ -119,6 +121,25 @@ export function visualization(state = visualizationDefault, action) {
         }
       }
       })
+
+    case visualizationConstants.ENABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN:
+    return update(state, {
+      fieldDetails: 
+      {
+        dataMinerDropdownDisabled: {
+          $set: false
+      }
+    }
+    })
+  case visualizationConstants.DISABLE_DATA_MINER_FIELD_DETAILS_DROPDOWN:
+    return update(state, {
+      fieldDetails: 
+      {
+        dataMinerDropdownDisabled: {
+          $set: true
+      }
+    }
+    })
     case visualizationConstants.SET_FIELD_DATA_DROPDOWN:
       return update(state, {
         fieldDetails: 
@@ -214,7 +235,10 @@ const dataDefault = {
     timeSeries: [],
     filters: [],
     type:"Map",
-    json:null
+    json:null,
+    latitude:52.292779,
+    longitude:4.918047,
+    zoom:10
   },
   chart1:{
     tree: null,
@@ -272,7 +296,10 @@ const dataDefault = {
       selectedFieldInYAxis:'ELAPSED',
       selectedFieldInYAxisId:0,
       headerProperties:[],
-      dataMinerData:[]
+      dataMinerData:[],
+    },
+    loader:{
+      loading:false
     },
     weatherChartDetails:{
       dateRange: null,
@@ -495,6 +522,14 @@ export function data(state = dataDefault, action) {
           }
         }
         })
+    case visualizationConstants.SET_DATA_MINER_LOADING:
+          return update(state, {
+            loader: {
+              loading: {
+                $set: action.loading
+              }
+            }
+          });    
     case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
       return update(state, {
         chart1Properties: {

@@ -36,6 +36,8 @@ const mapDispatchToProps = dispatch => ({
     {
       dispatch(visualizationActions.reloadSelectedLayer([]));
       dispatch(visualizationActions.disableFieldDetailsDropdown());
+      dispatch(visualizationActions.disableDataMinerFieldDetailsDropdown());
+
     //  dispatch(visualizationActions.setFieldDetailsDropdownValue(''));
       dispatch(visualizationActions.getNearestMeteoStation(''));
      // dispatch(visualizationActions.updateFieldDataDropdownValue(''));

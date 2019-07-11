@@ -3,8 +3,13 @@
   "version": "0.0.1",
   "private": false,
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
+    "@material-ui/styles": "^4.0.2",
     "axios": "~0.18.0",
     "immutability-helper": "~2.8.1",
+    "moment-range": "^4.0.2",
     "react-center": "^1.1.1",
     "react-columns": "^1.2.0",
     "react-confirm-alert": "^2.4.0",

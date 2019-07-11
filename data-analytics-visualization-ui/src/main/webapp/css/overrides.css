@@ -17,3 +17,6 @@
     padding-right: 20px !important;
 }
 
+.aui .label:empty, .aui .badge:empty {
+    display: inline-block !important;
+}

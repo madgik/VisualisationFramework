@@ -9,6 +9,7 @@ import LoadingBar from 'react-redux-loading-bar'
 import FieldInfoContainer from './containers/FieldInfoContainer';
 import DataMinerChartHeaderContainer from './containers/DataMinerChartHeaderContainer';
 import TimeSeriesChartContainer from './containers/TimeSeriesChartContainer';
+import LoaderContainer from './containers/LoaderContainer';
 
 
 class Dashboard extends React.Component {
@@ -29,7 +30,10 @@ class Dashboard extends React.Component {
     }];
 
     const mmRenderRef = React.createRef();
-
+    var positionRelative = {
+      position: 'relative',
+      top  :'0px'
+    }
     return (
 
       <div className='App-style'>
@@ -44,32 +48,39 @@ class Dashboard extends React.Component {
 
           <Columns columns={2} gap='8px' queries={queries} rootStyles={{overflowX:'visible'}} >
             <div className='ui clearing segment '  >
-              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
               <MapConfigurationContainer />
+              <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
             </div>
             <div >
               <div className='ui clearing segment'>
                 <FieldInfoContainer></FieldInfoContainer>
               </div>
-              <div className='ui clearing segment'>
+             
+            </div>
+          </Columns>
+          <br></br>
+          <Columns columns={2} gap='8px' queries={queries} rootStyles={{overflowX:'visible'}} >
+
+          <div className='ui clearing segment' >
                 <TimeSeriesChartContainer></TimeSeriesChartContainer>
                 <br></br>
                 <br></br>
                 <br></br>
                 <Chart2RenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-              </div>
-              <div className='ui clearing segment'>
-                <DataMinerChartHeaderContainer></DataMinerChartHeaderContainer>
-                <br></br>
-                <br></br>
-                <br></br>
-                <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
-              </div>
+          </div>
+          <div className='ui clearing segment' >
+          <div style={positionRelative} >
+            <DataMinerChartHeaderContainer></DataMinerChartHeaderContainer>
+            <br></br>
+            <LoaderContainer></LoaderContainer>
             </div>
-          </Columns>
-        </div>
+            <br></br>
+            <br></br>
+            <ChartRenderContainer size={this.props.chartsSize} mmRender={mmRenderRef} />
+          </div>
+       </Columns>
       </div>
-
+</div>
 
     );
   }

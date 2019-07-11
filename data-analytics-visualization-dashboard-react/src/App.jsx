@@ -63,11 +63,11 @@ App.defaultProps = {
     workspaceToken: '2a85cb45-5dc1-4d29-a630-919f549e9858-843339462'  },
   size: {
     width: 1000,
-    height: 660
+    height: 400
   },
   chartsSize: {
-    width: 900,
-    height: 237
+    width: 1000,
+    height: 400
   }
 }
 

@@ -15,6 +15,18 @@ class MapRenderer extends React.Component {
     this.previousFeature = null;
     this.previousLayer = null;
     this.hasClickedOnLayer = false;
+    console.log(this.props.visualization);
+    console.log(props.visualization);
+
+    if(this.props.visualization.latitude !== null && this.props.visualization.latitude !== undefined){
+      // this.setState({position : [this.props.visualization.latitude, this.props.visualization.longitude]});
+      // this.setState({zoom : this.props.visualization.zoom});
+      this.state = {
+        zoom: this.props.visualization.zoom,
+        position: [this.props.visualization.latitude, this.props.visualization.longitude]
+      }
+      console.log("Zoom: " + this.props.visualization.zoom + " , position: " + this.props.visualization.latitude +", " + this.props.visualization.longitude);
+    }
   }
 
   componentDidUpdate(prevProps,prevState) {
@@ -117,7 +129,9 @@ class MapRenderer extends React.Component {
 
     }
 
-    const position = [this.state.lat, this.state.lng];
+    console.log("position: " + this.state.position + "   zoom: ," + this.state.zoom)
+  
+
     return (
       <LeafletMap   ref={(ref) => { this.map = ref; }} onZoomend={this.onZoomEvent.bind(this)} onMoveend={this.handleMoveend.bind(this)} center={this.state.position} zoom={this.state.zoom} style={style} onclick={this.onMapClick.bind(this)}>
         <TileLayer

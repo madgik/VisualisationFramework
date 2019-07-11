@@ -383,8 +383,6 @@ class ChartRenderer extends React.Component {
             this.selectedPoints.splice(position,1);
             this.selectedPoints.push(firstPointElement);
 
-            console.log("selected points in if: " + this.selectedPoints);
-
             this.props.onUpdateDocuments(clone);
           }
           }

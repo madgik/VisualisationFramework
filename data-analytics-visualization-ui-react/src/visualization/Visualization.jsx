@@ -5,6 +5,10 @@ import FiltersRendererContainer from './containers/FiltersRendererContainer'
 import ChartHeaderContainer from './containers/ChartHeaderContainer'
 import DocumentRendererContainer from './containers/DocumentRendererContainer';
 
+import Slider from '@material-ui/lab/Slider';
+
+
+
 class Visualization extends React.Component {
 
   render() {
@@ -23,6 +27,9 @@ class Visualization extends React.Component {
         <DocumentRendererContainer />
         <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
         <FiltersRendererContainer />
+        <Slider defaultValue={10}></Slider>
+
+
       </div>
     );
   }
