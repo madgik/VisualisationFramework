@@ -3,6 +3,7 @@ import update from 'immutability-helper'
 import { configItemConstants } from '../constants'
 
 function defaultState() {
+
   var fieldsToValidate = [
     'label',
     'type',
@@ -31,7 +32,7 @@ function defaultState() {
     isNew: true,
     data: {
       type: 'Line',
-      activeDocuments:1
+      activeDocuments: 1
     },
     menu: {
       activeItem: 'general'
@@ -43,7 +44,8 @@ function defaultState() {
     geoanalytics: {
       layers: [],
       checked: false
-    }
+    },
+    delimiter: ''
   }
 }
 
@@ -166,16 +168,16 @@ export function configItem(state = defaultState(), action) {
           }
         }
       })
-      case configItemConstants.ADD_TRANSFORMATION:
+    case configItemConstants.ADD_TRANSFORMATION:
       if (!state.data.transformations) state.data.transformations = '';
       return update(state, {
         data: {
           transformations: {
-            $set:action.transformation
+            $set: action.transformation
           }
         }
       })
-      case configItemConstants.UPDATE_TRANSFORMATION:
+    case configItemConstants.UPDATE_TRANSFORMATION:
       return update(state, {
         data: {
           $set: action.data
@@ -241,7 +243,7 @@ export function configItem(state = defaultState(), action) {
       return update(state, {
         geoanalytics: {
           layers: {
-            $set: action.geoanalytics.layers 
+            $set: action.geoanalytics.layers
           }
         }
       });
@@ -253,9 +255,15 @@ export function configItem(state = defaultState(), action) {
           }
         }
       });
+    case configItemConstants.SET_DELIMITER:
+      return update(state, {
+        delimiter: {
+            $set: action.delimiter
+        }
+      });
     default:
       return state;
   }
-  
+
 }
 

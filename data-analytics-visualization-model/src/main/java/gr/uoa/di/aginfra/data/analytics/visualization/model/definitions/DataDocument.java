@@ -22,8 +22,6 @@ public class DataDocument {
 
 	private Graph graph;
 
-	private NetGraph netGraph;
-
 	private TreeNode tree;
 
 	private MMNode freeMind;
@@ -35,6 +33,8 @@ public class DataDocument {
 	private Date createdAt;
 
 	private Date updatedAt;
+
+	private String delimiter;
 
 	public String getId() {
 		return id;
@@ -148,11 +148,12 @@ public class DataDocument {
 		this.updatedAt = updatedAt;
 	}
 
-	public NetGraph getNetGraph() {
-		return netGraph;
+
+	public String getDelimiter() {
+		return delimiter;
 	}
 
-	public void setNetGraph(NetGraph netGraph) {
-		this.netGraph = netGraph;
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
 	}
 }

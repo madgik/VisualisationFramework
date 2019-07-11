@@ -2,12 +2,16 @@ import React from 'react'
 
 import { Message, Image } from 'semantic-ui-react'
 
+import jsonImage from '../imgs/json.png'
 import csvImage from '../imgs/csv.png'
 import pieImage from '../imgs/pie.png'
 import treeImage from '../imgs/tree.png'
 import graphImage from '../imgs/graph.png'
 import freeMindImage from '../imgs/freemind.png'
 import geoJsonImage from '../imgs/geojson.png'
+
+import { Grid, Header, Divider, List, Icon } from 'semantic-ui-react'
+
 
 class UploadDataMessage extends React.Component {
 
@@ -53,9 +57,29 @@ class UploadDataMessage extends React.Component {
   render() {
     return <Message warning visible>
       <Message.Header>{this.typeToMessage[this.props.type]}</Message.Header>
-      <p>
-        <Image src={this.typeToImage[this.props.type]} alt='tree.json' />
-      </p>
+      {this.typeToImage[this.props.type] == csvImage ?
+
+        <p>
+          <br></br>
+          <Grid className="data-example">
+            <Grid.Row>
+
+              <Image src={csvImage} alt='tree.json' />
+            </Grid.Row>
+            <Grid.Row>
+              <p>or</p>
+            </Grid.Row>
+            <Grid.Row>
+
+              <Image src={jsonImage} alt='tree.json' />
+            </Grid.Row>
+          </Grid>
+        </p>
+        :
+        <p>
+          <Image src={this.typeToImage[this.props.type]} alt='tree.json' /></p>
+
+      }
     </Message>;
   }
 }

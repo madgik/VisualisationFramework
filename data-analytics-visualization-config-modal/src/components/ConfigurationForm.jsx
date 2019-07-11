@@ -56,6 +56,8 @@ class ConfigurationForm extends React.Component {
                 onFileDropped={this.props.onFileDropped}
                 onRemoveFileClick={this.props.onRemoveFileClick}
                 onJoinFieldChange={this.props.onJoinFieldChange} 
+                setDelimiter={this.props.setDelimiter}
+                delimiter={this.props.delimiter}
                 onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor

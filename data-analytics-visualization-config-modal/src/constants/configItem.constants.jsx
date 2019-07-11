@@ -22,5 +22,6 @@ export const configItemConstants = {
   END_DELETE_ITEM: 'end-delete-item',
   SHOW_VALIDATION_RESULT: 'show-validation-result',
   SHOW_MODAL_ERROR: 'show-modal-error',
-  UPDATE_CHECK_LAYER: 'update-check-layer'
+  UPDATE_CHECK_LAYER: 'update-check-layer',
+  SET_DELIMITER: 'set_delimiter'
 }

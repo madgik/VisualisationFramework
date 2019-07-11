@@ -69,7 +69,6 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	public String storeConfiguration(Configuration item) throws Exception {
 		if (item.getId() == null) item.setCreatedAt(new Date());
 		item.setUpdatedAt(new Date());
-
 		if (item.getId() == null) {
 			return configurationDAO.create(item);
 		} else {
@@ -79,7 +78,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	}
 
 	@Override
-	public String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content) throws Exception {
+	public String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content, String delimiter) throws Exception {
 		logger.info("Storing document with name " + name + " and datatype " + type);
 
 		DataDocument dataDocument = new DataDocument();
@@ -87,7 +86,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		dataDocument.setName(name);
 		dataDocument.setType(type);
 		dataDocument.setDataReference(isDataReference);
-
+		dataDocument.setDelimiter(delimiter);
 		RawDataImporter importer = rawDataImporterFactory.getImporter(type);
 		importer.importData(content, dataDocument);
 

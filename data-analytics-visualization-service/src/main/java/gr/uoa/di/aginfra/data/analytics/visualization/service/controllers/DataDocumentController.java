@@ -64,6 +64,7 @@ public class DataDocumentController extends BaseController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> post(@RequestParam("file") MultipartFile[] file,
+									   @RequestParam("delimiter") String delimiter,
 									   String name,
 									   DataType type,
 									   Boolean isDataReference) throws Exception {
@@ -74,7 +75,7 @@ public class DataDocumentController extends BaseController {
 				name,
 				type,
 				isDataReference != null ? isDataReference.booleanValue() : false,
-				file[0].getBytes());
+				file[0].getBytes(), delimiter);
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
 				.path(DATA_DOCUMENT_BASE_PATH + "/{id}")

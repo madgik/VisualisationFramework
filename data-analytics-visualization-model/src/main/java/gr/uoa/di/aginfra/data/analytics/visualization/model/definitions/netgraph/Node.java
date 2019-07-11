@@ -33,28 +33,10 @@ public class Node extends SubGraphEntity{
 
     public Node(String nodeId, double x, double y, Map<String,String> attributes, String graphId, String graphName, String tenantName, String privacy) {
 
-//        System.out.println("ID node:"+nodeId);
         this.nodeId = nodeId;
         this.x = x;
         this.y = y;
-        this.nodeProperties = new ArrayList<>();
-        int i=0;
-        for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry<String, String> entry = it.next();
-            if(entry.getKey().matches("[a-zA-Z ]+")) {
-
-                NodeProperty nodeProperty = new NodeProperty(entry.getKey(), entry.getValue(),this);
-                nodeProperties.add(nodeProperty);
-//                System.out.println(entry.getKey() + " = " + entry.getValue());
-                it.remove();
-            }
-            else {
-                if(i == 0) {
-                    this.setStartingDate(Integer.parseInt(entry.getKey().replace(".","")));
-                }
-            }
-            i++;
-        }
+        this.nodeProperties = fixProperties(attributes);
 
         this.setSubGraphId(graphId);
         this.setSubGraphName(graphName);
@@ -65,12 +47,7 @@ public class Node extends SubGraphEntity{
 //                .filter(e->Double.parseDouble(e.getValue().replace(",","."))>0)
                 .map(e -> new HasDateNode(this, new DateNode(e.getKey(),e.getValue(),this)))
                 .collect(Collectors.toSet());
-
-
-//        System.out.println("I counted dateNodes:"+ hasDateNodes.size());
-
     }
-
 
     public String getNodeId() {
         return nodeId;
@@ -126,5 +103,29 @@ public class Node extends SubGraphEntity{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    private List<NodeProperty> fixProperties(Map<String,String> attributes) {
+        List<NodeProperty> nodeProps = new ArrayList<>();
+        int i=0;
+        for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, String> entry = it.next();
+            if(entry.getKey().matches("[a-zA-Z ]+")) {
+                String value = entry.getValue();
+                if (entry.getValue().matches("[0-9, /,]+")) {
+                    value = entry.getValue().replace(",",".");
+                }
+                NodeProperty nodeProperty = new NodeProperty(entry.getKey(), value,this);
+                nodeProps.add(nodeProperty);
+                it.remove();
+            }
+            else {
+                if(i == 0) {
+                    this.setStartingDate(Integer.parseInt(entry.getKey().replace(".","")));
+                }
+            }
+            i++;
+        }
+        return nodeProps;
     }
 }

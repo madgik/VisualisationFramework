@@ -23,7 +23,8 @@ export const configItemActions = {
   closeItemEdit,
   showErrorMessage,
   updateGeoanalyticsLayers,
-  updateCheckLayer
+  updateCheckLayer,
+  setDelimiter
 }
 
 /*
@@ -90,11 +91,10 @@ function setGeoanalyticsLayers(layers){
 }
 
 function updateCheckLayer(value) {
-  console.log("im in update:"+value);
   return {type:configItemConstants.UPDATE_CHECK_LAYER, value}
 }
 
-function uploadFile(files, type) {
+function uploadFile(files, type, delimiter) {
   return function (dispatch) {
     // var dataType = visualizationToDataType(type);
     files.forEach(file => {
@@ -103,6 +103,7 @@ function uploadFile(files, type) {
       formData.append("file", file);
       formData.append("name", file.name);
       formData.append("type", type);
+      formData.append("delimiter", delimiter)
 
       return documentService.postDocument(formData).then(response => {
         dispatch(updateUploadedFile(response.data));
@@ -237,4 +238,8 @@ function showErrorMessage(message) {
 
 function setErrorMessage(message) {
   return { type: configItemConstants.SHOW_MODAL_ERROR, message };
+}
+
+function setDelimiter(delimiter) {
+  return { type: configItemConstants.SET_DELIMITER, delimiter };
 }

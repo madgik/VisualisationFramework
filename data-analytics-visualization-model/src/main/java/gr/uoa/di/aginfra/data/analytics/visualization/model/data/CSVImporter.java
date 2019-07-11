@@ -109,9 +109,12 @@ public class CSVImporter implements RawDataImporter {
 
     public void importPlainCSV(byte[] content, DataDocument dataDocument) throws Exception {
 
+
         String[][] csv;
         try {
-            csv = CSVReader.readCSV(new String(content, StandardCharsets.UTF_8.name()));
+            String temp = new String(content, StandardCharsets.UTF_8.name());
+
+            csv = CSVReader.readCSV(temp.replace(dataDocument.getDelimiter(),","));
         } catch (Exception e) {
             throw new InvalidFormatException("Invalid csv format provided", e);
         }

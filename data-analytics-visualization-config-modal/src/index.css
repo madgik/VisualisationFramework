@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.ui .grid .data-example {
+  margin: 10px;
+}
+
+.ui .grid  .four .column .delimiter {
+  margin-bottom: 10px;
+}
+
+ .ui .form input .delimiter-input {
+  width: 90px;
+}

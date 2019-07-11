@@ -33,6 +33,7 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
                     filters.and(new Filter("value", ComparisonOperator.LESS_THAN_EQUAL, q.getValue()));
                 }
             } else {
+
                 filters.and(new Filter("name", ComparisonOperator.EQUALS, q.getKey()));
                 filters.and(new Filter("value", ComparisonOperator.EQUALS, q.getValue()));
             }
@@ -97,34 +98,27 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
                 cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
 
                 if (rangeParams[1].equals("1")) {
-                    cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value>=$valueFrom" + i + "\n";
+                    cypher += "WHERE toFloat(p" + i + ".name=$name" + i + ") and p" + i + ".value>=$valueFrom" + i + "\n";
                     params.put("valueFrom" + i, Double.valueOf(entry.getValue()));
                 } else {
-                    cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value<=$valueTo" + i + "\n";
+                    cypher += "WHERE toFloat(p" + i + ".name=$name" + i + ") and p" + i + ".value<=$valueTo" + i + "\n";
                     params.put("valueTo" + i, Double.valueOf(entry.getValue()));
                 }
                 params.put("name" + i, rangeParams[0]);
                 System.out.println("name" + i + ":" + rangeParams[0]);
             } else {
                 cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
-                cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value=$value" + i + "\n";
+                cypher += "WHERE p" + i + ".name=$name" + i + " and p" + i + ".value=~ $value" + i + "\n";
                 params.put("name" + i, entry.getKey());
-                params.put("value" + i, entry.getValue());
+                params.put("value" + i, "(?i).*"+ entry.getValue()+".*");
             }
             i++;
         }
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
-
         cypher += "Return p,hp,n";
-//        if (hasWeight == true) {
-//            cypher += ",hd, d, w, d2";
-//        }
-
         cypher += " LIMIT 25";
 
         System.out.println(cypher);
-//        for(int j =0)
-//        Map<String, Object> params = new HashMap<>();
 
 
         Iterable<Node> nodes = session.query(Node.class, cypher, params);

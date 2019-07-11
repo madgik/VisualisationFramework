@@ -86,13 +86,10 @@ public class ConfigurationController extends BaseController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> put(@PathVariable("id") String id, @RequestBody ConfigurationDto dto) throws Exception {
-
 		Configuration entity = modelMapper.map(dto);
 		entity.setId(id);
 		entity.setVre(vreResolver.resolve());
-
 		configurationService.storeConfiguration(entity);
-
 
 		return ResponseEntity.ok("");
 	}

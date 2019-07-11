@@ -48,6 +48,8 @@ class ConfigurationModalInner extends React.Component {
             onFilterRemoval={this.props.onFilterRemoval}
             onTransformationAddition={this.props.onTransformationAddition}
             onCheckLayerChange={this.props.onCheckLayerChange}
+            setDelimiter={this.props.setDelimiter}
+            delimiter={this.props.delimiter}
             />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
@@ -75,7 +77,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onFieldChange: (data, validation) => dispatch(configItemActions.updateEditedItem(data, validation)),
-  onFileDropped: (files, type) => dispatch(configItemActions.uploadFile(files, type)),
+  onFileDropped: (files, type, delimiter) => dispatch(configItemActions.uploadFile(files, type, delimiter)),
   onRemoveFileClick: (index) => dispatch(configItemActions.removeFile(index)),
   onJoinFieldChange: (source, field) => dispatch(configItemActions.updateJoinField(source, field)),
   onFilterAddition: (filter) => dispatch(configItemActions.addFilter(filter)),
@@ -86,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
   onSavePressed: (callback) => dispatch(configItemActions.storeConfiguration(callback)),
   onDeletePressed: (callback) => dispatch(configItemActions.deleteConfiguration(callback)),
   onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
-  onCheckLayerChange: (value) => dispatch(configItemActions.updateCheckLayer(value))
+  onCheckLayerChange: (value) => dispatch(configItemActions.updateCheckLayer(value)),
+  setDelimiter: (value) => dispatch(configItemActions.setDelimiter(value))
 })
 
 export default connect(
