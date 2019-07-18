@@ -45,7 +45,8 @@ function defaultState() {
       layers: [],
       checked: false
     },
-    delimiter: ''
+    delimiter: '',
+    commentCharacter:''
   }
 }
 
@@ -258,7 +259,13 @@ export function configItem(state = defaultState(), action) {
     case configItemConstants.SET_DELIMITER:
       return update(state, {
         delimiter: {
-            $set: action.delimiter
+          $set: action.delimiter
+        }
+      });
+    case configItemConstants.SET_COMMENT_CHARACTER:
+      return update(state, {
+        commentCharacter: {
+          $set: action.commentCharacter
         }
       });
     default:

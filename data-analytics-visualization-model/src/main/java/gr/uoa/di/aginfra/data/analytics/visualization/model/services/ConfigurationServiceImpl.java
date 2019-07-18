@@ -78,7 +78,8 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	}
 
 	@Override
-	public String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content, String delimiter) throws Exception {
+	public String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content,
+									String delimiter, String commentChar) throws Exception {
 		logger.info("Storing document with name " + name + " and datatype " + type);
 
 		DataDocument dataDocument = new DataDocument();
@@ -87,6 +88,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		dataDocument.setType(type);
 		dataDocument.setDataReference(isDataReference);
 		dataDocument.setDelimiter(delimiter);
+		dataDocument.setCommentChar(commentChar);
 		RawDataImporter importer = rawDataImporterFactory.getImporter(type);
 		importer.importData(content, dataDocument);
 

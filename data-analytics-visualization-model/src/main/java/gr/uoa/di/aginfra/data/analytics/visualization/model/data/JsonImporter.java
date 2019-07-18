@@ -68,6 +68,11 @@ public class JsonImporter implements RawDataImporter {
 
     public void importPlainJson(byte[] content, DataDocument dataDocument) throws Exception {
         String stringContent = new String(content, StandardCharsets.UTF_8.name());
+        /**  Delete Comment Lines  **/
+        if (!dataDocument.getCommentChar().equals("")) {
+            stringContent = FileHelpers.deleteCommentLine(stringContent, dataDocument.getCommentChar());
+        }
+
         List<Map<String, String>> data = mapper.readValue(stringContent, new TypeReference<List<Map<String, String>>>(){});
         List<String> fields = new ArrayList<>();
         if(data.size() > 0) {

@@ -109,19 +109,26 @@ public class CSVImporter implements RawDataImporter {
 
     public void importPlainCSV(byte[] content, DataDocument dataDocument) throws Exception {
 
-
         String[][] csv;
         try {
             String temp = new String(content, StandardCharsets.UTF_8.name());
-
-            csv = CSVReader.readCSV(temp.replace(dataDocument.getDelimiter(),","));
+            /**  Delete Comment Lines  **/
+			String modContent = "";
+			if (!dataDocument.getCommentChar().equals("")) {
+				temp = FileHelpers.deleteCommentLine(temp, dataDocument.getCommentChar());
+			}
+			if(!dataDocument.getDelimiter().equals("")) {
+				temp = temp.replace(dataDocument.getDelimiter(),",");
+			}
+			System.out.println(temp.substring(0,10));
+            csv = CSVReader.readCSV(temp);
         } catch (Exception e) {
             throw new InvalidFormatException("Invalid csv format provided", e);
         }
 
         if (csv.length < 2) throw new Exception("No records found in csv file");
 
-        dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
+        dataDocument.setFields(new ArrayList<>(Arrays.stream(csv[0]).collect(Collectors.toList())));
 
         List<Map<String, String>> list = new ArrayList<>();
         for (int i = 1; i < csv.length; i++) {

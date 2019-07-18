@@ -42,7 +42,7 @@ export const controlGraphActions = {
   setFilteredTimestamps,
   setPropModalIsOpen,
   setRecord,
-  setAvailRecord, 
+  setAvailRecord,
   setNode
 }
 
@@ -137,8 +137,8 @@ function getFilteredGraph(query, graphId) {
         'content-type': 'application/json'
       }
     }).then(response => {
-       console.log("response"+JSON.stringify(response.data));
-      
+      console.log("response" + JSON.stringify(response.data));
+
       dispatch(loadGraph(response.data));
 
       dispatch(hideLoading());
@@ -179,30 +179,37 @@ function addGraphData(newData, graphData, showOldNodes, topNodes) {
 }
 
 
-function getDateGraph(date, graphData, graphId, showOldNodes, topNodes) {
+function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
   return function (dispatch) {
-    var nodeIds = new URLSearchParams();
+    // var nodeIds = new URLSearchParams();
 
-    var nodes = [];
+    var nodesIds = [];
     graphData.nodes.forEach(element => {
-      // nodes.push(element.id);
-      // nodeIds +=+element.id +",";
-      nodeIds.append("nodes", element.id);
-
+      nodesIds.push(element.id);
     });
+    // nodeIds.append("date", date);
 
-    nodeIds.append("date", date);
+    var data = {
+      nodes: nodesIds,
+      date: dateReq
+    }
 
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId, nodeIds);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
     console.log(resourceUrl);
-    // console.log("get string:" + JSON.stringify(nodeIds))
-    // ,{params:{nodes: nodeIds,date: date}}
+  
     console.log("TOP:" + showOldNodes + topNodes);
-    return axios.get(resourceUrl)
+
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    return axios.post(resourceUrl, data, axiosConfig)
       .then(response => {
 
         dispatch(addGraphData(response.data, graphData, showOldNodes, topNodes))
-        dispatch(setCurrentDate(date))
+        dispatch(setCurrentDate(dateReq))
       })
       .catch(response => {
         alert(response);

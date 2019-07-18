@@ -45,7 +45,7 @@ public class Node extends SubGraphEntity{
         this.hasDateNodes = attributes.entrySet()
                 .stream()
 //                .filter(e->Double.parseDouble(e.getValue().replace(",","."))>0)
-                .map(e -> new HasDateNode(this, new DateNode(e.getKey(),e.getValue(),this)))
+                .map(e -> new HasDateNode(this, new DateNode(e.getKey(),fixProperty(e.getValue()),this)))
                 .collect(Collectors.toSet());
     }
 
@@ -111,10 +111,7 @@ public class Node extends SubGraphEntity{
         for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
             if(entry.getKey().matches("[a-zA-Z ]+")) {
-                String value = entry.getValue();
-                if (entry.getValue().matches("[0-9, /,]+")) {
-                    value = entry.getValue().replace(",",".");
-                }
+				String value = fixProperty(entry.getValue());
                 NodeProperty nodeProperty = new NodeProperty(entry.getKey(), value,this);
                 nodeProps.add(nodeProperty);
                 it.remove();
@@ -128,4 +125,12 @@ public class Node extends SubGraphEntity{
         }
         return nodeProps;
     }
+
+	private String fixProperty(String property) {
+		String value = property;
+		if (property.matches("[0-9, /,]+")) {
+			value = property.replace(",",".");
+		}
+		return  value;
+	}
 }

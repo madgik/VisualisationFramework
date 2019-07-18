@@ -58,6 +58,8 @@ class ConfigurationForm extends React.Component {
                 onJoinFieldChange={this.props.onJoinFieldChange} 
                 setDelimiter={this.props.setDelimiter}
                 delimiter={this.props.delimiter}
+                setCommentCharacter={this.props.setCommentCharacter}
+                commentCharacter={this.props.commentCharacter}
                 onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor

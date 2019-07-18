@@ -36,6 +36,8 @@ public class DataDocument {
 
 	private String delimiter;
 
+	private String commentChar;
+
 	public String getId() {
 		return id;
 	}
@@ -155,5 +157,13 @@ public class DataDocument {
 
 	public void setDelimiter(String delimiter) {
 		this.delimiter = delimiter;
+	}
+
+	public String getCommentChar() {
+		return commentChar;
+	}
+
+	public void setCommentChar(String commentChar) {
+		this.commentChar = commentChar;
 	}
 }

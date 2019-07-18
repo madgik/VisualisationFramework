@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class FileHelpers {
 
@@ -60,5 +61,21 @@ public class FileHelpers {
 		}
 
 		return bytesArray;
+	}
+
+	public static String deleteCommentLine(String content, String commentChar) {
+		String[] lines = content.split(System.getProperty("line.separator"));
+		for(int i=0;i<lines.length;i++){
+			if(lines[i].startsWith(commentChar)){
+				lines[i]="";
+			}
+		}
+		StringBuilder finalStringBuilder= new StringBuilder("");
+		for(String s:lines){
+			if(!s.equals("")){
+				finalStringBuilder.append(s).append(System.getProperty("line.separator"));
+			}
+		}
+		return finalStringBuilder.toString();
 	}
 }

@@ -23,5 +23,6 @@ export const configItemConstants = {
   SHOW_VALIDATION_RESULT: 'show-validation-result',
   SHOW_MODAL_ERROR: 'show-modal-error',
   UPDATE_CHECK_LAYER: 'update-check-layer',
-  SET_DELIMITER: 'set_delimiter'
+  SET_DELIMITER: 'set_delimiter',
+  SET_COMMENT_CHARACTER: 'set_comment_character'
 }

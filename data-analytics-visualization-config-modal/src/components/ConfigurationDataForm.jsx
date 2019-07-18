@@ -15,11 +15,15 @@ class ConfigurationDataForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleDelimiterChange = this.handleDelimiterChange.bind(this);
+    this.handleCommentCharacterChange = this.handleCommentCharacterChange.bind(this);
   }
 
   handleDelimiterChange(e) {
-    console.log("change"+e.target.value);
     this.props.setDelimiter(e.target.value);
+  }
+
+  handleCommentCharacterChange(e) {
+    this.props.setCommentCharacter(e.target.value);
   }
 
   handleFileDropped(files) {
@@ -31,9 +35,9 @@ class ConfigurationDataForm extends React.Component {
     else {
       type = "Records";
     }
-    console.log("change"+this.props.delimiter);
+    console.log("change" + this.props.delimiter);
 
-    this.props.onFileDropped(files, type, this.props.delimiter);
+    this.props.onFileDropped(files, type, this.props.delimiter, this.props.commentCharacter);
   }
 
   handleRemoveFileClick(index) {
@@ -72,18 +76,36 @@ class ConfigurationDataForm extends React.Component {
           onCheckLayerChange={this.props.onCheckLayerChange}
         />
         {/* {(this.type != undefined && this.type == "csv") && */}
-        <Grid columns={5} className="delimiter" style={{ marginTop: 10 , marginBottom: 8 , padding: 10}}>
-            <h4>CSV delimiter:</h4>
-          {/* </Grid.Column>
-          <Grid.Column> */}
+        <Grid columns={4}>
+          <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
+            <Grid.Column>
+              <h4>CSV delimiter:</h4>
+            </Grid.Column>
+            <Grid.Column>
+              <Input
+                maxLength="1"
+                className="delimeter-input"
+                placeholder="ex: , . : - ;"
+                onChange={this.handleDelimiterChange}
+                style={{ width: 90, top: -5 }}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
+          <Grid.Column>
+            <h4>Comment character:</h4>
+            </Grid.Column>
+            <Grid.Column>
             <Input
               maxLength="1"
               className="delimeter-input"
-              placeholder="ex: , . : - ;"
-              onChange={this.handleDelimiterChange}
+              placeholder="ex: # // *"
+              onChange={this.handleCommentCharacterChange}
               style={{ width: 90, top: -5 }}
-            
+
             />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
         {(!this.props.geoanalytics.checked) ?
           <Dropzone onDrop={this.handleFileDropped.bind(this)}>

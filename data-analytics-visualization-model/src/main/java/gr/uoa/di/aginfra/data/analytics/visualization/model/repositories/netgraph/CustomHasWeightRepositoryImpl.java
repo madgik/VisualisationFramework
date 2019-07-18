@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NodeProperty;
+import javafx.beans.binding.FloatBinding;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.session.Session;
 
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +69,14 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
 
                 if (rangeParams[1].equals("property")) {
 
-                    cypher += "WHERE d.property=$property \n";
-
+						if (!entry.getValue().contains(".")) {
+							entry.setValue(entry.getValue() +".0");
+						}
+						else {
+							DecimalFormat df = new DecimalFormat("#.0");
+							entry.setValue(String.valueOf(df.format(Float.parseFloat(entry.getValue()))));
+						}
+					cypher += "WHERE d.property=$property \n";
                     params.put("property", entry.getValue());
 
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("1")) {
