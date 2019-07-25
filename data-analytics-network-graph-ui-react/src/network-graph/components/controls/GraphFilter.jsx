@@ -44,7 +44,6 @@ const styles = theme => ({
 
 class GraphFilter extends React.Component {
 
-
   constructor(props) {
     super(props);
     this.handlePropertyChange = this.handlePropertyChange.bind(this);

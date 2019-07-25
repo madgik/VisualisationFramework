@@ -35,6 +35,7 @@ class ConfigurationModal extends React.Component {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     Ajax.setIsLocalDeployment(this.props.isLocalDeployment);
     ErrorHandler.init(this.store);
+    this.store.dispatch(configItemActions.getAllConfigurations());
   }
 
   componentDidMount() {

@@ -52,6 +52,12 @@ class ConfigurationModalInner extends React.Component {
             delimiter={this.props.delimiter}
             setCommentCharacter={this.props.setCommentCharacter}
             commentCharacter={this.props.commentCharacter}         
+            configurations={this.props.configurations}
+            configOptions={this.props.configOptions}
+            selectedConfiguration={this.props.selectedConfiguration}
+            setSelectedConfiguration={this.props.setSelectedConfiguration}
+            showConfigurationData={this.props.showConfigurationData}
+            setConfigurationData={this.props.setConfigurationData}
             />
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
@@ -92,7 +98,10 @@ const mapDispatchToProps = dispatch => ({
   onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
   onCheckLayerChange: (value) => dispatch(configItemActions.updateCheckLayer(value)),
   setDelimiter: (value) => dispatch(configItemActions.setDelimiter(value)),
-  setCommentCharacter: (value) => dispatch(configItemActions.setCommentCharacter(value))
+  setCommentCharacter: (value) => dispatch(configItemActions.setCommentCharacter(value)),
+  setSelectedConfiguration: (value) => dispatch(configItemActions.setSelectedConfiguration(value)),
+  showConfigurationData: (value) => dispatch(configItemActions.showConfigurationData(value)),
+  setConfigurationData: (value) => dispatch(configItemActions.setConfigurationData(value)),
 })
 
 export default connect(

@@ -107,7 +107,7 @@ public class NetworkGraphController {
 		try {
 			List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
 			Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, true);
-
+			System.out.println(d3Results);
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
 

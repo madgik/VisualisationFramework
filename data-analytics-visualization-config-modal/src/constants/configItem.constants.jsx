@@ -24,5 +24,9 @@ export const configItemConstants = {
   SHOW_MODAL_ERROR: 'show-modal-error',
   UPDATE_CHECK_LAYER: 'update-check-layer',
   SET_DELIMITER: 'set_delimiter',
-  SET_COMMENT_CHARACTER: 'set_comment_character'
+  SET_COMMENT_CHARACTER: 'set_comment_character',
+  SET_CONFIGURATIONS: 'set_configurations',
+  SET_CONFIG_OPTIONS: 'set_config_options',
+  SET_SELECTED_CONFIGURATION: 'set_selected_configuration',
+  SET_CONFIGURATION_DATA: 'set_configuration_data'
 }

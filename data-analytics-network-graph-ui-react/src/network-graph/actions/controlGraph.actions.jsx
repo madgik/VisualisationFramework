@@ -62,7 +62,7 @@ function getTopNodes(graphId, num) {
     }
     return axios.get(resourceUrl)
       .then(response => {
-        // console.log(response.data);
+      //  console.log(response.data);
         dispatch(loadGraph(response.data));
         var topNodes = {
           nodes: response.data.nodes.slice(0),
@@ -137,7 +137,7 @@ function getFilteredGraph(query, graphId) {
         'content-type': 'application/json'
       }
     }).then(response => {
-      console.log("response" + JSON.stringify(response.data));
+      // console.log("response" + JSON.stringify(response.data));
 
       dispatch(loadGraph(response.data));
 
@@ -158,10 +158,9 @@ function getFilteredGraph(query, graphId) {
 /* OTHERS */
 function addGraphData(newData, graphData, showOldNodes, topNodes) {
   return function (dispatch) {
-
-    // console.log("Old String:" + JSON.stringify(graphData.links));
-
+    //  console.log("Old String:" + JSON.stringify(graphData.nodes));
     var newGraphDataNodes = mergeJson(newData.nodes, graphData.nodes);//mergeDeep(newData.nodes, graphData.nodes);
+    // console.log("new String:" + JSON.stringify(newData.nodes));
 
     graphData.links = newData.links;
     if (showOldNodes) {
@@ -195,9 +194,9 @@ function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
     }
 
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
-    console.log(resourceUrl);
+    // console.log(resourceUrl);
   
-    console.log("TOP:" + showOldNodes + topNodes);
+    // console.log("TOP:" + showOldNodes + topNodes);
 
     let axiosConfig = {
       headers: {
@@ -251,6 +250,7 @@ function setSelectedNode(nodeId) {
 function loadGraph(graphData) {
   return function (dispatch) {
     dispatch(setGraphLinks([]));
+
     let newNodes = graphData.nodes.slice(0);
     dispatch(setGraphNodes(newNodes));
     let newLinks = graphData.links.slice(0);

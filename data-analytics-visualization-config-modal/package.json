@@ -4,7 +4,8 @@
   "private": false,
   "main": "./dist/index.js",
   "dependencies": {
-    "react-dropzone": "~5.1.0"
+    "react-dropzone": "~5.1.0",
+    "react-select-search": "^0.9.6"
   },
   "peerDependencies": {
     "axios": "~0.18.0",

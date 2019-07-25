@@ -23,11 +23,17 @@ public class D3Helper {
                 nodeMap.put(property.getName(), property.getValue());
             }
 
-            nodes.add(nodeMap);
-
+            double value = 0.0;
             for (HasDateNode hasDateNode : node.getHasDateNodes()) {
+                double temp  = Double.parseDouble(hasDateNode.getTarget().getProperty());
+                if ( temp > value ) {
+                    value = Double.parseDouble(hasDateNode.getTarget().getProperty());
+                }
                 rels.add(map("source", node.getNodeId(), "target", hasDateNode.getTarget().getHasWeight().getTarget().getParentId(),"weight",hasDateNode.getTarget().getHasWeight().getWeight(), "color", "lightblue","highlightColor", "lightblue")); // "color", "blue"
             }
+            nodeMap.put("value", value);
+            nodes.add(nodeMap);
+
         }
         //spoof links for visualization
         if( isInitialization) {
@@ -59,6 +65,7 @@ public class D3Helper {
             for(NodeProperty property: node.getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
+            nodeMap.put("value", "0.0");
 
             nodes.add(nodeMap);
 
@@ -96,6 +103,7 @@ public class D3Helper {
             for(NodeProperty property: dateNode.getParentNode().getNodeProperties()){
                 nodeMap.put(property.getName(), property.getValue());
             }
+            nodeMap.put("value", dateNode.getProperty());
             nodes.add(nodeMap);
 
             rels.add(map("source", dateNode.getParentNode().getNodeId(), "target", dateNode.getHasWeight().getTarget().getParentNode().getNodeId(),
@@ -114,7 +122,7 @@ public class D3Helper {
         Map<String, Node> existedNodes = new HashMap<>();
         Map<String, String> existedLinks = new HashMap<>();
 
-        Set<String> targetIds = new HashSet<>();
+        Map<String, String > targetIds = new HashMap<>();
         while (result.hasNext()) {
             HasWeight hasWeight= result.next();
             Node node = hasWeight.getSource().getParentNode();
@@ -133,19 +141,20 @@ public class D3Helper {
 
             if( existedLinks.get(node.getNodeId() + "," + hasWeight.getTarget().getParentId()) == null) {
                 existedLinks.put(node.getNodeId() + "," + hasWeight.getTarget().getParentId(),"");
-                targetIds.add(hasWeight.getTarget().getParentId());
+                targetIds.put(hasWeight.getTarget().getParentId(), hasWeight.getTarget().getProperty());
                 rels.add(map("source", node.getNodeId(), "target", hasWeight.getTarget().getParentId(), "weight", hasWeight.getWeight(), "color", "lightblue", "highlightColor", "blue")); // "color", "blue"
 
             }
         }
-        targetIds.stream().forEach(t->{
+        targetIds.entrySet().stream().forEach(t->{
             if( existedNodes.get(t) == null) {
-                Node node= networkGraphService.findNodeById(t,graphId);
+                Node node= networkGraphService.findNodeById(t.getKey(),graphId);
                 if(node != null) {
-                    Map<String, Object> nodeMap = map("id", node.getNodeId()); // "x",  node.getX(), "y"
+                    Map<String, Object> nodeMap = map("id", node.getNodeId(),  "value", t.getValue()); // "x",  node.getX(), "y"
                     for (NodeProperty property : node.getNodeProperties()) {
                         nodeMap.put(property.getName(), property.getValue());
                     }
+
                     nodes.add(nodeMap);
                 }
             }

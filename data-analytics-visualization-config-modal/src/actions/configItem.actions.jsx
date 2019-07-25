@@ -5,7 +5,7 @@ import { geoanalyticsService } from '../services'
 
 import ConfigurationValidators from '../validation/ConfigurationValidators'
 
-export const configItemActions = {
+export const  configItemActions = {
   createConfiguration,
   editConfiguration,
   showConfigurationData,
@@ -25,12 +25,29 @@ export const configItemActions = {
   updateGeoanalyticsLayers,
   updateCheckLayer,
   setDelimiter,
-  setCommentCharacter
+  setCommentCharacter,
+  getAllConfigurations,
+  setConfigurations,
+  setConfigOptions,
+  setSelectedConfiguration,
+  setConfigurationData
 }
 
 /*
  * action creators
  */
+
+function getAllConfigurations() {
+  return function(dispatch) {
+    configurationService.getConfigurations()
+      .then (response => {
+        console.log(response.data);
+        var options = response.data.map( (configuration) => ({ name: configuration.label, value: configuration.id }));
+        dispatch(setConfigOptions(options))
+        dispatch(setConfigurations(response.data))
+      })
+  }
+}
 
 function createConfiguration() {
   return { type: configItemConstants.CREATE_ITEM };
@@ -248,4 +265,20 @@ function setDelimiter(delimiter) {
 
 function setCommentCharacter(commentCharacter) {
   return { type: configItemConstants.SET_COMMENT_CHARACTER, commentCharacter };
+}
+
+function setConfigurations(configurations) {
+  return { type: configItemConstants.SET_CONFIGURATIONS, configurations };
+}
+
+function setConfigOptions(configOptions) {
+  return { type: configItemConstants.SET_CONFIG_OPTIONS, configOptions };
+}
+
+function setSelectedConfiguration(selectedConfiguration) {
+  return { type: configItemConstants.SET_SELECTED_CONFIGURATION, selectedConfiguration };
+}
+
+function setConfigurationData(data) {
+  return { type: configItemConstants.SET_CONFIGURATION_DATA, data };
 }

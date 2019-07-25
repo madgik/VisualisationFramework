@@ -6,7 +6,7 @@
 	<artifactId>network-graphs-visualization-portlet</artifactId>
 	<packaging>war</packaging>
 	<name>network-graphs-visualization-portlet</name>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 
 	<properties>
 		<org.springframework.version>4.3.4.RELEASE</org.springframework.version>

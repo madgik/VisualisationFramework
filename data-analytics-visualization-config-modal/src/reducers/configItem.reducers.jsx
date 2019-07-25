@@ -46,7 +46,10 @@ function defaultState() {
       checked: false
     },
     delimiter: '',
-    commentCharacter:''
+    commentCharacter: '',
+    configurations: [],
+    configOptions: [],
+    selectedConfiguration: null
   }
 }
 
@@ -266,6 +269,30 @@ export function configItem(state = defaultState(), action) {
       return update(state, {
         commentCharacter: {
           $set: action.commentCharacter
+        }
+      });
+    case configItemConstants.SET_CONFIGURATIONS:
+      return update(state, {
+        configurations: {
+          $set: action.configurations
+        }
+      });
+    case configItemConstants.SET_CONFIG_OPTIONS:
+      return update(state, {
+        configOptions: {
+          $set: action.configOptions
+        }
+      });
+    case configItemConstants.SET_SELECTED_CONFIGURATION:
+      return update(state, {
+        selectedConfiguration: {
+          $set: action.selectedConfiguration
+        }
+      });
+    case configItemConstants.SET_CONFIGURATION_DATA:
+      return update(state, {
+        data: {
+          $set: action.data
         }
       });
     default:

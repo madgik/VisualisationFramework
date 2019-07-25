@@ -8,8 +8,28 @@ import ConfigurationValidators from '../validation/ConfigurationValidators'
 
 import TransformationFiltering from '../utilities/TransformationsFiltering';
 
+import SelectSearch from 'react-select-search';
+
+import './SearchBar.css';
+
 
 class ConfigurationGeneralForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleConfigurationChange = this.handleConfigurationChange.bind(this);
+    console.log(this.props.selectedConfiguration);
+  }
+
+  handleConfigurationChange = (e) => {
+    var data = this.props.configurations.find(function (element, e) {
+      return element.value == e.value;
+    });
+    this.props.setSelectedConfiguration(data);
+    this.props.setConfigurationData(data);
+    // this.props.showConfigurationData(data);
+
+  }
 
   handleFieldChange = (prop, value) => {
     const data = update(this.props.data, {
@@ -56,7 +76,6 @@ class ConfigurationGeneralForm extends React.Component {
   extractFieldSuggestions = (addEmpty) => {
 
     var suggestions = TransformationFiltering.getSuggestions(this.props.data.transformations,this.props.data.dataSources);
-
 
     if (addEmpty) {
       suggestions.unshift({
@@ -105,8 +124,29 @@ class ConfigurationGeneralForm extends React.Component {
       this.props.data.type === 'Polar');
   }
 
+
   render() {
+    console.log(this.props.selectedConfiguration)
     return (<React.Fragment>
+       <Form.Field  error={this.props.validation.label.touched && !this.props.validation.label.valid}>
+        <label>Create New or Select From History</label>
+        { (this.props.configOptions != []) &&
+          <SelectSearch 
+            search= {true}
+            mode="input"
+            options={this.props.configOptions} 
+            value={this.props.data.label|| ""} 
+            name="configuration" 
+            placeholder="Select a saved configuration" 
+            onChange = {(e) => this.handleConfigurationChange(e)}
+            />
+        }
+      </Form.Field>
+      { (this.props.selectedConfiguration != null) ? 
+      <Form.Field>
+        <label>Please upload new data file before save</label>
+      </Form.Field> :''
+      }
       <Form.Field required error={this.props.validation.label.touched && !this.props.validation.label.valid}>
         <label>Label</label>
         <Input

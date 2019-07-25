@@ -48,7 +48,14 @@ class ConfigurationForm extends React.Component {
               <ConfigurationGeneralForm
                 data={this.props.data}
                 validation={this.props.validation}
-                onFieldChange={this.props.onFieldChange} /> : ''}
+                configurations={this.props.configurations}
+                configOptions={this.props.configOptions}
+                onFieldChange={this.props.onFieldChange} 
+                selectedConfiguration={this.props.selectedConfiguration}
+                setSelectedConfiguration={this.props.setSelectedConfiguration} 
+                showConfigurationData={this.props.showConfigurationData}
+                setConfigurationData={this.props.setConfigurationData}
+                /> : ''}
             {this.isDataMenuItemSelected() ?
               <ConfigurationDataForm
                 data={this.props.data}
