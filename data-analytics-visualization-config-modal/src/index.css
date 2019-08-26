@@ -15,3 +15,7 @@ body {
  .ui .form input .delimiter-input {
   width: 90px;
 }
+
+.inputs {
+  display: flex;
+}

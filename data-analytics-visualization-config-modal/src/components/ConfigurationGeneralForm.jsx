@@ -22,10 +22,13 @@ class ConfigurationGeneralForm extends React.Component {
   }
 
   handleConfigurationChange = (e) => {
-    var data = this.props.configurations.find(function (element, e) {
-      return element.value == e.value;
+   
+    var data = this.props.configurations.find(function (element) {     
+      return element.id == e.value;
     });
+    delete data.id;
     this.props.setSelectedConfiguration(data);
+    // console.log()
     this.props.setConfigurationData(data);
     // this.props.showConfigurationData(data);
 
@@ -126,7 +129,7 @@ class ConfigurationGeneralForm extends React.Component {
 
 
   render() {
-    console.log(this.props.selectedConfiguration)
+    console.log(this.props.data)
     return (<React.Fragment>
        <Form.Field  error={this.props.validation.label.touched && !this.props.validation.label.valid}>
         <label>Create New or Select From History</label>
@@ -142,6 +145,7 @@ class ConfigurationGeneralForm extends React.Component {
             />
         }
       </Form.Field>
+    
       { (this.props.selectedConfiguration != null) ? 
       <Form.Field>
         <label>Please upload new data file before save</label>

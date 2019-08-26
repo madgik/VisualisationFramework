@@ -63,21 +63,19 @@ class UploadDataMessage extends React.Component {
           <br></br>
           <Grid className="data-example">
             <Grid.Row>
-
-              <Image src={csvImage} alt='tree.json' />
+              <Image src={csvImage} alt='csv.png' />
             </Grid.Row>
             <Grid.Row>
               <p>or</p>
             </Grid.Row>
             <Grid.Row>
-
-              <Image src={jsonImage} alt='tree.json' />
+              <Image src={jsonImage} alt='tree.png' />
             </Grid.Row>
           </Grid>
         </p>
         :
         <p>
-          <Image src={this.typeToImage[this.props.type]} alt='tree.json' /></p>
+          <Image src={this.typeToImage[this.props.type]} alt='tree.png' /></p>
 
       }
     </Message>;

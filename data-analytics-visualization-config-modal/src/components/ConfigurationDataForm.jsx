@@ -76,6 +76,7 @@ class ConfigurationDataForm extends React.Component {
           onCheckLayerChange={this.props.onCheckLayerChange}
         />
         {/* {(this.type != undefined && this.type == "csv") && */}
+        <div className="inputs">
         <Grid columns={4}>
           <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
             <Grid.Column>
@@ -115,6 +116,7 @@ class ConfigurationDataForm extends React.Component {
           <ConfigurationDataGeoanalyticsSelector
             layers={this.props.geoanalytics.layers} />
         }
+        </div>
       </div>
 
     </div>);
