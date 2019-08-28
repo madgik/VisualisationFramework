@@ -1,8 +1,11 @@
 import React from 'react';
-import { Map as LeafletMap, TileLayer, GeoJSON } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, GeoJSON, withLeaflet  } from 'react-leaflet'
+import { ReactLeafletSearch } from 'react-leaflet-search'
+
 import idGenerator from 'react-id-generator';
 
 
+const ReactLeafletSearchComponent = withLeaflet(ReactLeafletSearch);
 
 class MapRenderer extends React.Component {
 
@@ -141,6 +144,33 @@ class MapRenderer extends React.Component {
           onEachFeature={this.onEachFeature.bind(this)}
 
         />
+        {/* <ReactLeafletSearch
+          position="topleft"
+          inputPlaceholder="Custom placeholder"
+          search = {
+            [33.100745405144245, 46.48315429687501]
+          }
+          showMarker={true}
+          zoom={5}
+          showPopup={true}
+          closeResultsOnClick={true}
+          openSearchOnLoad={true}
+          // // these searchbounds would limit results to only Turkey.
+          // searchBounds = {
+          //   [
+          //     [33.100745405144245, 46.48315429687501],
+          //     [44.55916341529184, 24.510498046875]
+          //   ]
+          // }
+          // providerOptions={{region: 'tr'}}
+
+          // default provider OpenStreetMap
+          // provider="BingMap"
+          // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
+        /> */}
+
+      <ReactLeafletSearchComponent position="topright" />
+
       </LeafletMap>
     )
   }

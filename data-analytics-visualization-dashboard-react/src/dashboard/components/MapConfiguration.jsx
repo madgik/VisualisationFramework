@@ -29,7 +29,9 @@ class MapConfiguration extends React.Component {
         { key: 4, text: '2015', value: 2015 },
         { key: 5, text: '2016', value: 2016 },
         { key: 6, text: '2017', value: 2017 },
-        { key: 7, text: '2018', value: 2018 }
+        { key: 7, text: '2018', value: 2018 },
+        { key: 8, text: '2019', value: 2019 }
+
       ]
     return (
     <div className='ui clearing segment '>
