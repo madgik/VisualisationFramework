@@ -77,6 +77,7 @@ class HeaderMenu extends React.Component {
             <Input
                 maxLength={750}
                 placeholder="Dashboard Title"
+                value={this.props.visualization.dashboardTitle}
                 onChange={(e) => this.onSave(e.target.value)}
             />
             </div>

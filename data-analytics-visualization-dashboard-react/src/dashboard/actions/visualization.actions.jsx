@@ -343,25 +343,27 @@ function saveNewFileToWorkspace() {
     let state = getState();
    
     let json = JSON.parse(state.data.map.json);
-    let features = json["features"];
-    let arr = [];
+    if(json !== null){
+      let features = json["features"];
+      let arr = [];
 
-    Object.keys(features).forEach(function(key) {
-     // let feature = features[key].properties;
-      if(features[key].properties.color !== undefined){
-        delete features[key].properties.color;
-        console.log(features[key].properties);
+      Object.keys(features).forEach(function(key) {
+      // let feature = features[key].properties;
+        if(features[key].properties.color !== undefined){
+          delete features[key].properties.color;
+          console.log(features[key].properties);
 
-      }
-      arr.push(features[key]);
+        }
+        arr.push(features[key]);
 
 
-    });
+      });
 
-    console.log(arr);
-    json["features"] = arr;
-    state.data.map.json = JSON.stringify(json);
-    console.log(state.data.map.json);
+      console.log(arr);
+      json["features"] = arr;
+      state.data.map.json = JSON.stringify(json);
+      console.log(state.data.map.json);
+    }
     // const config = {
     //     headers: {
     //         'content-type': 'multipart/form-data'
@@ -446,8 +448,8 @@ function loadStateFromFile(file) {
     console.log(file.data);
     dispatch(setDataToState(file.data));
 
-    //this.store.dispatch(visualizationActions.setDateRange(this.value));
     dispatch(setVisualizationToState(file.visualization));
+
     dispatch(showSaveToWorkspace(false));
 
   }

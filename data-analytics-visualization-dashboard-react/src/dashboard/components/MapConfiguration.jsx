@@ -34,7 +34,7 @@ class MapConfiguration extends React.Component {
     return (
     <div className='ui clearing segment '>
         
-        <Dropdown options={options} defaultValue={options[6].value} placeholder='Select Year'  selection  
+        <Dropdown options={options}   value={this.props.visualization.selectedYear}  placeholder='Select Year'  selection  
         onChange={(e, { value }) => this.handleDropDownChange( value)}/>
         <Button floated='right' disabled={this.props.visualization.disableFetchData} onClick={this.loadData.bind(this)}>Fetch Data</Button>
         

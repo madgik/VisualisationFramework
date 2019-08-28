@@ -5,9 +5,10 @@ import HeaderMenu from '../components/HeaderMenu'
 
 function mapStateToProps(state) {
   return {
-    visualization: state.data.map,
+    visualization: state.visualization,
     document: state.document,
-    workspace: state.data.workspaceDetails
+    workspace: state.data.workspaceDetails,
+
   };
 }
 
