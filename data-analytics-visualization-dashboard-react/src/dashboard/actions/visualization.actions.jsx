@@ -1117,7 +1117,7 @@ function setDataMinerChartDetails(){
     let chart2 =  Object.assign({}, getState().data.chart2);
     chart2.timeSeries = timeSeriesArray;
     chart2.xAxisLabel = "Date";
-    chart2.yAxisLabel = getState().data.chart2Properties.selectedFieldInYAxis;
+    chart2.yAxisLabel = getState().data.chart2Properties.selectedFieldInYAxis + " ( " + headerProperties[columnID -1].unit + " ) " ;
     dispatch(reloadDataMinerChart(chart2));
   
   }

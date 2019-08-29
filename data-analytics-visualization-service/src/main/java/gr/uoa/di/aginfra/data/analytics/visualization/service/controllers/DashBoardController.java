@@ -354,10 +354,19 @@ public class DashBoardController {
 
         DataDocument dataDocument = new DataDocument();
         String dataFromLink = httpClient.workspaceGetRequest(link, null, null);
-
+        String[] units = new String[0];
         String[] lines = dataFromLink.split("\n");
         for(int i=0;i<lines.length;i++){
             if(lines[i].startsWith("#")){
+                if(lines[i].contains("Column units")){
+
+                    String header = lines[i];
+                    units = header.split(";");
+                    for(String s : units){
+                        System.out.println(s);
+                    }
+                }
+
                 lines[i]="";
             }
         }
@@ -374,7 +383,7 @@ public class DashBoardController {
         List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
         for(int i=0,j=0 ; i< properties.size(); i++) {
             if (!properties.get(i).equals("DATE")) {
-                dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
+                dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j, units[i]));
                 j++;
             }
         }
