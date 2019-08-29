@@ -12,7 +12,7 @@ class CustomLoader extends React.Component {
   
     return (
         <div>
-             {this.props.loading === true  &&   <Loader active={this.props.loading}>Loading</Loader>
+             {this.props.loading === true  &&   <Loader active={this.props.loading}></Loader>
  } 
         </div>
     );

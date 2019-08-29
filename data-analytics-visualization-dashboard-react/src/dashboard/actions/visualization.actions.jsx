@@ -92,7 +92,8 @@ export const visualizationActions = {
   setDataMinerChartDetails,
   setDataMinerLoading,
   enableDataMinerFieldDetailsDropdown,
-  disableDataMinerFieldDetailsDropdown
+  disableDataMinerFieldDetailsDropdown,
+  setDataMinerEnableCropSimulation
 }
 
 /*
@@ -564,6 +565,11 @@ function setDataMinerLoading(loading) {
   return { type: visualizationConstants.SET_DATA_MINER_LOADING, loading };
 }
 
+
+function setDataMinerEnableCropSimulation(enableCropSimulation) {
+  return { type: visualizationConstants.SET_DATA_MINER_ENABLE_CROP_SIMULATION, enableCropSimulation };
+}
+
 function updateFieldDetailsDropdownValue(selected) {
   return function (dispatch, getState) {
 
@@ -1025,6 +1031,7 @@ function getDataMinerData(){
    // let parameters = "url=" + url;
 
     dispatch(setDataMinerLoading(true));
+    dispatch(visualizationActions.setDataMinerEnableCropSimulation(false));
     dispatch(disableDataMinerFieldDetailsDropdown());
 
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData');
@@ -1047,6 +1054,7 @@ function getDataMinerData(){
           dispatch(setDataMinerChartDetails());
           dispatch(setDataMinerLoading(false));
           dispatch(enableDataMinerFieldDetailsDropdown());
+          dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
 
         }
         else{
@@ -1059,6 +1067,7 @@ function getDataMinerData(){
           dispatch(reloadDataMinerChart(chart2));
           dispatch(setDataMinerLoading(false));
           dispatch(enableDataMinerFieldDetailsDropdown());
+          dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
 
         }
 

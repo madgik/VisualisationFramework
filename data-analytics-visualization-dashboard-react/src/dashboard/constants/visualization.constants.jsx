@@ -23,6 +23,8 @@ export const visualizationConstants = {
 
   SET_DATE_RANGE_OPEN: 'set-date-range-open',
   SET_DATA_MINER_LOADING: 'set-data-miner-loading',
+  SET_DATA_MINER_ENABLE_CROP_SIMULATION: 'set-data-miner-enable-crop-simulation',
+
 
 
   UPDATE_FILTER: 'update-filter',

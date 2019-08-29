@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Dropdown, Header, Loader } from 'semantic-ui-react'
+import { Dropdown, Header , Button} from 'semantic-ui-react'
+import Center from 'react-center';
 
 export const optionValues = Object.freeze({"field":1, "altitude":2, "soil":3, "crop":4})
 
@@ -21,6 +22,10 @@ class DataMinerChartHeader extends React.Component {
     this.props.onFieldChange(value, this.props.chartProperties.headerProperties[value].text);
   }
 
+  getDataMinerData() {
+    this.props.getDataMinerData();
+  }
+
   render() {
     const styles = {   
             position: 'absolute',
@@ -30,6 +35,7 @@ class DataMinerChartHeader extends React.Component {
     return (
     <div >
         <Header as='h3'>Crop simulation series</Header>
+
         <Dropdown
             placeholder='Properties'
             selection
@@ -39,6 +45,14 @@ class DataMinerChartHeader extends React.Component {
             value={this.props.chartProperties.selectedFieldInYAxisId}
              onChange={(e, { value }) => this.onFieldChange(value)}
         />
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <Center>
+          <Button disabled={!this.props.loader.enableCropSimulation} class="ui positive button" onClick={this.getDataMinerData.bind(this)} >Run Crop Simulation</Button>
+        </Center>
+
   </div>
     );
   }

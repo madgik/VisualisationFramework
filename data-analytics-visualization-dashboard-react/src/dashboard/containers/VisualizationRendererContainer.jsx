@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.enableFieldDetailsDropdown())
       //const dataMiner =  'http://dataminer-prototypes.d4science.org/wps/WebProcessingService'
 
-      dispatch(visualizationActions.getDataMinerData())
 
+      dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
       // dispatch(visualizationActions.getSelectedFieldDetails(feature));
      
       // dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
