@@ -3,6 +3,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.AxisDataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
@@ -98,6 +99,15 @@ public class DashBoardServiceImpl implements DashBoardService {
         timeSeries.setYAxisData(yAxisData);
         timeSeries.setXAxisDataType(AxisDataType.Date);
         return timeSeries;
+    }
+
+    @Override
+    public FeatureCollection setColorsToFeatureCollection(FeatureCollection featureCollection) {
+
+        for(Feature feature : featureCollection.getFeatures()){
+            feature.getProperties().put("color", DashBoardMapConverter.getColor(feature));
+        }
+        return featureCollection;
     }
 
     private String getGeometryPolygon(String geoJSON) throws IOException {

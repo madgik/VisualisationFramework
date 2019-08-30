@@ -53,7 +53,8 @@ class MapRenderer extends React.Component {
 
     if(feature.properties.color !== undefined){
       layer.setStyle({
-        fillColor: '#ffaa33',
+        fillColor: feature.properties.color,
+        color: '#ffffff',
         fillOpacity: 1
       });
       this.previousFeature = feature;
@@ -108,19 +109,37 @@ class MapRenderer extends React.Component {
 
   unHighlightFeature(feature, layer) {
     if (feature !== null) {
+      console.log(feature.properties.color);
+
       if (feature.geometry.type === 'LineString') {
-        layer.setStyle({
-          color: '#3388ff',
-          fillOpacity: 0.2
-        });
+        if(feature.properties.color !== undefined){
+          layer.setStyle({
+            color:  feature.properties.color,
+            fillOpacity: 1
+          });
+        }
+        else{
+          layer.setStyle({
+            color:  "#3388ff",
+            fillOpacity: 0.2
+          });
+        }  
       } else {
-        layer.setStyle({
-          fillColor: '#3388ff',
-          fillOpacity: 0.2
-        });
+        console.log("Unhighlight color:::: " + " " + feature.properties.color);
+        if(feature.properties.color !== undefined){
+          layer.setStyle({
+            fillColor: feature.properties.color,
+            fillOpacity: 1
+          });
+        }
+        else{
+          layer.setStyle({
+            fillColor: '#3388ff',
+            fillOpacity: 0.2
+        })
+      }
       }
     }
-
   }
   render() {
     var features = JSON.parse(this.props.visualization.json);

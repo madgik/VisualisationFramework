@@ -340,4 +340,31 @@ public class DashBoardMapConverter {
         return cropDetails;
     }
 
+
+    public static String getColor(Feature feature){
+
+        int crop_code = Integer.parseInt(String.valueOf(feature.getProperties().get("crop_code")));
+        String grondgebruik = String.valueOf(feature.getProperties().get("grondgebruik"));
+
+        if(crop_code == 256)
+            return "#BC1AE4";
+        else if(crop_code == 236)
+            return "#FB5599";
+        else if(crop_code == 252 || crop_code == 253)
+            return "#FF7F00";
+        else if(crop_code == 259)
+            return "#DBDB30";
+        else if(crop_code == 233)
+            return "#D55C24";
+        else if(grondgebruik.equals("Bouwland"))
+            return "#FDF1E3";
+        else if(grondgebruik.equals("Grasland"))
+            return "#E3ECD4";
+        else if(grondgebruik.equals("Natuurterrein"))
+            return "#C2E4CC";
+        else if(grondgebruik.equals("Braakland") || grondgebruik.equals("Overige"))
+            return "#D3D3D3";
+        else
+            return "#E6C4DC";
+    }
 }

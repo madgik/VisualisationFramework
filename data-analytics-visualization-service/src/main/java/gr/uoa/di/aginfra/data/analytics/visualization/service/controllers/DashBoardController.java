@@ -95,8 +95,8 @@ public class DashBoardController {
         logger.debug("Retrieving visualization usage statistics");
 
         FeatureCollection stats = dashBoardService.get(gCubeUrl, params, GeometryType.Polygon);
-
-        return ResponseEntity.ok(stats);
+        FeatureCollection features = dashBoardService.setColorsToFeatureCollection(stats);
+        return ResponseEntity.ok(features);
     }
 
 
