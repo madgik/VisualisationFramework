@@ -93,7 +93,8 @@ export const visualizationActions = {
   setDataMinerLoading,
   enableDataMinerFieldDetailsDropdown,
   disableDataMinerFieldDetailsDropdown,
-  setDataMinerEnableCropSimulation
+  setDataMinerEnableCropSimulation,
+  enableDataMinerFetch
 }
 
 /*
@@ -120,6 +121,39 @@ const options = {
     }
   ]
 }
+
+const cropCodes = [
+  "233",
+  "234",
+  "236", 
+  "256",
+  "257", 
+  "259", 
+  "252",
+  "253",
+  "254",
+  "255",
+  "859",
+  "1909",
+  "1910",
+  "1911",
+  "1912",
+  "1927",
+  "1928",
+  "1929",
+  "1934",
+  "1935",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2025",
+  "2951",
+  "3730",
+  "3731",
+  "3732",
+  "3792"
+]
 
 function requestVisualizations() {
   return function (dispatch) {
@@ -1021,6 +1055,19 @@ function getNDVIFieldDataProperties(){
     .catch(response => {
       alert(response);
     });
+  }
+}
+
+function enableDataMinerFetch() {
+
+  return function (dispatch, getState) 
+  {
+    let crop_code = getState().visualization.selectedLayer.properties.crop_code;
+    let year = getState().visualization.selectedLayer.properties.year;
+    if (cropCodes.indexOf(crop_code) > -1 && year !== 2019)
+      return true;
+
+    return false;  
   }
 }
 
