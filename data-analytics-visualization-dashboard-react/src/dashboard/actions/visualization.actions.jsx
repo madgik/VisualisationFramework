@@ -92,7 +92,9 @@ export const visualizationActions = {
   setDataMinerChartDetails,
   setDataMinerLoading,
   enableDataMinerFieldDetailsDropdown,
-  disableDataMinerFieldDetailsDropdown
+  disableDataMinerFieldDetailsDropdown,
+  setDataMinerEnableCropSimulation,
+  enableDataMinerFetch
 }
 
 /*
@@ -119,6 +121,39 @@ const options = {
     }
   ]
 }
+
+const cropCodes = [
+  "233",
+  "234",
+  "236", 
+  "256",
+  "257", 
+  "259", 
+  "252",
+  "253",
+  "254",
+  "255",
+  "859",
+  "1909",
+  "1910",
+  "1911",
+  "1912",
+  "1927",
+  "1928",
+  "1929",
+  "1934",
+  "1935",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2025",
+  "2951",
+  "3730",
+  "3731",
+  "3732",
+  "3792"
+]
 
 function requestVisualizations() {
   return function (dispatch) {
@@ -343,25 +378,27 @@ function saveNewFileToWorkspace() {
     let state = getState();
    
     let json = JSON.parse(state.data.map.json);
-    let features = json["features"];
-    let arr = [];
+    if(json !== null){
+      let features = json["features"];
+      let arr = [];
 
-    Object.keys(features).forEach(function(key) {
-     // let feature = features[key].properties;
-      if(features[key].properties.color !== undefined){
-        delete features[key].properties.color;
-        console.log(features[key].properties);
+      Object.keys(features).forEach(function(key) {
+      // let feature = features[key].properties;
+        if(features[key].properties.color !== undefined){
+          delete features[key].properties.color;
+          console.log(features[key].properties);
 
-      }
-      arr.push(features[key]);
+        }
+        arr.push(features[key]);
 
 
-    });
+      });
 
-    console.log(arr);
-    json["features"] = arr;
-    state.data.map.json = JSON.stringify(json);
-    console.log(state.data.map.json);
+      console.log(arr);
+      json["features"] = arr;
+      state.data.map.json = JSON.stringify(json);
+      console.log(state.data.map.json);
+    }
     // const config = {
     //     headers: {
     //         'content-type': 'multipart/form-data'
@@ -446,8 +483,8 @@ function loadStateFromFile(file) {
     console.log(file.data);
     dispatch(setDataToState(file.data));
 
-    //this.store.dispatch(visualizationActions.setDateRange(this.value));
     dispatch(setVisualizationToState(file.visualization));
+
     dispatch(showSaveToWorkspace(false));
 
   }
@@ -560,6 +597,11 @@ function setDateRangeOpen(isOpen) {
 
 function setDataMinerLoading(loading) {
   return { type: visualizationConstants.SET_DATA_MINER_LOADING, loading };
+}
+
+
+function setDataMinerEnableCropSimulation(enableCropSimulation) {
+  return { type: visualizationConstants.SET_DATA_MINER_ENABLE_CROP_SIMULATION, enableCropSimulation };
 }
 
 function updateFieldDetailsDropdownValue(selected) {
@@ -1016,6 +1058,19 @@ function getNDVIFieldDataProperties(){
   }
 }
 
+function enableDataMinerFetch() {
+
+  return function (dispatch, getState) 
+  {
+    let crop_code = getState().visualization.selectedLayer.properties.crop_code;
+    let year = getState().visualization.selectedLayer.properties.year;
+    if (cropCodes.indexOf(crop_code) > -1 && year !== 2019)
+      return true;
+
+    return false;  
+  }
+}
+
 function getDataMinerData(){
 
   return function (dispatch, getState) 
@@ -1023,6 +1078,7 @@ function getDataMinerData(){
    // let parameters = "url=" + url;
 
     dispatch(setDataMinerLoading(true));
+    dispatch(visualizationActions.setDataMinerEnableCropSimulation(false));
     dispatch(disableDataMinerFieldDetailsDropdown());
 
     var resourceUrl = Ajax.buildUrl(Ajax.DASHBOARD_BASE_PATH + '/getDataMinerData');
@@ -1045,6 +1101,7 @@ function getDataMinerData(){
           dispatch(setDataMinerChartDetails());
           dispatch(setDataMinerLoading(false));
           dispatch(enableDataMinerFieldDetailsDropdown());
+          dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
 
         }
         else{
@@ -1057,6 +1114,7 @@ function getDataMinerData(){
           dispatch(reloadDataMinerChart(chart2));
           dispatch(setDataMinerLoading(false));
           dispatch(enableDataMinerFieldDetailsDropdown());
+          dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
 
         }
 
@@ -1115,7 +1173,7 @@ function setDataMinerChartDetails(){
     let chart2 =  Object.assign({}, getState().data.chart2);
     chart2.timeSeries = timeSeriesArray;
     chart2.xAxisLabel = "Date";
-    chart2.yAxisLabel = getState().data.chart2Properties.selectedFieldInYAxis;
+    chart2.yAxisLabel = getState().data.chart2Properties.selectedFieldInYAxis + " ( " + headerProperties[columnID -1].unit + " ) " ;
     dispatch(reloadDataMinerChart(chart2));
   
   }

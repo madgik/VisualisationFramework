@@ -11,7 +11,6 @@ function mapStateToProps(state) {
   };
 }
 
-
 const mapDispatchToProps = dispatch => ({
   
   onMapElementClick: (feature) => {
@@ -22,8 +21,9 @@ const mapDispatchToProps = dispatch => ({
       dispatch(visualizationActions.enableFieldDetailsDropdown())
       //const dataMiner =  'http://dataminer-prototypes.d4science.org/wps/WebProcessingService'
 
-      dispatch(visualizationActions.getDataMinerData())
 
+      if(dispatch(visualizationActions.enableDataMinerFetch()) === true)
+        dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
       // dispatch(visualizationActions.getSelectedFieldDetails(feature));
      
       // dispatch(visualizationActions.setFieldDetailsDropdownValue(1));

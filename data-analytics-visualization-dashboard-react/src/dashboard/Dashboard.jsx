@@ -71,7 +71,6 @@ class Dashboard extends React.Component {
           <div className='ui clearing segment' >
           <div style={positionRelative} >
             <DataMinerChartHeaderContainer></DataMinerChartHeaderContainer>
-            <br></br>
             <LoaderContainer></LoaderContainer>
             </div>
             <br></br>

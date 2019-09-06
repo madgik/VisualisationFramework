@@ -12,4 +12,6 @@ public interface DashBoardService {
     FeatureCollection get(String url, Map<String, Object> parameters, GeometryType geometryType) throws Exception;
     FeatureCollection getFieldDetails(String id, Map<String, Object> parameters) throws Exception;
     TimeSeries getTimeSeries(String yAxisField, FeatureCollection featureCollection);
+    FeatureCollection setColorsToFeatureCollection(FeatureCollection featureCollection);
+
 }

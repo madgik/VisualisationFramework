@@ -1,8 +1,11 @@
 import React from 'react';
-import { Map as LeafletMap, TileLayer, GeoJSON } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, GeoJSON, withLeaflet  } from 'react-leaflet'
+import { ReactLeafletSearch } from 'react-leaflet-search'
+
 import idGenerator from 'react-id-generator';
 
 
+const ReactLeafletSearchComponent = withLeaflet(ReactLeafletSearch);
 
 class MapRenderer extends React.Component {
 
@@ -50,7 +53,8 @@ class MapRenderer extends React.Component {
 
     if(feature.properties.color !== undefined){
       layer.setStyle({
-        fillColor: '#ffaa33',
+        fillColor: feature.properties.color,
+        color: '#ffffff',
         fillOpacity: 1
       });
       this.previousFeature = feature;
@@ -105,19 +109,37 @@ class MapRenderer extends React.Component {
 
   unHighlightFeature(feature, layer) {
     if (feature !== null) {
+      console.log(feature.properties.color);
+
       if (feature.geometry.type === 'LineString') {
-        layer.setStyle({
-          color: '#3388ff',
-          fillOpacity: 0.2
-        });
+        if(feature.properties.color !== undefined){
+          layer.setStyle({
+            color:  feature.properties.color,
+            fillOpacity: 1
+          });
+        }
+        else{
+          layer.setStyle({
+            color:  "#3388ff",
+            fillOpacity: 0.2
+          });
+        }  
       } else {
-        layer.setStyle({
-          fillColor: '#3388ff',
-          fillOpacity: 0.2
-        });
+        console.log("Unhighlight color:::: " + " " + feature.properties.color);
+        if(feature.properties.color !== undefined){
+          layer.setStyle({
+            fillColor: feature.properties.color,
+            fillOpacity: 1
+          });
+        }
+        else{
+          layer.setStyle({
+            fillColor: '#3388ff',
+            fillOpacity: 0.2
+        })
+      }
       }
     }
-
   }
   render() {
     var features = JSON.parse(this.props.visualization.json);
@@ -141,6 +163,33 @@ class MapRenderer extends React.Component {
           onEachFeature={this.onEachFeature.bind(this)}
 
         />
+        {/* <ReactLeafletSearch
+          position="topleft"
+          inputPlaceholder="Custom placeholder"
+          search = {
+            [33.100745405144245, 46.48315429687501]
+          }
+          showMarker={true}
+          zoom={5}
+          showPopup={true}
+          closeResultsOnClick={true}
+          openSearchOnLoad={true}
+          // // these searchbounds would limit results to only Turkey.
+          // searchBounds = {
+          //   [
+          //     [33.100745405144245, 46.48315429687501],
+          //     [44.55916341529184, 24.510498046875]
+          //   ]
+          // }
+          // providerOptions={{region: 'tr'}}
+
+          // default provider OpenStreetMap
+          // provider="BingMap"
+          // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
+        /> */}
+
+      <ReactLeafletSearchComponent position="topright" />
+
       </LeafletMap>
     )
   }

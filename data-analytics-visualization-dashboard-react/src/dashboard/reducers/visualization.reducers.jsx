@@ -15,7 +15,7 @@ const visualizationDefault = {
   },
   options: [],
   selectedLayer:'',
-  selectedYear:'2018',
+  selectedYear:2018,
   nearestMeteoStation:'',
   currentGeometry:'',
   disableFetchData:true,
@@ -299,7 +299,8 @@ const dataDefault = {
       dataMinerData:[],
     },
     loader:{
-      loading:false
+      loading:false,
+      enableCropSimulation:false
     },
     weatherChartDetails:{
       dateRange: null,
@@ -530,6 +531,15 @@ export function data(state = dataDefault, action) {
               }
             }
           });    
+
+    case visualizationConstants.SET_DATA_MINER_ENABLE_CROP_SIMULATION:
+    return update(state, {
+      loader: {
+        enableCropSimulation: {
+          $set: action.enableCropSimulation
+        }
+      }
+    });    
     case visualizationConstants.SET_NDVI_DATA_PROPERTIES:
       return update(state, {
         chart1Properties: {
