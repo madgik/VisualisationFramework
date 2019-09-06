@@ -29,11 +29,14 @@ class ConfigurationModalInner extends React.Component {
   
 
   render() {
+    console.log("modalInner"+this.props.configOptions);
+
     return (
       <Modal open={this.props.open} size="fullscreen" onClose={this.props.onModalClose}>
         <Modal.Header>Configuration</Modal.Header>
         <Modal.Content>
           <ConfigurationForm
+            isNew = {this.props.isNew}
             data={this.props.data}
             menuState={this.props.menu}
             geoanalytics={this.props.geoanalytics}

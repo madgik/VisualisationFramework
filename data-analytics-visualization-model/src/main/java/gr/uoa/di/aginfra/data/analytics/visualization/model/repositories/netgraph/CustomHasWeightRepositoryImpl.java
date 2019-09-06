@@ -89,7 +89,6 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
 
                     params.put("weightFrom", Double.valueOf(entry.getValue()));
 
-                    System.out.println("weightFrom" + entry.getValue());
                 } else if (rangeParams[1].equals("weight") && rangeParams[2].equals("2")) {
                     if (!hasWeight) {
                         cypher += "WHERE w.weight<=$weightTo \n";
@@ -97,7 +96,6 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
                     } else {
                         cypher += "AND w.weight<=$weightTo \n";
                     }
-                    System.out.println("weightTo" + entry.getValue());
 
                     params.put("weightTo", Double.valueOf(entry.getValue()));
                 }
@@ -106,10 +104,10 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
                 cypher += "MATCH (p" + i + ":NodeProperty)-[hp" + i + ":HAS_PROPERTY]-(n:Node{subGraphId: $id})";
 
                 if (rangeParams[1].equals("1")) {
-                    cypher += "WHERE toFloat(p" + i + ".name=$name" + i + ") and p" + i + ".value>=$valueFrom" + i + "\n";
+                    cypher += "WHERE p" + i + ".name=$name" + i + " and  toFloat(p" + i + ".value)>=$valueFrom" + i + "\n";
                     params.put("valueFrom" + i, Double.valueOf(entry.getValue()));
                 } else {
-                    cypher += "WHERE toFloat(p" + i + ".name=$name" + i + ") and p" + i + ".value<=$valueTo" + i + "\n";
+                    cypher += "WHERE p" + i + ".name=$name" + i + " and toFloat(p" + i + ".value)<=$valueTo" + i + "\n";
                     params.put("valueTo" + i, Double.valueOf(entry.getValue()));
                 }
                 params.put("name" + i, rangeParams[0]);

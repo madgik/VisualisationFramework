@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ConfigurationModal from './components/ConfigurationModal';
+import { configItemActions } from './actions'
+
 
 class App extends Component {
   constructor(props) {
@@ -7,7 +9,9 @@ class App extends Component {
     this.state = {
       open: true,
       isNew: true,
-      editItemId: null
+      editItemId: null,
+      configOptions: [],
+      data: {type: "Line", activeDocuments: 1}
     }
   }
 
@@ -20,6 +24,7 @@ class App extends Component {
   }
 
   handleConfigurationLoaded(){
+
     this.setState({
       open: true
     })
@@ -33,6 +38,7 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div className="App">
         <div onClick={() => this.handleModalOpen()}>Open</div>

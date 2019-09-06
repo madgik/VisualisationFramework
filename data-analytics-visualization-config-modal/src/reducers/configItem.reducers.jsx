@@ -48,8 +48,8 @@ function defaultState() {
     delimiter: '',
     commentCharacter: '',
     configurations: [],
-    configOptions: [],
-    selectedConfiguration: null
+    configOptions: [{name:"",value:"5d0cd7f2d22586580c5f9436"}],
+    selectedConfiguration: []
   }
 }
 

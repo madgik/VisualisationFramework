@@ -1,13 +1,15 @@
 import update from 'immutability-helper'
 
 import { configListConstants } from '../constants'
+import { defaultState } from './configItem.reducers'
 
-const configListDefault = {
+export const configListDefault = {
   data: [],
   loading: false,
   errorMessage: null,
-  disableChartCreation: false
+  disableChartCreation: false,
 }
+
 
 export function configList(state = configListDefault, action) {
   switch (action.type) {

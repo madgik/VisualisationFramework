@@ -18,19 +18,20 @@ class ConfigurationGeneralForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleConfigurationChange = this.handleConfigurationChange.bind(this);
-    console.log(this.props.selectedConfiguration);
+    console.log("Here" + this.props.selectedConfiguration);
   }
 
   handleConfigurationChange = (e) => {
-   
-    var data = this.props.configurations.find(function (element) {     
+
+    var data = this.props.configurations.find(function (element) {
       return element.id == e.value;
     });
     delete data.id;
+    console.log("=")
+
     this.props.setSelectedConfiguration(data);
-    // console.log()
+    console.log("-")
     this.props.setConfigurationData(data);
-    // this.props.showConfigurationData(data);
 
   }
 
@@ -78,7 +79,7 @@ class ConfigurationGeneralForm extends React.Component {
 
   extractFieldSuggestions = (addEmpty) => {
 
-    var suggestions = TransformationFiltering.getSuggestions(this.props.data.transformations,this.props.data.dataSources);
+    var suggestions = TransformationFiltering.getSuggestions(this.props.data.transformations, this.props.data.dataSources);
 
     if (addEmpty) {
       suggestions.unshift({
@@ -108,12 +109,12 @@ class ConfigurationGeneralForm extends React.Component {
 
   showGroupByField = () => {
     return (this.props.data.type !== 'ThreeD'
-    && this.props.data.type !== 'HeatMap');
+      && this.props.data.type !== 'HeatMap');
   }
 
   showZAxisField = () => {
-    return (this.props.data.type === 'ThreeD'|| 
-    this.props.data.type === 'HeatMap');
+    return (this.props.data.type === 'ThreeD' ||
+      this.props.data.type === 'HeatMap');
   }
 
   showColorChartFields = () => {
@@ -129,27 +130,28 @@ class ConfigurationGeneralForm extends React.Component {
 
 
   render() {
-    console.log(this.props.data)
+    console.log("generalForms" + this.props.isNew);
     return (<React.Fragment>
-       <Form.Field  error={this.props.validation.label.touched && !this.props.validation.label.valid}>
-        <label>Create New or Select From History</label>
-        { (this.props.configOptions != []) &&
-          <SelectSearch 
-            search= {true}
+      {(this.props.isNew == true) &&
+        <Form.Field error={this.props.validation.label.touched && !this.props.validation.label.valid}>
+          <label>Create New or Select From History</label>
+
+          <SelectSearch
+            search={true}
             mode="input"
-            options={this.props.configOptions} 
-            value={this.props.data.label|| ""} 
-            name="configuration" 
-            placeholder="Select a saved configuration" 
-            onChange = {(e) => this.handleConfigurationChange(e)}
-            />
-        }
-      </Form.Field>
-    
-      { (this.props.selectedConfiguration != null) ? 
-      <Form.Field>
-        <label>Please upload new data file before save</label>
-      </Form.Field> :''
+            options={this.props.configOptions}
+            value={this.props.data.label || ""}
+            name="configuration"
+            placeholder="Select a saved configuration"
+            onChange={(e) => this.handleConfigurationChange(e)}
+          />
+
+        </Form.Field>
+      }
+      {(this.props.selectedConfiguration != [] && (this.props.isNew == true)) ?
+        <Form.Field>
+          <label>Please upload new data file before save</label>
+        </Form.Field> : ''
       }
       <Form.Field required error={this.props.validation.label.touched && !this.props.validation.label.valid}>
         <label>Label</label>

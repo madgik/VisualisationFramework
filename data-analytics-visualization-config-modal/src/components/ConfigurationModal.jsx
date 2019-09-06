@@ -52,6 +52,7 @@ class ConfigurationModal extends React.Component {
       this.props.editItemId !== this.editItemId) {
       this.isNew = this.props.isNew;
       this.editItemId = this.props.editItemId;
+      this.store.dispatch(configItemActions.getAllConfigurations());
       if (this.isNew || !this.editItemId || this.editItemId.length === 0) {
         this.store.dispatch(configItemActions.createConfiguration());
       } else {
@@ -61,11 +62,13 @@ class ConfigurationModal extends React.Component {
   }
 
   render() {
+    console.log("modal");
     return (
       <Provider store={this.store}>
         <ConfigurationModalInner
           allowDelete={this.props.allowDelete}
           open={this.props.open}
+          isNew = {this.props.isNew}
           onModalClose={this.props.onModalClose}
           onDeleteComplete={this.props.onDeleteComplete}
           onSaveComplete={this.props.onSaveComplete}

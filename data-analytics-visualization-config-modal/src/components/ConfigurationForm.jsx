@@ -46,23 +46,24 @@ class ConfigurationForm extends React.Component {
           <Form>
             {this.isGeneralMenuItemSelected() ?
               <ConfigurationGeneralForm
+                isNew={this.props.isNew}
                 data={this.props.data}
                 validation={this.props.validation}
                 configurations={this.props.configurations}
                 configOptions={this.props.configOptions}
-                onFieldChange={this.props.onFieldChange} 
+                onFieldChange={this.props.onFieldChange}
                 selectedConfiguration={this.props.selectedConfiguration}
-                setSelectedConfiguration={this.props.setSelectedConfiguration} 
+                setSelectedConfiguration={this.props.setSelectedConfiguration}
                 showConfigurationData={this.props.showConfigurationData}
                 setConfigurationData={this.props.setConfigurationData}
-                /> : ''}
+              /> : ''}
             {this.isDataMenuItemSelected() ?
               <ConfigurationDataForm
                 data={this.props.data}
                 geoanalytics={this.props.geoanalytics}
                 onFileDropped={this.props.onFileDropped}
                 onRemoveFileClick={this.props.onRemoveFileClick}
-                onJoinFieldChange={this.props.onJoinFieldChange} 
+                onJoinFieldChange={this.props.onJoinFieldChange}
                 setDelimiter={this.props.setDelimiter}
                 delimiter={this.props.delimiter}
                 setCommentCharacter={this.props.setCommentCharacter}
