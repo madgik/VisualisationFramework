@@ -62,7 +62,6 @@ class ConfigurationModal extends React.Component {
   }
 
   render() {
-    console.log("modal");
     return (
       <Provider store={this.store}>
         <ConfigurationModalInner

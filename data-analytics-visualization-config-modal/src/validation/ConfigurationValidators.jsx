@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 
 class ConfigurationValidators {
 
-  validate(item, validationState) {
+  validate(item, validationState, previousConfigs) {
     var fieldsToValidate = [
       'label',
       'type',
@@ -16,31 +16,31 @@ class ConfigurationValidators {
       'labelField',
       'valueField'];
 
-      var transformationsFieldsToValidate = [
-        'transformationLabel',
-        'transformationLabelValue',
-        'transformationColumns'];
+    var transformationsFieldsToValidate = [
+      'transformationLabel',
+      'transformationLabelValue',
+      'transformationColumns'];
 
     var valid = true;
     var messages = [];
     fieldsToValidate.forEach(field => {
-      var result = this.validateField(field, item, validationState)
+      var result = this.validateField(field, item, validationState, previousConfigs)
       validationState = result.state;
       valid = valid && result.valid;
-      
+
       messages.push.apply(messages, result.messages);
     })
 
 
-    if(!!item.transformations){
+    if (!!item.transformations) {
       transformationsFieldsToValidate.forEach(field => {
-        var result = this.validateField(field, item.transformations, validationState)
+        var result = this.validateField(field, item.transformations, validationState, previousConfigs)
         validationState = result.state;
         valid = valid && result.valid;
-        
+
         messages.push.apply(messages, result.messages);
       })
-   } 
+    }
     return {
       state: validationState,
       valid: valid,
@@ -48,14 +48,20 @@ class ConfigurationValidators {
     }
   }
 
-  validateField(field, item, validationState) {
-    
+  validateField(field, item, validationState, previousConfigs) {
+
     var valid = true;
     var messages = [];
     (this.validators[field] || []).forEach(validator => {
       if (!validator.f(item[field] || '', item)) {
         valid = false;
         messages.push(validator.m);
+      }
+      if (field === "label") {
+        if (previousConfigs.find(el => el.name === item.label)) {
+          valid = false;
+          messages.push(validator.same)
+        }
       }
     });
     const state = update(validationState, {
@@ -67,7 +73,7 @@ class ConfigurationValidators {
         }
       }
     });
-    
+
     return {
       state: state,
       valid: valid,
@@ -78,7 +84,8 @@ class ConfigurationValidators {
   validators = {
     'label': [{
       f: (val) => !validator.isEmpty(val),
-      m: 'The label field is required'
+      m: 'The label field is required',
+      same: 'The selected label field already exists'
     }],
     'type': [{
       f: (val) => !validator.isEmpty(val),
@@ -150,13 +157,13 @@ class ConfigurationValidators {
   }
 
   checkTransformationsFields = (item) => {
-    if((!validator.isEmpty(item.transformationLabel) || !validator.isEmpty(item.transformationLabelValue)
-        || !(item.transformationColumns.length === 0)))
+    if ((!validator.isEmpty(item.transformationLabel) || !validator.isEmpty(item.transformationLabelValue)
+      || !(item.transformationColumns.length === 0)))
       return true;
     else
       return false;
   }
-  
+
 
 }
 

@@ -18,7 +18,6 @@ class ConfigurationGeneralForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleConfigurationChange = this.handleConfigurationChange.bind(this);
-    console.log("Here" + this.props.selectedConfiguration);
   }
 
   handleConfigurationChange = (e) => {
@@ -27,20 +26,21 @@ class ConfigurationGeneralForm extends React.Component {
       return element.id == e.value;
     });
     delete data.id;
-    console.log("=")
-
+    data.label = data.label + "-copy"
     this.props.setSelectedConfiguration(data);
-    console.log("-")
     this.props.setConfigurationData(data);
 
+    this.handleFieldChange("label", data.label)
+    
   }
 
   handleFieldChange = (prop, value) => {
+
     const data = update(this.props.data, {
       [prop]: { $set: value }
     });
 
-    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation);
+    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation, this.props.configOptions);
 
     this.props.onFieldChange(data, state);
   }
@@ -130,7 +130,6 @@ class ConfigurationGeneralForm extends React.Component {
 
 
   render() {
-    console.log("generalForms" + this.props.isNew);
     return (<React.Fragment>
       {(this.props.isNew == true) &&
         <Form.Field error={this.props.validation.label.touched && !this.props.validation.label.valid}>

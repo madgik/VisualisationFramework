@@ -13,12 +13,9 @@ class ConfigurationModalContainer extends React.Component {
         allowDelete={true}
         routing={this.props.routing}
         isLocalDeployment={this.props.isLocalDeployment}
-
         open={this.props.open}
-
         isNew={this.props.isNew}
         editItemId={this.props.editItemId}
-
         onModalClose={this.props.onModalClose}
         onConfigurationLoaded={this.props.onConfigurationLoaded}
         onSaveComplete={this.props.onSaveComplete}

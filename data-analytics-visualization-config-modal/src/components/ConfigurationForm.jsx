@@ -87,6 +87,7 @@ class ConfigurationForm extends React.Component {
                 onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
             {this.showChartFields() && this.isDocumentsMenuItemSelected() ?
               <ConfigurationDocumentsForm
+                configOptions={this.props.configOptions}
                 data={this.props.data}
                 validation={this.props.validation}
                 onFieldChange={this.props.onFieldChange} /> : ''}

@@ -203,7 +203,7 @@ function validateData() {
 
     var state = getState().configItem;
 
-    var result = ConfigurationValidators.validate(state.data, state.validation);
+    var result = ConfigurationValidators.validate(state.data, state.validation, state.configOptions);
 
     var validation = result.state,
       isFormValid = result.valid,
