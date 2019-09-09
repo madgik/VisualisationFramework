@@ -21,7 +21,9 @@ class ConfigurationFilterEditor extends React.Component {
 
   filterTypeOptions = [
     { text: 'Checkbox List', value: 'CheckBoxList' },
-    { text: 'Dropdown', value: 'DropDown' }
+    { text: 'Dropdown', value: 'DropDown' },
+    { text: 'Slider', value: 'Slider' }
+
   ]
 
   extractFieldSuggestions = () => {
