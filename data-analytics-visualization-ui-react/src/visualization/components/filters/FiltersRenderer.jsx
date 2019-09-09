@@ -11,7 +11,9 @@ class FiltersRenderer extends React.Component {
           return <ChartFilter
             key={index}
             filter={item}
-            onFilterChange={this.props.onFilterChange} />;
+            sliderValue={this.props.sliderValue}
+            onFilterChange={this.props.onFilterChange} 
+            onSliderValueChange={this.props.onSliderValueChange}/>;
         })}
       </div>
     );

@@ -3,6 +3,7 @@ import React from 'react';
 import CheckBoxList from '../generic/CheckBoxList'
 
 import { Dropdown } from 'semantic-ui-react'
+import Slider from '@material-ui/lab/Slider';
 
 class ChartFilter extends React.Component {
 
@@ -13,6 +14,12 @@ class ChartFilter extends React.Component {
 
   handleDropDownChange = (e, { value }) => {
     this.props.onFilterChange(this.props.filter.field, value);
+  }
+
+  handleSliderChange = (event, value) => {
+    this.props.onSliderValueChange(value);
+    console.log("on slider:: " + value);
+    this.props.onFilterChange(this.props.filter.field, this.props.filter.options[value]);
   }
 
   extractCheckBoxOptions(options) {
@@ -49,10 +56,12 @@ class ChartFilter extends React.Component {
   render() {
     return (<div>
       <label>{this.props.filter.label}</label>
-      {this.props.filter.type === 'CheckBoxList' ?
+      {this.props.filter.type === 'CheckBoxList' &&
         <CheckBoxList
           defaultData={this.extractCheckBoxOptions(this.props.filter.options)}
-          onChange={this.handleCheckboxListChange} /> :
+          onChange={this.handleCheckboxListChange} /> 
+      }
+      {this.props.filter.type === 'DropDown' &&
         <Dropdown
           placeholder='Select Chart'
           selection
@@ -60,6 +69,18 @@ class ChartFilter extends React.Component {
           value={this.props.filter.value}
           onChange={this.handleDropDownChange} />
       }
+      {this.props.filter.type === 'Slider' &&
+
+        <Slider 
+          value={this.props.sliderValue}
+          min={0}
+          max={this.props.filter.options.length}
+          step={1}
+          aria-labelledby="label"
+          onChange={this.handleSliderChange}
+        ></Slider>
+      } 
+
     </div>);
   }
 }

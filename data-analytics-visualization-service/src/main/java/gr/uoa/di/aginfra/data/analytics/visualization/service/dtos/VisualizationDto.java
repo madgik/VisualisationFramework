@@ -37,6 +37,8 @@ public class VisualizationDto {
 
     private List<Filter> filters;
 
+    private int sliderSelectedValue;
+
 	private TabularData tabularData;
 
     private Collection<TimeSeries> timeSeries;
@@ -252,5 +254,37 @@ public class VisualizationDto {
 
     public void setActiveDocuments(int activeDocuments) {
         this.activeDocuments = activeDocuments;
+    }
+
+    public String getxAxisLabel() {
+        return xAxisLabel;
+    }
+
+    public void setxAxisLabel(String xAxisLabel) {
+        this.xAxisLabel = xAxisLabel;
+    }
+
+    public String getyAxisLabel() {
+        return yAxisLabel;
+    }
+
+    public void setyAxisLabel(String yAxisLabel) {
+        this.yAxisLabel = yAxisLabel;
+    }
+
+    public String getzAxisLabel() {
+        return zAxisLabel;
+    }
+
+    public void setzAxisLabel(String zAxisLabel) {
+        this.zAxisLabel = zAxisLabel;
+    }
+
+    public int getSliderSelectedValue() {
+        return sliderSelectedValue;
+    }
+
+    public void setSliderSelectedValue(int sliderSelectedValue) {
+        this.sliderSelectedValue = sliderSelectedValue;
     }
 }

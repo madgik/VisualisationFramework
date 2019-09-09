@@ -18,7 +18,8 @@ export const visualizationActions = {
   reloadData,
   updateFilter,
   showNetworkError,
-  showEmptyConfigurations
+  showEmptyConfigurations,
+  setSliderValue
 }
 
 const options = {
@@ -62,6 +63,10 @@ function requestVisualizations() {
 
 function loadVisualizations(options) {
   return { type: visualizationConstants.LOAD_VISUALIZATIONS, options };
+}
+
+function setSliderValue(sliderSelectedValue) {
+  return { type: visualizationConstants.UPDATE_SLIDER, sliderSelectedValue };
 }
 
 function changeVisualizationAndLoad(selected) {

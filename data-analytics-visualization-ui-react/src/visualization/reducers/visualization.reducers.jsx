@@ -32,7 +32,8 @@ const dataDefault = {
   graph: null,
   barChartData: null,
   timeSeries: [],
-  filters: []
+  filters: [],
+  sliderSelectedValue: 0
 }
 
 export function data(state = dataDefault, action) {
@@ -41,6 +42,11 @@ export function data(state = dataDefault, action) {
       return action.data;
     case visualizationConstants.RESET_VISUALIZATION:
       return dataDefault;
+    case visualizationConstants.UPDATE_SLIDER:
+      return update(state, {
+        sliderSelectedValue: {
+          $set: action.sliderSelectedValue
+        }});
     case visualizationConstants.CHANGE_CHART_TYPE:
       return update(state, {
         type: {

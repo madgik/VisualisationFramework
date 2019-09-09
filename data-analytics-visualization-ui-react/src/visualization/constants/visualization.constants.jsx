@@ -7,6 +7,7 @@ export const visualizationConstants = {
   RESET_VISUALIZATION: 'reset-visualization',
   CHANGE_CHART_TYPE: 'change-chart-type',
   RELOAD_DATA: 'reload-data',
+  UPDATE_SLIDER: 'update-slider',
 
   UPDATE_FILTER: 'update-filter'
 }
