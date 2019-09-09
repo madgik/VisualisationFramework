@@ -55,7 +55,9 @@ class MapRenderer extends React.Component {
       layer.setStyle({
         fillColor: feature.properties.color,
         color: '#ffffff',
-        fillOpacity: 1
+        fillOpacity: 1,
+        weight: '0.9'
+
       });
       this.previousFeature = feature;
       this.previousLayer = layer;
@@ -188,7 +190,7 @@ class MapRenderer extends React.Component {
           // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
         /> */}
 
-      <ReactLeafletSearchComponent position="topright" />
+      <ReactLeafletSearchComponent   inputPlaceholder="Search place" position="topright" />
 
       </LeafletMap>
     )

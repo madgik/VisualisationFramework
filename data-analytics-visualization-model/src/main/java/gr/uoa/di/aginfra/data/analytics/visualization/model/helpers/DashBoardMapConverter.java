@@ -331,7 +331,7 @@ public class DashBoardMapConverter {
 
 
             CropDetails cropDetail = new CropDetails(String.valueOf((properties.get("year"))), String.valueOf((properties.get("crop_code"))), String.valueOf((properties.get("crop_name")))
-            , String.valueOf((properties.get("fieldid"))), String.valueOf((fieldDetails.get(5).value)), String.valueOf((fieldDetails.get(6).value)));
+            , String.valueOf((properties.get("fieldid"))), String.valueOf((fieldDetails.get(3).value)), String.valueOf((fieldDetails.get(1  ).value)));
 
             cropDetails.add(cropDetail);
         }

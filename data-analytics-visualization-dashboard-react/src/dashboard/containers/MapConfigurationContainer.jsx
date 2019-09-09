@@ -13,7 +13,17 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
   onSelectYearElementClick: (year) => {
-  dispatch(visualizationActions.selectYear(year))
+    dispatch(visualizationActions.reloadSelectedLayer([]));
+      dispatch(visualizationActions.disableFieldDetailsDropdown());
+      dispatch(visualizationActions.disableDataMinerFieldDetailsDropdown());
+
+    //  dispatch(visualizationActions.setFieldDetailsDropdownValue(''));
+      dispatch(visualizationActions.getNearestMeteoStation(''));
+     // dispatch(visualizationActions.updateFieldDataDropdownValue(''));
+      dispatch(visualizationActions.cleanRelatedFieldData());
+      dispatch(visualizationActions.reloadSelectedLayerSoilData([]));
+
+    dispatch(visualizationActions.selectYear(year))
   },
 
  getMapData: () => {
