@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(visualizationActions.updateFilterAndReload(field, value))
   },
   onSliderValueChange:(value) => {
-    dispatch(visualizationActions.setSliderValue(value))
+    dispatch(visualizationActions.setSliderValue(value));
   }
 })
 

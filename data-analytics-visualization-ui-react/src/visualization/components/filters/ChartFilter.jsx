@@ -1,12 +1,31 @@
 import React from 'react';
 
 import CheckBoxList from '../generic/CheckBoxList'
-
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
 import { Dropdown } from 'semantic-ui-react'
-import Slider from '@material-ui/lab/Slider';
+import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
 
+const Handle = Slider.Handle;
+
+const handle = (props) => {
+  const { value, dragging, index, ...restProps } = props;
+  return (
+    <Tooltip
+      prefixCls="rc-slider-tooltip"
+      overlay={value}
+      visible={dragging}
+      placement="top"
+      key={index}
+    >
+      <Handle value={value} {...restProps} />
+    </Tooltip>
+  );
+};
 class ChartFilter extends React.Component {
 
+  sliderValue = 0;
   handleCheckboxListChange = (selected) => {
     var filterString = this.stringifyFilter(selected);
     this.props.onFilterChange(this.props.filter.field, filterString);
@@ -16,11 +35,16 @@ class ChartFilter extends React.Component {
     this.props.onFilterChange(this.props.filter.field, value);
   }
 
-  handleSliderChange = (event, value) => {
+  handleSliderChange = ( value) => {
     this.props.onSliderValueChange(value);
-    console.log("on slider:: " + value);
-    this.props.onFilterChange(this.props.filter.field, this.props.filter.options[value]);
+   // console.log("on slider:: " + value);
+    this.sliderValue = value;
   }
+
+  onAfterChange = (value) => {
+    console.log(value); //eslint-disable-line
+    this.props.onFilterChange(this.props.filter.field, this.props.filter.options[value]);
+  };
 
   extractCheckBoxOptions(options) {
     var cOptions = [];
@@ -55,7 +79,8 @@ class ChartFilter extends React.Component {
 
   render() {
     return (<div>
-      <label>{this.props.filter.label}</label>
+      <label>{this.props.filter.label}  (       {this.props.filter.options[this.props.sliderValue]} )
+</label>
       {this.props.filter.type === 'CheckBoxList' &&
         <CheckBoxList
           defaultData={this.extractCheckBoxOptions(this.props.filter.options)}
@@ -71,15 +96,25 @@ class ChartFilter extends React.Component {
       }
       {this.props.filter.type === 'Slider' &&
 
-        <Slider 
-          value={this.props.sliderValue}
-          min={0}
-          max={this.props.filter.options.length}
-          step={1}
-          aria-labelledby="label"
-          onChange={this.handleSliderChange}
-        ></Slider>
+        // <Slider 
+        //   value={this.props.sliderValue}
+        //   min={0}
+        //   max={this.props.filter.options.length}
+        //   step={1}
+        //   aria-labelledby="label"
+        //   onChange={this.handleSliderChange}
+        //   onDragStop={this.onDragStop}
+        //   onDragStart={this.onDragStart}
+        // ></Slider>
+       
+        <Slider min={0} 
+        max={this.props.filter.options.length} 
+        value={this.props.sliderValue}
+        onChange={this.handleSliderChange}
+        onAfterChange={this.onAfterChange} 
+        handle={handle} />
       } 
+
 
     </div>);
   }

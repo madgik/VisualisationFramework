@@ -116,6 +116,8 @@ class ConfigurationDataForm extends React.Component {
           <ConfigurationDataGeoanalyticsSelector
             layers={this.props.geoanalytics.layers} />
         }
+        <Loader active={this.props.loading}>Loading</Loader>
+
         </div>
       </div>
 

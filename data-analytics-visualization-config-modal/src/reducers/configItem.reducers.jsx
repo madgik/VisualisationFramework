@@ -39,6 +39,7 @@ function defaultState() {
     },
     validation: validation,
     isFormValid: true,
+    loading: false,
     validationPanelMessages: [],
     errorMessage: null,
     geoanalytics: {
@@ -65,6 +66,11 @@ export function configItem(state = defaultState(), action) {
       editState.data = action.data;
       return editState;
     }
+    case configItemConstants.LOADING:
+      return update(state, {
+        loading: {
+          $set: action.loading
+        }});
     case configItemConstants.UPDATE_EDITED_ITEM:
       return update(state, {
         data: {

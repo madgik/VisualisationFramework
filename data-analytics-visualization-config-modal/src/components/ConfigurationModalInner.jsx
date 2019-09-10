@@ -51,6 +51,7 @@ class ConfigurationModalInner extends React.Component {
             onCheckLayerChange={this.props.onCheckLayerChange}
             setDelimiter={this.props.setDelimiter}
             delimiter={this.props.delimiter}
+            loading={this.props.loading}
             setCommentCharacter={this.props.setCommentCharacter}
             commentCharacter={this.props.commentCharacter}         
             configurations={this.props.configurations}
@@ -86,7 +87,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onFieldChange: (data, validation) => dispatch(configItemActions.updateEditedItem(data, validation)),
-  onFileDropped: (files, type, delimiter,commentCharacter) => dispatch(configItemActions.uploadFile(files, type, delimiter, commentCharacter)),
+  onFileDropped: (files, type, delimiter,commentCharacter) => {
+    dispatch(configItemActions.setLoader(true));
+
+    dispatch(configItemActions.uploadFile(files, type, delimiter, commentCharacter))
+  
+  },
   onRemoveFileClick: (index) => dispatch(configItemActions.removeFile(index)),
   onJoinFieldChange: (source, field) => dispatch(configItemActions.updateJoinField(source, field)),
   onFilterAddition: (filter) => dispatch(configItemActions.addFilter(filter)),

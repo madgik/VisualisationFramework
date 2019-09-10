@@ -28,5 +28,7 @@ export const configItemConstants = {
   SET_CONFIGURATIONS: 'set_configurations',
   SET_CONFIG_OPTIONS: 'set_config_options',
   SET_SELECTED_CONFIGURATION: 'set_selected_configuration',
-  SET_CONFIGURATION_DATA: 'set_configuration_data'
+  SET_CONFIGURATION_DATA: 'set_configuration_data',
+  LOADING: 'loading',
+
 }

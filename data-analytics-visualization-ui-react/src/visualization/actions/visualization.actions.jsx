@@ -69,6 +69,7 @@ function setSliderValue(sliderSelectedValue) {
   return { type: visualizationConstants.UPDATE_SLIDER, sliderSelectedValue };
 }
 
+
 function changeVisualizationAndLoad(selected) {
 
   return function (dispatch) {
@@ -148,6 +149,7 @@ function updateFilterAndReload(field, value) {
       .catch(response => {
         alert(response);
       })
+      
   }
 }
 
