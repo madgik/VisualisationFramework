@@ -8,7 +8,19 @@ import { Input, Form } from 'semantic-ui-react'
 import ConfigurationDataJoinEditor from './ConfigurationDataJoinEditor'
 import UploadDataMessage from './UploadDataMessage';
 import ConfigurationDataGeoanalyticsSelector from './ConfigurationDataGeoanalyticsSelector';
+import { css } from '@emotion/core';
+import Center from 'react-center';
 
+
+// Another way to import. This is recommended to reduce bundle size
+import SyncLoader from 'react-spinners/SyncLoader';
+
+// Can be a string as well. Need to ensure each key-value pair ends with ;
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+`;
 
 class ConfigurationDataForm extends React.Component {
 
@@ -77,50 +89,67 @@ class ConfigurationDataForm extends React.Component {
         />
         {/* {(this.type != undefined && this.type == "csv") && */}
         <div className="inputs">
-        <Grid columns={4}>
-          <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
-            <Grid.Column>
-              <h4>CSV delimiter:</h4>
-            </Grid.Column>
-            <Grid.Column>
-              <Input
-                maxLength="1"
-                className="delimeter-input"
-                placeholder="ex: , . : - ;"
-                onChange={this.handleDelimiterChange}
-                style={{ width: 90, top: -5 }}
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
-          <Grid.Column>
-            <h4>Comment character:</h4>
-            </Grid.Column>
-            <Grid.Column>
-            <Input
-              maxLength="1"
-              className="delimeter-input"
-              placeholder="ex: # // *"
-              onChange={this.handleCommentCharacterChange}
-              style={{ width: 90, top: -5 }}
+          <Grid columns={4}>
+            <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
+              <Grid.Column>
+                <h4>CSV delimiter:</h4>
+              </Grid.Column>
+              <Grid.Column>
+                <Input
+                  maxLength="1"
+                  className="delimeter-input"
+                  placeholder="ex: , . : - ;"
+                  onChange={this.handleDelimiterChange}
+                  style={{ width: 90, top: -5 }}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row className="delimiter" style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 }}>
+              <Grid.Column>
+                <h4>Comment character:</h4>
+              </Grid.Column>
+              <Grid.Column>
+                <Input
+                  maxLength="1"
+                  className="delimeter-input"
+                  placeholder="ex: # // *"
+                  onChange={this.handleCommentCharacterChange}
+                  style={{ width: 90, top: -5 }}
 
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <p>
+
+          {(!this.props.geoanalytics.checked) ?
+          
+            <Dropzone onDrop={this.handleFileDropped.bind(this)}>
+              <p>Drop a file here or click to select one</p>
+            </Dropzone>
+            :
+            <ConfigurationDataGeoanalyticsSelector
+              layers={this.props.geoanalytics.layers} />
+          }
+          <div className='sweet-loading'>
+          <Center>
+<br></br><br></br>
+
+            <SyncLoader
+              css={override}
+              sizeUnit={"px"}
+              size={15}
+              color={'#31bc12'}
+              loading={this.props.loading}
             />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        {(!this.props.geoanalytics.checked) ?
-          <Dropzone onDrop={this.handleFileDropped.bind(this)}>
-            <p>Drop a file here or click to select one</p>
-          </Dropzone>
-          :
-          <ConfigurationDataGeoanalyticsSelector
-            layers={this.props.geoanalytics.layers} />
-        }
-        <Loader active={this.props.loading}>Loading</Loader>
+              </Center>
+          </div>
+          </p>
 
         </div>
-      </div>
 
+      </div>
+  
     </div>);
   }
 }

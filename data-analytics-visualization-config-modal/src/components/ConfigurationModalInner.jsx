@@ -14,8 +14,12 @@ import ConfigurationForm from './ConfigurationForm'
 
 import ConfigurationErrorPanel from './ConfigurationErrorPanel'
 
-import { Button, Modal, Message } from 'semantic-ui-react'
+import { Button, Modal, Message, Loader } from 'semantic-ui-react'
 
+var positionRelative = {
+  position: 'relative'
+
+}
 class ConfigurationModalInner extends React.Component {
 
   constructor(props) {
@@ -33,6 +37,7 @@ class ConfigurationModalInner extends React.Component {
       <Modal open={this.props.open} size="fullscreen" onClose={this.props.onModalClose}>
         <Modal.Header>Configuration</Modal.Header>
         <Modal.Content>
+          <div>
           <ConfigurationForm
             isNew = {this.props.isNew}
             data={this.props.data}
@@ -61,6 +66,11 @@ class ConfigurationModalInner extends React.Component {
             showConfigurationData={this.props.showConfigurationData}
             setConfigurationData={this.props.setConfigurationData}
             />
+            <div  >
+
+            <Loader style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 , top: 550}} active={this.props.loading}>Loading</Loader>
+          </div>
+            </div>
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
