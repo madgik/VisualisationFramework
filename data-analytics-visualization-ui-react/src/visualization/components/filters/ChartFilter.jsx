@@ -9,20 +9,20 @@ import Tooltip from 'rc-tooltip';
 
 const Handle = Slider.Handle;
 
-const handle = (props) => {
-  const { value, dragging, index, ...restProps } = props;
-  return (
-    <Tooltip
-      prefixCls="rc-slider-tooltip"
-      overlay={value}
-      visible={dragging}
-      placement="top"
-      key={index}
-    >
-      <Handle value={value} {...restProps} />
-    </Tooltip>
-  );
-};
+// const handle = (props) => {
+//   const { value, dragging, index, ...restProps } = props;
+//   return (
+//     <Tooltip
+//       prefixCls="rc-slider-tooltip"
+//       overlay={value}
+//       visible={dragging}
+//       placement="top"
+//       key={index}
+//     >
+//       <Handle value={value} {...restProps} />
+//     </Tooltip>
+//   );
+// };
 class ChartFilter extends React.Component {
 
   sliderValue = 0;
@@ -112,7 +112,7 @@ class ChartFilter extends React.Component {
         value={this.props.sliderValue}
         onChange={this.handleSliderChange}
         onAfterChange={this.onAfterChange} 
-        handle={handle} />
+         />
       } 
 
 
