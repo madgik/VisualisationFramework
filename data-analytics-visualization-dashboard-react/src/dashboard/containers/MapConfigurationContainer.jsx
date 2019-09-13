@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
      // dispatch(visualizationActions.updateFieldDataDropdownValue(''));
       dispatch(visualizationActions.cleanRelatedFieldData());
       dispatch(visualizationActions.reloadSelectedLayerSoilData([]));
+      dispatch(visualizationActions.reloadData([]));
 
     dispatch(visualizationActions.selectYear(year))
   },

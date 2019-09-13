@@ -384,11 +384,11 @@ function saveNewFileToWorkspace() {
 
       Object.keys(features).forEach(function(key) {
       // let feature = features[key].properties;
-        if(features[key].properties.color !== undefined){
-          delete features[key].properties.color;
-          console.log(features[key].properties);
+        // if(features[key].properties.color !== undefined){
+        //   delete features[key].properties.color;
+        //   console.log(features[key].properties);
 
-        }
+        // }
         arr.push(features[key]);
 
 
@@ -793,7 +793,7 @@ function setWorkspaceDashboardDirDetails(workspaceDashboardDirDetails) {
   return { type: visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS, workspaceDashboardDirDetails };
 }
 
-function reloadData(data) {
+function  reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
 }
 
