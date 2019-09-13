@@ -14,8 +14,12 @@ import ConfigurationForm from './ConfigurationForm'
 
 import ConfigurationErrorPanel from './ConfigurationErrorPanel'
 
-import { Button, Modal, Message } from 'semantic-ui-react'
+import { Button, Modal, Message, Loader } from 'semantic-ui-react'
 
+var positionRelative = {
+  position: 'relative'
+
+}
 class ConfigurationModalInner extends React.Component {
 
   constructor(props) {
@@ -33,6 +37,7 @@ class ConfigurationModalInner extends React.Component {
       <Modal open={this.props.open} size="fullscreen" onClose={this.props.onModalClose}>
         <Modal.Header>Configuration</Modal.Header>
         <Modal.Content>
+          <div>
           <ConfigurationForm
             isNew = {this.props.isNew}
             data={this.props.data}
@@ -51,6 +56,7 @@ class ConfigurationModalInner extends React.Component {
             onCheckLayerChange={this.props.onCheckLayerChange}
             setDelimiter={this.props.setDelimiter}
             delimiter={this.props.delimiter}
+            loading={this.props.loading}
             setCommentCharacter={this.props.setCommentCharacter}
             commentCharacter={this.props.commentCharacter}         
             configurations={this.props.configurations}
@@ -60,6 +66,11 @@ class ConfigurationModalInner extends React.Component {
             showConfigurationData={this.props.showConfigurationData}
             setConfigurationData={this.props.setConfigurationData}
             />
+            <div  >
+
+            <Loader style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 , top: 550}} active={this.props.loading}>Loading</Loader>
+          </div>
+            </div>
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
@@ -86,7 +97,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onFieldChange: (data, validation) => dispatch(configItemActions.updateEditedItem(data, validation)),
-  onFileDropped: (files, type, delimiter,commentCharacter) => dispatch(configItemActions.uploadFile(files, type, delimiter, commentCharacter)),
+  onFileDropped: (files, type, delimiter,commentCharacter) => {
+    dispatch(configItemActions.setLoader(true));
+
+    dispatch(configItemActions.uploadFile(files, type, delimiter, commentCharacter))
+  
+  },
   onRemoveFileClick: (index) => dispatch(configItemActions.removeFile(index)),
   onJoinFieldChange: (source, field) => dispatch(configItemActions.updateJoinField(source, field)),
   onFilterAddition: (filter) => dispatch(configItemActions.addFilter(filter)),

@@ -44,6 +44,10 @@ public class DataSetManipulator {
 				return validFormat.parse(value);
 			} catch (ParseException ex1) {
 			}
+			catch (NumberFormatException number) {
+
+				System.out.println(number);
+			}
 		}
 		return null;
 	}

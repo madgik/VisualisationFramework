@@ -30,7 +30,8 @@ export const  configItemActions = {
   setConfigurations,
   setConfigOptions,
   setSelectedConfiguration,
-  setConfigurationData
+  setConfigurationData,
+  setLoader
 }
 
 /*
@@ -125,8 +126,11 @@ function uploadFile(files, type, delimiter, commentCharacter) {
       formData.append("comment", commentCharacter);
 
       return documentService.postDocument(formData).then(response => {
+        dispatch(configItemActions.setLoader(false));
+
         dispatch(updateUploadedFile(response.data));
-      }).catch(_ => { });
+      }).catch(_ => {     dispatch(configItemActions.setLoader(false));
+      });
     });
   }
 }
@@ -148,6 +152,10 @@ function addDataSource(id) {
 
 function setUploadedFileMetadata(metadata) {
   return { type: configItemConstants.SET_UPLOADED_FILE_METADATA, metadata };
+}
+
+function setLoader(loading) {
+  return { type: configItemConstants.LOADING, loading };
 }
 
 function removeFile(index) {
