@@ -68,7 +68,6 @@ class ConfigurationModalInner extends React.Component {
             />
             <div  >
 
-            <Loader style={{ marginTop: 10, marginBottom: 8, paddingTop: 10 , top: 550}} active={this.props.loading}>Loading</Loader>
           </div>
             </div>
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
