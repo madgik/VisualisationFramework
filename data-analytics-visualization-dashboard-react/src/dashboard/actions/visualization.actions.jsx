@@ -94,7 +94,8 @@ export const visualizationActions = {
   enableDataMinerFieldDetailsDropdown,
   disableDataMinerFieldDetailsDropdown,
   setDataMinerEnableCropSimulation,
-  enableDataMinerFetch
+  enableDataMinerFetch,
+  cleanDataMinerData
 }
 
 /*
@@ -817,6 +818,16 @@ function cleanRelatedFieldData(){
     chart1.xAxisLabel = "";
     chart1.yAxisLabel = "";
     dispatch(reloadRelatedFieldData(chart1));
+    let chart2 =  Object.assign({}, getState().data.chart2);
+    chart2.timeSeries = null;
+    chart2.xAxisLabel = "";
+    chart2.yAxisLabel = "";
+    dispatch(reloadDataMinerChart(chart2));
+  }
+}
+
+function cleanDataMinerData(){
+  return function (dispatch, getState){
     let chart2 =  Object.assign({}, getState().data.chart2);
     chart2.timeSeries = null;
     chart2.xAxisLabel = "";
