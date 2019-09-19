@@ -306,6 +306,8 @@ public class DashBoardController {
         for(mil.nga.sf.geojson.Feature feature : featureCollection){
             int fieldid1 = (int) feature.getProperties().get("fieldid");
             if(fieldid1 == fieldid){
+                String color = String.valueOf(feature.getProperties().get("color"));
+                feature.getProperties().put("previousColor", color);
                 feature.getProperties().put("color", "#ffaa33");
                 System.out.println(feature.getProperties().toString());
 

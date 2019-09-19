@@ -38,6 +38,7 @@ class MapRenderer extends React.Component {
 
   onMapClick(e) {
     if (!this.hasClickedOnLayer) {
+    console.log("on map click: ", this.previousFeature);
       this.unHighlightFeature(this.previousFeature, this.previousLayer);
       this.previousFeature = null;
       this.previousLayer = null;
@@ -59,15 +60,27 @@ class MapRenderer extends React.Component {
         weight: '0.9'
 
       });
-      this.previousFeature = feature;
-      this.previousLayer = layer;
+      // this.previousFeature = feature;
+      // this.previousLayer = layer;
      
+      console.log("Colllllllllloor out:::::  " + feature.properties.color);
+
+      if( feature.properties.color === '#ffaa33'){
+     
+        this.previousFeature = feature;
+        this.previousLayer = layer;
+
        if (this.state.zoom !== 15) {
+      
+        console.log("Colllllllllloor:::::  " + feature.properties.color);
+        console.log(" preeeeviouuus Colllllllllloor:::::  " + feature.properties.previousColor);
          this.setState({ zoom: 15 });
          let coordinates = feature.geometry.coordinates[0];
          let point = coordinates[0];
          this.setState({ position: [ point[1], point[0]] });
        }
+      }
+      
     }
 
 
@@ -99,8 +112,8 @@ class MapRenderer extends React.Component {
 
     if (feature.geometry.type === 'LineString') {
       layer.setStyle({
-        color: '#ffaa33',
-      });
+        color: '#ffaa33'
+            });
     } else {
       layer.setStyle({
         fillColor: '#ffaa33',
@@ -111,7 +124,7 @@ class MapRenderer extends React.Component {
 
   unHighlightFeature(feature, layer) {
     if (feature !== null) {
-      console.log(feature.properties.color);
+      console.log("feature in unhighlight: " + JSON.stringify(feature));
 
       if (feature.geometry.type === 'LineString') {
         if(feature.properties.color !== undefined){
@@ -127,8 +140,17 @@ class MapRenderer extends React.Component {
           });
         }  
       } else {
-        console.log("Unhighlight color:::: " + " " + feature.properties.color);
-        if(feature.properties.color !== undefined){
+        if(feature.properties.previousColor !== undefined){
+          console.log("φεατθρε: " + feature);
+          console.log("Unhighlight prev color:::: " + " " + feature.properties.color);
+          layer.setStyle({
+            fillColor: feature.properties.previousColor,
+            fillOpacity: 1
+          });
+        }
+        else if((feature.properties.color !== undefined)){
+          console.log("φεατθρε: " + feature);
+          console.log("Unhighlight color:::: " + " " + feature.properties.color);
           layer.setStyle({
             fillColor: feature.properties.color,
             fillOpacity: 1

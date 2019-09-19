@@ -24,8 +24,11 @@ const mapDispatchToProps = dispatch => ({
 
       if(dispatch(visualizationActions.enableDataMinerFetch()) === true)
         dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
+      else
+        dispatch(visualizationActions.setDataMinerEnableCropSimulation(false));
+
       // dispatch(visualizationActions.getSelectedFieldDetails(feature));
-     
+      dispatch(visualizationActions.cleanDataMinerData());
       // dispatch(visualizationActions.setFieldDetailsDropdownValue(1));
       // dispatch(visualizationActions.getSelectedFieldMeteoStation(feature))
       // dispatch(visualizationActions.setXaxisFieldDataLabel("Date"));
@@ -43,6 +46,8 @@ const mapDispatchToProps = dispatch => ({
      // dispatch(visualizationActions.updateFieldDataDropdownValue(''));
       dispatch(visualizationActions.cleanRelatedFieldData());
       dispatch(visualizationActions.reloadSelectedLayerSoilData([]));
+      dispatch(visualizationActions.setDataMinerEnableCropSimulation(false));
+
 
       // dispatch(visualizationActions.setXaxisFieldDataLabel(""));
       // dispatch(visualizationActions.setYaxisFieldDataLabel(""));

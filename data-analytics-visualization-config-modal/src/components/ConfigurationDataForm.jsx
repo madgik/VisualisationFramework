@@ -122,34 +122,34 @@ class ConfigurationDataForm extends React.Component {
           </Grid>
           <p>
 
-          {(!this.props.geoanalytics.checked) ?
-          
-            <Dropzone onDrop={this.handleFileDropped.bind(this)}>
-              <p>Drop a file here or click to select one</p>
-            </Dropzone>
-            :
-            <ConfigurationDataGeoanalyticsSelector
-              layers={this.props.geoanalytics.layers} />
-          }
-          <div className='sweet-loading'>
-          <Center>
-<br></br><br></br>
+            {(!this.props.geoanalytics.checked) ?
 
-            <SyncLoader
-              css={override}
-              sizeUnit={"px"}
-              size={15}
-              color={'#31bc12'}
-              loading={this.props.loading}
-            />
+              <Dropzone onDrop={this.handleFileDropped.bind(this)}>
+                <p>Drop a file here or click to select one</p>
+              </Dropzone>
+              :
+              <ConfigurationDataGeoanalyticsSelector
+                layers={this.props.geoanalytics.layers} />
+            }
+            <div className='sweet-loading'>
+              <Center>
+                <br></br><br></br>
+
+                <SyncLoader
+                  css={override}
+                  sizeUnit={"px"}
+                  size={15}
+                  color={'#31bc12'}
+                  loading={this.props.loading}
+                />
               </Center>
-          </div>
+            </div>
           </p>
 
         </div>
 
       </div>
-  
+
     </div>);
   }
 }

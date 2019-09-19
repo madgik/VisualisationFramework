@@ -94,7 +94,8 @@ export const visualizationActions = {
   enableDataMinerFieldDetailsDropdown,
   disableDataMinerFieldDetailsDropdown,
   setDataMinerEnableCropSimulation,
-  enableDataMinerFetch
+  enableDataMinerFetch,
+  cleanDataMinerData
 }
 
 /*
@@ -384,11 +385,11 @@ function saveNewFileToWorkspace() {
 
       Object.keys(features).forEach(function(key) {
       // let feature = features[key].properties;
-        if(features[key].properties.color !== undefined){
-          delete features[key].properties.color;
-          console.log(features[key].properties);
+        // if(features[key].properties.color !== undefined){
+        //   delete features[key].properties.color;
+        //   console.log(features[key].properties);
 
-        }
+        // }
         arr.push(features[key]);
 
 
@@ -793,7 +794,7 @@ function setWorkspaceDashboardDirDetails(workspaceDashboardDirDetails) {
   return { type: visualizationConstants.SET_WORKSPACE_DASHBOARD_DIR_DETAILS, workspaceDashboardDirDetails };
 }
 
-function reloadData(data) {
+function  reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
 }
 
@@ -817,6 +818,16 @@ function cleanRelatedFieldData(){
     chart1.xAxisLabel = "";
     chart1.yAxisLabel = "";
     dispatch(reloadRelatedFieldData(chart1));
+    let chart2 =  Object.assign({}, getState().data.chart2);
+    chart2.timeSeries = null;
+    chart2.xAxisLabel = "";
+    chart2.yAxisLabel = "";
+    dispatch(reloadDataMinerChart(chart2));
+  }
+}
+
+function cleanDataMinerData(){
+  return function (dispatch, getState){
     let chart2 =  Object.assign({}, getState().data.chart2);
     chart2.timeSeries = null;
     chart2.xAxisLabel = "";
