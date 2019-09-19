@@ -11,7 +11,13 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { Select } from "@material-ui/core";
+import { Select as SelectMaterial } from "@material-ui/core";
+
+
+import SelectSearch from 'react-select-search'
+import './SearchBar.css';
+
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -93,7 +99,6 @@ class GraphFilter extends React.Component {
   }
 
   handleNodePropertyChange(e) {
-    console.log(e.target.id + ":" + e.target.value)
 
     if (e.target.value != "") {
       this.filtersBtn = false;
@@ -101,27 +106,21 @@ class GraphFilter extends React.Component {
     }
     else {
       delete this.query[e.target.id];
-      // }
-      // else {
-      // Object.keys(this.props.graph.nodes[0]).map(element => {
-      //   if(this.element.value != null && this.element.value != "") {
-      //     this.filtersBtn = false;
-      //     return;
-      //   }
-      //    this.filtersBtn = true;
-      // });
+    }
+  }
+
+  handleSelectPropertyChange(e, id) {
+    console.log("id" + JSON.stringify(id) + "-"+JSON.stringify(e))
+    if (e.value != "") {
+      this.filtersBtn = false;
+      this.query[id] = e.value
+    }
+    else {
+      delete this.query[id];
     }
   }
 
   handleApplyFilters() {
-    // Object.keys(this.props.graph.nodes[0]).map(e => {
-    //     if(e.value != null && e.value != "") {
-    //       this.query[e.id] = e.value
-    //       return;
-    //     }
-    //   });
-      //    this.filtersBtn = true
-    console.log("----"+this.query)
     if (Object.keys(this.query).length !== 0) {
       this.props.getFilteredGraph(this.query, this.props.selectedGraph);
     }
@@ -129,7 +128,7 @@ class GraphFilter extends React.Component {
     toast.success("Filters Applied", {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast',
-      hideProgressBar:true
+      hideProgressBar: true
     });
   }
 
@@ -148,16 +147,13 @@ class GraphFilter extends React.Component {
           alignContent="center"
           spacing={8}
         >
-          <Grid item>
-            <h3>Filters</h3>
-
-          </Grid>
+          <Grid item><h3>Filters</h3></Grid>
           <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
                   checked={this.props.showOldNodes}
-                  onChange={this.handleChangeShowOldNodes}
+                  onChange={(e)=>this.handleChangeShowOldNodes}
                   value={this.showOldNodes}
                   color="primary"
                 />
@@ -173,28 +169,30 @@ class GraphFilter extends React.Component {
                 <h4>Main Property</h4>
               </Grid>
               <Grid item>
-              <TextField
-                id="main-property-1"
-                label="Property"
-                className={classes.textFieldRange}
-                onChange={this.handleNodePropertyChange}
-                margin="normal"
-              />
+                <TextField
+                  id="main-property-1"
+                  label="Property"
+                  className={classes.textFieldRange}
+                  onChange={this.handleNodePropertyChange}
+                  margin="normal"
+                />
+              </Grid>
             </Grid>
           </Grid>
-          {/* <Grid
+          <Grid item >
+
+            <Grid
               direction='column'
               container>
               <Grid item>
-                <h4>Main Property Range</h4>
+                <h4>Weight Range</h4>
               </Grid>
-
               <Grid
                 direction='row'
                 container>
                 <Grid item xs={6}>
                   <TextField
-                    id="main-property-1"
+                    id="main-weight-1"
                     label="from"
                     className={classes.textFieldRange}
                     onChange={this.handleNodePropertyChange}
@@ -203,192 +201,156 @@ class GraphFilter extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={6}>
+                  {/* <label>to</label> */}
                   <TextField
-                    id="main-property-2"
+                    id="main-weight-2"
                     label="to"
                     className={classes.textFieldRange}
                     onChange={this.handleNodePropertyChange}
                     margin="normal"
                     type="number"
-
                   />
                 </Grid>
               </Grid>
-            </Grid> */}
-
-        </Grid>
-        <Grid item >
-
-          <Grid
-            direction='column'
-            container>
-            <Grid item>
-              <h4>Weight Range</h4>
-            </Grid>
-
-            <Grid
-              direction='row'
-              container>
-              <Grid item xs={6}>
-                {/* <label>from</label> */}
-                <TextField
-                  id="main-weight-1"
-                  label="from"
-                  className={classes.textFieldRange}
-                  onChange={this.handleNodePropertyChange}
-                  margin="normal"
-                  type="number"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                {/* <label>to</label> */}
-                <TextField
-                  id="main-weight-2"
-                  label="to"
-                  className={classes.textFieldRange}
-                  onChange={this.handleNodePropertyChange}
-                  margin="normal"
-                  type="number"
-
-                />
-              </Grid>
             </Grid>
           </Grid>
-
-
-        </Grid>
-        <Grid item>
-          <h4>Node Property filters</h4>
-        </Grid>
+          <Grid item>
+            <h4>Node Property filters</h4>
+          </Grid>
 
           {
-        this.props.topNodes.nodes != undefined ?
-        <Grid item>
-          {Object.keys(this.props.topNodes.nodes[0]).map(element => {
-            if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
-              return <Grid item>
-                {/* <label>{element}</label> */}
-                <TextField
-                  id={element}
-                  label={element}
-                  className={[classes.textField, 'filters'].join(" ")}
-                  onChange={this.handleNodePropertyChange}
-                  margin="normal"
-                />
+            this.props.topNodes.nodes != undefined ?
+              <Grid item>
+                {Object.keys(this.props.topNodes.nodes[0]).map(element => {
+                  if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
+                    return <Grid item>
+                      {(this.props.propertyValues[element]) != undefined ?
+                        <SelectSearch
+                          id={element}
+                          search={true}
+                          mode="input"
+                          options={this.props.propertyValues[element]}
+                          onChange={(e) => this.handleSelectPropertyChange(e,element)}
+                          placeholder={element}
+                        />
+                        :
+                        <TextField
+                          id={element}
+                          label={element}
+                          className={[classes.textField, 'filters'].join(" ")}
+                          onChange={this.handleNodePropertyChange}
+                          margin="normal"
+                        />}
+                    </Grid>
+                  }
+                  else if (element != 'latitude' && element != 'longitude') {
+                    return <Grid
+                      direction='column'
+                      container>
+                      <Grid item>
+                        <label>{element}</label>
+                      </Grid>
+                      <Grid
+                        direction='row'
+                        container>
+                        <Grid item xs={6}>
+                          <TextField
+                            id={element + "-1"}
+                            label="from"
+                            className={classes.textFieldRange}
+                            onChange={this.handleNodePropertyChange}
+                            margin="normal"
+                            type="number"
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            id={element + "-2"}
+                            label="to"
+                            className={classes.textFieldRange}
+                            onChange={this.handleNodePropertyChange}
+                            margin="normal"
+                            type="number"
+                          />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  }
+                })
+                }
               </Grid>
-            }
-            else if (element != 'latitude' && element != 'longitude') {
-              return <Grid
-                direction='column'
-                container>
-                <Grid item>
-                  <label>{element}</label>
-                </Grid>
-
-                <Grid
-                  direction='row'
-                  container>
-                  <Grid item xs={6}>
-                    <TextField
-                      id={element + "-1"}
-                      label="from"
-                      className={classes.textFieldRange}
-                      onChange={this.handleNodePropertyChange}
-                      margin="normal"
-                      type="number"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id={element + "-2"}
-                      label="to"
-                      className={classes.textFieldRange}
-                      onChange={this.handleNodePropertyChange}
-                      margin="normal"
-                      type="number"
-
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-            }
-
-          })
+              :
+              ''
           }
-        </Grid>
-        :
-        ''
-      }
-      <Grid item>
-        <h4>Date Range</h4>
-      </Grid>
-        <Grid
-          direction='row'
-          container>
-          <Grid item xs={6}>
-
-            <FormControl className={classes.formControl}>
-
-              <Select
-                value={this.props.timestampFrom}
-                onChange={this.handleTimestampFromChange}
-                inputProps={{
-                  name: 'timestamp-from-selector',
-                  id: 'timestamp-from-selector',
-                  classes: {
-                    icon: classes.icon,
-                    root: classes.whiteColor,
-                  },
-                }}
-              >
-                {(this.props.timestamps != null && this.props.timestamps != '') ?
-                  this.props.timestamps.map((timestamp, i) =>
-                    <MenuItem key={i} value={timestamp}>
-                      {timestamp}
-                    </MenuItem>) :
-                  ''
-                }
-              </Select>
-            </FormControl>
-
+          <Grid item>
+            <h4>Date Range</h4>
           </Grid>
-          <Grid item xs={6}>
-            <FormControl className={classes.formControl}>
+          <Grid
+            direction='row'
+            container>
+            <Grid item xs={6}>
 
-              <Select
-                value={this.props.timestampTo}
-                onChange={this.handleTimestampFromTo}
-                inputProps={{
-                  name: 'timestamp-to-selector',
-                  id: 'timestamp-to-selector',
-                  classes: {
-                    icon: classes.icon,
-                    root: classes.whiteColor,
-                  },
-                }}
-              >
-                {(this.props.timestamps != null && this.props.timestamps != '') ?
-                  this.props.timestamps.map((timestamp, i) =>
-                    <MenuItem key={i} value={timestamp}>
-                      {timestamp}
-                    </MenuItem>) :
-                  ''
-                }
-              </Select>
-            </FormControl>
+              <FormControl className={classes.formControl}>
+
+                <SelectMaterial
+                  value={this.props.timestampFrom}
+                  onChange={this.handleTimestampFromChange}
+                  inputProps={{
+                    name: 'timestamp-from-selector',
+                    id: 'timestamp-from-selector',
+                    classes: {
+                      icon: classes.icon,
+                      root: classes.whiteColor,
+                    },
+                  }}
+                >
+                  {(this.props.timestamps != null && this.props.timestamps != '') ?
+                    this.props.timestamps.map((timestamp, i) =>
+                      <MenuItem key={i} value={timestamp}>
+                        {timestamp}
+                      </MenuItem>) :
+                    ''
+                  }
+                </SelectMaterial>
+              </FormControl>
+
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl className={classes.formControl}>
+
+                <SelectMaterial
+                  value={this.props.timestampTo}
+                  onChange={this.handleTimestampFromTo}
+                  inputProps={{
+                    name: 'timestamp-to-selector',
+                    id: 'timestamp-to-selector',
+                    classes: {
+                      icon: classes.icon,
+                      root: classes.whiteColor,
+                    },
+                  }}
+                >
+                  {(this.props.timestamps != null && this.props.timestamps != '') ?
+                    this.props.timestamps.map((timestamp, i) =>
+                      <MenuItem key={i} value={timestamp}>
+                        {timestamp}
+                      </MenuItem>) :
+                    ''
+                  }
+                </SelectMaterial>
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="contained" className={classes.button}
-            onClick={this.handleApplyFilters}
-          // disabled={this.filtersBtn}
-          >
-            Apply Filters
+          <Grid item>
+            <Button
+              variant="contained" className={classes.button}
+              onClick={this.handleApplyFilters}
+            // disabled={this.filtersBtn}
+            >
+              Apply Filters
             </Button>
 
-        </Grid>
+          </Grid>
         </Grid >
       );
     }

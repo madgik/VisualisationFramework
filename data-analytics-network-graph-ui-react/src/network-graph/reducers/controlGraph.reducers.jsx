@@ -37,13 +37,14 @@ const dataDefault = {
     },
     sliderValue: 0,
     timestamps: null,
-    playerTimestamps:null,
+    playerTimestamps: null,
     showOldNodes: true,
     timestampFrom: '2012.01',
-    timestampTo:'2015.12',
+    timestampTo: '2015.12',
     propModalIsOpen: false,
     record: false,
-    availRec: false
+    availRec: false,
+    propertyValues: {}
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -53,7 +54,7 @@ export function controlGraph(state = dataDefault, action) {
                 graph: {
                     $set: action.graph
                 }
-            }) 
+            })
         case controlGraphConstants.SET_NODE:
             return update(state, {
                 node: {
@@ -186,12 +187,20 @@ export function controlGraph(state = dataDefault, action) {
                 }
             })
         }
-        //   case visualizationConstants.CHANGE_TIME:
-        //     return update(state, {
-        //       type: {
-        //         $set: action.loadTime
-        //       }
-        //     })
+        case controlGraphConstants.SET_PROPERTY_VALUES: {
+            // console.log()dataDefault.propertyValues
+            if (dataDefault.propertyValues == undefined) {
+                dataDefault.propertyValues = {}
+            }
+            for (var x in action.propertyValues) {
+                dataDefault.propertyValues[x] = action.propertyValues[x];
+            }
+            return update(state, {
+                propertyValues: {
+                    $set: dataDefault.propertyValues
+                }
+            })
+        }
         default:
             return state;
     }
@@ -215,3 +224,4 @@ export function filters(state = filtersDefault, action) {
             return state;
     }
 }
+

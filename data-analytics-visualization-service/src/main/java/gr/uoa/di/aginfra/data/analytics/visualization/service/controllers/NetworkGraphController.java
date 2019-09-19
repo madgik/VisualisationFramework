@@ -9,6 +9,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.D3Helper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
+import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.PropertyValuesDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,11 +25,10 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @CrossOrigin(exposedHeaders = "Location")
@@ -153,17 +153,11 @@ public class NetworkGraphController {
 	ResponseEntity<?> getCurrentTimeSubgraph(@PathVariable("id") String graphId, @RequestBody Map<String, Object> request){ //@RequestParam("nodes") String[] nodes,@RequestParam("date") String date
 
 		try {
-
 			List<String> nodeList = Arrays.asList(mapper.convertValue(request.get("nodes"), new TypeReference<String[]>(){}));
 			List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, request.get("date").toString());
 			Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
-//            System.out.println("-"+d3Results);
-			//            List<Node> result = networkGraphService.getCurrentTimestampSubGraph(graphId, nodeList, currentDate);
-//            System.out.println("RESULTS:"+result.size());
-//            Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, false);
 //            System.out.println(d3Results.get("nodes"));
 //            System.out.println(d3Results.get("links"));
-
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -204,4 +198,17 @@ public class NetworkGraphController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@RequestMapping(value = "properties/{graphId}")
+	ResponseEntity<?> getPropertyValues(@PathVariable("graphId") String graphId, @RequestParam("property")String property) {
+		List<String> result = networkGraphService.getPropertyValues(property, graphId);
+
+		List<PropertyValuesDto> resultProperties = IntStream.range(0, result.size())
+				.mapToObj(i -> new PropertyValuesDto(i, result.get(i), result.get(i)))
+				.collect(Collectors.toList());
+
+		return new ResponseEntity<>(resultProperties, HttpStatus.OK);
+	}
+
+
 }

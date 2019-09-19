@@ -24,8 +24,8 @@ const mapStateToProps = state => ({
   showOldNodes: state.controlGraph.showOldNodes,
   topNodes: state.controlGraph.topNodes,
   timestampFrom: state.controlGraph.timestampFrom,
-  timestampTo: state.controlGraph.timestampTo
-  
+  timestampTo: state.controlGraph.timestampTo,
+  propertyValues: state.controlGraph.propertyValues
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -33,7 +33,8 @@ const mapDispatchToProps = dispatch => ({
     uploadFile: (file) => dispatch(configGraphActions.uploadFile(file)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
     getFilteredGraph: (query, graphId) => dispatch(controlGraphActions.getFilteredGraph(query, graphId)),
-
+    getPropertyValues: (property, graphId) => dispatch(controlGraphActions.getPropertyValues(property, graphId)),
+    
     //SETTERS
     setFileValidation: (isValid) => dispatch(configGraphActions.setFileValidation(isValid)),
     setGraphSource: (graphSource) => dispatch(configGraphActions.setGraphSource(graphSource)),

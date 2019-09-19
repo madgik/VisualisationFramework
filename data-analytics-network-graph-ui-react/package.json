@@ -25,6 +25,7 @@
     "react-redux": "~5.0.7",
     "react-redux-loading-bar": "^4.2.0",
     "react-scripts": "2.1.8",
+    "react-select-search": "^0.9.6",
     "react-sidebar": "^3.0.2",
     "react-swipeable-views": "^0.13.1",
     "react-toastify": "^5.2.1",

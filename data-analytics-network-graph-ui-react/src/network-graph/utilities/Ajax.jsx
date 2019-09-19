@@ -16,6 +16,8 @@ class Ajax {
 
   NETWORK_GRAPH_FILTERED_PATH = 'filtered' 
 
+  NETWORK_GRAPH_PROPERTIES = 'properties'
+
   baseUrl = null
 
   getBaseUrl() {
@@ -44,15 +46,13 @@ class Ajax {
   }
 
   buildPortlet(path, parameters) {
-    console.log("Path: " + path);
-    console.log(parameters);
-    console.log(this.baseUrl);
+    // console.log("Path: " + path);
+    // console.log(parameters);
+    // console.log(this.baseUrl);
 
     var resourceURL = this.baseUrl.replace('%7Burl%7D', path);
-    console.log(resourceURL);
     var url = resourceURL.replace('%7Bparameters%7D',  '');
-    console.log(url);
-    // return url;
+    // console.log(url);
 
     if (parameters) {
       console.log(parameters)

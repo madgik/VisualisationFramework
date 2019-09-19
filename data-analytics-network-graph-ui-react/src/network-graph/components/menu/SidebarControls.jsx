@@ -128,6 +128,7 @@ class SidebarControls extends React.Component {
         >
           <Grid>
             <GraphFilter
+              propertyValues={this.props.propertyValues}
               graph={this.props.graph}
               currentDate={this.props.currentDate}
               selectedGraph={this.props.selectedGraph}
@@ -144,24 +145,6 @@ class SidebarControls extends React.Component {
               topNodes={this.props.topNodes}
             />
           </Grid>
-          {/* <Grid item spacing={8}>
-          <Divider/>
-              <NodePropeties
-                graph={this.props.graph}
-                topNodes={this.props.topNodes}
-                selectedGraph={this.props.selectedGraph}
-                selectedNode={this.props.selectedNode}
-                getNeighbors={this.props.getNeighbors}
-                graphData={this.props.graphData}
-              />
-            </Grid>
-            <Grid item spacing={8}>
-            <Divider/>
-              <LinkProperties
-                selectedWeight={this.props.selectedWeight}
-                selectedLink={this.props.selectedLink}
-              />
-            </Grid> */}
 
         </Grid>
 
@@ -171,9 +154,7 @@ class SidebarControls extends React.Component {
     );
   }
 }
- // <div className="sidebar-controls">
 
-      // </div>
 SidebarControls.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,

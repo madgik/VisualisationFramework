@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.DateNodeRepository;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.HasWeightRepository;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.NodeRepository;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.SubGraphRepository;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NodeProperty;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.*;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -31,17 +29,21 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     private NodeRepository nodeRepository;
 
+    private NodePropertyRepository nodePropertyRepository;
+
     private SubGraphRepository subGraphRepository;
 
     private Session session;
 
     @Autowired
     public NetworkGraphServiceImpl(HasWeightRepository hasWeightRepository, DateNodeRepository dateNodeRepository,
-                                   NodeRepository nodeRepository, SubGraphRepository subGraphRepository, Session session) {
+                                   NodeRepository nodeRepository, SubGraphRepository subGraphRepository,
+                                   NodePropertyRepository nodePropertyRepository, Session session) {
         this.hasWeightRepository = hasWeightRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
         this.subGraphRepository = subGraphRepository;
+        this.nodePropertyRepository= nodePropertyRepository;
         this.session = session;
     }
 
@@ -134,5 +136,9 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         return hasWeightRepository.findNodesByProperties( session, subGraphId, query);
     }
 
+    @Override
+    public List<String> getPropertyValues(String property,String graphId) {
+        return nodePropertyRepository.findDistinctValuesByNameAndNodeSubGraphId(property, graphId);
+    }
 
 }

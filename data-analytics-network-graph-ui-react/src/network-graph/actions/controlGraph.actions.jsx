@@ -16,7 +16,9 @@ export const controlGraphActions = {
   getDateGraph,
   getAllTimestamps,
   getFilteredGraph,
+  getPropertyValues,
   //OTHERS
+  getPropertiesValues,
   addGraphData,
   deleteGraphLinks,
   //SETTERS
@@ -43,7 +45,8 @@ export const controlGraphActions = {
   setPropModalIsOpen,
   setRecord,
   setAvailRecord,
-  setNode
+  setNode,
+  setPropertyValues
 }
 
 /*
@@ -62,7 +65,7 @@ function getTopNodes(graphId, num) {
     }
     return axios.get(resourceUrl)
       .then(response => {
-      //  console.log(response.data);
+        //  console.log(response.data);
         dispatch(loadGraph(response.data));
         var topNodes = {
           nodes: response.data.nodes.slice(0),
@@ -70,6 +73,8 @@ function getTopNodes(graphId, num) {
         }
         dispatch(setTopNodes(topNodes));
         dispatch(hideLoading());
+        dispatch(getPropertiesValues(topNodes, graphId));
+
         dispatch(configGraphActions.setOpenSidebar(true))
         return response
       }).then(response => {
@@ -129,7 +134,6 @@ function getFilteredGraph(query, graphId) {
 
     for (var i in query) {
       queryParams.append(i, query[i]);
-
     }
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_FILTERED_PATH + "/" + graphId, queryParams);
     return axios.get(resourceUrl, {
@@ -152,6 +156,34 @@ function getFilteredGraph(query, graphId) {
       .catch(response => {
         alert(response);
       });
+  }
+}
+
+function getPropertyValues(name, graphId) {
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_PROPERTIES + "/" + graphId, "property="+name);
+    return axios.get(resourceUrl, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(response => {
+      dispatch(setPropertyValues({[name]: response.data}));
+    });
+  }
+}
+
+function getPropertiesValues(topNodes, graphId) {
+  return function (dispatch) {
+    console.log(topNodes.nodes);
+    if (topNodes.nodes[0] != undefined) {
+      for (var key in topNodes.nodes[0]) {
+        console.log(key + "-" + topNodes.nodes[0][key])
+        if (isNaN(topNodes.nodes[0][key]) && key != "id") {
+          console.log(topNodes.nodes[0][key])
+          dispatch(getPropertyValues(key, graphId));
+        }
+      }
+    }
   }
 }
 
@@ -180,13 +212,11 @@ function addGraphData(newData, graphData, showOldNodes, topNodes) {
 
 function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
   return function (dispatch) {
-    // var nodeIds = new URLSearchParams();
 
     var nodesIds = [];
     graphData.nodes.forEach(element => {
       nodesIds.push(element.id);
     });
-    // nodeIds.append("date", date);
 
     var data = {
       nodes: nodesIds,
@@ -194,14 +224,11 @@ function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
     }
 
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_DATE_PATH + "/" + graphId);
-    // console.log(resourceUrl);
-  
-    // console.log("TOP:" + showOldNodes + topNodes);
 
     let axiosConfig = {
       headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
       }
     };
     return axios.post(resourceUrl, data, axiosConfig)
@@ -216,23 +243,7 @@ function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
   }
 }
 
-// function playTimeGraph(date, graphData, graphId, paused) {
-//   return function (dispatch) {
-//     var index = DateUtils.dates.indexOf(date);
-//     for (var i = index; i < DateUtils.dates.length; i++) {
-//       if (paused != true) {
-//         setInterval(function () {
-//           dispatch(getDateGraph(DateUtils.dates[index], graphData, graphId));
-//         }, 3000);
 
-//       }
-//       else {
-//         return;
-//       }
-
-//     }
-//   }
-// }
 /* SET GRAPH DATA */
 
 
@@ -359,6 +370,10 @@ function setAvailRecord(availRecord) {
 
 function setNode(node) {
   return { type: controlGraphConstants.SET_NODE, node };
+}
+
+function setPropertyValues(propertyValues) {
+  return { type: controlGraphConstants.SET_PROPERTY_VALUES, propertyValues };
 }
 
 
