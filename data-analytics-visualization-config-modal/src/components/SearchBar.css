@@ -93,25 +93,25 @@ body {
         }
 
     .select-search-box input::-webkit-input-placeholder {
-        color: #ccc;
+        color: rgb(145, 145, 145);
         font-style: italic;
         font-weight: normal;
     }
 
     .select-search-box input::-moz-placeholder {
-        color: #ccc;
+        color: rgb(145, 145, 145);
         font-style: italic;
         font-weight: normal;
     }
 
     .select-search-box input:-moz-placeholder {
-        color: #ccc;
+        color: rgb(145, 145, 145);
         font-style: italic;
         font-weight: normal;
     }
 
     .select-search-box input:-ms-input-placeholder {
-        color: #ccc;
+        color: rgb(145, 145, 145);
         font-style: italic;
         font-weight: normal;
     }
@@ -129,7 +129,7 @@ body {
         background: #fff;
         border-radius: 4px;
         overflow: auto;
-        box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+        box-shadow: 0 4px 7px 0 rgba(50, 50, 93, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.07);
         z-index: 100;
         min-height: 49px;
     }
