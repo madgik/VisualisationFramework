@@ -43,7 +43,6 @@ class SelectGraphForm extends React.Component {
   }
 
   handleChange = event => {
-    console.log(event.currentTarget);
     this.props.setSelectedGraph(event.target.value);
     this.props.setFilename(event.currentTarget.innerText);
   };
@@ -54,7 +53,7 @@ class SelectGraphForm extends React.Component {
       <div className={classes.root}>
       
       <form className="form-inline" autoComplete="off">
-          <label for="graph-select">Select Graph</label>
+          <label htmlFor="graph-select">Select Graph</label>
           <FormControl className={classes.formControl}>
 
           <InputLabel className={classes.whiteColor} htmlFor="graph-select">

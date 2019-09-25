@@ -64,12 +64,11 @@ class ShowTopNodes extends React.Component {
     const { classes } = this.props;
     return (
       <form className="form-inline">
-            <label for="standard-bare">Select Top Nodes</label>
+            <label htmlFor="standard-bare">Select Top Nodes</label>
             <Input
               id="standard-bare"
               className="top-n-column top-n-button"
               placeholder="Number of Nodes"
-              defaultValue="5"
               margin="normal"
               type="number"
               value={this.props.nodesNumber}

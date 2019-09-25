@@ -55,7 +55,6 @@ class Ajax {
     // console.log(url);
 
     if (parameters) {
-      console.log(parameters)
       url += ('&' + parameters);
     }
     return url;

@@ -78,7 +78,7 @@ class GraphControls extends React.Component {
       }
       else {
         setTimeout(() => {
-          if (this.props.paused != true) {
+          if (this.props.paused !== true) {
             this.props.getDateGraph(date, this.props.graph, this.props.selectedGraph, this.props.showOldNodes, this.props.topNodes).then(() => {
               var nextDate = DateUtils.getNextDate(this.props.currentDate, this.props.playerTimestamps, this.props.showOldNodes, this.props.topNodes);
               this.props.setSliderValue(this.props.playerTimestamps.indexOf(nextDate));
@@ -88,7 +88,7 @@ class GraphControls extends React.Component {
         }, 3000);
       }
     }
-    else if (this.props.paused != true && date == undefined) {
+    else if (this.props.paused !== true && date === undefined) {
       this.props.setStopped(true);
     }
 
@@ -128,14 +128,12 @@ class GraphControls extends React.Component {
   }
 
 
-
-
   render() {
     const { classes } = this.props;
     var playClass = (this.props.stopped || this.props.paused) ? 'player-controls' : 'player-controls disabled';
 
 
-    if (this.props.graph.nodes.length == 0 || this.props.graph.nodes == undefined) {
+    if (this.props.graph.nodes.length === 0 || this.props.graph.nodes === undefined) {
       return (
         <div></div>
       )

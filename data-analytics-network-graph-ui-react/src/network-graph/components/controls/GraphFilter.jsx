@@ -95,7 +95,6 @@ class GraphFilter extends React.Component {
 
   handleChangeShowOldNodes(value) {
     this.props.setShowOldNodes(!this.props.showOldNodes);
-    console.log("check:" + this.props.showOldNodes);
   }
 
   handleNodePropertyChange(e) {
@@ -110,7 +109,6 @@ class GraphFilter extends React.Component {
   }
 
   handleSelectPropertyChange(e, id) {
-    console.log("id" + JSON.stringify(id) + "-"+JSON.stringify(e))
     if (e.value != "") {
       this.filtersBtn = false;
       this.query[id] = e.value
@@ -152,9 +150,10 @@ class GraphFilter extends React.Component {
             <FormControlLabel
               control={
                 <Checkbox
+                  id="show-old-nodes-check"
                   checked={this.props.showOldNodes}
-                  onChange={(e)=>this.handleChangeShowOldNodes}
-                  value={this.showOldNodes}
+                  onChange={this.handleChangeShowOldNodes}
+                  value={this.props.showOldNodes}
                   color="primary"
                 />
               }
@@ -180,7 +179,6 @@ class GraphFilter extends React.Component {
             </Grid>
           </Grid>
           <Grid item >
-
             <Grid
               direction='column'
               container>
@@ -222,20 +220,32 @@ class GraphFilter extends React.Component {
             this.props.topNodes.nodes != undefined ?
               <Grid item>
                 {Object.keys(this.props.topNodes.nodes[0]).map(element => {
-                  if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude')) {
-                    return <Grid item>
+                  if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude' && element != 'size')) {
+                    return <Grid key={"properties" + element} item>
+                      
                       {(this.props.propertyValues[element]) != undefined ?
+                      <Grid
+                      direction='column'
+                      container>
+                      <Grid item>
+                        <label>{element}</label>
+                      </Grid>
+                      <Grid item>
                         <SelectSearch
                           id={element}
+                          key={element}
                           search={true}
                           mode="input"
                           options={this.props.propertyValues[element]}
-                          onChange={(e) => this.handleSelectPropertyChange(e,element)}
+                          onChange={(e) => this.handleSelectPropertyChange(e, element)}
                           placeholder={element}
                         />
+                        </Grid>
+                        </Grid>
                         :
                         <TextField
                           id={element}
+                          key={element}
                           label={element}
                           className={[classes.textField, 'filters'].join(" ")}
                           onChange={this.handleNodePropertyChange}
@@ -243,8 +253,9 @@ class GraphFilter extends React.Component {
                         />}
                     </Grid>
                   }
-                  else if (element != 'latitude' && element != 'longitude') {
+                  else if (element != 'latitude' && element != 'longitude' && element != 'size') {
                     return <Grid
+                      key={"properties" + element}
                       direction='column'
                       container>
                       <Grid item>
@@ -256,6 +267,7 @@ class GraphFilter extends React.Component {
                         <Grid item xs={6}>
                           <TextField
                             id={element + "-1"}
+                            key={element + "1"}
                             label="from"
                             className={classes.textFieldRange}
                             onChange={this.handleNodePropertyChange}
@@ -266,6 +278,7 @@ class GraphFilter extends React.Component {
                         <Grid item xs={6}>
                           <TextField
                             id={element + "-2"}
+                            key={element + "2"}
                             label="to"
                             className={classes.textFieldRange}
                             onChange={this.handleNodePropertyChange}

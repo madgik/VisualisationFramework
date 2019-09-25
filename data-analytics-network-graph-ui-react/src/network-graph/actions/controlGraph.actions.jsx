@@ -177,9 +177,8 @@ function getPropertiesValues(topNodes, graphId) {
     console.log(topNodes.nodes);
     if (topNodes.nodes[0] != undefined) {
       for (var key in topNodes.nodes[0]) {
-        console.log(key + "-" + topNodes.nodes[0][key])
         if (isNaN(topNodes.nodes[0][key]) && key != "id") {
-          console.log(topNodes.nodes[0][key])
+          // console.log(topNodes.nodes[0][key])
           dispatch(getPropertyValues(key, graphId));
         }
       }

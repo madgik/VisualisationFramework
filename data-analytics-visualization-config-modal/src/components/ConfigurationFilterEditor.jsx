@@ -39,11 +39,11 @@ class ConfigurationFilterEditor extends React.Component {
         <Grid.Column width="15">
           <Segment>
             <Form.Group widths='equal'>
-              <Form.Field>
+              <Form.Field required>
                 <label>Label</label>
                 <Input placeholder='Label' value={this.props.filter.label} onChange={(e) => this.handleFieldChange('label', e.target.value)} />
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Field</label>
                 <Dropdown
                   placeholder='Field'
@@ -54,7 +54,7 @@ class ConfigurationFilterEditor extends React.Component {
               </Form.Field>
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Field>
+              <Form.Field required>
                 <label>Type</label>
                 <Dropdown
                   placeholder='Select Filter Type'
