@@ -2,11 +2,10 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.D3Helper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.GraphVisualizationHelper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGraphService;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.NetworkGraphDto;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.dtos.netgraph.PropertyValuesDto;
@@ -98,7 +97,6 @@ public class NetworkGraphController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@RequestMapping(value = "graphs/{subGraphId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,17 +104,13 @@ public class NetworkGraphController {
 
 		try {
 			List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
-			Map<String, Object> d3Results = D3Helper.nodesToD3Format(results, true);
+			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(results, true);
 			System.out.println(d3Results);
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
 		}
-
 	}
 
 
@@ -125,7 +119,7 @@ public class NetworkGraphController {
 
 		try {
 			List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-			Map<String, Object> d3Results = D3Helper.neighborsNodesToD3Format(results, nodeId, false);
+			Map<String, Object> d3Results = GraphVisualizationHelper.neighborsNodesToD3Format(results, nodeId, false);
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -155,7 +149,7 @@ public class NetworkGraphController {
 		try {
 			List<String> nodeList = Arrays.asList(mapper.convertValue(request.get("nodes"), new TypeReference<String[]>(){}));
 			List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, request.get("date").toString());
-			Map<String, Object> d3Results = D3Helper.hasWeightToD3Format(result, graphId, networkGraphService);
+			Map<String, Object> d3Results = GraphVisualizationHelper.hasWeightToD3Format(result, graphId, networkGraphService);
 //            System.out.println(d3Results.get("nodes"));
 //            System.out.println(d3Results.get("links"));
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
@@ -172,7 +166,7 @@ public class NetworkGraphController {
 		List<String> results = null;
 		try {
 			results = networkGraphService.getAllTimestamps(graphId);
-			results = D3Helper.datesToDateStrings(results);
+			results = GraphVisualizationHelper.datesToDateStrings(results);
 			return new ResponseEntity<>(results, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -188,7 +182,7 @@ public class NetworkGraphController {
 
 		try {
 			List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);
-			Map<String, Object> d3Results = D3Helper.nodesToD3Format(result, true);
+			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(result, true);
 			System.out.println(d3Results.get("nodes"));
 			System.out.println(d3Results.get("links"));
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);

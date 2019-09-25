@@ -20,6 +20,8 @@ public class Node extends SubGraphEntity{
 
     private int startingDate;
 
+    private int size;
+
 
     @Relationship(type = "HAS_PROPERTY")
     private List<NodeProperty> nodeProperties;
@@ -103,6 +105,14 @@ public class Node extends SubGraphEntity{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     private List<NodeProperty> fixProperties(Map<String,String> attributes) {

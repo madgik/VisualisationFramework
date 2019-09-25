@@ -1,10 +1,8 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NodeProperty;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.*;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.GraphVisualizationHelper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.*;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +103,8 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     @Override
     public List<Node> getTopNodesOfGraph(String subGraphId, int num) throws Exception {
-        return nodeRepository.findTopNodes(subGraphId, num);
+    	List<TopNodesResult> nodes = nodeRepository.findTopNodes(subGraphId, num);
+		return GraphVisualizationHelper.resizeNodesWithLinks(nodes);
     }
 
 

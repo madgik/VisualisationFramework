@@ -2,10 +2,12 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgra
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.DateNode;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.TopNodesResult;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +21,8 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
     @Query("Match(n:Node) where n.subGraphId={0}  " +
             "WITH n, SIZE((n)-[:HAS_DATENODE]->(:DateNode)-[:HAS_WEIGHT]->(:DateNode)-[:HAS_DATENODE]-(:Node)) as links ORDER BY links DESC LIMIT {1} " +
             "Match (n)-[h:HAS_PROPERTY]-(p:NodeProperty) " +
-            "RETURN n,h,p")
-    List<Node> findTopNodes(String subGraphId, int number);
+            "RETURN distinct(n) as node,h,p, links")
+	List<TopNodesResult> findTopNodes(String subGraphId, int number);
 
     @Query("MATCH (dn1:DateNode)-[hw:HAS_WEIGHT]-(dn2:DateNode)," +
             " (n:Node)-[h:HAS_DATENODE]-(dn1:DateNode)," +
