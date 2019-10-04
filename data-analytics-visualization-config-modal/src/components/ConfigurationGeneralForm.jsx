@@ -25,13 +25,22 @@ class ConfigurationGeneralForm extends React.Component {
     var data = this.props.configurations.find(function (element) {
       return element.id == e.value;
     });
-    delete data.id;
-    data.label = data.label + "-copy"
+    if (data.id != undefined)
+      delete data.id;
+    if (data.dataSources != undefined && data.xAxis != undefined && data.yAxis != undefined) {
+      delete data.dataSources;
+      delete data.xAxis;
+      delete data.yAxis;
+    }
+    data.label = data.label + "-copy";
+
     this.props.setSelectedConfiguration(data);
     this.props.setConfigurationData(data);
 
     this.handleFieldChange("label", data.label)
-    
+    var { state } = ConfigurationValidators.validateField('xAxis', data, this.props.validation, this.props.configOptions);
+    var { state } = ConfigurationValidators.validateField('yAxis', data, this.props.validation, this.props.configOptions);
+
   }
 
   handleFieldChange = (prop, value) => {

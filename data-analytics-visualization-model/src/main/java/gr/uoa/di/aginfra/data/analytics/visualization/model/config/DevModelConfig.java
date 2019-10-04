@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.model;
+package gr.uoa.di.aginfra.data.analytics.visualization.model.config;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.stats.UsageStatsService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.stats.UsageStatsServiceDev;

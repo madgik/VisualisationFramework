@@ -25,7 +25,10 @@ class ConfigurationFiltersEditor extends React.Component {
           dataSources={this.props.dataSources}
           transformations={this.props.transformations}
           onFilterRemoval={this.props.onFilterRemoval}
-          onFieldChange={this.props.onFilterFieldChange} />;
+          onFieldChange={this.props.onFilterFieldChange} 
+          validation={this.props.validation}
+          configOptions={this.props.configOptions}
+          />;
       })}
       <Grid>
         <Grid.Column width="15" className="add-filter-container">

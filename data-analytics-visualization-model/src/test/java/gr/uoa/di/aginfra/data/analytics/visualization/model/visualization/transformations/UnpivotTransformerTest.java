@@ -1,6 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.transformations;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Transformation;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.VisualizationDataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.DataSet;

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @EnableAsync
-@Import(gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig.class)
+@Import(gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig.class)
 @ComponentScan("gr.uoa.di.aginfra.data.analytics.visualization.service")
 public class AppConfig {
 

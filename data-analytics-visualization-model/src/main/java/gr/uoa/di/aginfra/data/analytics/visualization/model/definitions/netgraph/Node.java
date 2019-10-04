@@ -22,6 +22,8 @@ public class Node extends SubGraphEntity{
 
     private int size;
 
+    private String color;
+
 
     @Relationship(type = "HAS_PROPERTY")
     private List<NodeProperty> nodeProperties;
@@ -113,6 +115,14 @@ public class Node extends SubGraphEntity{
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     private List<NodeProperty> fixProperties(Map<String,String> attributes) {

@@ -65,7 +65,7 @@ public class DataDocumentRepositoryImpl implements DataDocumentRepository {
 				break;
 			}
 			case Records:
-			case JSON:{
+			case JSON: {
 				String data = new String(outputStream.toByteArray(), Charsets.UTF_8);
 				dataDocument.setRecords(mapper.readValue(data, new TypeReference<List<Map<String, String>>>() {
 

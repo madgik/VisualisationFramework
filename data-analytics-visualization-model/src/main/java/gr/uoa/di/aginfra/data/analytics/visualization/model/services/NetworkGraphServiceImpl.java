@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.NetworkGraphConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.GraphVisualizationHelper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph.*;
@@ -33,16 +34,19 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
 
     private Session session;
 
+    private NetworkGraphConfig networkGraphConfig;
+
     @Autowired
     public NetworkGraphServiceImpl(HasWeightRepository hasWeightRepository, DateNodeRepository dateNodeRepository,
                                    NodeRepository nodeRepository, SubGraphRepository subGraphRepository,
-                                   NodePropertyRepository nodePropertyRepository, Session session) {
+                                   NodePropertyRepository nodePropertyRepository, Session session, NetworkGraphConfig networkGraphConfig) {
         this.hasWeightRepository = hasWeightRepository;
         this.dateNodeRepository = dateNodeRepository;
         this.nodeRepository = nodeRepository;
         this.subGraphRepository = subGraphRepository;
         this.nodePropertyRepository= nodePropertyRepository;
         this.session = session;
+        this.networkGraphConfig = networkGraphConfig;
     }
 
     @Override
@@ -104,7 +108,7 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     @Override
     public List<Node> getTopNodesOfGraph(String subGraphId, int num) throws Exception {
     	List<TopNodesResult> nodes = nodeRepository.findTopNodes(subGraphId, num);
-		return GraphVisualizationHelper.resizeNodesWithLinks(nodes);
+		return GraphVisualizationHelper.resizeNodesWithLinks(nodes, networkGraphConfig);
     }
 
 

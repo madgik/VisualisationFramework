@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.model;
+package gr.uoa.di.aginfra.data.analytics.visualization.model.config;
 
 import gr.uoa.di.aginfra.data.analytics.visualization.model.persistence.RedisDataSourceManager;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.stats.UsageStatsService;

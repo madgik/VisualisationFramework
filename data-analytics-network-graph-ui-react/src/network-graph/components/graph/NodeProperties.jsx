@@ -28,8 +28,8 @@ class NodeProperties extends React.Component {
     // This binding is necessary to make `this` work in the callback
     this.handleNeighborsClick = this.handleNeighborsClick.bind(this);
   }
-  
-  handleNeighborsClick(){
+
+  handleNeighborsClick() {
     this.props.getNeighbors(this.props.selectedGraph, this.props.selectedNode, this.props.graph, this.props.topNodes);
   }
 
@@ -53,14 +53,12 @@ class NodeProperties extends React.Component {
                       return (
                         Object.keys(node).map(element => {
                           return (
-                            <TableRow  key={element + "-" + node[element]}>
-                              <TableCell padding="checkbox" >
-                                {element}
-                              </TableCell>
-                              <TableCell padding="checkbox">
-                                {node[element]}
-                              </TableCell>
-                            </TableRow>
+                            (element != 'size' && element != 'color') ?
+                              <TableRow key={element + "-" + node[element]}>
+                                <TableCell padding="checkbox" >{element}</TableCell>
+                                <TableCell padding="checkbox">{node[element]}</TableCell>
+                              </TableRow>
+                              : ''
                           )
                         })
                       )
@@ -71,7 +69,7 @@ class NodeProperties extends React.Component {
               </Table>
             </Paper>
             <Button
-               variant="contained" className={classes.button}
+              variant="contained" className={classes.button}
               onClick={this.handleNeighborsClick}
             >
               Find Neighbors

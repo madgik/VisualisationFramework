@@ -120,7 +120,7 @@ class ConfigurationDataForm extends React.Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <p>
+          <div>
 
             {(!this.props.geoanalytics.checked) ?
 
@@ -144,7 +144,7 @@ class ConfigurationDataForm extends React.Component {
                 />
               </Center>
             </div>
-          </p>
+          </div>
 
         </div>
 

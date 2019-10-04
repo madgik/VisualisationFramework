@@ -1,7 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.DevModelConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.DevModelConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataSource;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataSourceType;
 import org.junit.Assert;

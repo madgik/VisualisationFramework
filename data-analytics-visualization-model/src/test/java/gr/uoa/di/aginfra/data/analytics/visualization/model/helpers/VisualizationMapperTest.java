@@ -1,7 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.data.DataSetExtractorFactory;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.Visualization;
 import org.junit.Assert;

@@ -72,7 +72,9 @@ class ConfigurationForm extends React.Component {
                 onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor
+                validation={this.props.validation}
                 transformations={this.props.data.transformations}
+                configOptions={this.props.configOptions}
                 filters={this.props.data.filters}
                 dataSources={this.props.data.dataSources}
                 onFilterAddition={this.props.onFilterAddition}

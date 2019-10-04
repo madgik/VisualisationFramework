@@ -21,6 +21,11 @@ class ConfigurationValidators {
       'transformationLabelValue',
       'transformationColumns'];
 
+
+    var filterFieldsToValidate = [
+      'filterLabel',
+      'filterField'];
+
     var valid = true;
     var messages = [];
     fieldsToValidate.forEach(field => {
@@ -30,6 +35,19 @@ class ConfigurationValidators {
 
       messages.push.apply(messages, result.messages);
     })
+
+    if (!!item.filters) {
+      filterFieldsToValidate.forEach(field => {
+        // valid = false;
+        var result = this.validateField(field, item, validationState, previousConfigs)
+        validationState = result.state;
+        console.log("!!" + result.valid)
+
+        valid = valid && result.valid;
+
+        messages.push.apply(messages, result.messages);
+      })
+    }
 
 
     if (!!item.transformations) {
@@ -49,11 +67,17 @@ class ConfigurationValidators {
   }
 
   validateField(field, item, validationState, previousConfigs) {
-
     var valid = true;
     var messages = [];
     (this.validators[field] || []).forEach(validator => {
-      if (!validator.f(item[field] || '', item)) {
+    
+      if (field.includes("filter")) {
+        if (!validator.f(field || '', item)) {
+          valid = false;
+          messages.push(validator.m);
+        }
+      }
+      else if (!validator.f(item[field] || '', item)) {
         valid = false;
         messages.push(validator.m);
       }
@@ -134,6 +158,14 @@ class ConfigurationValidators {
     'transformationColumns': [{
       f: (val, item) => !this.checkTransformationsFields(item) || !(val.length === 0),
       m: 'The transformation columns are required'
+    }],
+    'filterLabel': [{
+      f: (val, item) => this.checkFiltersFields(val, item),
+      m: 'The filter label is required'
+    }],
+    'filterField': [{
+      f: (val, item) => this.checkFiltersFields(val, item),
+      m: 'The filter field is required'
     }]
   }
 
@@ -164,6 +196,26 @@ class ConfigurationValidators {
       return false;
   }
 
+  checkFiltersFields = (val, item) => {
+    var flag = true;
+
+    if (item != "" && item.filters === undefined) {
+      if (!validator.isEmpty(item.label)
+        && (!validator.isEmpty(item.field)))
+        return true;
+      else
+        return false;
+    }
+    else if (item != "" && item.filters !== undefined) {
+      for (var filter of item.filters) {
+        if (validator.isEmpty(filter.label) || (validator.isEmpty(filter.field))) {
+          flag = false;
+        }
+      }
+
+    }
+    return flag;
+  }
 
 }
 

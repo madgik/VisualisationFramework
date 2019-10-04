@@ -43,8 +43,8 @@ class PropertiesModal extends React.Component {
         onClose={this.closeModal}
         style={customStyles}
         className="node_props"
-        contentLabel="Example Modal"
-        overlayClassName="overlay"
+        contentlabel="Example Modal"
+        overlayclassname="overlay"
         BackdropProps={{
           classes: {
             root: classes.root

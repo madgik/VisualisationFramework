@@ -6,13 +6,30 @@ import TransformationFiltering from '../utilities/TransformationsFiltering';
 
 import { Grid, Segment, Form, Input, Checkbox, Dropdown, Icon } from 'semantic-ui-react'
 
+import ConfigurationValidators from '../validation/ConfigurationValidators'
+
+
 class ConfigurationFilterEditor extends React.Component {
 
   handleFieldChange = (field, value, e) => {
+
     const filter = update(this.props.filter, {
       [field]: { $set: value }
     });
     this.props.onFieldChange(this.props.id, filter);
+    // const data = update(this.props.data, {
+    //   [prop]: { $set: value }
+    // });
+    if (field === "label") {
+      field = "filterLabel"
+    }
+    else if (field === "field") {
+      field = "filterField"
+    }
+
+    var { state } = ConfigurationValidators.validateField(field, filter, this.props.validation, this.props.configOptions);
+    
+     this.props.onFieldChange(this.props.data, state);
   }
 
   handleFilterRemoval = () => {
@@ -39,11 +56,11 @@ class ConfigurationFilterEditor extends React.Component {
         <Grid.Column width="15">
           <Segment>
             <Form.Group widths='equal'>
-              <Form.Field required>
+              <Form.Field required error={this.props.validation.filterLabel.touched && !this.props.validation.filterLabel.valid}>
                 <label>Label</label>
                 <Input placeholder='Label' value={this.props.filter.label} onChange={(e) => this.handleFieldChange('label', e.target.value)} />
               </Form.Field>
-              <Form.Field required>
+              <Form.Field required  error={this.props.validation.filterField.touched && !this.props.validation.filterField.valid}>
                 <label>Field</label>
                 <Dropdown
                   placeholder='Field'

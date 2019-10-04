@@ -2,6 +2,8 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.graph.Network;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.NetworkGraphConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.Node;
@@ -39,13 +41,13 @@ public class NetworkGraphController {
 	private NetworkGraphService networkGraphService;
 	private EntityMapper modelMapper;
 	private static final ObjectMapper mapper = new ObjectMapper();
-
+	private NetworkGraphConfig networkGraphConfig;
 
 	@Autowired
-	public NetworkGraphController(NetworkGraphService networkGraphService, EntityMapper modelMapper) {
+	public NetworkGraphController(NetworkGraphService networkGraphService, EntityMapper modelMapper, NetworkGraphConfig networkGraphConfig) {
 		this.networkGraphService = networkGraphService;
 		this.modelMapper = modelMapper;
-
+		this.networkGraphConfig = networkGraphConfig;
 	}
 
 
@@ -149,7 +151,7 @@ public class NetworkGraphController {
 		try {
 			List<String> nodeList = Arrays.asList(mapper.convertValue(request.get("nodes"), new TypeReference<String[]>(){}));
 			List<HasWeight> result = networkGraphService.getCurrentTimestampGraph(graphId, nodeList, request.get("date").toString());
-			Map<String, Object> d3Results = GraphVisualizationHelper.hasWeightToD3Format(result, graphId, networkGraphService);
+			Map<String, Object> d3Results = GraphVisualizationHelper.hasWeightToD3Format(result, graphId, networkGraphService, networkGraphConfig);
 //            System.out.println(d3Results.get("nodes"));
 //            System.out.println(d3Results.get("links"));
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);

@@ -57,10 +57,10 @@ class UploadDataMessage extends React.Component {
   render() {
     return <Message warning visible>
       <Message.Header>{this.typeToMessage[this.props.type]}</Message.Header>
+      <br></br>
       {this.typeToImage[this.props.type] == csvImage ?
 
-        <p>
-          <br></br>
+          
           <Grid className="data-example">
             <Grid.Row>
               <Image src={csvImage} alt='csv.png' />
@@ -72,7 +72,6 @@ class UploadDataMessage extends React.Component {
               <Image src={jsonImage} alt='tree.png' />
             </Grid.Row>
           </Grid>
-        </p>
         :
         <p>
           <Image src={this.typeToImage[this.props.type]} alt='tree.png' /></p>

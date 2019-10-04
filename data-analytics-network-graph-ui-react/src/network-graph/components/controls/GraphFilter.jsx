@@ -153,7 +153,7 @@ class GraphFilter extends React.Component {
                   id="show-old-nodes-check"
                   checked={this.props.showOldNodes}
                   onChange={this.handleChangeShowOldNodes}
-                  value={this.props.showOldNodes}
+                  value={`${this.props.showOldNodes}`}
                   color="primary"
                 />
               }
@@ -220,7 +220,8 @@ class GraphFilter extends React.Component {
             this.props.topNodes.nodes != undefined ?
               <Grid item>
                 {Object.keys(this.props.topNodes.nodes[0]).map(element => {
-                  if (typeof this.props.topNodes.nodes[0][element] != 'number' && (element != 'Latitude' && element != 'Longitude' && element != 'size')) {
+                  if (typeof this.props.topNodes.nodes[0][element] != 'number' && element != 'Latitude' 
+                    && element != 'Longitude' && element != 'size' && element != 'color') {
                     return <Grid key={"properties" + element} item>
                       
                       {(this.props.propertyValues[element]) != undefined ?

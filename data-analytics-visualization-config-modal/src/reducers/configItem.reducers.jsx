@@ -17,7 +17,10 @@ function defaultState() {
     'valueField',
     'transformationLabel',
     'transformationLabelValue',
-    'transformationColumns'];
+    'transformationColumns',
+    'filterLabel',
+    'filterField'  
+  ];
 
   var validation = {}
   fieldsToValidate.forEach(field => {

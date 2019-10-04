@@ -1,6 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import org.junit.Assert;

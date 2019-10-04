@@ -1,6 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.MMNode;
 import org.junit.Assert;
 import org.junit.Test;

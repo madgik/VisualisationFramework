@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.model;
+package gr.uoa.di.aginfra.data.analytics.visualization.model.config;
 
 import org.modelmapper.ModelMapper;
 import org.neo4j.ogm.config.ClasspathConfigurationSource;
@@ -42,7 +42,6 @@ public class AppConfig {
                 .build();
         return configuration;
     }
-
 
     @Bean
     public SessionFactory sessionFactory() {
