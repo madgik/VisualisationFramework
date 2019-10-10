@@ -25,7 +25,8 @@ const mapStateToProps = state => ({
   topNodes: state.controlGraph.topNodes,
   timestampFrom: state.controlGraph.timestampFrom,
   timestampTo: state.controlGraph.timestampTo,
-  propertyValues: state.controlGraph.propertyValues
+  propertyValues: state.controlGraph.propertyValues,
+  isStatic: state.controlGraph.isStatic
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -58,7 +59,8 @@ const mapDispatchToProps = dispatch => ({
     setShowOldNodes: (showOldNodes) => dispatch(controlGraphActions.setShowOldNodes(showOldNodes)),
     setTimestampFrom: (timestampFrom) => dispatch(controlGraphActions.setTimestampFrom(timestampFrom)),
     setTimestampTo: (timestampTo) => dispatch(controlGraphActions.setTimestampTo(timestampTo)),
-    setFilteredTimestamps:(timestamps, timestampFrom, timestampTo) => dispatch(controlGraphActions.setFilteredTimestamps(timestamps, timestampFrom, timestampTo))
+    setFilteredTimestamps:(timestamps, timestampFrom, timestampTo) => dispatch(controlGraphActions.setFilteredTimestamps(timestamps, timestampFrom, timestampTo)),
+    setIsStatic: (isStatic) => dispatch(controlGraphActions.setIsStatic(isStatic))
 });
 
 export default connect(

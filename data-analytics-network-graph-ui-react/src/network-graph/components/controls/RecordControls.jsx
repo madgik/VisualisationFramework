@@ -35,7 +35,7 @@ class RecordControls extends React.Component {
   url = null;
   blob = null;
   recorder = null;
-  loopInit=null;
+  loopInit = null;
 
   constructor(props) {
     super(props);
@@ -56,7 +56,6 @@ class RecordControls extends React.Component {
     script2.src = "http://webrtc.github.io/adapter/adapter-latest.js";
     script2.async = true;
     document.body.appendChild(script);
-
   }
 
   componentWillMount() {
@@ -71,7 +70,7 @@ class RecordControls extends React.Component {
       this.context = this.canvas2d.getContext('2d');
       this.canvas2d.width = this.elementToRecord.clientWidth;
       this.canvas2d.height = this.elementToRecord.clientHeight;
-      if(this.loopInit == null) {
+      if (this.loopInit == null) {
         this.loop();
       }
     }
@@ -91,7 +90,6 @@ class RecordControls extends React.Component {
       html2canvas(that.elementToRecord).then(function (canvas) {
 
         that.context.clearRect(0, 0, that.canvas2d.width, that.canvas2d.height);
-
         that.context.drawImage(canvas, 0, 0, that.canvas2d.width, that.canvas2d.height);
         if (that.isStoppedRecording) {
           return;
@@ -123,7 +121,7 @@ class RecordControls extends React.Component {
       }
       setTimeout(looper, 100);
     })();
-    
+
   }
 
   handleStopRecordClick() {
@@ -140,7 +138,7 @@ class RecordControls extends React.Component {
     var mp4 = new File([this.blob], filename, {
       type: 'video/mp4'
     });
-    console.log("size" + this.blob.size +filename);
+    // console.log("size" + this.blob.size +filename);
     fileSaver.saveAs(mp4, filename);
   }
 
@@ -164,25 +162,25 @@ class RecordControls extends React.Component {
               <label>Record Graph</label>
             </Grid>
             <Grid item>
-            {this.props.record == false ?
-              <IconButton className='player-controls' aria-label="Record" color="primary"
-                onClick={this.handleStartRecordClick}
-              >
-                <FiberManualRecord />
-              </IconButton>
-              :
-              <IconButton className='player-controls' aria-label="Stop" color="primary"
-                onClick={this.handleStopRecordClick}
-              >
-                <Stop />
-              </IconButton>
-            }
+              {this.props.record == false ?
+                <IconButton className='player-controls' aria-label="Record" color="primary"
+                  onClick={this.handleStartRecordClick}
+                >
+                  <FiberManualRecord />
+                </IconButton>
+                :
+                <IconButton className='player-controls' aria-label="Stop" color="primary"
+                  onClick={this.handleStopRecordClick}
+                >
+                  <Stop />
+                </IconButton>
+              }
             </Grid>
             <Grid>
-            <Button variant="contained" size="small" className={classes.button} onClick={this.handleSaveFile} disabled={!this.props.availRecord}>
-              <a ref={this.urlRef}></a>
-              <SaveIcon className={classes.iconSmall} />
-              Save
+              <Button variant="contained" size="small" className={classes.button} onClick={this.handleSaveFile} disabled={!this.props.availRecord}>
+                <a ref={this.urlRef}></a>
+                <SaveIcon className={classes.iconSmall} />
+                Save
             </Button>
             </Grid>
           </Grid>

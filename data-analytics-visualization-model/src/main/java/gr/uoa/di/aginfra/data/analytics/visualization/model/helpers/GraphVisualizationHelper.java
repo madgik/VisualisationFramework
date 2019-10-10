@@ -28,7 +28,13 @@ public class GraphVisualizationHelper {
 		while (result.hasNext()) {
 			Node node = result.next();
 
-			Map<String, Object> nodeMap = map("id", node.getNodeId(), "x", Math.abs(node.getX())+1000, "y", node.getY(), "size", node.getSize(), "color", node.getColor());
+			Map<String, Object> nodeMap;
+			if (node.getX() != 0) {
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+			}
+			else {
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
+			}
 			for (NodeProperty property : node.getNodeProperties()) {
 				nodeMap.put(property.getName(), property.getValue());
 			}
@@ -70,8 +76,14 @@ public class GraphVisualizationHelper {
 		Iterator<Node> result = nodeEntities.iterator();
 		while (result.hasNext()) {
 			Node node = result.next();
+			Map<String, Object> nodeMap;
+			if (node.getX() != 0) {
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+			}
+			else {
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
+			}
 
-			Map<String, Object> nodeMap = map("id", node.getNodeId(), "x",  Math.abs(node.getX())+1000, "y", node.getY());
 			for (NodeProperty property : node.getNodeProperties()) {
 				nodeMap.put(property.getName(), property.getValue());
 			}
@@ -144,7 +156,15 @@ public class GraphVisualizationHelper {
 				node.setSize(resizeNode(node, hasWeight));
 				node.setColor(getNodeColor(hasWeight, config));
 
-				Map<String, Object> nodeMap = map("id", node.getNodeId(), "value", hasWeight.getSource().getProperty(), "size", node.getSize(), "color", node.getColor(),"x", Math.abs(node.getX())+1000, "y", node.getY());
+				Map<String, Object> nodeMap;
+				if (node.getX() != 0) {
+					nodeMap = map("id", node.getNodeId(), "value", hasWeight.getSource().getProperty(), "size", node.getSize(), "color", node.getColor(),"x", Math.abs(node.getX())+1000, "y", (node.getY()+500));
+				}
+				else {
+					nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
+				}
+
+
 				for (NodeProperty property : node.getNodeProperties()) {
 					nodeMap.put(property.getName(), property.getValue());
 				}
@@ -165,7 +185,14 @@ public class GraphVisualizationHelper {
 					node.setSize(resizeNode(node, t.getKey()));
 					node.setColor(getNodeColor(t.getKey(), config));
 
-					Map<String, Object> nodeMap = map("id", node.getNodeId(), "value", t.getValue(), "size", node.getSize(), "color", node.getColor(), "x",  Math.abs(node.getX())+1000, "y", node.getY());
+					Map<String, Object> nodeMap;
+					if (node.getX() != 0) {
+						nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+					}
+					else {
+						nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
+					}
+
 					for (NodeProperty property : node.getNodeProperties()) {
 						nodeMap.put(property.getName(), property.getValue());
 					}

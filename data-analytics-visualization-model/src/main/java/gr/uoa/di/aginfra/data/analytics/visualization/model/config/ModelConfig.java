@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:data-analytics-visualization.properties")
 @EnableNeo4jRepositories("gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.netgraph")
 @EnableTransactionManagement
-public class AppConfig {
+public class ModelConfig {
 
 	@Bean
 	public ModelMapper modelMapper(){

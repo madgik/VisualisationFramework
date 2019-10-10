@@ -23,7 +23,7 @@ export const configGraphActions = {
   setModalIsOpen,
   setModalMessage,
   setUsername,
-  setFilename
+  setFilename,
 }
 
 function uploadFile(file, fileName, privacy, username) {
@@ -49,7 +49,6 @@ function uploadFile(file, fileName, privacy, username) {
       dispatch(setModalMessage('uploadStarted'));
       console.log("file uploaded"+response)
     }).catch(_ => { });
-
   }
 }
 
@@ -82,13 +81,9 @@ function getAllGraphsMetadata() {
   }
 }
 
-
-
-
 function storeGraphData() {
   return { type: configGraphConstants.CREATE_GRAPH}
 }
-
 
 function showGraphEdit() {
   return { type: configGraphConstants.SHOW_ITEM_EDIT };
@@ -156,4 +151,6 @@ function setUsername(username) {
 function setFilename(filename) {
   return { type: configGraphConstants.SET_FILENAME, filename };
 }
+
+
 

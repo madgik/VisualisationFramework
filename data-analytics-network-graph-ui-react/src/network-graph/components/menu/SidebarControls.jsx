@@ -143,6 +143,8 @@ class SidebarControls extends React.Component {
               setTimestampTo={this.props.setTimestampTo}
               setFilteredTimestamps={this.props.setFilteredTimestamps}
               topNodes={this.props.topNodes}
+              isStatic={this.props.isStatic}
+              setIsStatic={this.props.setIsStatic}
             />
           </Grid>
 

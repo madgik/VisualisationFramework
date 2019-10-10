@@ -70,7 +70,7 @@ class ConfigurationValidators {
     var valid = true;
     var messages = [];
     (this.validators[field] || []).forEach(validator => {
-    
+      
       if (field.includes("filter")) {
         if (!validator.f(field || '', item)) {
           valid = false;

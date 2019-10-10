@@ -46,7 +46,8 @@ export const controlGraphActions = {
   setRecord,
   setAvailRecord,
   setNode,
-  setPropertyValues
+  setPropertyValues,
+  setIsStatic
 }
 
 /*
@@ -56,9 +57,6 @@ export const controlGraphActions = {
 function getTopNodes(graphId, num) {
   return function (dispatch) {
     dispatch(showLoading());
-    // var params = {
-    //   number: num
-    // }
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + "/" + Ajax.NETWORK_GRAPH_GRAPHS_PATH + "/" + graphId, "number=" + num);
     if (num === undefined || num === null) {
       num = 5;
@@ -70,6 +68,9 @@ function getTopNodes(graphId, num) {
         var topNodes = {
           nodes: response.data.nodes.slice(0),
           links: response.data.links.slice(0)
+        }        
+        if (topNodes.node != undefined && topNodes.nodes[0].x == undefined){
+          dispatch(setIsStatic(false));
         }
         dispatch(setTopNodes(topNodes));
         dispatch(hideLoading());
@@ -189,7 +190,6 @@ function getPropertiesValues(topNodes, graphId) {
 /* OTHERS */
 function addGraphData(newData, graphData, showOldNodes, topNodes) {
   return function (dispatch) {
-    //  console.log("Old String:" + JSON.stringify(graphData.nodes));
     var newGraphDataNodes = mergeJson(newData.nodes, graphData.nodes);//mergeDeep(newData.nodes, graphData.nodes);
     // console.log("new String:" + JSON.stringify(newData.nodes));
 
@@ -207,7 +207,6 @@ function addGraphData(newData, graphData, showOldNodes, topNodes) {
     dispatch(loadGraph(graphData));
   }
 }
-
 
 function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
   return function (dispatch) {
@@ -242,10 +241,7 @@ function getDateGraph(dateReq, graphData, graphId, showOldNodes, topNodes) {
   }
 }
 
-
 /* SET GRAPH DATA */
-
-
 function setPausedPromise(paused) {
   return function (dispatch) {
     return new Promise(() => dispatch(setPaused(paused)));
@@ -255,7 +251,6 @@ function setPausedPromise(paused) {
 function setSelectedNode(nodeId) {
   return { type: controlGraphConstants.SET_SELECTED_NODE, nodeId };
 }
-
 
 function loadGraph(graphData) {
   return function (dispatch) {
@@ -278,6 +273,7 @@ function deleteGraphLinks() {
 function setGraphData(graphData) {
   return { type: controlGraphConstants.SET_GRAPH_DATA, graphData };
 }
+
 function setGraph(graph) {
   return { type: controlGraphConstants.SET_GRAPH, graph };
 }
@@ -297,7 +293,6 @@ function setTopNodes(topNodes) {
 function setLinkColor(color) {
   return { type: controlGraphConstants.SET_LINK_COLOR, color };
 }
-
 
 function setPrevGraphStateData(prevGraphData) {
   return { type: controlGraphConstants.SET_PREV_GRAPH_STATE_DATA, prevGraphData };
@@ -375,37 +370,10 @@ function setPropertyValues(propertyValues) {
   return { type: controlGraphConstants.SET_PROPERTY_VALUES, propertyValues };
 }
 
-
-function mergeDeep(o1, o2) {
-  var tempNewObj = o1;
-  var key, value, index;
-  if (o1.length === undefined && typeof o1 !== "number") {
-    for (key in o2) {
-      value = o2[key]
-      if (o1[key] === undefined) {
-        tempNewObj[key] = value;
-      } else {
-        tempNewObj[key] = mergeDeep(o1[key], o2[key]);
-      }
-    }
-  }
-
-  //else if o1 is an array - []    I THINK I BROKE IT ._.
-  else if (o1.length > 0 && typeof o1 !== "string") {
-    for (index in o2) {
-      if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
-        tempNewObj.push(o2[index]);
-      }
-    }
-  }
-  //handling other types like string or number
-  else {
-    //taking value from the second object o2
-    //could be modified to keep o1 value with tempNewObj = o1;
-    tempNewObj = o2;
-  }
-  return tempNewObj;
+function setIsStatic(isStatic) {
+  return { type: controlGraphConstants.SET_IS_STATIC, isStatic };
 }
+
 
 
 function mergeJson(obj1, obj2) {

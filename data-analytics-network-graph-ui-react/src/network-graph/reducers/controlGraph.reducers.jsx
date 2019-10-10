@@ -44,7 +44,8 @@ const dataDefault = {
     propModalIsOpen: false,
     record: false,
     availRec: false,
-    propertyValues: {}
+    propertyValues: {},
+    isStatic: true,
 }
 
 export function controlGraph(state = dataDefault, action) {
@@ -201,6 +202,13 @@ export function controlGraph(state = dataDefault, action) {
                 }
             })
         }
+        case controlGraphConstants.SET_IS_STATIC: {
+            return update(state, {
+              isStatic: {
+                $set: action.isStatic
+              }
+            })
+          }
         default:
             return state;
     }

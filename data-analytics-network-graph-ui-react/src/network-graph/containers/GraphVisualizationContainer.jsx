@@ -19,7 +19,9 @@ const mapStateToProps = state => ({
     record: state.controlGraph.record,
     availRecord: state.controlGraph.availRecord,
     topNodes: state.controlGraph.topNodes,
-    filename: state.configGraph.filename
+    filename: state.configGraph.filename,
+    isStatic: state.controlGraph.isStatic,
+    // playerRef: this.playerRef
 });
 
 const mapDispatchToProps = dispatch => ({

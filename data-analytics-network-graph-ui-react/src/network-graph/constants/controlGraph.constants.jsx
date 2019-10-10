@@ -37,5 +37,6 @@ export const controlGraphConstants = {
   CHANGE_CHART_TYPE: 'change-chart-type',
   RELOAD_DATA: 'reload-data',
 
-  UPDATE_FILTER: 'update-filter'
+  UPDATE_FILTER: 'update-filter',
+  SET_IS_STATIC: 'set_is_static'
 }

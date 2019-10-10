@@ -14,39 +14,6 @@ import RecordControls from '../controls/RecordControls';
 import PropertiesModal from './PropertiesModal';
 import { ToastContainer } from 'react-toastify';
 
-// import reactD3GraphUtils from "../src/utils";
-
-
-
-// const onRightClickNode = function (event, nodeId) {
-//   // window.alert(`Right clicked node ${nodeId}`);
-// };
-
-
-// const onMouseOverNode = function (nodeId) {
-//   // window.alert(`Mouse over node ${nodeId}`);
-// };
-
-// const onMouseOutNode = function (nodeId) {
-//   // window.alert(`Mouse out node ${nodeId}`);
-// };
-
-// const onClickLink = function (source, target) {
-//   // window.alert(`Clicked link between ${source} and ${target}`);
-// };
-
-// const onRightClickLink = function (event, source, target) {
-//   // window.alert(`Right clicked link between ${source} and ${target}`);
-// };
-
-// const onMouseOverLink = function (source, target) {
-//   // window.alert(`Mouse over in link between ${source} and ${target}`);
-// };
-
-// const onMouseOutLink = function (source, target) {
-//   // window.alert(`Mouse out link between ${source} and ${target}`);
-// };
-
 
 class GraphView extends React.Component {
   constructor(props) {
@@ -84,11 +51,9 @@ class GraphView extends React.Component {
   closeModal() {
     this.props.setPropModalIsOpen(false)
   }
-  // componentDidUpdate() {
-  //   console.log("UPDATED")
-  // }
 
   myConfig = {
+    automaticRearrangeAfterDropNode: true,
     height: window.innerHeight * 0.73,
     width: window.innerWidth,
     directed: true,
@@ -102,16 +67,10 @@ class GraphView extends React.Component {
       highlightStrokeColor: 'blue',
     },
     d3: {
-      gravity: -300,
+      gravity: -200,
     },
-    staticGraphWithDragAndDrop: true,
-
+    staticGraphWithDragAndDrop: this.props.isStatic,
   }
-
-  // data = {
-  //   nodes: this.props.graph.nodes,
-  //   links: this.props.graph.links
-  // }
 
   refreshGraph = data => {
     const { config, schemaPropsValues } = this._buildGraphConfig(data);
@@ -186,23 +145,16 @@ class GraphView extends React.Component {
           :
           <div>
             <div ref={this.graphRef} >
-
               <Graph
-
                 id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
                 data={(this.props.graph.nodes === undefined || this.props.graph.nodes.length == 0) ? null : this.props.graph}
                 config={this.myConfig}
                 onClickNode={this.onClickNode}
                 checkForGraphElementsChanges={this.checkForGraphElementsChanges}
-                refreshGraph={this.refreshGraph}
+                // refreshGraph={this.refreshGraph}
                 // onRightClickNode={onRightClickNode}
                 onClickGraph={this.onClickGraph}
                 onClickLink={this.onClickLink}
-              // onRightClickLink={onRightClickLink}
-              // onMouseOverNode={onMouseOverNode}
-              // onMouseOutNode={onMouseOutNode}
-              // onMouseOverLink={onMouseOverLink}
-              // onMouseOutLink={onMouseOutLink}
               />
             </div>
             <canvas id="background-canvas" ref={this.canvasRef} className="canvas">
@@ -232,6 +184,7 @@ class GraphView extends React.Component {
           availRecord={this.props.availRecord}
           setAvailRecord={this.props.setAvailRecord}
           filename={this.props.filename}
+          // playerRef={this.props.playerRef}
         />
 
       </div>

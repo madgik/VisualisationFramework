@@ -21,6 +21,7 @@ class BaseView extends React.Component {
       width: this.props.size.width + 'px'
     };
     const mmRenderRef = React.createRef();
+    this.player = React.createRef();
 
     return (
       <div className='App-style'>
@@ -41,25 +42,26 @@ class BaseView extends React.Component {
 
               </div>
             </Grid>
-
+          
             <Grid item xs={12}>
               <div id="graph-content" className="content" >
 
                 <PropertiesContainer
                   mmRender={mmRenderRef}
                 />
-
-
                 <GraphVisualizationContainer
-                  mmRender={mmRenderRef} />
+                  mmRender={mmRenderRef}
+                  playerRef={this.playerRef} />
               </div>
 
             </Grid>
 
             <Grid item xs={12}>
+              <div ref={this.playerRef}>
               <PlayerContainer
                 mmRender={mmRenderRef}
               />
+              </div>
             </Grid>
           </Grid>
         </div>

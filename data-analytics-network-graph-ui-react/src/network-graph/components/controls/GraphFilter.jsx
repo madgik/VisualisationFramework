@@ -61,6 +61,7 @@ class GraphFilter extends React.Component {
     this.handleApplyFilters = this.handleApplyFilters.bind(this);
     this.handleTimestampFromChange = this.handleTimestampFromChange.bind(this);
     this.handleTimestampToChange = this.handleTimestampToChange.bind(this);
+    // this.handleChangeIsStatic = this.handleChangeIsStatic.bind(this);
   }
 
   filtersBtn = true;
@@ -79,13 +80,17 @@ class GraphFilter extends React.Component {
   handleChangeDatepicker() {
 
   }
+
+  // handleChangeIsStatic() {
+  //   this.props.setIsStatic(!this.props.isStatic);
+  // }
+
+
   handleTimestampFromChange = event => {
-    console.log(event.target.value)
     this.props.setTimestampFrom(event.target.value);
   };
 
   handleTimestampToChange = event => {
-    console.log(event.target.value)
     this.props.setTimestampFrom(event.target.value);
   };
 
@@ -93,7 +98,7 @@ class GraphFilter extends React.Component {
     this.props.getDateGraph(this.props.currentDate, this.props.graphData, this.props.selectedGraph)
   }
 
-  handleChangeShowOldNodes(value) {
+  handleChangeShowOldNodes() {
     this.props.setShowOldNodes(!this.props.showOldNodes);
   }
 
@@ -160,6 +165,20 @@ class GraphFilter extends React.Component {
               label="Show Previous Unlinked Nodes"
             />
           </Grid>
+          {/* <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="is-static-check"
+                  checked={this.props.isStatic}
+                  onChange={this.handleChangeIsStatic}
+                  value={`${this.props.isStatic}`}
+                  color="primary"
+                />
+              }
+              label="Static nodes in graph"
+            />
+          </Grid> */}
           <Grid item >
             <Grid
               direction='column'
@@ -254,7 +273,7 @@ class GraphFilter extends React.Component {
                         />}
                     </Grid>
                   }
-                  else if (element != 'latitude' && element != 'longitude' && element != 'size') {
+                  else if (element != 'latitude' && element != 'longitude' && element != 'size'  && element != 'color' && element != 'x' && element != 'y') {
                     return <Grid
                       key={"properties" + element}
                       direction='column'

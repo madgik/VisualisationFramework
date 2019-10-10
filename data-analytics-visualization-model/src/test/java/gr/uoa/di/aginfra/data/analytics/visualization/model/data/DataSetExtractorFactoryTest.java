@@ -1,6 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.ModelConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.config.DevModelConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataSource;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataSourceType;
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class, DevModelConfig.class})
+@ContextConfiguration(classes = {ModelConfig.class, DevModelConfig.class})
 @ActiveProfiles("dev")
 public class DataSetExtractorFactoryTest {
 

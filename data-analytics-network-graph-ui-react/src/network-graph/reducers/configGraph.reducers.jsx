@@ -152,7 +152,7 @@ export function configGraph(state = dataDefault, action) {
           $set: action.filename
         }
       })
-    }
+    }  
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.config.AppConfig;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.config.ModelConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.ConfigurationRepository;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.Configuration;
 import org.junit.Assert;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {ModelConfig.class})
 public class ConfigurationServiceTest {
 
 	@Mock
