@@ -11,5 +11,5 @@ public interface CustomHasWeightRepository {
 
     List<HasWeight> findHasWeightsByProperties(Session session, String graphId, Map<String, String> queryParams);
 
-    List<Node> findNodesByProperties(Session session, String graphId, Map<String, String> queryParams);
+    List<Node> findNodesByProperties(Session session, String graphId, Map<String, String> queryParams, Integer nodesNumber);
 }

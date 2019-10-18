@@ -46,7 +46,7 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
         return null;
     }
 
-    public List<Node> findNodesByProperties(Session session, String graphId, Map<String, String> queryParams) {
+    public List<Node> findNodesByProperties(Session session, String graphId, Map<String, String> queryParams, Integer nodesNumber) {
 
         String cypher = "";
         Map<String, Object> params = new HashMap<>();
@@ -122,7 +122,7 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
         }
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
         cypher += "Return p,hp,n";
-        cypher += " LIMIT 25";
+        cypher += " LIMIT "+nodesNumber;
 
         System.out.println(cypher);
 

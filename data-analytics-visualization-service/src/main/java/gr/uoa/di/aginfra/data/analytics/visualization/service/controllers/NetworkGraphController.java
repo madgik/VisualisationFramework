@@ -180,10 +180,11 @@ public class NetworkGraphController {
 	}
 
 	@RequestMapping(value = "filtered/{graphId}", method = RequestMethod.GET)
-	ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String, String> allRequestParams) {
+	ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String, String> allRequestParams, @RequestParam("nodesNumber") Integer nodesNumber) {
 
 		try {
-			List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams);
+			System.out.println("THE NUM"+nodesNumber);
+			List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams, nodesNumber);
 			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(result, true);
 			System.out.println(d3Results.get("nodes"));
 			System.out.println(d3Results.get("links"));

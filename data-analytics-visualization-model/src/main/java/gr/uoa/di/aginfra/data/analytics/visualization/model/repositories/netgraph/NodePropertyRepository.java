@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface NodePropertyRepository extends Neo4jRepository<NodeProperty, String> {
 
-	@Query("Match(p:NodeProperty)-[:HAS_PROPERTY]-(n:Node) where p.name={0} and n.subGraphId={1} Return distinct(p.value)")
+	@Query("Match(p:NodeProperty)-[:HAS_PROPERTY]-(n:Node) where p.name={0} and n.subGraphId={1} Return distinct(p.value) ORDER BY p.value")
 	List<String> findDistinctValuesByNameAndNodeSubGraphId(String name, String graphId);
 }

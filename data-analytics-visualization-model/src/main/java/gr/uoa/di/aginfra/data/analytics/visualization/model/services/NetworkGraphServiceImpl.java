@@ -136,8 +136,8 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    public List<Node> getFilteredGraph(String subGraphId, Map<String, String> query) throws Exception {
-        return hasWeightRepository.findNodesByProperties( session, subGraphId, query);
+    public List<Node> getFilteredGraph(String subGraphId, Map<String, String> query, Integer nodesNumber) throws Exception {
+        return hasWeightRepository.findNodesByProperties( session, subGraphId, query, nodesNumber);
     }
 
     @Override

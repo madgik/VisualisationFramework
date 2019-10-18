@@ -33,7 +33,7 @@ public interface NetworkGraphService {
 
     List<String> getAllTimestamps(String graphId) throws Exception;
 
-    List<Node> getFilteredGraph(String subGraphId, Map<String, String> query) throws Exception;
+    List<Node> getFilteredGraph(String subGraphId, Map<String, String> query, Integer nodesNumber) throws Exception;
 
 	List<String> getPropertyValues(String property, String id);
 }
