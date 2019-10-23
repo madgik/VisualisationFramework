@@ -145,6 +145,12 @@ class SidebarControls extends React.Component {
               topNodes={this.props.topNodes}
               isStatic={this.props.isStatic}
               setIsStatic={this.props.setIsStatic}
+              setFilterBtn={this.props.setFilterBtn}
+              getTopNodes={this.props.getTopNodes}
+              nodesNumber={this.props.nodesNumber}
+              getAllTimestamps={this.props.getAllTimestamps}
+              query={this.props.query}
+              setQuery={this.props.setQuery}
             />
           </Grid>
 

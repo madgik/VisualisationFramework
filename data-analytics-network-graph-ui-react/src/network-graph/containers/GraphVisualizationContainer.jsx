@@ -21,7 +21,10 @@ const mapStateToProps = state => ({
     topNodes: state.controlGraph.topNodes,
     filename: state.configGraph.filename,
     isStatic: state.controlGraph.isStatic,
-    // playerRef: this.playerRef
+    currentDate: state.controlGraph.currentDate,
+    movieRef: state.movieRef,
+    
+    // canvasRef: state.canvasRef
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
     setPropModalIsOpen : (propModalIsOpen) => dispatch(controlGraphActions.setPropModalIsOpen(propModalIsOpen)),
     setRecord: (record) => dispatch(controlGraphActions.setRecord(record)),
-    setAvailRecord: (availRecord) => dispatch(controlGraphActions.setAvailRecord(availRecord))
+    setAvailRecord: (availRecord) => dispatch(controlGraphActions.setAvailRecord(availRecord)),
 });
 
 export default connect(

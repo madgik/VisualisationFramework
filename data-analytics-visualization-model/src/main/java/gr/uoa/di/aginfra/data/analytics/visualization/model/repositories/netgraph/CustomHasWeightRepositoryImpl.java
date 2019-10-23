@@ -54,8 +54,6 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
         boolean hasExtra = false;
         boolean hasWeight = false;
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-
-//                    +  "-[hd" + i + ":HAS_DATENODE]-(d" + i + ":DateNode)-[w" + i + ":HAS_WEIGHT]-(d" + i + "_2:DateNode)\n";
             params.put("id", graphId);
 
             String[] rangeParams = entry.getKey().split("-");
@@ -120,15 +118,11 @@ public class CustomHasWeightRepositoryImpl implements CustomHasWeightRepository 
             }
             i++;
         }
+        cypher += "With n limit " + nodesNumber + "\n";
         cypher += "MATCH (p:NodeProperty)-[hp:HAS_PROPERTY]-(n)\n";
-        cypher += "Return p,hp,n";
-        cypher += " LIMIT "+nodesNumber;
-
-        System.out.println(cypher);
-
+        cypher += "Return n,hp,p";
 
         Iterable<Node> nodes = session.query(Node.class, cypher, params);
-        System.out.println("size:" + Lists.newArrayList(nodes).size());
 
         return Lists.newArrayList(nodes);
     }

@@ -13,7 +13,22 @@ import ReactModal from 'react-modal';
 import RecordControls from '../controls/RecordControls';
 import PropertiesModal from './PropertiesModal';
 import { ToastContainer } from 'react-toastify';
+import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 
+
+const style = () => ({
+
+  textField:{
+    marginLeft: '100px',
+    bottom: '-65px'
+  },
+  dateText: {
+    width: '100px',
+    fontSize: '16px',
+  },
+})
 
 class GraphView extends React.Component {
   constructor(props) {
@@ -118,6 +133,7 @@ class GraphView extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
 
     return (
       <div className='graph-container'>
@@ -156,6 +172,18 @@ class GraphView extends React.Component {
                 onClickGraph={this.onClickGraph}
                 onClickLink={this.onClickLink}
               />
+
+              <TextField
+                id="current-date"
+                label="CurrentDate"
+                InputProps={{ classes: { input: classes.dateText } }}
+                className={classes.textField, "date-label"}
+                value={this.props.currentDate}
+                margin="normal"
+                editable="false"
+                variant="outlined"
+              >{this.props.currentDate}
+              </TextField>
             </div>
             <canvas id="background-canvas" ref={this.canvasRef} className="canvas">
 
@@ -184,7 +212,7 @@ class GraphView extends React.Component {
           availRecord={this.props.availRecord}
           setAvailRecord={this.props.setAvailRecord}
           filename={this.props.filename}
-          // playerRef={this.props.playerRef}
+          getMovieRef={this.props.getMovieRef}
         />
 
       </div>
@@ -193,9 +221,13 @@ class GraphView extends React.Component {
   }
 }
 
+GraphView.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(style)(GraphView)
 
 
-export default GraphView;
 
 // export default React.forwardRef((props, ref) =>
 //   <GraphView {...props} graphRef={ref} />

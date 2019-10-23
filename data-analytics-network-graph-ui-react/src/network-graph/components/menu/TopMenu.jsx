@@ -72,14 +72,12 @@ class TopMenu extends React.Component {
 
             </Typography>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-
               <ShowTopNodes
                 nodesNumber={this.props.nodesNumber}
                 setNodesNumber={this.props.setNodesNumber}
                 getTopNodes={this.props.getTopNodes}
                 selectedGraph={this.props.selectedGraph}
                 getAllTimestamps={this.props.getAllTimestamps}
-
               />
             </Typography>
             <ImportModal

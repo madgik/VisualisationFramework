@@ -26,14 +26,17 @@ const mapStateToProps = state => ({
   timestampFrom: state.controlGraph.timestampFrom,
   timestampTo: state.controlGraph.timestampTo,
   propertyValues: state.controlGraph.propertyValues,
-  isStatic: state.controlGraph.isStatic
+  isStatic: state.controlGraph.isStatic,
+  nodesNumber: state.configGraph.nodesNumber,
+  query: state.controlGraph.query
+  
 });
 
 const mapDispatchToProps = dispatch => ({
     //API CALLS
     uploadFile: (file) => dispatch(configGraphActions.uploadFile(file)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
-    getFilteredGraph: (query, graphId) => dispatch(controlGraphActions.getFilteredGraph(query, graphId)),
+    getFilteredGraph: (query, graphId, nodesNumber) => dispatch(controlGraphActions.getFilteredGraph(query, graphId, nodesNumber)),
     getPropertyValues: (property, graphId) => dispatch(controlGraphActions.getPropertyValues(property, graphId)),
     
     //SETTERS
@@ -60,7 +63,9 @@ const mapDispatchToProps = dispatch => ({
     setTimestampFrom: (timestampFrom) => dispatch(controlGraphActions.setTimestampFrom(timestampFrom)),
     setTimestampTo: (timestampTo) => dispatch(controlGraphActions.setTimestampTo(timestampTo)),
     setFilteredTimestamps:(timestamps, timestampFrom, timestampTo) => dispatch(controlGraphActions.setFilteredTimestamps(timestamps, timestampFrom, timestampTo)),
-    setIsStatic: (isStatic) => dispatch(controlGraphActions.setIsStatic(isStatic))
+    setIsStatic: (isStatic) => dispatch(controlGraphActions.setIsStatic(isStatic)),
+    getTopNodes: (graphId, number) => dispatch(controlGraphActions.getTopNodes(graphId, number)),
+    setQuery: (query) => dispatch(controlGraphActions.setQuery(query))
 });
 
 export default connect(

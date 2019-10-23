@@ -47,7 +47,8 @@ export const controlGraphActions = {
   setAvailRecord,
   setNode,
   setPropertyValues,
-  setIsStatic
+  setIsStatic,
+  setQuery
 }
 
 /*
@@ -129,13 +130,14 @@ function setFilteredTimestamps(timestamps, timestampFrom, timestampTo) {
 
 }
 
-function getFilteredGraph(query, graphId) {
+function getFilteredGraph(query, graphId, nodesNumber) {
   return function (dispatch) {
     var queryParams = new URLSearchParams();
 
     for (var i in query) {
       queryParams.append(i, query[i]);
     }
+    queryParams.append("nodesNumber", nodesNumber)
     var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_FILTERED_PATH + "/" + graphId, queryParams);
     return axios.get(resourceUrl, {
       headers: {
@@ -175,7 +177,7 @@ function getPropertyValues(name, graphId) {
 
 function getPropertiesValues(topNodes, graphId) {
   return function (dispatch) {
-    console.log(topNodes.nodes);
+    // console.log(topNodes.nodes);
     if (topNodes.nodes[0] != undefined) {
       for (var key in topNodes.nodes[0]) {
         if (isNaN(topNodes.nodes[0][key]) && key != "id") {
@@ -374,7 +376,9 @@ function setIsStatic(isStatic) {
   return { type: controlGraphConstants.SET_IS_STATIC, isStatic };
 }
 
-
+function setQuery(query) {
+  return { type: controlGraphConstants.SET_QUERY, query };
+}
 
 function mergeJson(obj1, obj2) {
   return Object.values(obj1.concat(obj2).reduce((r, o) => {

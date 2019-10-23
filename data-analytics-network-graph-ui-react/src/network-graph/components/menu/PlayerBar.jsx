@@ -26,6 +26,7 @@ const styles = theme => ({
   appBar: {
     top: 'auto',
     bottom: 0,
+    // zIndex:0
   },
   toolbar: {
     alignItems: 'center',
@@ -77,7 +78,7 @@ class PlayerBar extends React.Component {
             graphRef={this.props.graphRef}
           />
         </AppBar>
-      </div>
+       </div>
     );
   }
 }

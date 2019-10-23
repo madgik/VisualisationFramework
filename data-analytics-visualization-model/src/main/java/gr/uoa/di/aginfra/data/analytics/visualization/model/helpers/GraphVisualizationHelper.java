@@ -6,6 +6,7 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.services.NetworkGrap
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.nio.ch.Net;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -20,7 +21,7 @@ public class GraphVisualizationHelper {
 	@Autowired
 	private NetworkGraphConfig config;
 
-	public static Map<String, Object> nodesToD3Format(Collection<Node> nodeEntities, boolean isInitialization) {
+	public static Map<String, Object> nodesToD3Format(Collection<Node> nodeEntities, boolean isInitialization, String graphId) {
 		List<Map<String, Object>> nodes = new ArrayList<>();
 		List<Map<String, Object>> rels = new ArrayList<>();
 		int i = 0;
@@ -28,9 +29,11 @@ public class GraphVisualizationHelper {
 		while (result.hasNext()) {
 			Node node = result.next();
 
+			Point2D point2D = NetworkGraphPositioningHelper.getInstance().addPositions(graphId+node.getId());
+
 			Map<String, Object> nodeMap;
 			if (node.getX() != 0) {
-				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", point2D.getX(), "y", point2D.getY());
 			}
 			else {
 				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
@@ -69,16 +72,19 @@ public class GraphVisualizationHelper {
 		return map("nodes", nodes, "links", rels);
 	}
 
-	public static Map<String, Object> neighborsNodesToD3Format(Collection<Node> nodeEntities, String sourceId, boolean isInitialization) {
+	public static Map<String, Object> neighborsNodesToD3Format(Collection<Node> nodeEntities, String sourceId, boolean isInitialization, String graphId) {
 		List<Map<String, Object>> nodes = new ArrayList<>();
 		List<Map<String, Object>> rels = new ArrayList<>();
 		int i = 0;
 		Iterator<Node> result = nodeEntities.iterator();
 		while (result.hasNext()) {
 			Node node = result.next();
+
+			Point2D point2D = NetworkGraphPositioningHelper.getInstance().addPositions(graphId+node.getId());
+
 			Map<String, Object> nodeMap;
 			if (node.getX() != 0) {
-				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x",point2D.getX(), "y", point2D.getY());
 			}
 			else {
 				nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
@@ -156,9 +162,11 @@ public class GraphVisualizationHelper {
 				node.setSize(resizeNode(node, hasWeight));
 				node.setColor(getNodeColor(hasWeight, config));
 
+				Point2D point2D = NetworkGraphPositioningHelper.getInstance().addPositions(graphId+node.getId());
+
 				Map<String, Object> nodeMap;
 				if (node.getX() != 0) {
-					nodeMap = map("id", node.getNodeId(), "value", hasWeight.getSource().getProperty(), "size", node.getSize(), "color", node.getColor(),"x", Math.abs(node.getX())+1000, "y", (node.getY()+500));
+					nodeMap = map("id", node.getNodeId(), "value", hasWeight.getSource().getProperty(), "size", node.getSize(), "color", node.getColor(),"x",point2D.getX(), "y", point2D.getY());
 				}
 				else {
 					nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());
@@ -185,9 +193,11 @@ public class GraphVisualizationHelper {
 					node.setSize(resizeNode(node, t.getKey()));
 					node.setColor(getNodeColor(t.getKey(), config));
 
+					Point2D point2D = NetworkGraphPositioningHelper.getInstance().addPositions(graphId+node.getId());
+
 					Map<String, Object> nodeMap;
 					if (node.getX() != 0) {
-						nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", Math.abs(node.getX()) + 1000, "y", (node.getY()+500));
+						nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor(), "x", point2D.getX(), "y", point2D.getY());
 					}
 					else {
 						nodeMap = map("id", node.getNodeId(), "size", node.getSize(), "color", node.getColor());

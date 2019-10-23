@@ -5,11 +5,24 @@ import GraphVisualizationContainer from './containers/GraphVisualizationContaine
 import LoadingBar from 'react-redux-loading-bar'
 import PropertiesContainer from './containers/SidebarContainer';
 import PlayerContainer from './containers/PlayerContainer';
-
 import Grid from '@material-ui/core/Grid';
 
 
 class BaseView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.movieRef = React.createRef();
+    this.canvasRef= React.createRef();
+  }
+
+  getMovieRef = () => {
+    return this.movieRef;
+  }
+
+  getCanvasRef = () => {
+    return this.canvasRef
+  }
 
   render() {
 
@@ -24,11 +37,14 @@ class BaseView extends React.Component {
     this.player = React.createRef();
 
     return (
+
       <div className='App-style'>
         <div className="headerMenu">
           <LoadingBar updateTime={2200} maxProgress={90} progressIncrease={5} showFastActions />
         </div>
+
         <div className="main-content" style={sizeStyle}>
+
           <Grid container
             direction="row"
             justify="center"
@@ -42,27 +58,36 @@ class BaseView extends React.Component {
 
               </div>
             </Grid>
-          
-            <Grid item xs={12}>
-              <div id="graph-content" className="content" >
+            {/* <div ref={this.movieRef}> */}
 
-                <PropertiesContainer
-                  mmRender={mmRenderRef}
-                />
-                <GraphVisualizationContainer
-                  mmRender={mmRenderRef}
-                  playerRef={this.playerRef} />
-              </div>
+              <Grid item xs={12}>
+                <div id="graph-content" className="content" >
 
-            </Grid>
+                  <PropertiesContainer
+                    mmRender={mmRenderRef}
+                  />
 
-            <Grid item xs={12}>
-              <div ref={this.playerRef}>
-              <PlayerContainer
-                mmRender={mmRenderRef}
-              />
-              </div>
-            </Grid>
+                  <GraphVisualizationContainer
+                    mmRender={mmRenderRef}
+                    playerRef={this.playerRef}
+                    getMovieRef={this.getMovieRef} 
+                    // getMovieRef={this.getCanvasRef} 
+                    />
+                </div>
+              </Grid>
+
+              <Grid item xs={12}>
+                <div ref={this.movieRef}>
+                  <PlayerContainer
+                    mmRender={mmRenderRef}
+                  />
+                  
+                </div>
+              </Grid>
+                     {/* <canvas id="background-canvas" ref={this.canvasRef} className="canvas">
+
+            </canvas> */}
+              {/* </div> */}
           </Grid>
         </div>
       </div>

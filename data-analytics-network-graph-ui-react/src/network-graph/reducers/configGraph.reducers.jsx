@@ -23,8 +23,6 @@ const dataDefault = {
   filename: ''
 }
 
-
-
 export function configGraph(state = dataDefault, action) {
   switch (action.type) {
     case configGraphConstants.UPLOAD_FILE: {

@@ -47,7 +47,7 @@ function uploadFile(file, fileName, privacy, username) {
       dispatch(setOpenImportModal(false));
       dispatch(setModalIsOpen(true));
       dispatch(setModalMessage('uploadStarted'));
-      console.log("file uploaded"+response)
+      // console.log("file uploaded"+response)
     }).catch(_ => { });
   }
 }
@@ -61,7 +61,7 @@ function updateUploadedFile(id) {
        }
     }).then(response => {
       dispatch(setAllGraphsMetadata(response.data));
-      console.log("get graphs"+response.data)
+      // console.log("get graphs"+response.data)
     }).catch(_ => { });
   }
 }
@@ -74,7 +74,7 @@ function getAllGraphsMetadata() {
         'content-type': 'application/json'
        }
     }).then(response => {
-      console.log("get graphs"+response.data)
+      // console.log("get graphs"+response.data)
 
       dispatch(setAllGraphsMetadata(response.data));
     }).catch(_ => { });

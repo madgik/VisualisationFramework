@@ -38,5 +38,6 @@ export const controlGraphConstants = {
   RELOAD_DATA: 'reload-data',
 
   UPDATE_FILTER: 'update-filter',
-  SET_IS_STATIC: 'set_is_static'
+  SET_IS_STATIC: 'set_is_static',
+  SET_QUERY: 'set_query'
 }

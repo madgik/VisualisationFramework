@@ -63,7 +63,8 @@ class RecordControls extends React.Component {
   }
 
   componentDidUpdate() {
-    this.elementToRecord = this.props.graphRef().current;
+    
+    this.elementToRecord = this.props.graphRef().current;//this.props.graphRef().current;
     this.canvas2d = this.props.canvasRef().current;
 
     if (this.elementToRecord != null && this.canvas2d != null && this.canvas2d != undefined) {

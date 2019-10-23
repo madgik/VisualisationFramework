@@ -106,7 +106,7 @@ public class NetworkGraphController {
 
 		try {
 			List<Node> results = networkGraphService.getTopNodesOfGraph(subGraphId, number);
-			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(results, true);
+			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(results, true, subGraphId);
 			System.out.println(d3Results);
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
 		} catch (Exception e) {
@@ -121,7 +121,7 @@ public class NetworkGraphController {
 
 		try {
 			List<Node> results = networkGraphService.getNeighborNodes(subGraphId, nodeId);
-			Map<String, Object> d3Results = GraphVisualizationHelper.neighborsNodesToD3Format(results, nodeId, false);
+			Map<String, Object> d3Results = GraphVisualizationHelper.neighborsNodesToD3Format(results, nodeId, false, subGraphId);
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -183,9 +183,9 @@ public class NetworkGraphController {
 	ResponseEntity<?> getFilteredGraph(@PathVariable("graphId") String graphId, @RequestParam Map<String, String> allRequestParams, @RequestParam("nodesNumber") Integer nodesNumber) {
 
 		try {
-			System.out.println("THE NUM"+nodesNumber);
+			allRequestParams.remove("nodesNumber");
 			List<Node> result = networkGraphService.getFilteredGraph(graphId, allRequestParams, nodesNumber);
-			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(result, true);
+			Map<String, Object> d3Results = GraphVisualizationHelper.nodesToD3Format(result, true, graphId);
 			System.out.println(d3Results.get("nodes"));
 			System.out.println(d3Results.get("links"));
 			return new ResponseEntity<>(d3Results, HttpStatus.OK);

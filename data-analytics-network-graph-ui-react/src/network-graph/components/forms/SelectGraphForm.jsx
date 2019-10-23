@@ -51,37 +51,37 @@ class SelectGraphForm extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-      
-      <form className="form-inline" autoComplete="off">
+
+        <form className="form-inline" autoComplete="off">
           <label htmlFor="graph-select">Select Graph</label>
           <FormControl className={classes.formControl}>
 
-          <InputLabel className={classes.whiteColor} htmlFor="graph-select">
-             Graph Name
+            <InputLabel className={classes.whiteColor} htmlFor="graph-select">
+              Graph Name
           </InputLabel>
-          <Select
-            value={this.props.selectedGraph}
-            onChange={this.handleChange}
-            // name={this.props.filename}
-            inputProps={{
-              name: 'graph-selector',
-              id: 'graph-select',
-              classes: {
-                icon: classes.icon,
-                root: classes.whiteColor,
-              },
-            }}
-          >
-            { (this.props.allGraphsMetadata!= '') ? 
-              this.props.allGraphsMetadata.map((graph,i) =>
-              <MenuItem key={i} value={graph.id} name={graph.name}>
-                {graph.name}
-            </MenuItem>)  :
-            ''
-            }
-          </Select>
+            <Select
+              value={this.props.selectedGraph}
+              onChange={this.handleChange}
+              // name={this.props.filename}
+              inputProps={{
+                name: 'graph-selector',
+                id: 'graph-select',
+                classes: {
+                  icon: classes.icon,
+                  root: classes.whiteColor,
+                },
+              }}
+            >
+              {(this.props.allGraphsMetadata != '') ?
+                this.props.allGraphsMetadata.map((graph, i) =>
+                  <MenuItem key={i} value={graph.id} name={graph.name}>
+                    {graph.name}
+                  </MenuItem>) :
+                ''
+              }
+            </Select>
           </FormControl>
-      </form>
+        </form>
       </div>
     );
   }

@@ -4,7 +4,7 @@ import UploadMessage from '../ui_utils/UploadMessage';
 import { findDOMNode } from 'react-dom'
 
 import { Header, Divider, Icon } from 'semantic-ui-react';
-import {Grid} from '@material-ui/core/';
+import { Grid } from '@material-ui/core/';
 import { Button, withStyles } from '@material-ui/core/';
 import { Input } from 'semantic-ui-react';
 import TextField from '@material-ui/core/TextField';
@@ -13,16 +13,21 @@ import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
+    },
+    form: {
+        heigh:"500px"
     },
     control: {
-      padding: theme.spacing.unit * 2,
+        padding: theme.spacing.unit * 2,
     },
     message: {
-        padding: '20px'
+        textAlign: "center",
+        margin: "auto"
+
     }
-    
-  });
+
+});
 
 class DataImportForm extends React.Component {
     constructor(props) {
@@ -90,27 +95,61 @@ class DataImportForm extends React.Component {
         return (
             <div className="data-import-form">
 
-                <div>
+                    <Grid className="data-import-fix"
+                            spacing={32}
+                            className={classes.form}
+                            container
+                            direction='column'
+                            justify="center"
+                            alignItems="center"
+                            alignContent="center"
+                        >
                     <UploadMessage
                         className={styles.message}
                         type='Graph'
                     />
-                                    <Divider className="import-divider" />
+                    <Divider className="import-divider" />
                     <br></br>
                     <form className='add-graph-file' onSubmit={this.submit}>
-                        <Grid className="data-import-fix"  
+                        <Grid className="data-import-fix"
                             spacing={32}
-                            className={classes.root}  
-                            container 
-                            direction='column' 
+                            className={classes.root}
+                            container
+                            direction='column'
                             justify="center"
                             alignItems="center"
                             alignContent="center"
-                            >
-                            <Grid container 
-                            
+                        >
+                            <Grid container
+                                direction='row'
+                              >
+                                <Grid item xs={5}>
+                                    <label>URL of the resource</label>
+                                </Grid>
+                                <Grid item xs={5}>
+                                    <Input
+                                        className="input-file data-import-fix"
+                                        type='text'
+
+                                        ref={this.fileName}
+                                        onChange={this.onFileNameChange}
+                                    />
+                                </Grid>
+                            </Grid>
+
+                            <Grid container
+                            spacing={0}
+                            direction="row"
+                            alignItems="center"
+                            justify="center">
+
+                                <h4>Or Select File</h4>
+
+                            </Grid>
+
+                            <Grid container
                                 direction='row'>
-                                <Grid item xs ={5}>
+                                <Grid item xs={5}>
                                     <label>File Name</label>
                                 </Grid>
                                 <Grid item xs={5}>
@@ -122,7 +161,7 @@ class DataImportForm extends React.Component {
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid container 
+                            <Grid container
                                 direction='row'>
                                 <Grid item xs={5}>
                                     <label>Privacy</label>
@@ -134,9 +173,9 @@ class DataImportForm extends React.Component {
                                     </select>
                                 </Grid>
                             </Grid>
-                            <Grid container 
+                            <Grid container
                                 direction='row'>
-                                <Grid item   item xs={5}>
+                                <Grid item item xs={5}>
                                     <label>Description</label>
                                 </Grid>
                                 <Grid item item xs={5}>
@@ -172,7 +211,7 @@ class DataImportForm extends React.Component {
                         </Grid>
 
                     </form>
-                </div>
+                </Grid>
                 <div>
 
                 </div>
@@ -180,4 +219,4 @@ class DataImportForm extends React.Component {
     }
 }
 
-export default withStyles(styles) (DataImportForm);
+export default withStyles(styles)(DataImportForm);
