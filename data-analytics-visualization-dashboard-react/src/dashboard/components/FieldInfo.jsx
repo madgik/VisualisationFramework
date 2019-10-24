@@ -30,7 +30,7 @@ class FieldInfo extends React.Component {
           columns={this.props.fieldDetails.columns}
           showPagination={true}
           defaultPageSize={10}
-          resizable={true}
+          resizable={false}
           showPageSizeOptions={false}
 
         />)}
@@ -40,7 +40,7 @@ class FieldInfo extends React.Component {
           columns={this.props.soilDetails.columns}
           showPagination={true}
           defaultPageSize={10}
-          resizable={true}
+          resizable={false}
           className="-striped -highlight"
           showPageSizeOptions={false}
           SubComponent={row => {

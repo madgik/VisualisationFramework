@@ -212,7 +212,12 @@ class MapRenderer extends React.Component {
           // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
         /> */}
 
-      <ReactLeafletSearchComponent   inputPlaceholder="Search place" position="topright" />
+      <ReactLeafletSearchComponent   inputPlaceholder="Search place" position="topright" 
+        showMarker={true}
+        showPopup={false}
+        closeResultsOnClick={true} 
+      
+      />
 
       </LeafletMap>
     )

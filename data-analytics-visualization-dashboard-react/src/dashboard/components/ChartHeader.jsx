@@ -31,8 +31,9 @@ class ChartHeader extends React.Component {
   render() {
     const styles = {   
             position: 'absolute',
-            right: 25
-            }
+            right: 25,
+            width: '300px'
+          }
       ;
     return (
     <div >
