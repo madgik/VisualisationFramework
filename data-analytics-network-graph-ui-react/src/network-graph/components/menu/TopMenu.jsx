@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ImportModal from '../forms/ImportModal';
 import ModalContainer from '../ui_utils/ModalComponent';
+import ConfigurarionModal from '../forms/ConfigurarionModal';
 
 const styles = {
   root: {
@@ -37,6 +38,12 @@ class TopMenu extends React.Component {
     super(props);
     this.handleAddNewClick = this.handleAddNewClick.bind(this);
     this.handleSidebarClick = this.handleSidebarClick.bind(this);
+    //add this line due to not property find as handleAddNewClick.
+    this.handleConfigGraphClick = this.handleConfigGraphClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getAllGraphsMetadata();
   }
 
   handleSidebarClick() {
@@ -46,6 +53,12 @@ class TopMenu extends React.Component {
   handleAddNewClick() {
     this.props.setOpenImportModal(!this.props.openImportModal);
   }
+
+  handleConfigGraphClick() {
+    this.props.setOpenConfigGraphModal(!this.props.openConfigGraphModal);
+  }
+
+
   render() {
 
     const { classes } = this.props;
@@ -88,14 +101,28 @@ class TopMenu extends React.Component {
               fileDetails={this.props.fileDetails}
               username={this.props.username}
             />
+            <ConfigurarionModal
+              openConfigGraphModal={this.props.openConfigGraphModal}
+              setOpenConfigGraphModal={this.props.setOpenConfigGraphModal}
+              uploadFile={this.props.uploadFile}
+              setFileValidation={this.props.setFileValidation}
+              fileDetails={this.props.fileDetails}
+              username={this.props.username}
+            />
+
             <Button
               color="inherit"
               onClick={this.handleAddNewClick}
             >Add New Graph</Button>
+            |
+            <Button
+              color="inherit"
+              onClick={this.handleConfigGraphClick}
+            >Config Graph</Button>
           </Toolbar>
 
         </AppBar>
-        <ModalContainer 
+        <ModalContainer
           modalIsOpen={this.props.modalIsOpen}
           modalMessage={this.props.modalMessage}
           setModalIsOpen={this.props.setModalIsOpen}
