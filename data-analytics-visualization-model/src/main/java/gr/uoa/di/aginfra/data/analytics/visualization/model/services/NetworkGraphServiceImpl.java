@@ -145,4 +145,9 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
         return nodePropertyRepository.findDistinctValuesByNameAndNodeSubGraphId(property, graphId);
     }
 
+    @Override
+    public String deleteSubGraph(String graphId){
+        return subGraphRepository.deleteSubGraphBySubGraphId(graphId);
+    }
+
 }

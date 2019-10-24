@@ -84,6 +84,7 @@ class TopMenu extends React.Component {
               openImportModal={this.props.openImportModal}
               setOpenImportModal={this.props.setOpenImportModal}
               uploadFile={this.props.uploadFile}
+              getFromUrl={this.props.getFromUrl}
               setFileValidation={this.props.setFileValidation}
               fileDetails={this.props.fileDetails}
               username={this.props.username}

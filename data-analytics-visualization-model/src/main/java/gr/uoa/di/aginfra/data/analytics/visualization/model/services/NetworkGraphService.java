@@ -36,4 +36,6 @@ public interface NetworkGraphService {
     List<Node> getFilteredGraph(String subGraphId, Map<String, String> query, Integer nodesNumber) throws Exception;
 
 	List<String> getPropertyValues(String property, String id);
+
+	String deleteSubGraph(String sub);
 }

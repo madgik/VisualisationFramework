@@ -207,5 +207,13 @@ public class NetworkGraphController {
 		return new ResponseEntity<>(resultProperties, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="graphs/{graphId}", method = RequestMethod.DELETE)
+	ResponseEntity<?> deleteSubGraph(@PathVariable("graphId") String graphId) {
+
+		String result= networkGraphService.deleteSubGraph(graphId);
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 }
