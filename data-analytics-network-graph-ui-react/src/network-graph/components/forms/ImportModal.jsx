@@ -14,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const DialogTitle = withStyles(theme => ({
   root: {
-    width:'500px',
+    width: '500px',
     borderBottom: `1px solid ${theme.palette.divider}`,
     margin: 10,
     padding: theme.spacing.unit * 2,
@@ -73,7 +73,7 @@ class ImportModal extends React.Component {
     // this.submit = this.submit.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  
+
   handleClose = () => {
     this.props.setOpenImportModal(false);
   };
@@ -90,17 +90,17 @@ class ImportModal extends React.Component {
         onClose={this.handleClose}
       >
         <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            Data Import 
+          Data Import
           </DialogTitle>
-          <DialogContent>        
+        <DialogContent>
           {/* <Typography variant="subtitle1" id="simple-modal-description"> */}
-            <DataImportForm
-              username={this.props.username}
-              uploadFile={this.props.uploadFile}
-              setFileValidation={this.props.setFileValidation}
-              fileDetails={this.props.fileDetails} />
+          <DataImportForm
+            username={this.props.username}
+            uploadFile={this.props.uploadFile}
+            setFileValidation={this.props.setFileValidation}
+            fileDetails={this.props.fileDetails} />
           {/* </Typography> */}
-          
+
         </DialogContent>
 
       </Dialog>
@@ -115,4 +115,4 @@ ImportModal.propTypes = {
 // // We need an intermediary variable for handling the recursive nesting.
 // const ImportModalWrapped = withStyles(styles)(ImportModal);
 
-export default  withStyles(styles)(ImportModal);
+export default withStyles(styles)(ImportModal);
