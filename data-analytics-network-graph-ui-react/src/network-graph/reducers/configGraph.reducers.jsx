@@ -8,18 +8,19 @@ const dataDefault = {
   isNew: false,
   uploaded: true,
   editGraphId: '',
-  fileDetails:{
+  fileDetails: {
     valid: false
   },
   graphSource: 'new',
   selectedGraph: '-',
   allGraphsMetadata: '',
   openImportModal: false,
+  openConfigGraphModal: false,
   openSidebar: false,
-  nodesNumber: 5, 
+  nodesNumber: 5,
   modalIsOpen: false,
   modalMessage: 'uploadStarted',
-  username:'',
+  username: '',
   filename: ''
 }
 
@@ -31,7 +32,7 @@ export function configGraph(state = dataDefault, action) {
           $set: true
         },
         isNew: {
-          $set:true
+          $set: true
         }
       });
     }
@@ -96,7 +97,7 @@ export function configGraph(state = dataDefault, action) {
       })
     }
     case configGraphConstants.SET_ALL_GRAPHS_METADATA: {
-      return update( state, {
+      return update(state, {
         allGraphsMetadata: {
           $set: action.allGraphsMetadata
         }
@@ -106,6 +107,13 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         openImportModal: {
           $set: action.openImportModal
+        }
+      })
+    }
+    case configGraphConstants.SET_OPEN_CONFIG_GRAPH_MODAL: {
+      return update(state, {
+        openConfigGraphModal: {
+          $set: action.openConfigGraphModal
         }
       })
     }
@@ -130,7 +138,7 @@ export function configGraph(state = dataDefault, action) {
         }
       })
     }
-     case configGraphConstants.SET_MODAL_MESSAGE: {
+    case configGraphConstants.SET_MODAL_MESSAGE: {
       return update(state, {
         modalMessage: {
           $set: action.modalMessage
@@ -150,7 +158,7 @@ export function configGraph(state = dataDefault, action) {
           $set: action.filename
         }
       })
-    }  
+    }
     default:
       return state;
   }

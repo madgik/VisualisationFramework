@@ -39,9 +39,6 @@ const DialogTitle = withStyles(theme => ({
   );
 });
 
-
-
-
 const DialogContent = withStyles(theme => ({
   root: {
     margin: 20,
@@ -100,12 +97,8 @@ class ImportModal extends React.Component {
             <DataImportForm
               username={this.props.username}
               uploadFile={this.props.uploadFile}
-              getFromUrl={this.props.getFromUrl}
               setFileValidation={this.props.setFileValidation}
-              fileDetails={this.props.fileDetails} 
-          
-
-              />
+              fileDetails={this.props.fileDetails} />
           {/* </Typography> */}
           
         </DialogContent>
