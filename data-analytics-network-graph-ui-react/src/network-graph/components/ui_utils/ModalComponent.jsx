@@ -62,17 +62,20 @@ class ModalContainer extends React.Component {
         <DialogTitle id="alert-dialog-title">{this.typeToMessage[this.props.modalMessage][0]}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          {this.typeToMessage[this.props.modalMessage][1]}
+            {this.typeToMessage[this.props.modalMessage][1]}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.closeModal} color="primary" autoFocus>
             Close
-          </Button>
+            </Button>
         </DialogActions>
       </Dialog>
     );
+
   }
+
+
 }
 
 export default ModalContainer;

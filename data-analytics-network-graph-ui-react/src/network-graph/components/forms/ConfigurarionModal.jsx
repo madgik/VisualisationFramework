@@ -15,6 +15,13 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
+import Grid from '@material-ui/core/Grid';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
+
+
+
 const DialogTitle = withStyles(theme => ({
 	root: {
 		width: '500px',
@@ -68,7 +75,7 @@ const styles = theme => ({
 	//   outline: 'none',
 	// },
 });
-class ConfgurationModal extends React.Component {
+class ImportModal extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -78,45 +85,82 @@ class ConfgurationModal extends React.Component {
 	}
 
 	handleClose = () => {
-		this.props.setOpenCongfigGraphModal(false);
+		this.props.setOpenConfigGraphModal(false);
 	};
+
+	deleteItem = (item) => {
+		console.log(item.id);
+		this.props.deleteGraphMetadata(item.id);
+	}
 
 
 	render() {
 		const { classes } = this.props;
+		console.log(this.props.allGraphsMetadata);
 
 		return (
 			<Dialog
 				aria-labelledby="simple-modal-title"
 				aria-describedby="simple-modal-description"
-				open={this.props.setOpenCongfigGraphModal}
+				open={this.props.openConfigGraphModal}
 				onClose={this.handleClose}
 			>
 				<DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-					Test the modal first...
+					Delete Data
           </DialogTitle>
 				<DialogContent>
 					{/* <Typography variant="subtitle1" id="simple-modal-description"> */}
-					<DataImportForm
+					{/* <DataImportForm
 						username={this.props.username}
 						uploadFile={this.props.uploadFile}
 						setFileValidation={this.props.setFileValidation}
-						fileDetails={this.props.fileDetails} />
+						fileDetails={this.props.fileDetails} /> */}
 					{/* </Typography> */}
+					<h1 id='title'>React Dynamic Table</h1>
+					<div className='container'>
+						{this.renderTableData()}
+					</div>
 
 				</DialogContent>
 
 			</Dialog>
 		);
 	}
+
+	renderTableData = () => {
+
+		return Array.from(this.props.allGraphsMetadata).map((graphData) =>
+			// <div className="row">
+			// 	<Col xs={9}>{graphData.name}</Col><Col><Button>Delete</Button></Col>
+			// </div>
+			<div className="row">
+				{/* <div>{graphData.name}</div> */}
+				{/* <div><Button onClick={() => this.deleteItem(graphData)}>Delete</Button></div> */}
+				<Grid item xs={6}>
+					<Typography>{graphData.name}</Typography>
+				</Grid>
+				<Grid item xs={4}>
+					<DeleteIcon onClick={() => this.deleteItem(graphData)} />
+					{/* <DeleteForeverIcon /> */}
+				</Grid>
+			</div>
+		);
+
+	};
+
+
 }
 
-ConfgurationModal.propTypes = {
+
+
+
+
+ImportModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
 // // We need an intermediary variable for handling the recursive nesting.
 // const ImportModalWrapped = withStyles(styles)(ImportModal);
 
-export default withStyles(styles)(ConfgurationModal);
+export default withStyles(styles)(ImportModal);
 

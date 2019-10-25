@@ -2,13 +2,14 @@ import { configGraphConstants } from '../constants'
 import axios from 'axios';
 import Ajax from '../utilities/Ajax';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import {controlGraphActions} from './controlGraph.actions'
+import { controlGraphActions } from './controlGraph.actions'
 
 
 export const configGraphActions = {
   uploadFile,
   updateUploadedFile,
   getAllGraphsMetadata,
+  deleteGraphMetadata,
   storeGraphData,
   showGraphEdit,
   closeGraphEdit,
@@ -18,6 +19,7 @@ export const configGraphActions = {
   setSelectedGraph,
   setAllGraphsMetadata,
   setOpenImportModal,
+  setOpenConfigGraphModal,
   setOpenSidebar,
   setNodesNumber,
   setModalIsOpen,
@@ -37,14 +39,15 @@ function uploadFile(file, fileName, privacy, username) {
     formData.append("privacy", privacy);
     formData.append("username", username)
 
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_FILE_PATH);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_FILE_PATH);
     return axios.post(resourceUrl, formData, {
-      headers: { 
+      headers: {
         'content-type': 'multipart/form-data'
-       }
+      }
     }).then(response => {
       dispatch(hideLoading());
       dispatch(setOpenImportModal(false));
+      // dispatch(setOpenConfigGraphModal(false));
       dispatch(setModalIsOpen(true));
       dispatch(setModalMessage('uploadStarted'));
       // console.log("file uploaded"+response)
@@ -54,11 +57,11 @@ function uploadFile(file, fileName, privacy, username) {
 
 function updateUploadedFile(id) {
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_GRAPHS_PATH);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_GRAPHS_PATH);
     return axios.get(resourceUrl, {
-      headers: { 
+      headers: {
         'content-type': 'application/json'
-       }
+      }
     }).then(response => {
       dispatch(setAllGraphsMetadata(response.data));
       // console.log("get graphs"+response.data)
@@ -68,11 +71,11 @@ function updateUploadedFile(id) {
 
 function getAllGraphsMetadata() {
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH +'/'+Ajax.NETWORK_GRAPH_GRAPHS_PATH);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_GRAPHS_PATH);
     return axios.get(resourceUrl, {
-      headers: { 
+      headers: {
         'content-type': 'application/json'
-       }
+      }
     }).then(response => {
       // console.log("get graphs"+response.data)
 
@@ -81,8 +84,25 @@ function getAllGraphsMetadata() {
   }
 }
 
+function deleteGraphMetadata(id) {
+  console.log('call delete method..');
+  return function (dispatch) {
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + '${id}');
+    console.log(resourceUrl);
+    return axios.delete(resourceUrl, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(response => {
+      console.log("delete graph : " + response.data);
+
+      //dispatch(setAllGraphsMetadata(response.data));
+    }).catch(_ => { });
+  }
+}
+
 function storeGraphData() {
-  return { type: configGraphConstants.CREATE_GRAPH}
+  return { type: configGraphConstants.CREATE_GRAPH }
 }
 
 function showGraphEdit() {
@@ -126,6 +146,10 @@ function setAllGraphsMetadata(allGraphsMetadata) {
 
 function setOpenImportModal(openImportModal) {
   return { type: configGraphConstants.SET_OPEN_IMPORT_MODAL, openImportModal };
+}
+
+function setOpenConfigGraphModal(openConfigGraphModal) {
+  return { type: configGraphConstants.SET_OPEN_CONFIG_GRAPH_MODAL, openConfigGraphModal };
 }
 
 function setOpenSidebar(openSidebar) {

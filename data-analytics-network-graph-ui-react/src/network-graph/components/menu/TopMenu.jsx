@@ -34,6 +34,8 @@ const styles = {
 
 class TopMenu extends React.Component {
 
+  modalType = null;
+
   constructor(props) {
     super(props);
     this.handleAddNewClick = this.handleAddNewClick.bind(this);
@@ -55,7 +57,9 @@ class TopMenu extends React.Component {
   }
 
   handleConfigGraphClick() {
+    // this.props.setOpenImportModal(!this.props.openImportModal);
     this.props.setOpenConfigGraphModal(!this.props.openConfigGraphModal);
+    // this.deleteGraphMetadata('something');
   }
 
 
@@ -95,6 +99,7 @@ class TopMenu extends React.Component {
             </Typography>
             <ImportModal
               openImportModal={this.props.openImportModal}
+              // modalType={this.modalType}
               setOpenImportModal={this.props.setOpenImportModal}
               uploadFile={this.props.uploadFile}
               setFileValidation={this.props.setFileValidation}
@@ -104,10 +109,12 @@ class TopMenu extends React.Component {
             <ConfigurarionModal
               openConfigGraphModal={this.props.openConfigGraphModal}
               setOpenConfigGraphModal={this.props.setOpenConfigGraphModal}
-              uploadFile={this.props.uploadFile}
-              setFileValidation={this.props.setFileValidation}
-              fileDetails={this.props.fileDetails}
-              username={this.props.username}
+              allGraphsMetadata={this.props.allGraphsMetadata}
+              deleteGraphMetadata={this.props.deleteGraphMetadata}
+            // uploadFile={this.props.uploadFile}
+            // setFileValidation={this.props.setFileValidation}
+            // fileDetails={this.props.fileDetails}
+            // username={this.props.username}
             />
 
             <Button
@@ -123,6 +130,7 @@ class TopMenu extends React.Component {
 
         </AppBar>
         <ModalContainer
+          modalType={this.sample}
           modalIsOpen={this.props.modalIsOpen}
           modalMessage={this.props.modalMessage}
           setModalIsOpen={this.props.setModalIsOpen}
