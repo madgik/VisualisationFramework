@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
    nodesNumber: state.configGraph.nodesNumber,
    modalIsOpen: state.configGraph.modalIsOpen,
    modalMessage: state.configGraph.modalMessage,
-   username: state.configGraph.username
+   username: state.configGraph.username,
    modalType: state.configGraph.modalType,
    openConfigGraphModal: state.configGraph.openConfigGraphModal,
 });

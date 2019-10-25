@@ -4,6 +4,7 @@ import { documentService } from '../services'
 import { geoanalyticsService } from '../services'
 
 import ConfigurationValidators from '../validation/ConfigurationValidators'
+import Axios from 'axios'
 
 export const  configItemActions = {
   createConfiguration,
@@ -31,7 +32,9 @@ export const  configItemActions = {
   setConfigOptions,
   setSelectedConfiguration,
   setConfigurationData,
-  setLoader
+  setLoader,
+  setUrl,
+  getDataFromUrl
 }
 
 /*
@@ -47,6 +50,17 @@ function getAllConfigurations() {
         dispatch(setConfigOptions(options))
         dispatch(setConfigurations(response.data))
       })
+  }
+}
+
+function getDataFromUrl(url, type, delimiter, commentCharacter) {
+  return function(dispatch) {
+     configurationService.getDataFromUrl(url)
+     .then(response => {
+      console.log(response.data);
+
+        dispatch(uploadFile(response, type, delimiter, commentCharacter));
+     })
   }
 }
 
@@ -289,4 +303,8 @@ function setSelectedConfiguration(selectedConfiguration) {
 
 function setConfigurationData(data) {
   return { type: configItemConstants.SET_CONFIGURATION_DATA, data };
+}
+
+function setUrl(url) {
+  return { type: configItemConstants.SET_URL, url };
 }

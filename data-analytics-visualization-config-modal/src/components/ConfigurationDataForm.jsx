@@ -28,6 +28,24 @@ class ConfigurationDataForm extends React.Component {
     super(props);
     this.handleDelimiterChange = this.handleDelimiterChange.bind(this);
     this.handleCommentCharacterChange = this.handleCommentCharacterChange.bind(this);
+    this.handleUrlChange = this.handleUrlChange.bind(this);
+    this.handleGetDataFromUrl = this.handleGetDataFromUrl.bind(this);
+  }
+
+  handleUrlChange(e) {
+    
+    this.props.setUrl(e.target.value, this.props.delimiter, this.props.commentCharacter);
+  }
+
+  handleGetDataFromUrl() {
+    var type = this.props.url.substring(this.props.url.lastIndexOf('.') + 1, this.props.url.length) || this.props.url;
+    if (type === "json") {
+      type = "JSON";
+    }
+    else {
+      type = "Records";
+    }
+    this.props.getDataFromUrl(this.props.url, type, this.props.delimiter, this.props.commentCharacter);
   }
 
   handleDelimiterChange(e) {
@@ -119,7 +137,10 @@ class ConfigurationDataForm extends React.Component {
                 />
               </Grid.Column>
             </Grid.Row>
+            
           </Grid>
+         
+
           <div>
 
             {(!this.props.geoanalytics.checked) ?
@@ -149,7 +170,24 @@ class ConfigurationDataForm extends React.Component {
         </div>
 
       </div>
+      <Grid>
+        <Grid.Row>
+        <h3>Or import dataset from Url</h3>
+</Grid.Row>
+        <Grid.Row>
 
+            <Input
+              tyle={{ width:"500px" }}
+              placeholder='Label'
+              action= {{
+                content:'Get Data',
+                onClick: this.handleGetDataFromUrl
+              }}
+              onChange={(e) => this.handleUrlChange(e)} />
+
+
+          </Grid.Row>
+            </Grid>
     </div>);
   }
 }

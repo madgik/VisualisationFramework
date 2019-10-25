@@ -65,6 +65,9 @@ class ConfigurationModalInner extends React.Component {
             setSelectedConfiguration={this.props.setSelectedConfiguration}
             showConfigurationData={this.props.showConfigurationData}
             setConfigurationData={this.props.setConfigurationData}
+            url={this.props.url}
+            setUrl={this.props.setUrl}
+            getDataFromUrl={this.props.getDataFromUrl}
             />
             <div  >
 
@@ -118,6 +121,11 @@ const mapDispatchToProps = dispatch => ({
   setSelectedConfiguration: (value) => dispatch(configItemActions.setSelectedConfiguration(value)),
   showConfigurationData: (value) => dispatch(configItemActions.showConfigurationData(value)),
   setConfigurationData: (value) => dispatch(configItemActions.setConfigurationData(value)),
+  setUrl: (url) => dispatch(configItemActions.setUrl(url)),
+  getDataFromUrl: (url, type, delimiter, commentCharacter) =>{    
+    dispatch(configItemActions.setLoader(true));
+    dispatch(configItemActions.getDataFromUrl(url, type, delimiter, commentCharacter))
+  } 
 })
 
 export default connect(

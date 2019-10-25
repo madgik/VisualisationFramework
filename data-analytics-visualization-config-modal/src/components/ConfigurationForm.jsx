@@ -56,6 +56,9 @@ class ConfigurationForm extends React.Component {
                 setSelectedConfiguration={this.props.setSelectedConfiguration}
                 showConfigurationData={this.props.showConfigurationData}
                 setConfigurationData={this.props.setConfigurationData}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
               /> : ''}
             {this.isDataMenuItemSelected() ?
               <ConfigurationDataForm
@@ -67,6 +70,9 @@ class ConfigurationForm extends React.Component {
                 setDelimiter={this.props.setDelimiter}
                 delimiter={this.props.delimiter}
                 loading={this.props.loading}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
                 setCommentCharacter={this.props.setCommentCharacter}
                 commentCharacter={this.props.commentCharacter}
                 onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
@@ -76,6 +82,9 @@ class ConfigurationForm extends React.Component {
                 transformations={this.props.data.transformations}
                 configOptions={this.props.configOptions}
                 filters={this.props.data.filters}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
                 dataSources={this.props.data.dataSources}
                 onFilterAddition={this.props.onFilterAddition}
                 onFilterFieldChange={this.props.onFilterFieldChange}

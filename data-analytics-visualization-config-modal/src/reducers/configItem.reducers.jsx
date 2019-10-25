@@ -19,7 +19,7 @@ function defaultState() {
     'transformationLabelValue',
     'transformationColumns',
     'filterLabel',
-    'filterField'  
+    'filterField'
   ];
 
   var validation = {}
@@ -52,8 +52,9 @@ function defaultState() {
     delimiter: '',
     commentCharacter: '',
     configurations: [],
-    configOptions: [{name:"",value:"5d0cd7f2d22586580c5f9436"}],
-    selectedConfiguration: []
+    configOptions: [{ name: "", value: "5d0cd7f2d22586580c5f9436" }],
+    selectedConfiguration: [],
+    url: ''
   }
 }
 
@@ -73,7 +74,8 @@ export function configItem(state = defaultState(), action) {
       return update(state, {
         loading: {
           $set: action.loading
-        }});
+        }
+      });
     case configItemConstants.UPDATE_EDITED_ITEM:
       return update(state, {
         data: {
@@ -302,6 +304,12 @@ export function configItem(state = defaultState(), action) {
       return update(state, {
         data: {
           $set: action.data
+        }
+      });
+    case configItemConstants.SET_URL:
+      return update(state, {
+        url: {
+          $set: action.url
         }
       });
     default:
