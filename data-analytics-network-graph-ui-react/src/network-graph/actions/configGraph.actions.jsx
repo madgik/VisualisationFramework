@@ -76,8 +76,8 @@ function getFromUrl(url, fileName, privacy, username) {
     dispatch(showLoading());
     console.log(url)
     axios.get(url)
-      .then( response => {
- 
+      .then(response => {
+
         const formData = new FormData();
         formData.append("file", response.data);
         formData.append("name", fileName);
@@ -119,7 +119,7 @@ function getAllGraphsMetadata() {
 function deleteGraphMetadata(id) {
   console.log('call delete method..');
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + id);
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_GRAPHS_PATH + '/' + id);
     console.log(resourceUrl);
     return axios.delete(resourceUrl, {
       headers: {

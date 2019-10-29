@@ -101,7 +101,6 @@ class ConfigurationModal extends React.Component {
 		if (window.confirm("Are you sure you want to delete " + item.name + " ?")) {
 			this.props.deleteGraphMetadata(item.id);
 		}
-		// 
 	}
 
 
