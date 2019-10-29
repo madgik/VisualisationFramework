@@ -30,5 +30,5 @@ export const configItemConstants = {
   SET_SELECTED_CONFIGURATION: 'set_selected_configuration',
   SET_CONFIGURATION_DATA: 'set_configuration_data',
   LOADING: 'loading',
-
+  SET_URL: 'set_url'
 }

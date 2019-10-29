@@ -105,3 +105,7 @@ body{
 .toast {
   top:100px;
 }
+
+.data-import-form{
+  height: 400px;
+}

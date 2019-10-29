@@ -26,6 +26,7 @@ export const configGraphActions = {
   setModalMessage,
   setUsername,
   setFilename,
+  getFromUrl
 }
 
 function uploadFile(file, fileName, privacy, username) {
@@ -68,6 +69,36 @@ function updateUploadedFile(id) {
     }).catch(_ => { });
   }
 }
+
+function getFromUrl(url, fileName, privacy, username) {
+  return function (dispatch) {
+    dispatch(showLoading());
+
+    axios.get(url)
+      .then( response => {
+ 
+        const formData = new FormData();
+        formData.append("file", response.data);
+        formData.append("name", fileName);
+        formData.append("privacy", privacy);
+        formData.append("username", username)
+
+        var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_FILE_PATH);
+        return axios.post(resourceUrl, formData, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        }).then(response => {
+          dispatch(hideLoading());
+          dispatch(setOpenImportModal(false));
+          dispatch(setModalIsOpen(true));
+          dispatch(setModalMessage('uploadStarted'));
+          // console.log("file uploaded"+response)
+        }).catch(_ => { });
+      });
+  }
+}
+
 
 function getAllGraphsMetadata() {
   return function (dispatch) {

@@ -14,4 +14,6 @@ public interface SubGraphRepository extends Neo4jRepository<SubGraphEntity, Stri
 
     @Query("MATCH (s:SubGraphEntity) RETURN DISTINCT s.subGraphId as id, s.subGraphName as name")
     List<Map<String,String>> findAllDistinctSubGraphId();
+
+    String deleteSubGraphBySubGraphId(String subGraphId);
 }

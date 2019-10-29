@@ -16,7 +16,7 @@ const styles = theme => ({
         flexGrow: 1,
     },
     form: {
-        heigh:"500px"
+        heigh: "500px"
     },
     control: {
         padding: theme.spacing.unit * 2,
@@ -35,12 +35,14 @@ class DataImportForm extends React.Component {
         // This binding is necessary to make `this` work in the callback
         this.onFileChange = this.onFileChange.bind(this);
         this.onFileNameChange = this.onFileNameChange.bind(this);
+        this.onUrlChange = this.onUrlChange.bind(this);
 
         this.submit = this.submit.bind(this);
         this.file = React.createRef();
         this.myFile = React.createRef();
         this.fileName = React.createRef();
         this.privacy = React.createRef();
+        this.url = React.createRef();
     }
 
 
@@ -66,6 +68,13 @@ class DataImportForm extends React.Component {
         return true;
     }
 
+    onUrlChange(e) {
+        console.log(e)
+        if (e.target.value !== "") {
+            this.props.setFileValidation(true);
+        }
+    }
+
     onFileChange(e) {
         if (e.target.files[0] && this.validate(e.target.files[0])) {
             this.props.setFileValidation(true);
@@ -86,7 +95,13 @@ class DataImportForm extends React.Component {
 
     submit(e) {
         e.preventDefault();
-        this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
+
+        if (this.url === "" && (this.myFile instanceof File)) {
+            this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
+        }
+        else if (this.url !== "" && !(this.myFile instanceof File)) {
+            this.props.getFromUrl(this.url, this.fileName, this.privacy, this.props.username);
+        }
     }
 
     render() {
@@ -95,19 +110,16 @@ class DataImportForm extends React.Component {
         return (
             <div className="data-import-form">
 
-                    <Grid className="data-import-fix"
-                            spacing={32}
-                            className={classes.form}
-                            container
-                            direction='column'
-                            justify="center"
-                            alignItems="center"
-                            alignContent="center"
-                        >
-                    <UploadMessage
-                        className={styles.message}
-                        type='Graph'
-                    />
+                <Grid className="data-import-fix"
+                    spacing={32}
+                    className={classes.form}
+                    container
+                    direction='column'
+                    justify="center"
+                    alignItems="center"
+                    alignContent="center"
+                >
+                    <h3>Please upload a valid json file</h3>
                     <Divider className="import-divider" />
                     <br></br>
                     <form className='add-graph-file' onSubmit={this.submit}>
@@ -122,7 +134,7 @@ class DataImportForm extends React.Component {
                         >
                             <Grid container
                                 direction='row'
-                              >
+                            >
                                 <Grid item xs={5}>
                                     <label>URL of the resource</label>
                                 </Grid>
@@ -131,17 +143,17 @@ class DataImportForm extends React.Component {
                                         className="input-file data-import-fix"
                                         type='text'
 
-                                        ref={this.fileName}
-                                        onChange={this.onFileNameChange}
+                                        ref={this.url}
+                                        onChange={this.onUrlChange}
                                     />
                                 </Grid>
                             </Grid>
 
                             <Grid container
-                            spacing={0}
-                            direction="row"
-                            alignItems="center"
-                            justify="center">
+                                spacing={0}
+                                direction="row"
+                                alignItems="center"
+                                justify="center">
 
                                 <h4>Or Select File</h4>
 

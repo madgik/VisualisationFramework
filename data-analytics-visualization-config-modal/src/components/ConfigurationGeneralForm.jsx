@@ -18,6 +18,7 @@ class ConfigurationGeneralForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleConfigurationChange = this.handleConfigurationChange.bind(this);
+
   }
 
   handleConfigurationChange = (e) => {
@@ -42,6 +43,8 @@ class ConfigurationGeneralForm extends React.Component {
     var { state } = ConfigurationValidators.validateField('yAxis', data, this.props.validation, this.props.configOptions);
 
   }
+
+
 
   handleFieldChange = (prop, value) => {
 
@@ -141,20 +144,22 @@ class ConfigurationGeneralForm extends React.Component {
   render() {
     return (<React.Fragment>
       {(this.props.isNew == true) &&
-        <Form.Field error={this.props.validation.label.touched && !this.props.validation.label.valid}>
-          <label>Create New or Select From History</label>
+        
 
-          <SelectSearch
-            search={true}
-            mode="input"
-            options={this.props.configOptions}
-            value={this.props.data.label || ""}
-            name="configuration"
-            placeholder="Select a saved configuration"
-            onChange={(e) => this.handleConfigurationChange(e)}
-          />
+          <Form.Field error={this.props.validation.label.touched && !this.props.validation.label.valid}>
+            <label>Create New or Select From History</label>
 
-        </Form.Field>
+            <SelectSearch
+              search={true}
+              mode="input"
+              options={this.props.configOptions}
+              value={this.props.data.label || ""}
+              name="configuration"
+              placeholder="Select a saved configuration"
+              onChange={(e) => this.handleConfigurationChange(e)}
+            />
+
+          </Form.Field>
       }
       {(this.props.selectedConfiguration != [] && (this.props.isNew == true)) ?
         <Form.Field>
