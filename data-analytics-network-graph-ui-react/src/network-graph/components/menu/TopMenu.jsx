@@ -57,6 +57,7 @@ class TopMenu extends React.Component {
   }
 
   handleConfigGraphClick() {
+    console.log('something..');
     // this.props.setOpenImportModal(!this.props.openImportModal);
     this.props.setOpenConfigGraphModal(!this.props.openConfigGraphModal);
     // this.deleteGraphMetadata('something');
@@ -69,7 +70,7 @@ class TopMenu extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" >
+        <AppBar openosition="static" >
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
               onClick={this.handleSidebarClick}
@@ -112,12 +113,10 @@ class TopMenu extends React.Component {
             <ConfigurarionModal
               openConfigGraphModal={this.props.openConfigGraphModal}
               setOpenConfigGraphModal={this.props.setOpenConfigGraphModal}
+              openConfirmModal={this.props.openConfirmModal}
+              setOpenConfirmModal={this.props.setOpenConfirmModal}
               allGraphsMetadata={this.props.allGraphsMetadata}
               deleteGraphMetadata={this.props.deleteGraphMetadata}
-            // uploadFile={this.props.uploadFile}
-            // setFileValidation={this.props.setFileValidation}
-            // fileDetails={this.props.fileDetails}
-            // username={this.props.username}
             />
 
             <Button

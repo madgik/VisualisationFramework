@@ -3,11 +3,8 @@
 
 import React from "react";
 import PropTypes from 'prop-types';
-import DataImportForm from "./DataImportForm";
-import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -17,8 +14,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+
+import './styles/configurationModal.css';
 
 
 
@@ -39,7 +37,7 @@ const DialogTitle = withStyles(theme => ({
 	const { children, classes, onClose } = props;
 	return (
 		<MuiDialogTitle disableTypography className={classes.root}>
-			<Typography variant="h6">{children}</Typography>
+			<Typography variant="subtitle1">{children}</Typography>
 			{onClose ? (
 				<IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
 					<CloseIcon />
@@ -75,28 +73,42 @@ const styles = theme => ({
 	//   outline: 'none',
 	// },
 });
-class ImportModal extends React.Component {
+
+
+
+
+class ConfigurationModal extends React.Component {
 
 	constructor(props) {
 		super(props);
 		// This binding is necessary to make `this` work in the callback
 		// this.submit = this.submit.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleDeleteClick = this.handleDeleteClick.bind(this);
+
+
+		// this.openConfirmModal = false;
 	}
 
 	handleClose = () => {
 		this.props.setOpenConfigGraphModal(false);
 	};
 
-	deleteItem = (item) => {
-		console.log(item.id);
-		this.props.deleteGraphMetadata(item.id);
+
+
+
+	handleDeleteClick = (item) => {
+		if (window.confirm("Are you sure you want to delete " + item.name + " ?")) {
+			this.props.deleteGraphMetadata(item.id);
+		}
+		// 
 	}
 
 
 	render() {
 		const { classes } = this.props;
 		console.log(this.props.allGraphsMetadata);
+
 
 		return (
 			<Dialog
@@ -106,23 +118,13 @@ class ImportModal extends React.Component {
 				onClose={this.handleClose}
 			>
 				<DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-					Delete Data
-          </DialogTitle>
+					Select the Graph you wish to delete
+            </DialogTitle>
 				<DialogContent>
-					{/* <Typography variant="subtitle1" id="simple-modal-description"> */}
-					{/* <DataImportForm
-						username={this.props.username}
-						uploadFile={this.props.uploadFile}
-						setFileValidation={this.props.setFileValidation}
-						fileDetails={this.props.fileDetails} /> */}
-					{/* </Typography> */}
-					<h1 id='title'>React Dynamic Table</h1>
 					<div className='container'>
 						{this.renderTableData()}
 					</div>
-
 				</DialogContent>
-
 			</Dialog>
 		);
 	}
@@ -130,18 +132,16 @@ class ImportModal extends React.Component {
 	renderTableData = () => {
 
 		return Array.from(this.props.allGraphsMetadata).map((graphData) =>
-			// <div className="row">
-			// 	<Col xs={9}>{graphData.name}</Col><Col><Button>Delete</Button></Col>
-			// </div>
-			<div className="row">
-				{/* <div>{graphData.name}</div> */}
-				{/* <div><Button onClick={() => this.deleteItem(graphData)}>Delete</Button></div> */}
-				<Grid item xs={6}>
-					<Typography>{graphData.name}</Typography>
-				</Grid>
-				<Grid item xs={4}>
-					<DeleteIcon onClick={() => this.deleteItem(graphData)} />
-					{/* <DeleteForeverIcon /> */}
+			<div >
+				<Grid container spacing={3} justify="start"
+					direction="row" alignItems="stretch" className="selectedLine">
+					<Grid item xs={11}>
+						<Typography fontSize={16} className="selectedRow">{graphData.name}</Typography>
+					</Grid>
+					<Grid item xs={1}>
+						<DeleteIcon className="deleteIcon" onClick={() => this.handleDeleteClick(graphData)} />
+					</Grid>
+
 				</Grid>
 			</div>
 		);
@@ -155,12 +155,12 @@ class ImportModal extends React.Component {
 
 
 
-ImportModal.propTypes = {
+ConfigurationModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
 // // We need an intermediary variable for handling the recursive nesting.
 // const ImportModalWrapped = withStyles(styles)(ImportModal);
 
-export default withStyles(styles)(ImportModal);
+export default withStyles(styles)(ConfigurationModal);
 
