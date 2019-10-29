@@ -119,7 +119,7 @@ function getAllGraphsMetadata() {
 function deleteGraphMetadata(id) {
   console.log('call delete method..');
   return function (dispatch) {
-    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + '${id}');
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + id);
     console.log(resourceUrl);
     return axios.delete(resourceUrl, {
       headers: {

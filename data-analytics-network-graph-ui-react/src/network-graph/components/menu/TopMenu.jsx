@@ -60,7 +60,6 @@ class TopMenu extends React.Component {
     console.log('something..');
     // this.props.setOpenImportModal(!this.props.openImportModal);
     this.props.setOpenConfigGraphModal(!this.props.openConfigGraphModal);
-    // this.deleteGraphMetadata('something');
   }
 
 

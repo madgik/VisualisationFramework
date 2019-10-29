@@ -60,7 +60,8 @@ const mapDispatchToProps = dispatch => ({
     setModalIsOpen: (modalIsOpen) => dispatch(configGraphActions.setModalIsOpen(modalIsOpen)),
     setModalType: (modalType) => dispatch(configGraphActions.setModalType(modalType)),
     setFilename: (filename) => dispatch(configGraphActions.setFilename(filename)),
-    setUrl: (url) => dispatch(configGraphActions.setUrl(url))
+    setUrl: (url) => dispatch(configGraphActions.setUrl(url)),
+    deleteGraphMetadata: (id) =>dispatch(configGraphActions.deleteGraphMetadata(id))
 });
 
 export default connect(
