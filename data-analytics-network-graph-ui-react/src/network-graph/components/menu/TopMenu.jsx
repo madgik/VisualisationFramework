@@ -106,6 +106,8 @@ class TopMenu extends React.Component {
               setFileValidation={this.props.setFileValidation}
               fileDetails={this.props.fileDetails}
               username={this.props.username}
+              url={this.props.url}
+              setUrl={this.props.setUrl}
             />
             <ConfigurarionModal
               openConfigGraphModal={this.props.openConfigGraphModal}

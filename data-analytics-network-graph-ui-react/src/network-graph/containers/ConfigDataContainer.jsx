@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
    username: state.configGraph.username,
    modalType: state.configGraph.modalType,
    openConfigGraphModal: state.configGraph.openConfigGraphModal,
+   url: state.configGraph.url
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,6 +40,7 @@ const mapDispatchToProps = dispatch => ({
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
     getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),
+    getFromUrl: (url, filename, privacy, username) => dispatch(configGraphActions.getFromUrl(url,filename,privacy,username)),
     //SETTERS
     setFileValidation: (isValid) => dispatch(configGraphActions.setFileValidation(isValid)),
     setGraphSource: (graphSource) => dispatch(configGraphActions.setGraphSource(graphSource)),
@@ -57,7 +59,8 @@ const mapDispatchToProps = dispatch => ({
     setNodesNumber: (nodesNumber) => dispatch(configGraphActions.setNodesNumber(nodesNumber)),
     setModalIsOpen: (modalIsOpen) => dispatch(configGraphActions.setModalIsOpen(modalIsOpen)),
     setModalType: (modalType) => dispatch(configGraphActions.setModalType(modalType)),
-    setFilename: (filename) => dispatch(configGraphActions.setFilename(filename))
+    setFilename: (filename) => dispatch(configGraphActions.setFilename(filename)),
+    setUrl: (url) => dispatch(configGraphActions.setUrl(url))
 });
 
 export default connect(

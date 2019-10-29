@@ -50,6 +50,7 @@ public class NetworkGraphPositioningHelper {
 	}
 
 	public Point2D addPositions(String id) {
+
 		if(NetworkGraphPositioningHelper.getInstance().getPoints().size()>1000000) {
 			NetworkGraphPositioningHelper.getInstance().getPoints().clear();
 		}

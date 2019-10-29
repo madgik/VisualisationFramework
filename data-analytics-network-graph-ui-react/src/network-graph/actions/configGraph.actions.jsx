@@ -26,7 +26,8 @@ export const configGraphActions = {
   setModalMessage,
   setUsername,
   setFilename,
-  getFromUrl
+  getFromUrl,
+  setUrl
 }
 
 function uploadFile(file, fileName, privacy, username) {
@@ -73,7 +74,7 @@ function updateUploadedFile(id) {
 function getFromUrl(url, fileName, privacy, username) {
   return function (dispatch) {
     dispatch(showLoading());
-
+    console.log(url)
     axios.get(url)
       .then( response => {
  
@@ -205,6 +206,10 @@ function setUsername(username) {
 
 function setFilename(filename) {
   return { type: configGraphConstants.SET_FILENAME, filename };
+}
+
+function setUrl(url) {
+  return { type: configGraphConstants.SET_URL, url };
 }
 
 

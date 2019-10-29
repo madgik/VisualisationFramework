@@ -21,7 +21,8 @@ const dataDefault = {
   modalIsOpen: false,
   modalMessage: 'uploadStarted',
   username: '',
-  filename: ''
+  filename: '',
+  url: ''
 }
 
 export function configGraph(state = dataDefault, action) {
@@ -156,6 +157,13 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         filename: {
           $set: action.filename
+        }
+      })
+    }
+    case configGraphConstants.SET_URL: {
+      return update(state, {
+        url: {
+          $set: action.url
         }
       })
     }

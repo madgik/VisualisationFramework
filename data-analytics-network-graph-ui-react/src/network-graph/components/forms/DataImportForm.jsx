@@ -71,6 +71,7 @@ class DataImportForm extends React.Component {
     onUrlChange(e) {
         console.log(e)
         if (e.target.value !== "") {
+            this.props.setUrl(e.target.value)
             this.props.setFileValidation(true);
         }
     }
@@ -100,7 +101,7 @@ class DataImportForm extends React.Component {
             this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
         }
         else if (this.url !== "" && !(this.myFile instanceof File)) {
-            this.props.getFromUrl(this.url, this.fileName, this.privacy, this.props.username);
+            this.props.getFromUrl(this.props.url, this.fileName, this.privacy, this.props.username);
         }
     }
 

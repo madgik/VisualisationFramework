@@ -17,5 +17,6 @@ export const configGraphConstants = {
   SET_MODAL_MESSAGE: 'set_modal_message',
   SET_USERNAME: 'set_username',
   SET_FILENAME: 'set_filename',
-  SET_OPEN_CONFIG_GRAPH_MODAL: 'set_config_graph_modal'
+  SET_OPEN_CONFIG_GRAPH_MODAL: 'set_config_graph_modal',
+  SET_URL: 'set_url'
 }

@@ -1,8 +1,12 @@
+/* FOR PORTLET BUILD comment THIS */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import serviceWorker from './serviceWorker';
+
+
+/* FOR PORTLET BUILD comment above and uncomment bellow */
 
 // const React=require('react').default;
 // const ReactDOM = require('react-dom').default;

@@ -98,7 +98,10 @@ class ImportModal extends React.Component {
               username={this.props.username}
               uploadFile={this.props.uploadFile}
               setFileValidation={this.props.setFileValidation}
-              fileDetails={this.props.fileDetails} />
+              getFromUrl={this.props.getFromUrl}
+              fileDetails={this.props.fileDetails} 
+              url={this.props.url}
+              setUrl={this.props.setUrl}/>
           {/* </Typography> */}
           
         </DialogContent>
