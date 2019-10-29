@@ -19,10 +19,11 @@ const customStyles = {
 };
 
 class ModalContainer extends React.Component {
+
   constructor(props) {
     super(props);
 
-    this.closeModal = this.closeModal.bind(this)
+    this.closeModal = this.closeModal.bind(this);
   }
   closeModal() {
     this.props.setModalIsOpen(false);
@@ -70,6 +71,9 @@ class ModalContainer extends React.Component {
             Close
             </Button>
         </DialogActions>
+
+
+
       </Dialog>
     );
 
