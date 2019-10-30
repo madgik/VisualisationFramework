@@ -116,6 +116,10 @@ class TopMenu extends React.Component {
               setOpenConfirmModal={this.props.setOpenConfirmModal}
               allGraphsMetadata={this.props.allGraphsMetadata}
               deleteGraphMetadata={this.props.deleteGraphMetadata}
+              setTestMessageDelete={this.props.setTestMessageDelete}
+              testMessageDelete={this.props.testMessageDelete}
+
+
             />
 
             <Button

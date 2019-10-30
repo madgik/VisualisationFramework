@@ -20,6 +20,7 @@ const dataDefault = {
   nodesNumber: 5,
   modalIsOpen: false,
   modalMessage: 'uploadStarted',
+  testMessageDelete: 'You just pass a parameter..',
   username: '',
   filename: '',
   url: ''
@@ -164,6 +165,13 @@ export function configGraph(state = dataDefault, action) {
       return update(state, {
         url: {
           $set: action.url
+        }
+      })
+    }
+    case configGraphConstants.SET_TEST_MESSAGE_DELETE: {
+      return update(state, {
+        url: {
+          $set: action.testMessageDelete
         }
       })
     }

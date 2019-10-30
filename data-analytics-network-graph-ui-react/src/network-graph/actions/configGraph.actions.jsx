@@ -27,7 +27,8 @@ export const configGraphActions = {
   setUsername,
   setFilename,
   getFromUrl,
-  setUrl
+  setUrl,
+  setTestMessageDelete
 }
 
 function uploadFile(file, fileName, privacy, username) {
@@ -182,6 +183,10 @@ function setOpenImportModal(openImportModal) {
 
 function setOpenConfigGraphModal(openConfigGraphModal) {
   return { type: configGraphConstants.SET_OPEN_CONFIG_GRAPH_MODAL, openConfigGraphModal };
+}
+
+function setTestMessageDelete(testMessageDelete) {
+  return { type: configGraphConstants.SET_TEST_MESSAGE_DELETE, testMessageDelete };
 }
 
 function setOpenSidebar(openSidebar) {
