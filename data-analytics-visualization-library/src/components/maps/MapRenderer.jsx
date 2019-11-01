@@ -216,7 +216,8 @@ class MapRenderer extends React.Component {
         showMarker={true}
         showPopup={false}
         closeResultsOnClick={true} 
-      
+        provider="OpenStreetMap"
+        providerOptions={{region: 'nl'}}
       />
 
       </LeafletMap>

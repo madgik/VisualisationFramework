@@ -1,8 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.data.CSVImporter;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.data.RawDataImporter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
@@ -11,17 +9,14 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDoc
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.EntityMapper;
-import gr.uoa.di.aginfra.data.analytics.visualization.service.mappers.XMLMapper;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.mapper.XMLMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
 import mil.nga.sf.geojson.FeatureConverter;
-import net.opengis.wps10.OutputDataType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
-import org.geotools.data.wps.WebProcessingService;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,19 +25,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 import java.io.StringReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
@@ -271,8 +258,8 @@ public class DashBoardController {
     public ResponseEntity<?> getWorkspaceFile(@RequestParam  String url) throws Exception {
         logger.debug("Retrieving visualization usage statistics");
         JSONObject selectedLayer = null;
-        String file = httpClient.workspaceGetRequest(url, null, null);
-        JSONObject jsnobject = new JSONObject(file);
+        Map<String, String> file = httpClient.workspaceGetRequest(url, null, null);
+        JSONObject jsnobject = new JSONObject(file.get("body"));
         if(!jsnobject.has("data") || !jsnobject.has("visualization") || !jsnobject.has("visualization")
                 || !jsnobject.has("data")){
             return ResponseEntity.ok("");
@@ -327,12 +314,12 @@ public class DashBoardController {
 
 
         JSONObject selectedLayer = null;
-        String file = httpClient.workspaceGetRequest(url, null, params);
-        if( file == null)
-            return ResponseEntity.ok(null);
+        Map<String, String> results = httpClient.workspaceGetRequest(url, null, params);
+        if( results.get("body") == null)
+            return ResponseEntity.ok(results);
 
         DOMParser parser = new DOMParser();
-        InputSource is = new InputSource(new StringReader(file));
+        InputSource is = new InputSource(new StringReader(results.get("body")));
 
         parser.parse(is);
         Document doc = parser.getDocument();
@@ -355,9 +342,9 @@ public class DashBoardController {
         String desc = XMLMapper.getNodeValue("d4science:Description", nodes);
 
         DataDocument dataDocument = new DataDocument();
-        String dataFromLink = httpClient.workspaceGetRequest(link, null, null);
+        Map<String, String> dataFromLink = httpClient.workspaceGetRequest(link, null, null);
         String[] units = new String[0];
-        String[] lines = dataFromLink.split("\n");
+        String[] lines = dataFromLink.get("body").split("\n");
         for(int i=0;i<lines.length;i++){
             if(lines[i].startsWith("#")){
                 if(lines[i].contains("Column units")){
