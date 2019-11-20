@@ -95,7 +95,8 @@ export const visualizationActions = {
   disableDataMinerFieldDetailsDropdown,
   setDataMinerEnableCropSimulation,
   enableDataMinerFetch,
-  cleanDataMinerData
+  cleanDataMinerData,
+  showDataMinerError
 }
 
 /*
@@ -1105,7 +1106,7 @@ function getDataMinerData(){
         // chart1.timeSeries = response.data;
         // chart1.xAxisLabel = "Date";
         // chart1.yAxisLabel = getState().data.chart1Properties.selectedNDVIFieldInYAxis;
-        if(response.data !== "")
+        if(response.data.body !== null)
         {
           dispatch(setDataMinerHeader(response.data.header));
           dispatch(setDataMinerData(response.data.data));
@@ -1126,7 +1127,7 @@ function getDataMinerData(){
           dispatch(setDataMinerLoading(false));
           dispatch(enableDataMinerFieldDetailsDropdown());
           dispatch(visualizationActions.setDataMinerEnableCropSimulation(true));
-
+          dispatch(showDataMinerError(response.data.message));
         }
 
       })
@@ -1190,7 +1191,20 @@ function setDataMinerChartDetails(){
   }
 }
 
-
+function showDataMinerError(message){
+  return function (dispatch) {
+    const options = {
+      message: 'Error while executing the embedded process for algorithm: CROP_SIMULATION_FOR_FIELD_V1',
+      buttons: [
+        {
+          label: 'Close'
+        }
+      ]
+    }
+    confirmAlert(options);
+   
+  }
+}
 
 function setDataMinerHeader(header) {
   return { type: visualizationConstants.SET_DATAMINER_DATA_HEADER,header};

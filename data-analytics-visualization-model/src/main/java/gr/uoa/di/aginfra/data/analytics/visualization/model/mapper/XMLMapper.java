@@ -1,4 +1,4 @@
-package gr.uoa.di.aginfra.data.analytics.visualization.service.mappers;
+package gr.uoa.di.aginfra.data.analytics.visualization.model.mapper;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;

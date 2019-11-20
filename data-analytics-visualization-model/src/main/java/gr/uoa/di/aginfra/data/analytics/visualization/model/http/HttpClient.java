@@ -1,6 +1,8 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.http;
 
+import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.interceptors.RequestLoggingInterceptor;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.mapper.XMLMapper;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -14,10 +16,15 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.*;
 
 public class HttpClient extends RestTemplate {
 
@@ -65,7 +72,10 @@ public class HttpClient extends RestTemplate {
 
     }
 
-    public String  workspaceGetRequest(String url, Map<String, String> headers, Map<String, Object> parameters){
+    public Map<String,String>  workspaceGetRequest(String url, Map<String, String> headers, Map<String, Object> parameters) throws IOException, SAXException {
+
+        Map<String,String> results = new HashMap<>();
+
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         restTemplate.setInterceptors(Collections.singletonList(new RequestLoggingInterceptor()));
         HttpEntity<String> entity = null;
@@ -81,13 +91,30 @@ public class HttpClient extends RestTemplate {
         //Execute the method writing your HttpEntity to the request
         try {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            return response.getBody();
+            results.put("body",response.getBody());
+            return results;
 
         }
         catch(HttpServerErrorException e){
             System.out.println(e.getMessage());
+            String message = null;
+            DOMParser parser = new DOMParser();
+            InputSource is = new InputSource(new StringReader(e.getResponseBodyAsString()));
+
+            parser.parse(is);
+            Document doc;
+            doc = parser.getDocument();
+
+            NodeList root = doc.getChildNodes();
+            Node executeResponse = XMLMapper.getNode("ows:ExceptionReport", root);
+            List<Node> processOutputs = XMLMapper.getNodes("ows:Exception", executeResponse.getChildNodes() );
+            NodeList nodes = processOutputs.get(0).getChildNodes();
+            message = XMLMapper.getNodeValue("ows:ExceptionText", nodes);
+            results.put("body",null);
+            results.put("message",message);
+
             System.out.println(e.getResponseBodyAsString());
-            return null;
+            return results;
         }
 
     }
