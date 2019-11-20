@@ -55,3 +55,4 @@ data-analytics-visualization-dashboard/index.jsp
 data-analytics-visualization-config-ui/node_modules/
 
 UIWorkspace.code-workspace
+.idea/

@@ -14,7 +14,8 @@
 
         <init-param>
             <name>back-end-url</name>
-            <value>http://localhost:8082/service/</value>
+<!--            <value>http://localhost:8082/service/</value>-->
+			<value>http://192.168.32.125:8081/data-analytics-visualization-service/</value>
         </init-param>
 
 		<expiration-cache>0</expiration-cache>
