@@ -20,6 +20,7 @@ import './SearchBar.css';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { isArray } from 'util';
 
 
 const styles = theme => ({
@@ -52,6 +53,14 @@ class GraphFilter extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      resetCondition: true,
+      showOldNodes: props.showOldNodes
+    };
+    this.fromCondition = true;
+    this.toCondition = true;
+    this.oldNodesCondition = true;
+    this.selectElements=[];
     this.handleNodePropertyChange = this.handleNodePropertyChange.bind(this);
     this.handleGetCurrent = this.handleGetCurrent.bind(this);
     this.handleChangeShowOldNodes = this.handleChangeShowOldNodes.bind(this);
@@ -60,22 +69,38 @@ class GraphFilter extends React.Component {
     this.handleTimestampToChange = this.handleTimestampToChange.bind(this);
     this.handleResetFilters = this.handleResetFilters.bind(this);
     this.handleSelectPropertyChange = this.handleSelectPropertyChange.bind(this);
-
   }
 
-  query = {}
+  query = {};
   dateFrom = null;
 
   componentDidMount() {
 
   }
 
+  handleResetCondition(){    
+    const condition = Object.keys(this.props.query).length == 0 && this.fromCondition && this.toCondition && this.oldNodesCondition;
+
+    this.state.resetCondition = condition;
+    this.setState({resetCondition: this.state.resetCondition, showOldNodes: this.state.showOldNodes});
+
+    return condition;
+  }
+
   handleTimestampFromChange = event => {
+    const condition = event.target.value == this.props.timestamps[0];
+    this.fromCondition = condition;
+    this.state.resetCondition = !condition ? condition : this.handleResetCondition();
+    this.setState({resetCondition: this.state.resetCondition, showOldNodes: this.state.showOldNodes});
     this.props.setTimestampFrom(event.target.value);
   };
 
   handleTimestampToChange = event => {
-    this.props.setTimestampFrom(event.target.value);
+    const condition = event.target.value == this.props.timestamps[this.props.timestamps.length - 1];
+    this.toCondition = condition;
+    this.state.resetCondition = !condition ? condition : this.handleResetCondition();
+    this.setState({resetCondition: this.state.resetCondition, showOldNodes: this.state.showOldNodes});
+    this.props.setTimestampTo(event.target.value);
   };
 
   handleGetCurrent() {
@@ -83,7 +108,14 @@ class GraphFilter extends React.Component {
   }
 
   handleChangeShowOldNodes() {
-    this.props.setShowOldNodes(!this.props.showOldNodes);
+    // const condition = !this.props.showOldNodes;
+    const condition = !this.state.showOldNodes;
+    this.oldNodesCondition = condition;
+    this.state.showOldNodes = condition;
+    this.state.resetCondition = !condition ? condition : this.handleResetCondition();
+    this.setState({resetCondition: this.state.resetCondition, showOldNodes: this.state.showOldNodes});
+    // this.props.setShowOldNodes(!this.props.showOldNodes);
+    this.props.setShowOldNodes(!this.state.showOldNodes);
   }
 
   handleNodePropertyChange(e) {
@@ -94,21 +126,19 @@ class GraphFilter extends React.Component {
     else {
       delete this.props.query[e.target.id];
     }
-    this.props.setQuery(this.props.query)
+    this.props.setQuery(this.props.query);
+    this.handleResetCondition();
   }
 
   handleSelectPropertyChange(e, id) {
     if (e.value != "") {
-
-      this.props.query[id] = e.value
+      this.props.query[id] = e.value;
     }
     else {
       delete this.props.query[id];
     }
     this.props.setQuery(this.props.query)
-
-
-
+    this.handleResetCondition();
   }
 
   handleApplyFilters() {
@@ -116,6 +146,9 @@ class GraphFilter extends React.Component {
       this.props.getFilteredGraph(this.props.query, this.props.selectedGraph, this.props.nodesNumber);
     }
     this.props.setFilteredTimestamps(this.props.timestamps, this.props.timestampFrom, this.props.timestampTo);
+    this.handleResetCondition();
+    console.log("this.props.query");
+    console.log(this.props.query);
     toast.success("Filters Applied", {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast',
@@ -127,7 +160,14 @@ class GraphFilter extends React.Component {
     document.getElementById("filter-form").reset();
     this.props.getTopNodes(this.props.selectedGraph, this.props.nodesNumber);
     this.props.getAllTimestamps(this.props.selectedGraph);
-    this.props.setFilterBtn(false)
+    for(let q in this.props.query){
+      delete this.props.query[q];
+    }
+    this.fromCondition = true;
+    this.toCondition = true;
+    this.oldNodesCondition = true;
+    this.state.resetCondition = true;
+    this.setState({resetCondition: this.state.resetCondition, showOldNodes: this.props.showOldNodes});
     toast.success("Filters Cleard", {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast',
@@ -137,7 +177,8 @@ class GraphFilter extends React.Component {
 
   render() {
     const { classes } = this.props;
-    var showOldNodes = this.props.showOldNodes;
+    // var showOldNodes = this.props.showOldNodes;
+    var showOldNodes = this.state.showOldNodes;
 
     if (this.props.topNodes.nodes != null && this.props.topNodes.nodes != undefined) {
       return (
@@ -161,9 +202,9 @@ class GraphFilter extends React.Component {
                 control={
                   <Checkbox
                     id="show-old-nodes-check"
-                    checked={this.props.showOldNodes}
+                    checked={this.state.showOldNodes}
                     onChange={this.handleChangeShowOldNodes}
-                    value={`${this.props.showOldNodes}`}
+                    value={`${this.state.showOldNodes}`}
                     color="primary"
                   />
                 }
@@ -248,9 +289,11 @@ class GraphFilter extends React.Component {
                   {Object.keys(this.props.topNodes.nodes[0]).map(element => {
                     if (typeof this.props.topNodes.nodes[0][element] != 'number' && element != 'Latitude'
                       && element != 'Longitude' && element != 'size' && element != 'color') {
+                        
                       return <Grid key={"properties" + element} item>
-
-                        {(this.props.propertyValues[element]) != undefined ?
+                      
+                        {
+                          (this.props.propertyValues[element]) != undefined ?
                           <Grid
                             direction='column'
                             container>
@@ -259,7 +302,7 @@ class GraphFilter extends React.Component {
                             </Grid>
                             <Grid className="select-search-extra" item>
                               
-                              <SelectSearch
+                              <SelectSearch                                
                                 id={element}
                                 key={element}
                                 search={true}
@@ -267,7 +310,7 @@ class GraphFilter extends React.Component {
                                 options={this.props.propertyValues[element]}
                                 onChange={(e) => this.handleSelectPropertyChange(e, element)}
                                 placeholder={element}
-                                value={{ label: this.props.query[element], value: this.props.query[element] }}
+                                value={this.props.query[element]}
                               />
                             </Grid>
                           </Grid>
@@ -337,6 +380,7 @@ class GraphFilter extends React.Component {
                   <SelectMaterial
                     value={this.props.timestampFrom}
                     onChange={this.handleTimestampFromChange}
+                    placeholder="Select a date"
                     inputProps={{
                       name: 'timestamp-from-selector',
                       id: 'timestamp-from-selector',
@@ -362,7 +406,7 @@ class GraphFilter extends React.Component {
 
                   <SelectMaterial
                     value={this.props.timestampTo}
-                    onChange={this.handleTimestampFromTo}
+                    onChange={this.handleTimestampToChange}
                     inputProps={{
                       name: 'timestamp-to-selector',
                       id: 'timestamp-to-selector',
@@ -388,7 +432,7 @@ class GraphFilter extends React.Component {
               <Button
                 variant="contained" className={classes.button}
                 onClick={this.handleApplyFilters}
-                disabled={this.props.query == {}}
+                disabled={this.state.resetCondition}
               >
                 Apply Filters
             </Button>
@@ -397,8 +441,8 @@ class GraphFilter extends React.Component {
             <Grid item>
               <Button
                 variant="contained" className={classes.button}
-                onClick={this.handleResetFilters}
-                disabled={this.props.query != {}}
+                onClick={this.handleResetFilters}                
+                disabled={this.state.resetCondition}
               >
                 Reset Filters
             </Button>

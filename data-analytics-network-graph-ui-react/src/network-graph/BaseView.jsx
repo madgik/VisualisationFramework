@@ -39,7 +39,7 @@ class BaseView extends React.Component {
     return (
 
       <div className='App-style'>
-        <div className="headerMenu">
+        <div className="headerMenu" style={{marginRight:0+"px",position:'relative'}}>
           <LoadingBar updateTime={2200} maxProgress={90} progressIncrease={5} showFastActions />
         </div>
 

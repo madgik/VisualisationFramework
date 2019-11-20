@@ -158,9 +158,24 @@ input#standard-bare{
     box-shadow: none;
 }
 
-
 .date-label {
     bottom: 10px;
     right: -100px;
 }
 
+.main-content header {
+    position: relative;
+}
+
+#graph-id-graph-wrapper svg {
+    height: -webkit-fill-available !important;
+    width: 100% !important;
+}
+
+#graph-content {
+    margin-bottom: 2em;
+}
+
+.App-style .headerMenu {
+    height: 0px;
+}
