@@ -69,7 +69,7 @@ class TopMenu extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar openosition="static" >
+        <AppBar openposition="static" >
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
               onClick={this.handleSidebarClick}
