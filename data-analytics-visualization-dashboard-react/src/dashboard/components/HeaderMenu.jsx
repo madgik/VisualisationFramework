@@ -74,7 +74,7 @@ class HeaderMenu extends React.Component {
 
         <Header as='h1'>
         <div className="ui transparent input">
-            <Input
+            <Input style={{width: "570px"}}
                 maxLength={1750}
                 placeholder="Dashboard Title"
                 value={this.props.visualization.dashboardTitle}

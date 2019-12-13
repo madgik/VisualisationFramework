@@ -52,7 +52,7 @@ class DataMinerChartHeader extends React.Component {
         <br></br>
         <br></br>
         <Center>
-          <Button disabled={!this.props.loader.enableCropSimulation} class="ui positive button" onClick={this.getDataMinerData.bind(this)} >Run Crop Simulation</Button>
+          <Button disabled={!this.props.loader.enableCropSimulation} className="ui positive button" onClick={this.getDataMinerData.bind(this)} >Run Crop Simulation</Button>
         </Center>
 
   </div>

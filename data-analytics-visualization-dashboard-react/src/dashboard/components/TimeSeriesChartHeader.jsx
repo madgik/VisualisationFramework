@@ -60,7 +60,7 @@ class TimeSeriesHeader extends React.Component {
     const styles = {
       position: 'absolute',
       right: 25,
-      width: '300px'
+      width: '240px'
 
     }
     const buttonStyle = {
