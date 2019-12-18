@@ -18,13 +18,17 @@ class ChartHeader extends React.Component {
     
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
   }
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
   }
 
-  onFieldChange = (field) => {
+  // onFieldChange = (field) => {
+  //   this.props.onFieldCharacteristicsChange(field);
+  // }
+  onFieldChange(field) {
     this.props.onFieldCharacteristicsChange(field);
   }
 

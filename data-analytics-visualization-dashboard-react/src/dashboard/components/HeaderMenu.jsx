@@ -23,12 +23,19 @@ class HeaderMenu extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
-  handleItemClick = (event) => {
+  // handleItemClick = (event) => {
+  //   console.log(event);  
+  //   this.props.openFileFromWorkspace(event);  
+  // }
+  handleItemClick(event) {
     console.log(event);  
     this.props.openFileFromWorkspace(event);  
-}
+  }
 
-  handleFieldChange = (value) => {
+  // handleFieldChange = (value) => {
+  //   this.props.onFieldChange(value);
+  // }
+  handleFieldChange(value) {
     this.props.onFieldChange(value);
   }
 
@@ -74,7 +81,7 @@ class HeaderMenu extends React.Component {
 
         <Header as='h1'>
         <div className="ui transparent input">
-            <Input style={{width: "570px"}}
+            <Input style={{width:'240px'}}
                 maxLength={1750}
                 placeholder="Dashboard Title"
                 value={this.props.visualization.dashboardTitle}

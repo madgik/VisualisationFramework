@@ -10,10 +10,15 @@ class MapConfiguration extends React.Component {
     super(props);
    
     // This binding is necessary to make `this` work in the callback
-    this.handleClick = this.handleDropDownChange.bind(this);
+    // this.handleClick = this.handleDropDownChange.bind(this);
+    this.handleDropDownChange = this.handleDropDownChange.bind(this);
   }
 
-  handleDropDownChange = (value) => {
+  // handleDropDownChange = (value) => {
+  //   this.props.onSelectYearElementClick(value);
+  // }
+
+  handleDropDownChange(value) {
     this.props.onSelectYearElementClick(value);
   }
 
@@ -37,7 +42,8 @@ class MapConfiguration extends React.Component {
     <div className='ui clearing segment '>
         
         <Dropdown options={options}   value={this.props.visualization.selectedYear}  placeholder='Select Year'  selection  
-        onChange={(e, { value }) => this.handleDropDownChange( value)}/>
+        onChange={(e, { value }) => this.handleDropDownChange( value)}
+        />
         <Button floated='right' disabled={this.props.visualization.disableFetchData} onClick={this.loadData.bind(this)}>Fetch Data</Button>
         
   </div>

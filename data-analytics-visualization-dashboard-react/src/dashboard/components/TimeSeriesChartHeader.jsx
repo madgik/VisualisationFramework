@@ -28,11 +28,17 @@ class TimeSeriesHeader extends React.Component {
 
   }
 
-  updateWeatherDataDropdown = (value) => { 
+  // updateWeatherDataDropdown = (value) => { 
+  //   this.props.setWeatherPropertiesDropdownValue(value, this.props.chartProperties.fieldDataProperties[value].text);    
+  // }
+  updateWeatherDataDropdown(value) { 
     this.props.setWeatherPropertiesDropdownValue(value, this.props.chartProperties.fieldDataProperties[value].text);    
   }
 
-  updateNdviDataDropdown = (value) => {
+  // updateNdviDataDropdown = (value) => {
+  //   this.props.setNdviPropertiesDropdownValue(value, this.props.chartProperties.ndviDataProperties[value].text);
+  // }
+  updateNdviDataDropdown(value) {
     this.props.setNdviPropertiesDropdownValue(value, this.props.chartProperties.ndviDataProperties[value].text);
   }
 
@@ -42,17 +48,26 @@ class TimeSeriesHeader extends React.Component {
 
 
 
-  onCloseModal = () => {
+  // onCloseModal = () => {
+  //   this.props.clickButtonCallback(false);
+  // };
+  onCloseModal() {
     this.props.clickButtonCallback(false);
   };
 
 
 
-  onFieldChange = (field) => {
+  // onFieldChange = (field) => {
+  //   this.props.onFieldCharacteristicsChange(field);
+  // }
+  onFieldChange(field) {
     this.props.onFieldCharacteristicsChange(field);
   }
 
-  onSelect = (value, states) => {
+  // onSelect = (value, states) => {
+  //   this.props.setDateRange(value, this.props.fieldDetails.selectedFieldData);
+  // };
+  onSelect(value, states) {
     this.props.setDateRange(value, this.props.fieldDetails.selectedFieldData);
   };
 

@@ -12,13 +12,18 @@ class DataMinerChartHeader extends React.Component {
     
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
   }
 
   handleClick() {
     this.props.clickButtonCallback(this.props.item);
   }
 
-  onFieldChange = (value) => {
+  // onFieldChange = (value) => {
+  //   this.props.onFieldChange(value, this.props.chartProperties.headerProperties[value].text);
+  // }
+
+  onFieldChange(value) {
     this.props.onFieldChange(value, this.props.chartProperties.headerProperties[value].text);
   }
 

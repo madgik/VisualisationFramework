@@ -34,7 +34,6 @@
 
 .top-n-button {
     margin-right: 1em;
-
 }
 
 .playerbar-controls header {
@@ -109,9 +108,8 @@ input#standard-bare{
     display:flex;
 }
 
-
 .aui .sidebar-controls button {
-    margin:2em;
+    margin-top:2em;
 }
 
 .playerbar-controls input {
@@ -159,7 +157,7 @@ input#standard-bare{
 }
 
 .date-label {
-    bottom: 10px;
+    bottom: -50px;
     right: -100px;
 }
 
@@ -173,9 +171,13 @@ input#standard-bare{
 }
 
 #graph-content {
-    margin-bottom: 2em;
+    margin-top: 2em;
 }
 
 .App-style .headerMenu {
     height: 0px;
+}
+
+.App-style header {
+    z-index:999;
 }

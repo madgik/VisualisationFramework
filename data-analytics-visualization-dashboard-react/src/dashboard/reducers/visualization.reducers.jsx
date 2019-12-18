@@ -265,8 +265,10 @@ const dataDefault = {
   chart1Properties:{
     selectedFieldInYAxis:'mean_temperature',
     selectedFieldInYAxisId:0,
-    selectedNDVIFieldInYAxis:'ndvi_stddev',
-    selectedNDVIFieldInYAxisId:0,
+    // selectedNDVIFieldInYAxis:'ndvi_stddev',
+    // selectedNDVIFieldInYAxisId:0,
+    selectedNDVIFieldInYAxis:'ndvi_avg',
+    selectedNDVIFieldInYAxisId:1,
     fieldDataProperties:[],
     ndviDataProperties:[]
   },
