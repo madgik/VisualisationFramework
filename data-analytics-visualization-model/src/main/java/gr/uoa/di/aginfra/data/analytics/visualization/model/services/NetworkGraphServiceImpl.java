@@ -88,7 +88,6 @@ public class NetworkGraphServiceImpl implements NetworkGraphService {
     }
 
     @Override
-    @Async
     @Transactional
     public int storeNetworkGraph(NetworkGraph graph) throws Exception {
 
