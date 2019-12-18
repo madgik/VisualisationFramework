@@ -38,6 +38,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     //API CALLS
     uploadFile: (file, fileName, privacy, username) => dispatch(configGraphActions.uploadFile(file, fileName, privacy, username)),
+    uploadFromRemoteURL: (remoteUrl, fileName, privacy, username) => dispatch(configGraphActions.uploadFromRemoteURL(remoteUrl, fileName, privacy, username)),
     getAllGraphsMetadata: () => dispatch(configGraphActions.getAllGraphsMetadata()),
     getAllTimestamps: (selectedGraph) => dispatch(controlGraphActions.getAllTimestamps(selectedGraph)),
     setSliderValue: (sliderValue) => dispatch(controlGraphActions.setSliderValue(sliderValue)),

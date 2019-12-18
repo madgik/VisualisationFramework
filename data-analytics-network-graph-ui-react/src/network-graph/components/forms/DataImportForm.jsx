@@ -39,7 +39,11 @@ class DataImportForm extends React.Component {
 
         this.submit = this.submit.bind(this);
         this.file = React.createRef();
-        this.myFile = React.createRef();
+        this.myFile = null;
+        this.state = {
+            myFile: null,
+            myURL: null
+        };
         this.fileName = React.createRef();
         this.privacy = React.createRef();
         this.url = React.createRef();
@@ -69,17 +73,21 @@ class DataImportForm extends React.Component {
     }
 
     onUrlChange(e) {
+        this.setState({myFile:null, myURL:null});
         console.log(e)
         if (e.target.value !== "") {
-            this.props.setUrl(e.target.value)
+            this.props.setUrl(e.target.value);
+            this.setState({myFile:null, myURL:e.target.value});
             this.props.setFileValidation(true);
         }
     }
 
     onFileChange(e) {
+        this.setState({myFile:null, myURL:null});
         if (e.target.files[0] && this.validate(e.target.files[0])) {
             this.props.setFileValidation(true);
-            this.myFile = e.target.files[0];
+            let myFile = e.target.files[0];
+            this.setState({myFile:myFile, myURL:null});
         }
         else {
             this.props.setFileValidation(false);
@@ -97,12 +105,18 @@ class DataImportForm extends React.Component {
     submit(e) {
         e.preventDefault();
 
-        if (this.url === "" && (this.myFile instanceof File)) {
-            this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
+        if(this.state.myURL === null &&  (this.state.myFile instanceof File)) {
+            this.props.uploadFile(this.state.myFile, this.fileName, this.privacy, this.props.username);
         }
-        else if (this.url !== "" && !(this.myFile instanceof File)) {
-            this.props.getFromUrl(this.props.url, this.fileName, this.privacy, this.props.username);
+        else if (this.state.myURL !== "" && !(this.state.myFile instanceof File)) {
+            this.props.uploadFromRemoteURL(this.state.myURL, this.fileName, this.privacy.current.value, this.props.username);
         }
+        // if (this.url === "" && (this.myFile instanceof File)) {
+        //     this.props.uploadFile(this.myFile, this.fileName, this.privacy, this.props.username);
+        // }
+        // else if (this.url !== "" && !(this.myFile instanceof File)) {
+        //     this.props.getFromUrl(this.props.url, this.fileName, this.privacy, this.props.username);
+        // }
     }
 
     render() {
@@ -208,7 +222,6 @@ class DataImportForm extends React.Component {
                                     className="input-file data-import-fix"
                                     type='file'
                                     accept=".json"
-                                    ref={this.myFile}
                                     onChange={this.onFileChange}
                                 />
                             </Grid>

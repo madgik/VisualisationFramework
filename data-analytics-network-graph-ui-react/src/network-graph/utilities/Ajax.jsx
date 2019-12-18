@@ -4,6 +4,8 @@ class Ajax {
 
   NETWORK_GRAPH_FILE_PATH = 'file'
 
+  NETWORK_GRAPH_REMOTE_URL_PATH = 'url'
+
   NETWORK_GRAPH_GRAPHS_PATH = 'graphs'
 
   NETWORK_GRAPH_TOP_NODES = 'top'

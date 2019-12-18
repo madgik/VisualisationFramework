@@ -99,6 +99,7 @@ class ImportModal extends React.Component {
               uploadFile={this.props.uploadFile}
               setFileValidation={this.props.setFileValidation}
               getFromUrl={this.props.getFromUrl}
+              uploadFromRemoteURL={this.props.uploadFromRemoteURL}
               fileDetails={this.props.fileDetails} 
               url={this.props.url}
               setUrl={this.props.setUrl}/>

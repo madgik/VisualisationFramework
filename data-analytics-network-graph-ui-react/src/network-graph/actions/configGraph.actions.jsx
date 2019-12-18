@@ -27,6 +27,7 @@ export const configGraphActions = {
   setUsername,
   setFilename,
   getFromUrl,
+  uploadFromRemoteURL,
   setUrl,
   setTestMessageDelete
 }
@@ -68,6 +69,34 @@ function updateUploadedFile(id) {
     }).then(response => {
       dispatch(setAllGraphsMetadata(response.data));
       // console.log("get graphs"+response.data)
+    }).catch(_ => { });
+  }
+}
+
+function uploadFromRemoteURL(remoteURL, fileName, privacy, username) {
+  return function (dispatch) {
+    dispatch(showLoading());
+
+    // Initial FormData
+    const formData = new FormData();
+    // formData.append("url", remoteURL);
+    formData.append("name", fileName);
+    formData.append("privacy", privacy);
+    formData.append("username", username)
+    formData.append("url", remoteURL)
+
+    var resourceUrl = Ajax.buildUrl(Ajax.NETWORK_GRAPH_BASE_PATH + '/' + Ajax.NETWORK_GRAPH_REMOTE_URL_PATH);
+    return axios.post(resourceUrl, formData, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }).then(response => {
+      dispatch(hideLoading());
+      dispatch(setOpenImportModal(false));
+      // dispatch(setOpenConfigGraphModal(false));
+      dispatch(setModalIsOpen(true));
+      dispatch(setModalMessage('uploadStarted'));
+      // console.log("file uploaded"+response)
     }).catch(_ => { });
   }
 }

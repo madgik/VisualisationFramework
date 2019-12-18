@@ -43,8 +43,8 @@ class App extends React.Component {
 
 App.defaultProps = {
   routing: {
-    // baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
-    baseUrl: 'http://192.168.32.125:8081/data-analytics-visualization-service',
+    baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
+    // baseUrl: 'http://192.168.32.125:8081/data-analytics-visualization-service',
     username: 'testTenant'
   },
   size: {
