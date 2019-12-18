@@ -75,7 +75,9 @@ class ConfigurationForm extends React.Component {
                 getDataFromUrl={this.props.getDataFromUrl}
                 setCommentCharacter={this.props.setCommentCharacter}
                 commentCharacter={this.props.commentCharacter}
-                onCheckLayerChange={this.props.onCheckLayerChange} /> : ''}
+                onCheckLayerChange={this.props.onCheckLayerChange} 
+                postURLOfFile={this.props.postURLOfFile}
+                /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor
                 validation={this.props.validation}

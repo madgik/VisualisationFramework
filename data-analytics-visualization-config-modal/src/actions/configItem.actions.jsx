@@ -12,6 +12,7 @@ export const  configItemActions = {
   showConfigurationData,
   updateEditedItem,
   uploadFile,
+  postURLOfFile,
   removeFile,
   updateJoinField,
   addFilter,
@@ -125,6 +126,27 @@ function setGeoanalyticsLayers(layers){
 
 function updateCheckLayer(value) {
   return {type:configItemConstants.UPDATE_CHECK_LAYER, value}
+}
+
+function postURLOfFile(fileURL, type, delimiter, commentCharacter) {
+  return function (dispatch) {
+    
+      const formData = new FormData();
+      formData.append("url", fileURL);
+      // formData.append("name", file.name);
+      formData.append("type", type);
+      formData.append("delimiter", delimiter);
+      formData.append("comment", commentCharacter);
+
+      return documentService.postDocumentURL(formData).then(response => {
+        dispatch(configItemActions.setLoader(false));
+
+        dispatch(updateUploadedFile(response.data));
+      }).catch(_ => {
+        dispatch(configItemActions.setLoader(false));
+      });
+
+  }
 }
 
 function uploadFile(files, type, delimiter, commentCharacter) {

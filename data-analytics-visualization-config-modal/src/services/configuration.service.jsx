@@ -7,7 +7,8 @@ export const configurationService = {
   postConfiguration,
   putConfiguration,
   deleteConfiguration,
-  getDataFromUrl
+  getDataFromUrl,
+  postURLOfFile
 }
 
 function getConfigurations() {
@@ -36,6 +37,11 @@ function deleteConfiguration(id) {
 }
 
 function getDataFromUrl(url) {
+  return axios.get(url, { 
+headers: {"Access-Control-Allow-Origin": "*"}});
+}
+
+function postURLOfFile(url) {
   return axios.get(url, { 
 headers: {"Access-Control-Allow-Origin": "*"}});
 }

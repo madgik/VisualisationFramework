@@ -68,6 +68,7 @@ class ConfigurationModalInner extends React.Component {
             url={this.props.url}
             setUrl={this.props.setUrl}
             getDataFromUrl={this.props.getDataFromUrl}
+            postURLOfFile={this.props.postURLOfFile}
             />
             <div  >
 
@@ -122,10 +123,14 @@ const mapDispatchToProps = dispatch => ({
   showConfigurationData: (value) => dispatch(configItemActions.showConfigurationData(value)),
   setConfigurationData: (value) => dispatch(configItemActions.setConfigurationData(value)),
   setUrl: (url) => dispatch(configItemActions.setUrl(url)),
-  getDataFromUrl: (url, type, delimiter, commentCharacter) =>{    
+  getDataFromUrl: (url, type, delimiter, commentCharacter) =>{
     dispatch(configItemActions.setLoader(true));
     dispatch(configItemActions.getDataFromUrl(url, type, delimiter, commentCharacter))
-  } 
+  },
+  postURLOfFile: (url, type, delimiter, commentCharacter) =>{
+    dispatch(configItemActions.setLoader(true));
+    dispatch(configItemActions.postURLOfFile(url, type, delimiter, commentCharacter))
+  },
 })
 
 export default connect(

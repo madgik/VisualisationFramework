@@ -3,14 +3,13 @@ import React from 'react'
 import Dropzone from 'react-dropzone'
 
 import { Grid, Header, Divider, List, Icon } from 'semantic-ui-react'
-import { Input, Form } from 'semantic-ui-react'
+import { Input, Form, Dropdown } from 'semantic-ui-react'
 
 import ConfigurationDataJoinEditor from './ConfigurationDataJoinEditor'
 import UploadDataMessage from './UploadDataMessage';
 import ConfigurationDataGeoanalyticsSelector from './ConfigurationDataGeoanalyticsSelector';
 import { css } from '@emotion/core';
 import Center from 'react-center';
-
 
 // Another way to import. This is recommended to reduce bundle size
 import SyncLoader from 'react-spinners/SyncLoader';
@@ -37,15 +36,26 @@ class ConfigurationDataForm extends React.Component {
     this.props.setUrl(e.target.value, this.props.delimiter, this.props.commentCharacter);
   }
 
-  handleGetDataFromUrl() {
-    var type = this.props.url.substring(this.props.url.lastIndexOf('.') + 1, this.props.url.length) || this.props.url;
+  // handleGetDataFromUrl() {
+  //   var type = this.props.url.substring(this.props.url.lastIndexOf('.') + 1, this.props.url.length) || this.props.url;
+  //   if (type === "json") {
+  //     type = "JSON";
+  //   }
+  //   else {
+  //     type = "Records";
+  //   }
+  //   this.props.getDataFromUrl(this.props.url, type, this.props.delimiter, this.props.commentCharacter);
+  // }
+
+  handleGetDataFromUrl() {    
+      var type = this.props.url.substring(this.props.url.lastIndexOf('.') + 1, this.props.url.length) || this.props.url;
     if (type === "json") {
       type = "JSON";
     }
     else {
       type = "Records";
     }
-    this.props.getDataFromUrl(this.props.url, type, this.props.delimiter, this.props.commentCharacter);
+    this.props.postURLOfFile(this.props.url, type, this.props.delimiter, this.props.commentCharacter);
   }
 
   handleDelimiterChange(e) {
@@ -143,7 +153,8 @@ class ConfigurationDataForm extends React.Component {
 
           <div>
 
-            {(!this.props.geoanalytics.checked) ?
+            {
+              (!this.props.geoanalytics.checked) ?
 
               <Dropzone onDrop={this.handleFileDropped.bind(this)}>
                 <p>Drop a file here or click to select one</p>
@@ -171,21 +182,24 @@ class ConfigurationDataForm extends React.Component {
 
       </div>
       <Grid>
-        <Grid.Row>
+        {/* <Grid.Row>
         <h3>Or import dataset from Url</h3>
-</Grid.Row>
+</Grid.Row> */}
         <Grid.Row>
 
-            <Input
-              tyle={{ width:"500px" }}
-              placeholder='Label'
+        <Grid.Column width={4}>
+        <h3>Or import dataset from Url</h3>
+</Grid.Column>
+<Grid.Column width={8}>
+            <Input fluid
+              placeholder='FIle URL'
+              onChange={(e) => this.handleUrlChange(e)}
               action= {{
                 content:'Get Data',
                 onClick: this.handleGetDataFromUrl
               }}
-              onChange={(e) => this.handleUrlChange(e)} />
-
-
+               />
+              </Grid.Column>
           </Grid.Row>
             </Grid>
     </div>);
