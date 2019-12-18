@@ -2,7 +2,6 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.graph.Network;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.config.NetworkGraphConfig;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.HasWeight;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.netgraph.NetworkGraph;
@@ -26,6 +25,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
@@ -50,7 +51,6 @@ public class NetworkGraphController {
 		this.networkGraphConfig = networkGraphConfig;
 	}
 
-
 	@RequestMapping(value = "file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> importDataFile(@RequestParam("file") MultipartFile file,
 											@RequestParam("name") String graphName,
@@ -69,6 +69,47 @@ public class NetworkGraphController {
 				int results = 0;
 
 				results = networkGraphService.storeNetworkGraph(networkGraph);
+
+				if (results > 0) {
+
+				}
+				System.out.println("Im here but after");
+
+				UriComponents uriComponents = UriComponentsBuilder.newInstance()
+						.path(NETWORK_GRAPH_BASE_PATH + "/{id}")
+						.buildAndExpand(networkGraph.getGraphId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		});
+		System.out.println("servlet thread freed");
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+
+	@RequestMapping(value = "/url", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> importDataFromURL(@RequestParam("url") String fileURL,
+			@RequestParam("name") String graphName, @RequestParam("privacy") String privacy, @RequestParam("username") String username) throws Exception {
+
+		DeferredResult<ResponseEntity<?>> output = new DeferredResult<>();
+		ForkJoinPool.commonPool().submit(() -> {
+			try {
+				Util u = new Util().downloadFileFromURL(fileURL);
+
+				NetworkGraphDto networkGraphDto = mapper.readValue(Files.readAllBytes(Paths.get(u.getDataSet().getPath())), NetworkGraphDto.class);
+
+				NetworkGraph networkGraph = modelMapper.map(networkGraphDto, graphName, username, privacy);
+
+				int results = 0;
+
+				try {
+					results = networkGraphService.storeNetworkGraph(networkGraph);
+				} catch	(Exception ex) {
+					ex.printStackTrace();
+				}
+
 
 				if (results > 0) {
 

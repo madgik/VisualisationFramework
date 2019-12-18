@@ -51,4 +51,5 @@ public class BaseController {
 		logger.error(exception.getMessage(), exception);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
 	}
+
 }
