@@ -998,7 +998,8 @@ function getSelectedFieldData(){
         let chart1 =  Object.assign({}, getState().data.chart1);
         chart1.timeSeries = response.data;
         chart1.xAxisLabel = "Date";
-        chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis;
+        const units = response.data && response.data.length > 0 && response.data[0].units ? ' (' + response.data[0].units + ')' : '';
+        chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis + units;
         dispatch(reloadRelatedFieldData(chart1));
     })
     .catch(response => {
@@ -1076,7 +1077,7 @@ function enableDataMinerFetch() {
   {
     let crop_code = getState().visualization.selectedLayer.properties.crop_code;
     let year = getState().visualization.selectedLayer.properties.year;
-    if (cropCodes.indexOf(crop_code) > -1 && year !== 2019)
+    if (cropCodes.indexOf(crop_code) > -1)// && year !== 2019)
       return true;
 
     return false;  

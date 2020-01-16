@@ -1,6 +1,7 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.http;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.FeatureCollection;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.interceptors.RequestLoggingInterceptor;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.mapper.XMLMapper;
 import org.apache.http.client.config.RequestConfig;
@@ -16,7 +17,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.geojson.FeatureCollection;
 import org.springframework.http.*;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -42,7 +42,6 @@ import java.security.cert.X509Certificate;
 import java.util.*;
 
 public class HttpClient extends RestTemplate {
-
     private static HttpClient instance = null;
 
     private HttpClient() {
@@ -60,7 +59,7 @@ public class HttpClient extends RestTemplate {
         return instance;
     }
 
-    public FeatureCollection  getRequest(String url, Map<String, String> headers, Map<String, Object> parameters){
+    public FeatureCollection getRequest(String url, Map<String, String> headers, Map<String, Object> parameters){
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         restTemplate.setInterceptors(Collections.singletonList(new RequestLoggingInterceptor()));
         HttpEntity<String> entity = null;

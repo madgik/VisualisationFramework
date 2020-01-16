@@ -13,6 +13,7 @@ public class TimeSeries {
 	private List<Object> xAxisData;
 	private List<BigDecimal> yAxisData;
 	private List<String> documents;
+	private String units;
 
 	public String getName() {
 		return name;
@@ -62,6 +63,10 @@ public class TimeSeries {
 	public void setDocuments(List<String> documents) {
 		this.documents = documents;
 	}
+
+	public String getUnits() { return units; }
+
+	public void setUnits(String units) { this.units = units; }
 
 	public TimeSeries(String name) {
 		this.name = name;

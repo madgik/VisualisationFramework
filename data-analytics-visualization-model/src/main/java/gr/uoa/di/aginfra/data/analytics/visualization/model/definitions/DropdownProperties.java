@@ -27,9 +27,10 @@ public class DropdownProperties {
         this.text = text;
         this.key = key;
         this.value = value;
-        ScientificUnit scientificUnit = ScientificUnit.get(unit);
-        if(scientificUnit != null)
-            this.unit = scientificUnit.toString();
+        this.unit = unit;
+//        ScientificUnit scientificUnit = ScientificUnit.get(unit);
+//        if(scientificUnit != null)
+//            this.unit = scientificUnit.toString();
 //        for(ScientificUnit env : ScientificUnit.values())
 //        {
 //            System.out.println( ScientificUnit.get(env.getScientificUnit()));

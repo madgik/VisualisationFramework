@@ -15,7 +15,7 @@ const visualizationDefault = {
   },
   options: [],
   selectedLayer:'',
-  selectedYear:2018,
+  selectedYear:2019,
   nearestMeteoStation:'',
   currentGeometry:'',
   disableFetchData:true,

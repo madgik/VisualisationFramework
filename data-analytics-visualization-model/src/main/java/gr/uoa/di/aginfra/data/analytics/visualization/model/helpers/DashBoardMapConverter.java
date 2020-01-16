@@ -1,15 +1,8 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
-import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
-import org.geojson.Feature;
-import org.geojson.FeatureCollection;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DashBoardMapConverter {
 

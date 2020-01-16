@@ -1,20 +1,15 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.GeometryType;
-import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.AxisDataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.visualization.data.TimeSeries;
 import org.decimal4j.util.DoubleRounder;
-import org.geojson.*;
-import org.json.JSONObject;
-import org.omg.CORBA.TIMEOUT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,7 +27,7 @@ public class DashBoardServiceImpl implements DashBoardService {
     private HttpClient httpClient = HttpClient.getInstance();
 
     @Override
-    public FeatureCollection  get(String url, Map<String, Object> parameters, GeometryType geometryType) throws Exception {
+    public FeatureCollection get(String url, Map<String, Object> parameters, GeometryType geometryType) throws Exception {
         boolean hasMoreData = true;
         Map<String, String> headers = new HashMap<>();
         headers.put(TOKEN_TAG,token);
@@ -82,6 +77,13 @@ public class DashBoardServiceImpl implements DashBoardService {
         List<Object> xAxisData = new ArrayList<>();
         List<BigDecimal> yAxisData = new ArrayList<>();
 
+        Map<String,String> columnNameToUnitMap = new HashMap<String, String>();
+        if(featureCollection.getMetadata() != null) {
+            featureCollection.getMetadata().forEach(md -> {
+                columnNameToUnitMap.put(md.getColumn_name(), md.getUnits());
+            });
+        }
+
         for(Feature feature : featureCollection){
             if(feature.getProperties().get(yAxisField) != null) {
                 boolean skip = false;
@@ -95,6 +97,7 @@ public class DashBoardServiceImpl implements DashBoardService {
             }
         }
 
+        timeSeries.setUnits(columnNameToUnitMap.get(yAxisField));
         timeSeries.setXAxisData(xAxisData);
         timeSeries.setYAxisData(yAxisData);
         timeSeries.setXAxisDataType(AxisDataType.Date);

@@ -3,6 +3,8 @@ package gr.uoa.di.aginfra.data.analytics.visualization.service.controllers;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.*;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.CSVReader;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.Feature;
+import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.FeatureCollection;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.helpers.DashBoardMapConverter;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.http.HttpClient;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.repositories.DataDocumentRepository;
@@ -14,8 +16,6 @@ import gr.uoa.di.aginfra.data.analytics.visualization.service.vres.VREResolver;
 import mil.nga.sf.geojson.FeatureConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.geojson.Feature;
-import org.geojson.FeatureCollection;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,10 +206,16 @@ public class DashBoardController {
             if (!fieldDetails.getFeatures().isEmpty()) {
 
                 List<String> properties = new ArrayList(fieldDetails.getFeatures().get(0).getProperties().keySet());
+                Map<String,String> columnNameToUnitMap = new HashMap<String, String>();
+                if(fieldDetails.getMetadata() != null) {
+                    fieldDetails.getMetadata().forEach(md -> {
+                        columnNameToUnitMap.put(md.getColumn_name(), md.getUnits());
+                    });
+                }
                 List<DropdownProperties> dropdownPropertiesList = new ArrayList<>();
                 for (int i = 0, j = 0; i < properties.size(); i++) {
                     if (!properties.get(i).equals("meteostationid") && !properties.get(i).equals("datum")) {
-                        dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j));
+                        dropdownPropertiesList.add(new DropdownProperties(j, properties.get(i), j, columnNameToUnitMap.get(properties.get(i))));
                         j++;
 
                     }
