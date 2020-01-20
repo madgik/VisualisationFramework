@@ -57,3 +57,4 @@ data-analytics-visualization-config-ui/node_modules/
 UIWorkspace.code-workspace
 .idea/
 *.iml
+.vscode/
