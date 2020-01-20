@@ -19,7 +19,7 @@ public interface ConfigurationService {
 
 	String storeConfiguration(Configuration item) throws Exception;
 
-	String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content) throws Exception;
+	String storeDataDocument(String vre, String name, DataType type, boolean isDataReference, byte[] content, String delimiter, String commentChar) throws Exception;
 
 	void deleteConfiguration(String id) throws Exception;
 }

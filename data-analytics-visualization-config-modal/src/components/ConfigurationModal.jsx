@@ -26,11 +26,16 @@ class ConfigurationModal extends React.Component {
       }))
     );
   }
-
+  
+  extractGeoanalyticsLayers() {
+      this.store.dispatch(configItemActions.updateGeoanalyticsLayers());
+  }
+  
   componentWillMount() {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     Ajax.setIsLocalDeployment(this.props.isLocalDeployment);
     ErrorHandler.init(this.store);
+    this.store.dispatch(configItemActions.getAllConfigurations());
   }
 
   componentDidMount() {
@@ -41,11 +46,13 @@ class ConfigurationModal extends React.Component {
     this.checkRefresh();
   }
 
+
   checkRefresh() {
     if (this.props.isNew !== this.isNew ||
       this.props.editItemId !== this.editItemId) {
       this.isNew = this.props.isNew;
       this.editItemId = this.props.editItemId;
+      this.store.dispatch(configItemActions.getAllConfigurations());
       if (this.isNew || !this.editItemId || this.editItemId.length === 0) {
         this.store.dispatch(configItemActions.createConfiguration());
       } else {
@@ -60,6 +67,7 @@ class ConfigurationModal extends React.Component {
         <ConfigurationModalInner
           allowDelete={this.props.allowDelete}
           open={this.props.open}
+          isNew = {this.props.isNew}
           onModalClose={this.props.onModalClose}
           onDeleteComplete={this.props.onDeleteComplete}
           onSaveComplete={this.props.onSaveComplete}

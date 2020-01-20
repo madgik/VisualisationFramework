@@ -18,8 +18,15 @@
 		<Logger name="gr.cite.regional.data.collection.dataaccess" level="debug" additivity="false">
 			<AppenderRef ref="Console" />
 		</Logger>
+<!--		<logger name="org.springframework.data.neo4j" level="debug" additivity="false">-->
+<!--			<AppenderRef ref="Console" />-->
+<!--		</logger>-->
+<!--		<logger name="org.neo4j.ogm.drivers.bolt.request.BoltRequest" level="debug" additivity="false">-->
+<!--			<AppenderRef ref="Console" />-->
+<!--		</logger>-->
 		<Root level="info">
 			<AppenderRef ref="Console" />
 		</Root>
+
 	</Loggers>
 </Configuration>

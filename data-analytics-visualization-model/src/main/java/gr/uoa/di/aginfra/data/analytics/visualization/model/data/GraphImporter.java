@@ -9,18 +9,18 @@ import gr.uoa.di.aginfra.data.analytics.visualization.model.exceptions.InvalidFo
 import java.nio.charset.StandardCharsets;
 
 public class GraphImporter implements RawDataImporter {
-	@Override
-	public void importData(byte[] content, DataDocument dataDocument) throws Exception {
-		try {
-			String stringContent = new String(content, StandardCharsets.UTF_8.name());
+		@Override
+		public void importData(byte[] content, DataDocument dataDocument) throws Exception {
+			try {
+				String stringContent = new String(content, StandardCharsets.UTF_8.name());
 
-			ObjectMapper mapper = new ObjectMapper();
+				ObjectMapper mapper = new ObjectMapper();
 
-			Graph graph = mapper.readValue(stringContent, Graph.class);
+				Graph graph = mapper.readValue(stringContent, Graph.class);
 
-			dataDocument.setGraph(graph);
-		} catch (Exception e) {
-			throw new InvalidFormatException("Invalid graph format provided", e);
+				dataDocument.setGraph(graph);
+			} catch (Exception e) {
+				throw new InvalidFormatException("Invalid graph format provided", e);
+			}
 		}
-	}
 }

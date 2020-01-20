@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Controller
 @CrossOrigin(exposedHeaders = "Location")
 @RequestMapping("/" + DataDocumentController.DATA_DOCUMENT_BASE_PATH)
@@ -63,12 +66,12 @@ public class DataDocumentController extends BaseController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<String> post(@RequestParam("file") MultipartFile[] file,
+	public ResponseEntity<String> postFile(@RequestParam("file") MultipartFile[] file,
+									   @RequestParam("delimiter") String delimiter,
+									   @RequestParam("comment") String commentChar,
 									   String name,
 									   DataType type,
 									   Boolean isDataReference) throws Exception {
-
-
 
 
 		String id = configurationService.storeDataDocument(
@@ -76,7 +79,7 @@ public class DataDocumentController extends BaseController {
 				name,
 				type,
 				isDataReference != null ? isDataReference.booleanValue() : false,
-				file[0].getBytes());
+				file[0].getBytes(), delimiter, commentChar);
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
 				.path(DATA_DOCUMENT_BASE_PATH + "/{id}")
@@ -84,4 +87,29 @@ public class DataDocumentController extends BaseController {
 
 		return ResponseEntity.created(uriComponents.toUri()).body(id);
 	}
+
+	@RequestMapping(value = "/url/{url}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> postURL(@RequestParam("url") String url,
+									   @RequestParam("delimiter") String delimiter,
+									   @RequestParam("comment") String commentChar,
+									   String name, DataType type, Boolean isDataReference) throws Exception {
+
+//		if(name == null)
+//			name = UUID.randomUUID().toString();
+
+		Util u = new Util().downloadFileFromURL(url);
+		name = u.getDataSet().getName();
+
+		String id = configurationService.storeDataDocument(
+				vreResolver.resolve(), name, u.getDataType(),
+				isDataReference != null ? isDataReference.booleanValue() : false,
+				Files.readAllBytes(Paths.get(u.getDataSet().getPath())), delimiter, commentChar);
+
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.path(DATA_DOCUMENT_BASE_PATH + "/{id}")
+				.buildAndExpand(id);
+
+		return ResponseEntity.created(uriComponents.toUri()).body(id);
+	}
+
 }

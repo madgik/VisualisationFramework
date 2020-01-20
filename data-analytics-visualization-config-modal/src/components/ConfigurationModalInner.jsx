@@ -14,8 +14,12 @@ import ConfigurationForm from './ConfigurationForm'
 
 import ConfigurationErrorPanel from './ConfigurationErrorPanel'
 
-import { Button, Modal, Message } from 'semantic-ui-react'
+import { Button, Modal, Message, Loader } from 'semantic-ui-react'
 
+var positionRelative = {
+  position: 'relative'
+
+}
 class ConfigurationModalInner extends React.Component {
 
   constructor(props) {
@@ -26,15 +30,19 @@ class ConfigurationModalInner extends React.Component {
       }))
     );
   }
+  
 
   render() {
     return (
       <Modal open={this.props.open} size="fullscreen" onClose={this.props.onModalClose}>
         <Modal.Header>Configuration</Modal.Header>
         <Modal.Content>
+          <div>
           <ConfigurationForm
+            isNew = {this.props.isNew}
             data={this.props.data}
             menuState={this.props.menu}
+            geoanalytics={this.props.geoanalytics}
             validation={this.props.validation}
             onFieldChange={this.props.onFieldChange}
             onFileDropped={this.props.onFileDropped}
@@ -44,7 +52,28 @@ class ConfigurationModalInner extends React.Component {
             onFilterAddition={this.props.onFilterAddition}
             onFilterFieldChange={this.props.onFilterFieldChange}
             onFilterRemoval={this.props.onFilterRemoval}
-            onTransformationAddition={this.props.onTransformationAddition} />
+            onTransformationAddition={this.props.onTransformationAddition}
+            onCheckLayerChange={this.props.onCheckLayerChange}
+            setDelimiter={this.props.setDelimiter}
+            delimiter={this.props.delimiter}
+            loading={this.props.loading}
+            setCommentCharacter={this.props.setCommentCharacter}
+            commentCharacter={this.props.commentCharacter}         
+            configurations={this.props.configurations}
+            configOptions={this.props.configOptions}
+            selectedConfiguration={this.props.selectedConfiguration}
+            setSelectedConfiguration={this.props.setSelectedConfiguration}
+            showConfigurationData={this.props.showConfigurationData}
+            setConfigurationData={this.props.setConfigurationData}
+            url={this.props.url}
+            setUrl={this.props.setUrl}
+            getDataFromUrl={this.props.getDataFromUrl}
+            postURLOfFile={this.props.postURLOfFile}
+            />
+            <div  >
+
+          </div>
+            </div>
           {this.props.validationPanelMessages && this.props.validationPanelMessages.length > 0 ?
             <ConfigurationErrorPanel validation={this.props.validationPanelMessages} /> : ''}
           {this.props.errorMessage && this.props.errorMessage.length > 0 ?
@@ -71,7 +100,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onFieldChange: (data, validation) => dispatch(configItemActions.updateEditedItem(data, validation)),
-  onFileDropped: (files, type) => dispatch(configItemActions.uploadFile(files, type)),
+  onFileDropped: (files, type, delimiter,commentCharacter) => {
+    dispatch(configItemActions.setLoader(true));
+
+    dispatch(configItemActions.uploadFile(files, type, delimiter, commentCharacter))
+  
+  },
   onRemoveFileClick: (index) => dispatch(configItemActions.removeFile(index)),
   onJoinFieldChange: (source, field) => dispatch(configItemActions.updateJoinField(source, field)),
   onFilterAddition: (filter) => dispatch(configItemActions.addFilter(filter)),
@@ -81,7 +115,22 @@ const mapDispatchToProps = dispatch => ({
   //onModalClose: () => dispatch(configItemActions.closeItemEdit()),
   onSavePressed: (callback) => dispatch(configItemActions.storeConfiguration(callback)),
   onDeletePressed: (callback) => dispatch(configItemActions.deleteConfiguration(callback)),
-  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation))
+  onTransformationAddition: (transformation) => dispatch(configItemActions.addTransformation(transformation)),
+  onCheckLayerChange: (value) => dispatch(configItemActions.updateCheckLayer(value)),
+  setDelimiter: (value) => dispatch(configItemActions.setDelimiter(value)),
+  setCommentCharacter: (value) => dispatch(configItemActions.setCommentCharacter(value)),
+  setSelectedConfiguration: (value) => dispatch(configItemActions.setSelectedConfiguration(value)),
+  showConfigurationData: (value) => dispatch(configItemActions.showConfigurationData(value)),
+  setConfigurationData: (value) => dispatch(configItemActions.setConfigurationData(value)),
+  setUrl: (url) => dispatch(configItemActions.setUrl(url)),
+  getDataFromUrl: (url, type, delimiter, commentCharacter) =>{
+    dispatch(configItemActions.setLoader(true));
+    dispatch(configItemActions.getDataFromUrl(url, type, delimiter, commentCharacter))
+  },
+  postURLOfFile: (url, type, delimiter, commentCharacter) =>{
+    dispatch(configItemActions.setLoader(true));
+    dispatch(configItemActions.postURLOfFile(url, type, delimiter, commentCharacter))
+  },
 })
 
 export default connect(

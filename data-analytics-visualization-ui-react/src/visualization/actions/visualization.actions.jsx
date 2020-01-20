@@ -2,6 +2,8 @@ import axios from 'axios';
 import { visualizationConstants } from '../constants'
 import { documentActions } from '.'
 import Ajax from '../utilities/Ajax';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export const visualizationActions = {
   requestVisualizations,
@@ -14,9 +16,31 @@ export const visualizationActions = {
   changeChartType,
   updateFilterAndReload,
   reloadData,
-  updateFilter
+  updateFilter,
+  showNetworkError,
+  showEmptyConfigurations,
+  setSliderValue
 }
 
+const options = {
+  title: 'Alert',
+  message: 'An unexpected error has occurred. Please try again later.',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
+
+const emptryConfigurationsOptions = {
+  title: 'Alert',
+  message: 'No configurations for charts are specified.',
+  buttons: [
+    {
+      label: 'Close'
+    }
+  ]
+}
 /*
  * action creators
  */
@@ -27,9 +51,12 @@ function requestVisualizations() {
     return axios.get(resourceUrl)
       .then(response => {
         dispatch(loadVisualizations(response.data))
+        if(response.data.length === 0){
+          dispatch(showEmptyConfigurations());
+        }
       })
       .catch(response => {
-        alert(response);
+        dispatch(showNetworkError());
       });
   }
 }
@@ -37,6 +64,11 @@ function requestVisualizations() {
 function loadVisualizations(options) {
   return { type: visualizationConstants.LOAD_VISUALIZATIONS, options };
 }
+
+function setSliderValue(sliderSelectedValue) {
+  return { type: visualizationConstants.UPDATE_SLIDER, sliderSelectedValue };
+}
+
 
 function changeVisualizationAndLoad(selected) {
 
@@ -117,11 +149,28 @@ function updateFilterAndReload(field, value) {
       .catch(response => {
         alert(response);
       })
+      
   }
 }
 
 function reloadData(data) {
   return { type: visualizationConstants.RELOAD_DATA, data };
+}
+
+function showNetworkError()
+{
+  return function (dispatch) {
+    confirmAlert(options);
+   
+  }
+
+}
+
+function showEmptyConfigurations(){
+  return function (dispatch) {
+    confirmAlert(emptryConfigurationsOptions);
+   
+  }
 }
 
 function updateFilter(field, value) {

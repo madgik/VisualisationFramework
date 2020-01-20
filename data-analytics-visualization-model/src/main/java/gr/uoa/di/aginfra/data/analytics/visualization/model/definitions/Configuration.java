@@ -16,6 +16,8 @@ public class Configuration {
 
 	private String vre;
 
+//	private String delimiter;
+
 	private VisualizationType type;
 
 	private List<VisualizationType> availableTypes;
@@ -267,4 +269,12 @@ public class Configuration {
 	public void setActiveDocuments(int activeDocuments) {
 		this.activeDocuments = activeDocuments;
 	}
+
+//	public String getDelimiter() {
+//		return delimiter;
+//	}
+//
+//	public void setDelimiter(String delimiter) {
+//		this.delimiter = delimiter;
+//	}
 }

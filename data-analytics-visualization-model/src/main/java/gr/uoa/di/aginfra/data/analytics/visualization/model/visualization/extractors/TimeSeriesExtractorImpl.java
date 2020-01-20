@@ -90,7 +90,7 @@ public class TimeSeriesExtractorImpl extends DataSetManipulator implements TimeS
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			String json = mapper.writeValueAsString(timeSeries);
-			System.out.println("JSON = " + json);
+			//System.out.println("JSON = " + json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

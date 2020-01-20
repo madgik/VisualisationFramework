@@ -1,5 +1,6 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataDocument;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.DataType;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.definitions.UnpivotStructure;
@@ -24,11 +25,17 @@ public class CSVImporter implements RawDataImporter {
     private PropertiesConfig.ApiConfigTemplate config;
     private static final Logger logger = LogManager.getLogger(CSVImporter.class);
 
+
     private DataDocumentRepository dataDocumentDAO;
 
     public CSVImporter(PropertiesConfig.ApiConfigTemplate config,
                        DataDocumentRepository dataDocumentDAO) {
         this.config = config;
+        this.dataDocumentDAO = dataDocumentDAO;
+    }
+
+    public CSVImporter(DataDocumentRepository dataDocumentDAO) {
+        this.config = null;
         this.dataDocumentDAO = dataDocumentDAO;
     }
 
@@ -104,14 +111,24 @@ public class CSVImporter implements RawDataImporter {
 
         String[][] csv;
         try {
-            csv = CSVReader.readCSV(new String(content, StandardCharsets.UTF_8.name()));
+            String temp = new String(content, StandardCharsets.UTF_8.name());
+            /**  Delete Comment Lines  **/
+			String modContent = "";
+			if (!dataDocument.getCommentChar().equals("")) {
+				temp = FileHelpers.deleteCommentLine(temp, dataDocument.getCommentChar());
+			}
+			if(!dataDocument.getDelimiter().equals("")) {
+				temp = temp.replace(dataDocument.getDelimiter(),",");
+			}
+			System.out.println(temp.substring(0,10));
+            csv = CSVReader.readCSV(temp);
         } catch (Exception e) {
             throw new InvalidFormatException("Invalid csv format provided", e);
         }
 
         if (csv.length < 2) throw new Exception("No records found in csv file");
 
-        dataDocument.setFields(new ArrayList<String>(Arrays.stream(csv[0]).collect(Collectors.toList())));
+        dataDocument.setFields(new ArrayList<>(Arrays.stream(csv[0]).collect(Collectors.toList())));
 
         List<Map<String, String>> list = new ArrayList<>();
         for (int i = 1; i < csv.length; i++) {

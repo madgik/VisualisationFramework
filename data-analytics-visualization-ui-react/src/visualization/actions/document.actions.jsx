@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { documentConstants } from '../constants'
 import Ajax from '../utilities/Ajax';
+import { visualizationActions } from '../actions'
 
 export const documentActions = {
   showDocument,
@@ -8,14 +9,15 @@ export const documentActions = {
   hideDocument,
   showDocumentLoader,
   hideDocumentLoader,
-  updateDocumentData
+  updateDocumentData,
+  resetSelectedPoints
 }
 
 /*
  * action creators
  */
 
-function showDocument(document, modalSrc, activeDocuments) {
+function showDocument(document, modalSrc, activeDocuments, lineChartId, pointId, color) {
 
   return function (dispatch) {
 
@@ -26,7 +28,7 @@ function showDocument(document, modalSrc, activeDocuments) {
     return axios({
       url: resourceUrl,
       method: 'get',
-      withCredentials: true,
+      withCredentials: false,
       responseType: 'blob',
       headers: {
         'Accept': 'application/octet-stream',
@@ -36,10 +38,10 @@ function showDocument(document, modalSrc, activeDocuments) {
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(response.data);
         if(modalSrc.length < activeDocuments){
-          modalSrc.push({"imageName":document, "url": imageUrl});}
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId, "color": color.name, "colorId": color.id});}
         else{
           modalSrc.splice(0, 1);
-          modalSrc.push({"imageName":document, "url": imageUrl});
+          modalSrc.push({"imageName":document, "url": imageUrl, "lineChartId": lineChartId, "pointId": pointId, "color": color.name, "colorId": color.id});
         }
         dispatch(showDocumentData(modalSrc))
 
@@ -61,6 +63,19 @@ function updateDocumentData(modalSrc){
 
 function showDocumentData(url) {
   return { type: documentConstants.SHOW_DOCUMENT, url };
+}
+
+function resetSelectedPoints(){
+
+  return function (dispatch, getState) 
+  {
+    dispatch(hideDocument());
+    const clone =  Object.assign({}, getState().data);
+    const timeSeries = getState().data.timeSeries.slice(0);
+    console.log(timeSeries);
+    clone.timeSeries = timeSeries;
+    dispatch(visualizationActions.reloadData(clone))
+  }
 }
 
 function hideDocument() {

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="26128978-0897-4599-a8e6-036ff4a50e51" name="Default" comment="Merge branch 'develop' of https://github.com/madgik/VisualisationFramework into develop&#10;&#10;# Conflicts:&#10;#&#9;data-analytics-visualization-config-modal/dist/index.js&#10;#&#9;data-analytics-visualization-config-modal/src/components/UploadDataMessage.jsx&#10;#&#9;data-analytics-visualization-dashboard-react/dist/bundle.min.js&#10;#&#9;data-analytics-visualization-dashboard-react/src/dashboard/components/FieldInfo.jsx&#10;#&#9;data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js&#10;#&#9;data-analytics-visualization-model/pom.xml&#10;#&#9;data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties&#10;&#10;Merge accepted remote only">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-analytics-network-graph-ui-react/dist/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/data-analytics-network-graph-ui-react/dist/bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-analytics-visualization-config-ui-react/dist/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/data-analytics-visualization-config-ui-react/dist/bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-analytics-visualization-config-ui-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/data-analytics-visualization-config-ui-react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-analytics-visualization-config-ui/src/main/webapp/static/bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/data-analytics-visualization-config-ui/src/main/webapp/static/bundle.min.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="VisualisationFramework" />
+  </component>
+  <component name="FindInProjectRecents">
+    <dirStrings>
+      <dir>C:\Users\nlarios\IdeaProjects\VisualisationFramework\data-analytics-network-graph-ui-react</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-136" />
+    <option name="y" value="-13" />
+    <option name="width" value="1932" />
+    <option name="height" value="1046" />
+  </component>
+  <component name="ProjectId" id="1Weq09e6qsFHdErPveyWj7fAjZp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../data-analytics-visualization/trunk/data-analytics-visualization-model" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="26128978-0897-4599-a8e6-036ff4a50e51" name="Default" comment="" />
+      <created>1536845258216</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1536845258216</updated>
+    </task>
+    <task id="LOCAL-00001" summary="first commit after hand over">
+      <created>1550831823572</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1550831823572</updated>
+    </task>
+    <task id="LOCAL-00002" summary="workspace-geoanalytics connection">
+      <created>1550832935790</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1550832935790</updated>
+    </task>
+    <task id="LOCAL-00003" summary="workspace-geoanalytics connection">
+      <created>1550833276121</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1550833276121</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit after hand over" />
+    <MESSAGE value="workspace-geoanalytics connection" />
+    <MESSAGE value="Merge branch 'develop' of https://github.com/madgik/VisualisationFramework into develop&#10;&#10;# Conflicts:&#10;#&#9;data-analytics-visualization-config-modal/dist/index.js&#10;#&#9;data-analytics-visualization-config-modal/src/components/UploadDataMessage.jsx&#10;#&#9;data-analytics-visualization-dashboard-react/dist/bundle.min.js&#10;#&#9;data-analytics-visualization-dashboard-react/src/dashboard/components/FieldInfo.jsx&#10;#&#9;data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js&#10;#&#9;data-analytics-visualization-model/pom.xml&#10;#&#9;data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties&#10;&#10;Merge accepted remote only" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'develop' of https://github.com/madgik/VisualisationFramework into develop&#10;&#10;# Conflicts:&#10;#&#9;data-analytics-visualization-config-modal/dist/index.js&#10;#&#9;data-analytics-visualization-config-modal/src/components/UploadDataMessage.jsx&#10;#&#9;data-analytics-visualization-dashboard-react/dist/bundle.min.js&#10;#&#9;data-analytics-visualization-dashboard-react/src/dashboard/components/FieldInfo.jsx&#10;#&#9;data-analytics-visualization-dashboard/src/main/webapp/static/bundle.min.js&#10;#&#9;data-analytics-visualization-model/pom.xml&#10;#&#9;data-analytics-visualization-model/src/main/resources/data-analytics-visualization.properties&#10;&#10;Merge accepted remote only" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="456" y="5" key="CommitChangelistDialog2" timestamp="1579520714520">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="456" y="5" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1579520714519" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1579520653167">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579520653167" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1579520653167">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579520653167" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>VisualisationFramework</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

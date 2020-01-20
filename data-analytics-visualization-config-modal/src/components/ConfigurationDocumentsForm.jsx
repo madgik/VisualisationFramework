@@ -19,7 +19,7 @@ class ConfigurationDocumentsForm extends React.Component {
       [prop]: { $set: value }
     });
 
-    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation);
+    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation, this.props.configOptions);
 
     this.props.onFieldChange(data, state);
   }

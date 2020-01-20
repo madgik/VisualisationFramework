@@ -34,6 +34,10 @@ public class DataDocument {
 
 	private Date updatedAt;
 
+	private String delimiter;
+
+	private String commentChar;
+
 	public String getId() {
 		return id;
 	}
@@ -144,5 +148,22 @@ public class DataDocument {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+
+	public String getDelimiter() {
+		return delimiter;
+	}
+
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
+	}
+
+	public String getCommentChar() {
+		return commentChar;
+	}
+
+	public void setCommentChar(String commentChar) {
+		this.commentChar = commentChar;
 	}
 }

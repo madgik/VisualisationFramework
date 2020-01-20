@@ -3,6 +3,7 @@ import update from 'immutability-helper'
 import { configItemConstants } from '../constants'
 
 function defaultState() {
+
   var fieldsToValidate = [
     'label',
     'type',
@@ -16,7 +17,10 @@ function defaultState() {
     'valueField',
     'transformationLabel',
     'transformationLabelValue',
-    'transformationColumns'];
+    'transformationColumns',
+    'filterLabel',
+    'filterField'
+  ];
 
   var validation = {}
   fieldsToValidate.forEach(field => {
@@ -31,15 +35,26 @@ function defaultState() {
     isNew: true,
     data: {
       type: 'Line',
-      activeDocuments:1
+      activeDocuments: 1
     },
     menu: {
       activeItem: 'general'
     },
     validation: validation,
     isFormValid: true,
+    loading: false,
     validationPanelMessages: [],
-    errorMessage: null
+    errorMessage: null,
+    geoanalytics: {
+      layers: [],
+      checked: false
+    },
+    delimiter: '',
+    commentCharacter: '',
+    configurations: [],
+    configOptions: [{ name: "", value: "5d0cd7f2d22586580c5f9436" }],
+    selectedConfiguration: [],
+    url: ''
   }
 }
 
@@ -55,6 +70,12 @@ export function configItem(state = defaultState(), action) {
       editState.data = action.data;
       return editState;
     }
+    case configItemConstants.LOADING:
+      return update(state, {
+        loading: {
+          $set: action.loading
+        }
+      });
     case configItemConstants.UPDATE_EDITED_ITEM:
       return update(state, {
         data: {
@@ -162,16 +183,16 @@ export function configItem(state = defaultState(), action) {
           }
         }
       })
-      case configItemConstants.ADD_TRANSFORMATION:
+    case configItemConstants.ADD_TRANSFORMATION:
       if (!state.data.transformations) state.data.transformations = '';
       return update(state, {
         data: {
           transformations: {
-            $set:action.transformation
+            $set: action.transformation
           }
         }
       })
-      case configItemConstants.UPDATE_TRANSFORMATION:
+    case configItemConstants.UPDATE_TRANSFORMATION:
       return update(state, {
         data: {
           $set: action.data
@@ -232,8 +253,68 @@ export function configItem(state = defaultState(), action) {
           $set: action.message
         }
       });
+    case configItemConstants.SET_GEOANALYTICS_LAYERS:
+      if (!state.geoanalytics.layers) state.geoanalytics.layers = [];
+      return update(state, {
+        geoanalytics: {
+          layers: {
+            $set: action.geoanalytics.layers
+          }
+        }
+      });
+    case configItemConstants.UPDATE_CHECK_LAYER:
+      return update(state, {
+        geoanalytics: {
+          checked: {
+            $set: action.value
+          }
+        }
+      });
+    case configItemConstants.SET_DELIMITER:
+      return update(state, {
+        delimiter: {
+          $set: action.delimiter
+        }
+      });
+    case configItemConstants.SET_COMMENT_CHARACTER:
+      return update(state, {
+        commentCharacter: {
+          $set: action.commentCharacter
+        }
+      });
+    case configItemConstants.SET_CONFIGURATIONS:
+      return update(state, {
+        configurations: {
+          $set: action.configurations
+        }
+      });
+    case configItemConstants.SET_CONFIG_OPTIONS:
+      return update(state, {
+        configOptions: {
+          $set: action.configOptions
+        }
+      });
+    case configItemConstants.SET_SELECTED_CONFIGURATION:
+      return update(state, {
+        selectedConfiguration: {
+          $set: action.selectedConfiguration
+        }
+      });
+    case configItemConstants.SET_CONFIGURATION_DATA:
+      return update(state, {
+        data: {
+          $set: action.data
+        }
+      });
+    case configItemConstants.SET_URL:
+      return update(state, {
+        url: {
+          $set: action.url
+        }
+      });
     default:
       return state;
   }
+
 }
 

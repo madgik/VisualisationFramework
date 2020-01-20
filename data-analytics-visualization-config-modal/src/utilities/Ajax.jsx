@@ -5,6 +5,7 @@ class Ajax {
   CONFIGURATIONS_BASE_PATH = 'configurations'
   DOCUMENTS_BASE_PATH = 'dataDocuments'
   VISUALIZATIONS_BASE_PATH = 'visualizations'
+  GEOANALYTICS_BASE_PATH = 'geoanalytics'
 
   baseUrl = null
   _isLocalDeployment = true

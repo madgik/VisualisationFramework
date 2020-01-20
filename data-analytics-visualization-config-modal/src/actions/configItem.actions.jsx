@@ -1,15 +1,18 @@
 import { configItemConstants } from '../constants'
 import { configurationService } from '../services'
 import { documentService } from '../services'
+import { geoanalyticsService } from '../services'
 
 import ConfigurationValidators from '../validation/ConfigurationValidators'
+import Axios from 'axios'
 
-export const configItemActions = {
+export const  configItemActions = {
   createConfiguration,
   editConfiguration,
   showConfigurationData,
   updateEditedItem,
   uploadFile,
+  postURLOfFile,
   removeFile,
   updateJoinField,
   addFilter,
@@ -20,12 +23,47 @@ export const configItemActions = {
   storeConfiguration,
   deleteConfiguration,
   closeItemEdit,
-  showErrorMessage
+  showErrorMessage,
+  updateGeoanalyticsLayers,
+  updateCheckLayer,
+  setDelimiter,
+  setCommentCharacter,
+  getAllConfigurations,
+  setConfigurations,
+  setConfigOptions,
+  setSelectedConfiguration,
+  setConfigurationData,
+  setLoader,
+  setUrl,
+  getDataFromUrl
 }
 
 /*
  * action creators
  */
+
+function getAllConfigurations() {
+  return function(dispatch) {
+    configurationService.getConfigurations()
+      .then (response => {
+        console.log(response.data);
+        var options = response.data.map( (configuration) => ({ name: configuration.label, value: configuration.id }));
+        dispatch(setConfigOptions(options))
+        dispatch(setConfigurations(response.data))
+      })
+  }
+}
+
+function getDataFromUrl(url, type, delimiter, commentCharacter) {
+  return function(dispatch) {
+     configurationService.getDataFromUrl(url)
+     .then(response => {
+      console.log(response.data);
+
+        dispatch(uploadFile(response, type, delimiter, commentCharacter));
+     })
+  }
+}
 
 function createConfiguration() {
   return { type: configItemConstants.CREATE_ITEM };
@@ -74,19 +112,61 @@ function visualizationToDataType(type) {
   return visualizationToDataTypeMap[type];
 }
 
-function uploadFile(files, type) {
+function updateGeoanalyticsLayers(){
   return function (dispatch) {
-    var dataType = visualizationToDataType(type);
+    return geoanalyticsService.getLayers().then(response => {
+      dispatch(setGeoanalyticsLayers(response.data));
+    }).catch(_ => { });
+  }
+}
+
+function setGeoanalyticsLayers(layers){
+  return {type: configItemConstants.SET_GEOANALYTICS_LAYERS, layers}
+}
+
+function updateCheckLayer(value) {
+  return {type:configItemConstants.UPDATE_CHECK_LAYER, value}
+}
+
+function postURLOfFile(fileURL, type, delimiter, commentCharacter) {
+  return function (dispatch) {
+    
+      const formData = new FormData();
+      formData.append("url", fileURL);
+      // formData.append("name", file.name);
+      formData.append("type", type);
+      formData.append("delimiter", delimiter);
+      formData.append("comment", commentCharacter);
+
+      return documentService.postDocumentURL(formData).then(response => {
+        dispatch(configItemActions.setLoader(false));
+
+        dispatch(updateUploadedFile(response.data));
+      }).catch(_ => {
+        dispatch(configItemActions.setLoader(false));
+      });
+
+  }
+}
+
+function uploadFile(files, type, delimiter, commentCharacter) {
+  return function (dispatch) {
+    // var dataType = visualizationToDataType(type);
     files.forEach(file => {
       // Initial FormData
       const formData = new FormData();
       formData.append("file", file);
       formData.append("name", file.name);
-      formData.append("type", dataType);
+      formData.append("type", type);
+      formData.append("delimiter", delimiter);
+      formData.append("comment", commentCharacter);
 
       return documentService.postDocument(formData).then(response => {
+        dispatch(configItemActions.setLoader(false));
+
         dispatch(updateUploadedFile(response.data));
-      }).catch(_ => { });
+      }).catch(_ => {     dispatch(configItemActions.setLoader(false));
+      });
     });
   }
 }
@@ -108,6 +188,10 @@ function addDataSource(id) {
 
 function setUploadedFileMetadata(metadata) {
   return { type: configItemConstants.SET_UPLOADED_FILE_METADATA, metadata };
+}
+
+function setLoader(loading) {
+  return { type: configItemConstants.LOADING, loading };
 }
 
 function removeFile(index) {
@@ -163,7 +247,7 @@ function validateData() {
 
     var state = getState().configItem;
 
-    var result = ConfigurationValidators.validate(state.data, state.validation);
+    var result = ConfigurationValidators.validate(state.data, state.validation, state.configOptions);
 
     var validation = result.state,
       isFormValid = result.valid,
@@ -217,4 +301,32 @@ function showErrorMessage(message) {
 
 function setErrorMessage(message) {
   return { type: configItemConstants.SHOW_MODAL_ERROR, message };
+}
+
+function setDelimiter(delimiter) {
+  return { type: configItemConstants.SET_DELIMITER, delimiter };
+}
+
+function setCommentCharacter(commentCharacter) {
+  return { type: configItemConstants.SET_COMMENT_CHARACTER, commentCharacter };
+}
+
+function setConfigurations(configurations) {
+  return { type: configItemConstants.SET_CONFIGURATIONS, configurations };
+}
+
+function setConfigOptions(configOptions) {
+  return { type: configItemConstants.SET_CONFIG_OPTIONS, configOptions };
+}
+
+function setSelectedConfiguration(selectedConfiguration) {
+  return { type: configItemConstants.SET_SELECTED_CONFIGURATION, selectedConfiguration };
+}
+
+function setConfigurationData(data) {
+  return { type: configItemConstants.SET_CONFIGURATION_DATA, data };
+}
+
+function setUrl(url) {
+  return { type: configItemConstants.SET_URL, url };
 }

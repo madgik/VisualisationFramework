@@ -8,15 +8,51 @@ import ConfigurationValidators from '../validation/ConfigurationValidators'
 
 import TransformationFiltering from '../utilities/TransformationsFiltering';
 
+import SelectSearch from 'react-select-search';
+
+import './SearchBar.css';
+
 
 class ConfigurationGeneralForm extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.handleConfigurationChange = this.handleConfigurationChange.bind(this);
+
+  }
+
+  handleConfigurationChange = (e) => {
+
+    var data = this.props.configurations.find(function (element) {
+      return element.id == e.value;
+    });
+    if (data.id != undefined)
+      delete data.id;
+    if (data.dataSources != undefined && data.xAxis != undefined && data.yAxis != undefined) {
+      delete data.dataSources;
+      delete data.xAxis;
+      delete data.yAxis;
+    }
+    data.label = data.label + "-copy";
+
+    this.props.setSelectedConfiguration(data);
+    this.props.setConfigurationData(data);
+
+    this.handleFieldChange("label", data.label)
+    var { state } = ConfigurationValidators.validateField('xAxis', data, this.props.validation, this.props.configOptions);
+    var { state } = ConfigurationValidators.validateField('yAxis', data, this.props.validation, this.props.configOptions);
+
+  }
+
+
+
   handleFieldChange = (prop, value) => {
+
     const data = update(this.props.data, {
       [prop]: { $set: value }
     });
 
-    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation);
+    var { state } = ConfigurationValidators.validateField(prop, data, this.props.validation, this.props.configOptions);
 
     this.props.onFieldChange(data, state);
   }
@@ -55,8 +91,7 @@ class ConfigurationGeneralForm extends React.Component {
 
   extractFieldSuggestions = (addEmpty) => {
 
-    var suggestions = TransformationFiltering.getSuggestions(this.props.data.transformations,this.props.data.dataSources);
-
+    var suggestions = TransformationFiltering.getSuggestions(this.props.data.transformations, this.props.data.dataSources);
 
     if (addEmpty) {
       suggestions.unshift({
@@ -86,12 +121,12 @@ class ConfigurationGeneralForm extends React.Component {
 
   showGroupByField = () => {
     return (this.props.data.type !== 'ThreeD'
-    && this.props.data.type !== 'HeatMap');
+      && this.props.data.type !== 'HeatMap');
   }
 
   showZAxisField = () => {
-    return (this.props.data.type === 'ThreeD'|| 
-    this.props.data.type === 'HeatMap');
+    return (this.props.data.type === 'ThreeD' ||
+      this.props.data.type === 'HeatMap');
   }
 
   showColorChartFields = () => {
@@ -105,8 +140,32 @@ class ConfigurationGeneralForm extends React.Component {
       this.props.data.type === 'Polar');
   }
 
+
   render() {
     return (<React.Fragment>
+      {(this.props.isNew == true) &&
+        
+
+          <Form.Field error={this.props.validation.label.touched && !this.props.validation.label.valid}>
+            <label>Create New or Select From History</label>
+
+            <SelectSearch
+              search={true}
+              mode="input"
+              options={this.props.configOptions}
+              value={this.props.data.label || ""}
+              name="configuration"
+              placeholder="Select a saved configuration"
+              onChange={(e) => this.handleConfigurationChange(e)}
+            />
+
+          </Form.Field>
+      }
+      {(this.props.selectedConfiguration != [] && (this.props.isNew == true)) ?
+        <Form.Field>
+          <label>Please upload new data file before save</label>
+        </Form.Field> : ''
+      }
       <Form.Field required error={this.props.validation.label.touched && !this.props.validation.label.valid}>
         <label>Label</label>
         <Input

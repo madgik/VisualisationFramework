@@ -23,6 +23,8 @@ class Visualization extends React.Component {
         <DocumentRendererContainer />
         <VisualizationRendererContainer size={this.props.size} mmRender={mmRenderRef} />
         <FiltersRendererContainer />
+
+
       </div>
     );
   }

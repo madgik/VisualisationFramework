@@ -15,10 +15,20 @@ export const configItemConstants = {
   UPDATE_TRANSFORMATION: 'update-transformation-item',
   UPDATE_FILTER: 'update-filter',
   REMOVE_FILTER: 'remove-filter',
+  SET_GEOANALYTICS_LAYERS: 'set-geoanalytics-layers',
   SET_UPLOADED_FILE_METADATA: 'set-uploaded-file-metadata',
   UPDATE_MENU_ITEM: 'update-menu-item',
   END_STORE_ITEM: 'end-store-item',
   END_DELETE_ITEM: 'end-delete-item',
   SHOW_VALIDATION_RESULT: 'show-validation-result',
-  SHOW_MODAL_ERROR: 'show-modal-error'
+  SHOW_MODAL_ERROR: 'show-modal-error',
+  UPDATE_CHECK_LAYER: 'update-check-layer',
+  SET_DELIMITER: 'set_delimiter',
+  SET_COMMENT_CHARACTER: 'set_comment_character',
+  SET_CONFIGURATIONS: 'set_configurations',
+  SET_CONFIG_OPTIONS: 'set_config_options',
+  SET_SELECTED_CONFIGURATION: 'set_selected_configuration',
+  SET_CONFIGURATION_DATA: 'set_configuration_data',
+  LOADING: 'loading',
+  SET_URL: 'set_url'
 }

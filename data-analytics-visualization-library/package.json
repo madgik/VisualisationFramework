@@ -4,7 +4,8 @@
   "private": false,
   "main": "./dist/index.js",
   "dependencies": {
-    "react-dropzone": "~5.1.0"
+    "react-dropzone": "~5.1.0",
+    "react-leaflet-search": "^0.6.0"
   },
   "peerDependencies": {
     "axios": "~0.18.0",
@@ -24,6 +25,7 @@
     "babel-loader": "~7.1.5",
     "babel-plugin-transform-object-rest-spread": "~6.26.0",
     "babel-plugin-transform-react-remove-prop-types": "~0.4.15",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "~6.24.1",
     "babel-preset-es2015-without-strict": "0.0.4",
     "babel-preset-es2017": "~6.24.1",
@@ -38,7 +40,7 @@
     "html-loader": "~0.5.5",
     "immutability-helper": "~2.8.1",
     "jquery": "3.3.1",
-    "leaflet": "~1.0.3",
+    "leaflet": "^1.3.0",
     "plotly.js": "~1.41.1",
     "rc-input-number": "~4.3.1",
     "react": "~16.5.1",
@@ -59,7 +61,7 @@
     "semantic-ui-react": "~0.80.2",
     "validator": "~10.7.1",
     "webpack": "~4.27.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "start": "react-scripts start",

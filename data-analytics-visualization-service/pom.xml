@@ -6,14 +6,14 @@
 
     <groupId>gr.uoa.di.aginfra</groupId>
     <artifactId>data-analytics-visualization-service</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.1.6-SNAPSHOT</version>
 
     <packaging>war</packaging>
 
     <properties>
         <javax.servlet.servlet-api.version>3.1.0</javax.servlet.servlet-api.version>
         <log4j.version>2.9.1</log4j.version>
-        <org.springframework.version>4.3.12.RELEASE</org.springframework.version>
+        <org.springframework.version>5.1.5.RELEASE</org.springframework.version>
 
         <jackson.version>2.9.2</jackson.version>
 
@@ -25,6 +25,26 @@
         <junit.version>4.12</junit.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net repository</name>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        <repository>
+            <id>osgeo</id>
+            <name>Open Source Geospatial Foundation Repository</name>
+            <url>http://download.osgeo.org/webdav/geotools/</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>boundless</id>
+            <name>Boundless Maven Repository</name>
+            <url>http://repo.boundlessgeo.com/main</url>
+        </repository>
+    </repositories>
     <dependencies>
         <!-- Servlet -->
         <dependency>
@@ -38,7 +58,19 @@
         <dependency>
             <groupId>gr.uoa.di.aginfra</groupId>
             <artifactId>data-analytics-visualization-model</artifactId>
-            <version>[1.0.6-SNAPSHOT,2.0.0-SNAPSHOT)</version>
+            <version>[1.1.0-SNAPSHOT,2.0.0-SNAPSHOT)</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
         </dependency>
 
         <!-- Logging -->
@@ -111,6 +143,13 @@
             <version>5.2.0</version>
         </dependency>
 
+
+<!--        <dependency>-->
+<!--            <groupId>de.grundid.opendatalab</groupId>-->
+<!--            <artifactId>geojson-jackson</artifactId>-->
+<!--            <version>1.8.1</version>-->
+<!--        </dependency>-->
+
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
@@ -132,6 +171,19 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>mil.nga.sf</groupId>
+            <artifactId>sf-geojson</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
 
     </dependencies>
 

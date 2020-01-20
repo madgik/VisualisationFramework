@@ -6,7 +6,7 @@
 	<artifactId>data-analytics-visualization-dashboard</artifactId>
 	<packaging>war</packaging>
 	<name>data-analytics-visualization-dashboard</name>
-	<version>1.0.6-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 	<properties>
 		<org.springframework.version>4.3.4.RELEASE</org.springframework.version>
@@ -22,27 +22,27 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>com.liferay.maven.plugins</groupId>
-				<artifactId>liferay-maven-plugin</artifactId>
-				<version>${liferay.maven.plugin.version}</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>build-css</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<autoDeployDir>${liferay.auto.deploy.dir}</autoDeployDir>
-					<appServerDeployDir>${liferay.app.server.deploy.dir}</appServerDeployDir>
-					<appServerLibGlobalDir>${liferay.app.server.lib.global.dir}</appServerLibGlobalDir>
-					<appServerPortalDir>${liferay.app.server.portal.dir}</appServerPortalDir>
-					<liferayVersion>${liferay.version}</liferayVersion>
-					<pluginType>portlet</pluginType>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>com.liferay.maven.plugins</groupId>-->
+<!--				<artifactId>liferay-maven-plugin</artifactId>-->
+<!--				<version>${liferay.maven.plugin.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>generate-sources</phase>-->
+<!--						<goals>-->
+<!--							<goal>build-css</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<autoDeployDir>${liferay.auto.deploy.dir}</autoDeployDir>-->
+<!--					<appServerDeployDir>${liferay.app.server.deploy.dir}</appServerDeployDir>-->
+<!--					<appServerLibGlobalDir>${liferay.app.server.lib.global.dir}</appServerLibGlobalDir>-->
+<!--					<appServerPortalDir>${liferay.app.server.portal.dir}</appServerPortalDir>-->
+<!--					<liferayVersion>${liferay.version}</liferayVersion>-->
+<!--					<pluginType>portlet</pluginType>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5</version>
@@ -218,11 +218,7 @@
 			<artifactId>com.liferay.deployment.helper</artifactId>
 			<version>1.0.3</version>
 		</dependency>
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.deployment.helper</artifactId>
-			<version>1.0.3</version>
-		</dependency>
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

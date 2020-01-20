@@ -15,6 +15,19 @@ public class CSVReader {
 		return mapper.readValue(csvContent, String[][].class);
 	}
 
+	public static String[][] readCSV(String[] lines, String delimiter) {
+
+		String[] split = lines[0].split(delimiter);
+		String[][] fina = new String[lines.length][split.length];
+		for(int i=0;i<lines.length -1;i++) {
+			String[] details = lines[i +1].split(delimiter);
+			for (int j = 0; j < split.length; j++) {
+				fina[i][j] = details[j];
+			}
+		}
+		return fina;
+	}
+
 	public static String readStream(InputStream is) {
 		StringBuilder sb = new StringBuilder(512);
 		try {

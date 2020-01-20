@@ -46,19 +46,47 @@ class ConfigurationForm extends React.Component {
           <Form>
             {this.isGeneralMenuItemSelected() ?
               <ConfigurationGeneralForm
+                isNew={this.props.isNew}
                 data={this.props.data}
                 validation={this.props.validation}
-                onFieldChange={this.props.onFieldChange} /> : ''}
+                configurations={this.props.configurations}
+                configOptions={this.props.configOptions}
+                onFieldChange={this.props.onFieldChange}
+                selectedConfiguration={this.props.selectedConfiguration}
+                setSelectedConfiguration={this.props.setSelectedConfiguration}
+                showConfigurationData={this.props.showConfigurationData}
+                setConfigurationData={this.props.setConfigurationData}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
+              /> : ''}
             {this.isDataMenuItemSelected() ?
               <ConfigurationDataForm
                 data={this.props.data}
+                geoanalytics={this.props.geoanalytics}
                 onFileDropped={this.props.onFileDropped}
                 onRemoveFileClick={this.props.onRemoveFileClick}
-                onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
+                onJoinFieldChange={this.props.onJoinFieldChange}
+                setDelimiter={this.props.setDelimiter}
+                delimiter={this.props.delimiter}
+                loading={this.props.loading}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
+                setCommentCharacter={this.props.setCommentCharacter}
+                commentCharacter={this.props.commentCharacter}
+                onCheckLayerChange={this.props.onCheckLayerChange} 
+                postURLOfFile={this.props.postURLOfFile}
+                /> : ''}
             {this.showChartFields() && this.isFiltersMenuItemSelected() ?
               <ConfigurationFiltersEditor
+                validation={this.props.validation}
                 transformations={this.props.data.transformations}
+                configOptions={this.props.configOptions}
                 filters={this.props.data.filters}
+                url={this.props.url}
+                setUrl={this.props.setUrl}
+                getDataFromUrl={this.props.getDataFromUrl}
                 dataSources={this.props.data.dataSources}
                 onFilterAddition={this.props.onFilterAddition}
                 onFilterFieldChange={this.props.onFilterFieldChange}
@@ -73,6 +101,7 @@ class ConfigurationForm extends React.Component {
                 onJoinFieldChange={this.props.onJoinFieldChange} /> : ''}
             {this.showChartFields() && this.isDocumentsMenuItemSelected() ?
               <ConfigurationDocumentsForm
+                configOptions={this.props.configOptions}
                 data={this.props.data}
                 validation={this.props.validation}
                 onFieldChange={this.props.onFieldChange} /> : ''}

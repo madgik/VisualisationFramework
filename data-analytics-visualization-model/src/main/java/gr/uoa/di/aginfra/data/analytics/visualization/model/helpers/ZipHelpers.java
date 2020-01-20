@@ -28,6 +28,17 @@ public class ZipHelpers {
 		return  null;
 	}
 
+	public static String getJsonFile(String zipFilePath){
+		File[] files = new File(zipFilePath).listFiles();
+
+		for (File file : files) {
+			if (!file.isDirectory() && file.getName().endsWith(".json")) {
+				return file.getPath();
+			}
+		}
+		return  null;
+	}
+
 	public static String unzip(byte[] bytes, String destDir) throws IOException
 	{
 		String uuid = UUID.randomUUID().toString();
