@@ -80,14 +80,14 @@ class HeaderMenu extends React.Component {
     <div className='ui clearing segment'>
 
         <Header as='h1'>
-        <div className="ui transparent input">
-            <Input style={{width:'240px'}}
+        <div className="ui transparent input dashboard-title-container">
+          <Input style={{width:'700px'}}
                 maxLength={1750}
                 placeholder="Dashboard Title"
                 value={this.props.visualization.dashboardTitle}
                 onChange={(e) => this.onSave(e.target.value)}
-            />
-            </div>
+          />
+        </div>
         </Header>
         <Button floated='right' onClick={this.saveDashboardWorkspaceDirectory.bind(this)} >Save</Button>
         <Button floated='right' onClick={this.openDashboardWorkspaceDirectory.bind(this)} >Open</Button>

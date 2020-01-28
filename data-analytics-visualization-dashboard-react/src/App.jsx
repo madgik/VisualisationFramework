@@ -30,7 +30,8 @@ class App extends React.Component {
     Ajax.setBaseUrl(this.props.routing.baseUrl);
     Ajax.setWorkspaceUrl(this.props.routing.workspaceUrl);
     //this.store.dispatch(visualizationActions.requestVisualizations());
-    const dateToFormat = '2018-12-31';
+    // const dateToFormat = '2018-12-31';
+    const dateToFormat = '2019-12-31';
     const today = moment(dateToFormat);
     const dataMiner =  'http://dataminer-prototypes.d4science.org/wps/WebProcessingService'
 
