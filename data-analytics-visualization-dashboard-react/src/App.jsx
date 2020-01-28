@@ -58,10 +58,10 @@ class App extends React.Component {
 
 App.defaultProps = {
   routing: {
-    baseUrl: 'http://localhost:8081/data-analytics-visualization-service',
-    workspaceUrl: 'http://workspace-repository.d4science.org/storagehub/workspace',
-    workspaceUsername: 'cmitatakis',
-    workspaceToken: '2a85cb45-5dc1-4d29-a630-919f549e9858-843339462'  },
+    baseUrl: '',
+    workspaceUrl: '',
+    workspaceUsername: '',
+    workspaceToken: ''  },
   size: {
     width: 1000,
     height: 400
