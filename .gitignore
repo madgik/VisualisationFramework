@@ -17,7 +17,7 @@ data-analytics-visualization-service/data-analytics-visualization-service.iml
 data-analytics-visualization-ui-library/node_modules/
 data-analytics-visualization-dashboard-react/node_modules/
 
-data-analytics-visualization-config-ui/.idea/
+.idea/
 
 aginfra+.code-workspace
 data-analytics-visualization-dashboard/src/main/java/.DS_Store
