@@ -17,3 +17,7 @@
     padding-right: 20px !important;
 }
 
+.dashboard-title-container input {
+    height: 1.5em !important;
+    font-size: 1em !important;
+}
