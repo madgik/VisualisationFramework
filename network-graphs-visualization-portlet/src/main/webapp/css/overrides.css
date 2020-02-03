@@ -181,3 +181,7 @@ input#standard-bare{
 .App-style header {
     z-index:999;
 }
+
+body #content {
+    overflow: auto !important;
+}
