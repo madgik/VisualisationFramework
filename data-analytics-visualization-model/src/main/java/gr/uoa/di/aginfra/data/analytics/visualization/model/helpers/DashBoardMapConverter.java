@@ -1,11 +1,15 @@
 package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uoa.di.aginfra.data.analytics.visualization.model.services.DashBoardService;
 
+import java.io.IOException;
 import java.util.*;
 
 public class DashBoardMapConverter {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
     public static class FieldDetails{
         private String key;
         private String value;
@@ -277,6 +281,7 @@ public class DashBoardMapConverter {
             fieldDetails.add(fieldDetail);
         }
 
+
         return fieldDetails;
     }
 
@@ -290,6 +295,20 @@ public class DashBoardMapConverter {
                 LinkedHashMap<String, String> stringStringLinkedHashMap = props.get(0);
                 SoilDetails soilDetails = new SoilDetails(fieldId, String.valueOf((stringStringLinkedHashMap.get("id"))), String.valueOf((stringStringLinkedHashMap.get("soil_code")))
                     , String.valueOf(properties.get("area")), String.valueOf((properties.get("perimeter"))));
+
+                if(properties.get("soilunits") != null) {
+                    List<SoilUnit> soilUnits = new ArrayList<>();
+                    soilUnits = mapper.convertValue(properties.get("soilunits"), new TypeReference<List<SoilUnit>>(){});
+
+                    SoilUnit soilUnit = soilUnits.stream().filter(su -> {
+                        return Integer.toString(su.getId()).equals(String.valueOf((properties.get("id"))));
+                    }).findFirst().get();
+
+                    Soil soil = new Soil(String.valueOf((soilUnit.getId())), String.valueOf((soilUnit.getSoilCode())), String.valueOf((soilUnit.getSoilName()))
+                            , String.valueOf(soilUnit.getSoilType()), String.valueOf((properties.get("area"))), String.valueOf((properties.get("perimeter"))));
+
+                    soilDetails.setSoil(soil);
+                }
 //
             soilDetailsList.add(soilDetails);
             }
@@ -308,7 +327,7 @@ public class DashBoardMapConverter {
     public static Soil soilConvert(Feature feature)
     {
             Map<String, ?> properties = feature.getProperties();
-            Soil soil = new Soil(String.valueOf((properties.get("entityid"))), String.valueOf((properties.get("soilcode"))), String.valueOf((properties.get("soilname")))
+            Soil soil = new Soil(String.valueOf((properties.get("id"))), String.valueOf((properties.get("soil_code"))), String.valueOf((properties.get("soilname")))
                     , String.valueOf(properties.get("soiltype")), String.valueOf((properties.get("area"))), String.valueOf((properties.get("perimeter"))));
 
         return soil;

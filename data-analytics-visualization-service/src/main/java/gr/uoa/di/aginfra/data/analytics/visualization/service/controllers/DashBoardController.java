@@ -131,12 +131,12 @@ public class DashBoardController {
         List<DashBoardMapConverter.SoilDetails> fieldDetails = DashBoardMapConverter.soilDetailsConvert(fieldId, fieldDetailsFeatureCollection.getFeatures());
 
         FeatureCollection soilDetails = null;
-        for(int i=0; i < fieldDetails.size() ; i++) {
-            soilDetails = dashBoardService.getFieldDetails(gCubeUrlSoilV1 + fieldDetails.get(i).getSoilid(), params);
-            DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
-            fieldDetails.get(i).setSoil(soil);
-
-        }
+//        for(int i=0; i < fieldDetails.size() ; i++) {
+//            soilDetails = dashBoardService.getFieldDetails(gCubeUrl + fieldDetails.get(i).getSoilid(), params);
+//            DashBoardMapConverter.Soil soil = DashBoardMapConverter.soilConvert(soilDetails.getFeatures().get(0));
+//            fieldDetails.get(i).setSoil(soil);
+//
+//        }
       //  soilDetails.hashCode();
 
         return ResponseEntity.ok(fieldDetails);

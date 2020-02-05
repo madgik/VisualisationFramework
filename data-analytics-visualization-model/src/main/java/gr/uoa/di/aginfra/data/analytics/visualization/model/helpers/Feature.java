@@ -2,8 +2,7 @@ package gr.uoa.di.aginfra.data.analytics.visualization.model.helpers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Feature extends GeoJsonObject {
     @JsonInclude(JsonInclude.Include.ALWAYS)
@@ -58,11 +57,11 @@ public class Feature extends GeoJsonObject {
         if (!super.equals(o))
             return false;
         Feature feature = (Feature)o;
-        if (properties != null ? !properties.equals(feature.properties) : feature.properties != null)
+        if (!Objects.equals(properties, feature.properties))
             return false;
-        if (geometry != null ? !geometry.equals(feature.geometry) : feature.geometry != null)
+        if (!Objects.equals(geometry, feature.geometry))
             return false;
-        return !(id != null ? !id.equals(feature.id) : feature.id != null);
+        return !(!Objects.equals(id, feature.id));
     }
 
     @Override public int hashCode() {
@@ -73,8 +72,12 @@ public class Feature extends GeoJsonObject {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Feature{properties=" + properties + ", geometry=" + geometry + ", id='" + id + "'}";
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Feature{" +
+                "properties=" + properties +
+                ", geometry=" + geometry +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

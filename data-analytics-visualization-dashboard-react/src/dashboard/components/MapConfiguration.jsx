@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { Button, Dropdown } from 'semantic-ui-react'
+import { visualizationActions } from '../actions/visualization.actions';
+import { Button, Dropdown } from 'semantic-ui-react';
 
 class MapConfiguration extends React.Component {
 
@@ -20,6 +20,7 @@ class MapConfiguration extends React.Component {
 
   handleDropDownChange(value) {
     this.props.onSelectYearElementClick(value);
+    // visualizationActions.setDateRange()
   }
 
   loadData(){

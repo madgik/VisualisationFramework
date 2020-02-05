@@ -648,8 +648,8 @@ function updateFieldDataDropdownValue(selected) {
     switch (selected){
       case dataValues.weather:{
         dispatch(getSelectedFieldDataProperties());
-        dispatch(getSelectedFieldData(getState()));
-     //   dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedFieldInYAxis));
+        // dispatch(getSelectedFieldData(getState()));
+     // //  dispatch(setYaxisFieldDataLabel(getState().data.chart1.selectedFieldInYAxis));
         dispatch(hideLoading());
         return dispatch(setFieldDataDropdownValue(selected));
       }
@@ -1000,6 +1000,7 @@ function getSelectedFieldData(){
         chart1.xAxisLabel = "Date";
         const units = response.data && response.data.length > 0 && response.data[0].units ? ' (' + response.data[0].units + ')' : '';
         chart1.yAxisLabel = getState().data.chart1Properties.selectedFieldInYAxis + units;
+
         dispatch(reloadRelatedFieldData(chart1));
     })
     .catch(response => {
@@ -1020,6 +1021,9 @@ function getSelectedFieldDataProperties(){
           'Content-Type': 'application/json',
       }}).then(response => {
             dispatch(reloadRelatedFieldDataProperties(response.data));
+            let text = response.data[0].text;
+            dispatch(setWeatherPropertiesDropdownText(text));
+            dispatch(getSelectedFieldData(getState()));
     })
     .catch(response => {
       alert(response);
