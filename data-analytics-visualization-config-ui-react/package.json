@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "dependencies": {
-    "axios": "~0.18.0",
+    "axios": "~0.21.1",
     "immutability-helper": "~2.8.1",
     "react-confirm-alert": "^2.4.0",
     "react-redux": "~5.0.7",
