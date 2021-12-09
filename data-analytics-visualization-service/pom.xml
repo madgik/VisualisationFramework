@@ -15,7 +15,7 @@
         <log4j.version>2.9.1</log4j.version>
         <org.springframework.version>5.1.5.RELEASE</org.springframework.version>
 
-        <jackson.version>2.9.2</jackson.version>
+        <jackson.version>2.9.10.8</jackson.version>
 
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
