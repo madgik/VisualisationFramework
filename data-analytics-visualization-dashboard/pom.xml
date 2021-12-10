@@ -16,7 +16,7 @@
 		<liferay.auto.deploy.dir>C:\liferay-portal-6.2\deploy</liferay.auto.deploy.dir>
 		<liferay.maven.plugin.version>6.2.2</liferay.maven.plugin.version>
 		<liferay.version>6.2.2</liferay.version>
-        <log4j.version>2.9.1</log4j.version>
+        <log4j.version>2.15.0</log4j.version>
     </properties>
 
 	<build>
