@@ -12,7 +12,7 @@
     "immutability-helper": "~2.8.1",
     "moment": "^2.24.0",
     "moment-range": "^3.0.3",
-    "qs": "^6.7.0",
+    "qs": "^6.9.7",
     "react-center": "^1.1.1",
     "react-columns": "^1.2.0",
     "react-confirm-alert": "^2.3.0",
