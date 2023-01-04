@@ -44,7 +44,7 @@
     "html-loader": "~0.5.5",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "react-scripts": "~1.1.5",
+    "react-scripts": "~5.0.1",
     "replace": "~1.0.0",
     "replace-bundle-webpack-plugin": "~1.0.0"
   },
